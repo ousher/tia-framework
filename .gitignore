@@ -1,0 +1,56 @@
+# ═══════════════════════════════════════════════════════════
+# TIA Framework — .gitignore
+# ═══════════════════════════════════════════════════════════
+
+# Secrets & credentials
+*.env
+*.token
+*.key
+*.pem
+*.jwt
+*.p12
+auth/
+*secrets*
+*credentials*
+
+# ENT components (NEVER in public repo)
+evo_engine.py
+subconscious.py
+init_subconscious.py
+inject_golden.py
+**/generate-license.py
+tia-saboteur.*
+tia-dungeon-master.*
+tia-shadow-pipeline.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.so
+venv/
+.venv/
+
+# Personal files (NEVER in public repo)
+USER.md
+MEMORY.md
+HEARTBEAT.md
+IDENTITY.md
+ROUTING.md
+memory/
+golden-moments.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker build artifacts
+*.tar
+*.tar.gz
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
