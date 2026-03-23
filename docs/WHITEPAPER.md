@@ -1,6 +1,6 @@
-# TIA WHITEPAPER 1.0
+# TIA WHITEPAPER 2.0
 ## Threat Intelligence Autonomy — A Self-Testing, Self-Healing Security Operations Framework
-### Version 1.0 | March 2026
+### Version 2.0 | March 2026
 
 ---
 
@@ -8,11 +8,13 @@
 
 TIA is an autonomous security operations framework that deploys specialized AI agents on minimal infrastructure. In live testing (Project Skynet, March 23 2026), TIA detected an insider threat in **12 seconds** — a **1,400,000× improvement** over the industry average of 194 days.
 
-**Total infrastructure cost: €4.50/month.**
+Since v1.0, TIA has grown from 26 to **28 active agents** with new capabilities: **Alert Correlation Engine**, **Fleet Management**, **Self-Healing**, **Cross-Agent Log Analysis**, and a **5-tier LLM fallback chain**.
+
+**Total infrastructure cost: €4.50/month. Daily AI cost: $0.05.**
 
 ---
 
-## The Problem
+## 1. The Problem
 
 Modern cybersecurity faces a fundamental asymmetry:
 
@@ -22,181 +24,274 @@ Modern cybersecurity faces a fundamental asymmetry:
 | Time to act | Minutes | Months |
 | Cost | Low (automated) | High ($200K+ SOC team) |
 | Available 24/7 | Yes | No |
+| Alert fatigue | N/A | 6+ alerts in 10 seconds |
+| Self-healing | Adaptive | Manual intervention |
 
-Attackers already use AI agents. Defenders mostly don't.
+Attackers already use AI agents. Defenders mostly don't. And when defenders do deploy monitoring, they drown in alert noise.
 
 ---
 
-## TIA's Approach: Multi-Agent Autonomous Security
+## 2. Architecture
 
-### Architecture Overview
+### Three-Layer Design
 
 ```
-┌─────────────────────────────────────────┐
-│         SURVIVAL LAYER                   │
-│  Shadow Logging · Dead Man's Switch      │
-│  "Absence of evidence IS evidence"       │
-├─────────────────────────────────────────┤
-│         LEARNING LAYER                   │
-│  Shared Subconscious · EVO Engine        │
-│  "What one agent learns, all agents know"│
-├─────────────────────────────────────────┤
-│         EXECUTION LAYER                  │
-│  Specialized Agents · Commander Bus      │
-│  "Detect, respond, evolve"               │
-└─────────────────────────────────────────┘
+            ┌─────────────────────────────┐
+            │      MASTER AGENT           │
+            │   Strategic orchestration    │
+            └──────────┬──────────────────┘
+     ┌─────────────────┼─────────────────────┐
+     ▼                 ▼                     ▼
+┌────────────┐  ┌────────────────┐  ┌────────────────┐
+│ 🛡️ SECURITY │  │ 🧬 INTELLIGENCE│  │ ⚙️ OPERATIONS  │
+│  LAYER (8) │  │   LAYER (4)    │  │  LAYER (14)    │
+└─────┬──────┘  └───────┬────────┘  └───────┬────────┘
+      └─────────────────┼───────────────────┘
+                        ▼
+     ┌──────────────────────────────────────┐
+     │     SHARED INFRASTRUCTURE            │
+     │  Commander Bus · Alert Bus           │
+     │  Shadow Logging · Subconscious       │
+     │  Kill Switch                         │
+     └──────────────────┬───────────────────┘
+                        ▼
+     ┌──────────────────────────────────────┐
+     │     🧪 PROJECT SKYNET               │
+     │  16 attack modules · self-testing    │
+     └──────────────────────────────────────┘
 ```
 
-### Agent Ecosystem
+### Agent Ecosystem (28 active agents)
 
-TIA deploys **26 specialized agents** across 8 operational classes:
+| Layer | Agents | Function |
+|-------|--------|----------|
+| 🛡️ Security & Detection (8) | Security Sentinel, Config Guardian, File Integrity, DNS Anomaly, Container Escape, Outbound Traffic, Credential Leak, Process Guardian | Threat detection, config drift, FIM, network monitoring |
+| 🧬 Intelligence & Analysis (4) | EVO Engine, Research Analyst, PenTest Specialist, Incident Responder | Self-evolution, CVE feeds, automated pentesting, forensics |
+| ⚙️ Operations & Maintenance (14) | Fleet Manager, Log Analyst, Self-Healer, Smart Notifier, Uptime Sentinel, Shadow Logging, Orchestrator, Dashboard, Cost Watchdog, Log Janitor, Automation Engineer, Memory Trigger, Dependency Tracker, GW Watchdog | Fleet health, log analysis, auto-healing, alert correlation |
+| 🧪 Safety & Resilience (2) | Chaos Monkey, Kill Switch | Monthly resilience testing, emergency rollback |
+| 🧪 Skynet Arsenal (16+1) | Dungeon Master + 16 attack modules | Adversarial self-testing framework |
 
-| Class | Count | Function |
-|-------|-------|----------|
-| Security Operations | 9 | SSH monitoring, network analysis, file integrity |
-| Infrastructure | 7 | Gateway health, process management, backups |
-| Cost & Alerts | 3 | Budget tracking, intelligent notification routing |
-| Quality Assurance | 2 | Change validation, regression detection |
-| Orchestration | 2 | Master coordination, chaos testing |
-| Memory | 1 | Cross-agent knowledge persistence |
-| Research | 1 | Threat intelligence, CVE monitoring |
-| Evolution | 1 | Self-analysis, mutation proposals |
+**Total: 58 scripts, 31 cron jobs, $0.05/day operating cost.**
 
 ### Intelligent Model Routing
 
-TIA uses a 5-tier AI model routing strategy that achieves **95% cost reduction** while maintaining detection capability:
+TIA uses a 5-tier fallback chain that ensures zero downtime:
 
 ```
-Tier 1: Cost-efficient reasoning    (90% of workload)
-Tier 2-3: Mid-tier analysis         (fallback chain)
-Tier 4: Frontier reasoning          (critical incidents only)
-Tier 5: Local LLM                   (zero-cost emergency fallback)
+Tier 1: DeepSeek Reasoner     → Primary (cost-efficient, $0.55/M input)
+Tier 2: Claude Sonnet          → Smart fallback ($3/M input)
+Tier 3: Claude Opus            → Heavy reliable ($15/M input)  
+Tier 4: Claude Haiku           → Last resort API ($0.80/M input)
+Tier 5: Qwen 1.5B (local)     → Emergency ($0.00, CPU-only)
 ```
 
-**Result:** $0.05/day AI cost for 26 agents running 24/7.
+**Result:** $0.05/day for 28 agents. 95% cost reduction vs single-model approach.
 
 ---
 
-## Key Innovations
+## 3. Key Innovations
 
-### 1. Shared Subconscious (Cross-Agent Memory)
+### 3.1 Alert Correlation Engine (NEW in v0.3)
 
-Every agent writes insights to a shared vector database. When any agent encounters a new situation, it can semantically query what other agents have learned — even without explicit programming.
+Traditional monitoring generates **alert fatigue**. During a cascade attack, TIA's old architecture would fire 6 Telegram alerts in 10 seconds. The new Alert Bus solves this:
 
-- **Technology:** Vector embeddings (384-dimensional, local inference)
+- **HMAC-signed alert queue** — every alert cryptographically authenticated
+- **5 incident patterns**: Agent Kill, Config Tamper, Resource Attack, Network Attack, Full Compromise
+- **Correlation window**: 60 seconds across all agents
+- **Hourly throttle**: max 5 alerts per agent per hour
+- **Result**: 6 alerts → 1 meaningful incident notification with root cause
+
+21 out of 24 agents route through the centralized alert bus. Kill Switch intentionally bypasses (must always reach operator).
+
+### 3.2 Fleet Manager (NEW in v0.3)
+
+Real-time health monitoring for every agent in the fleet:
+
+- **Fleet Health Score** (0-100) calculated from heartbeat freshness, error rates, cron status
+- **Per-agent status**: HEALTHY, STALE, DEAD classification
+- **Cron verification**: detects missing scheduled agents
+- **Error tracking**: flags agents with high error rates
+- **Zero cost** (pure shell, no AI tokens)
+
+### 3.3 Self-Healing (NEW in v0.3)
+
+Autonomous repair of common failures:
+
+- **Stale lock files**: removes abandoned locks (>30min old)
+- **Corrupt alert queue**: validates JSON, removes broken entries
+- **Bloated logs**: truncates logs exceeding 10MB
+- **Orphan temp files**: cleans stale /tmp entries
+- **Cron integrity**: verifies 6 critical agents are always in crontab
+- Runs every 10 minutes, zero cost
+
+### 3.4 Cross-Agent Log Analysis (NEW in v0.3)
+
+Scans all agent logs (129 files in production) every 30 minutes:
+
+- **Pattern detection**: repeated failures, error spikes, high-volume flooding
+- **Cross-agent correlation**: multi-agent errors → possible cascade/attack
+- **Security clustering**: detects when multiple security agents report errors simultaneously
+- **Incremental analysis**: only processes new log lines since last run
+
+### 3.5 Shared Subconscious (Cross-Agent Memory)
+
+Vector database with HMAC-authenticated writes:
+
+- **Technology:** BAAI/bge-small-en-v1.5 (384-dim, local ONNX inference)
+- **Write authentication:** Agent whitelist (23 known agents) + HMAC tagging
+- **Noise filtering:** 9 spam patterns blocked at write time
+- **Deduplication:** md5 hash check, skip identical within 1 hour
 - **Cost:** Zero (CPU-only, no API calls)
-- **Example:** PenTest agent finds open port → Security Sentinel immediately recognizes lateral movement risk (0.71 semantic similarity)
 
-### 2. Shadow Logging (Negative Confirmation)
+**Improvement from v1.0:** 92.5% noise purged (5,085 → 364 memories), DB compacted from 1.2GB to 43MB.
 
-Traditional monitoring detects **what happens**. TIA also detects **what stops happening**.
+### 3.6 Shadow Logging (Negative Confirmation)
 
-Every agent sends a periodic heartbeat confirming "I'm alive and working." If a heartbeat stops, the system assumes the agent was **silenced by an attacker**.
+Every agent sends HMAC-signed heartbeats. Missing heartbeat = assumed compromise.
 
-> "Absence of evidence IS evidence."
+- **HMAC verification** prevents heartbeat replay attacks
+- **Race condition guard**: 2s retry + consecutive failure tracking
+- **Dead Man Switch**: alerts when agent count drops below threshold
+- **Score:** 9/10 (improved from 7/10 in v1.0)
 
-### 3. EVO Engine (Self-Evolution)
+### 3.7 EVO Engine (Self-Evolution)
 
-Every 4 hours, TIA's Evolution Architect analyzes the Shared Subconscious to:
-1. Cluster recent security events
-2. Detect blind spots (threats not covered by existing agents)
-3. Propose new agents (mutation proposals)
-
-The system literally proposes its own improvements.
-
-### 4. Project Skynet (Self-Testing)
-
-TIA deliberately attacks itself to measure its own immune response. A controlled "saboteur" deploys insider threat behaviors while the system's detection mechanisms are benchmarked in real-time.
-
-**This is Chaos Engineering applied to AI security operations.**
+Every 4 hours, analyzes the Shared Subconscious to detect blind spots and propose new agents (mutation proposals). The system literally designs its own improvements.
 
 ---
 
-## Benchmark Results: Project Skynet
+## 4. Project Skynet: Adversarial Self-Testing
 
-### Test Configuration
-- **Date:** March 23, 2026
-- **Infrastructure:** Hetzner CX11 (2 vCPU, 4GB RAM, €4.50/month)
-- **Test method:** Controlled insider threat deployment
-- **Safety:** Timeout limits, non-destructive operations, dead man's switch
+### 4.1 Methodology
 
-### Saboteur Behaviors Tested
-- Process enumeration (`/proc` scanning)
-- Credential hunting (`.env` file discovery)
-- Agent silencing (process suspension)
-- Heartbeat tampering (simulated compromise)
-- Anomalous network patterns
+TIA includes a built-in red team framework with **16 automated attack modules** across 4 tiers:
 
-### Results (3 consecutive tests, different targets)
+| Tier | Category | Attack Modules |
+|------|----------|----------------|
+| T1 | Process Manipulation | SIGSTOP kill, Nice Bomb (renice +19), Fork Bomb Lite (50 processes), Cascade (3-agent coordinated) |
+| T2 | Configuration/Filesystem | Config Poison (endpoint typo), Log Injection (fake bus entries), Crontab Wipe, Symlink Swap (binary → /dev/null) |
+| T3 | Network/Credential | DNS Hijack (resolv.conf), Env Pollution (invalid API keys), Memory Poisoning (subconscious injection) |
+| T4 | Advanced Persistent | Insider Impersonation (fake EVO proposals), Slow Bleed (APT micro-attacks), Time Warp (clock shift), Resource Exhaustion (RAM consumption) |
 
-| Metric | Target | Test 1 | Test 2 | Test 3 | Average |
-|--------|--------|--------|--------|--------|---------|
-| **Detection** | <300s | **13s** | **12s** | **13s** | **12.7s** |
-| **Identification** | <600s | **28s** | **27s** | **28s** | **27.7s** |
-| **Synthesis** | <1800s | **28s** | **27s** | **28s** | **27.7s** |
+### 4.2 Results — Round 3 (March 23, 2026)
 
-### Industry Comparison
+| # | Attack | Tier | Detection | Status |
+|---|--------|------|-----------|--------|
+| 1 | SIGSTOP Process Kill | T1 | 12s | ✅ PASS |
+| 2 | Heartbeat Replay | T2 | HMAC reject | ✅ PASS |
+| 3 | Memory Poisoning | T3 | — | ❌ FAIL |
+| 4 | Config Poisoning | T2 | Hash check | ✅ PASS |
+| 5 | Log Injection | T2 | — | ❌ FAIL |
+| 6 | Crontab Wipe | T2 | 0s silence | ✅ PASS |
+| 7 | Symlink Swap | T2 | FIM detect | ✅ PASS |
+| 8 | Nice Bomb | T1 | Auto-fix | ✅ PASS |
+| 9 | Fork Bomb Lite | T1 | 11 procs | ✅ PASS |
+| 10 | Cascade | T1 | — | ❌ FAIL |
+| 11 | DNS Hijack | T3 | Config Guard | ✅ PASS |
+| 12 | Env Pollution | T3 | Config Guard | — |
+| 13 | Insider Impersonation | T4 | — | ❌ FAIL |
+| 14 | Slow Bleed (APT) | T4 | — | ❌ FAIL |
 
-| Solution | Avg Detection Time | Monthly Cost | Self-Learning |
-|----------|-------------------|-------------|---------------|
-| **TIA** | **12.7 seconds** | **€4.50** | **Yes** |
-| Enterprise SIEM | 194 days | $2,000+ | No |
-| SOC Team (3 analysts) | Hours-Days | $25,000+ | Human only |
-| Managed Detection (MDR) | Hours | $5,000+ | Partial |
+**Score: 8/14 = 57%** (baseline was 14.3%, a **4× improvement** from same-day hardening)
 
-**Improvement factor: 1,400,000× faster detection at 0.02% of the cost.**
+### 4.3 Improvement Trajectory
+
+```
+Hour 0 (baseline):    14% detection  (2/14 pass)
+Hour 1 (quick wins):  57% detection  (8/14 pass) ← 4 patches in 10 minutes
+Week 1 (target):      86% detection  ← Commander Bus signing + Subconscious guards
+Week 2 (target):     100% detection  ← Baseline drift + full coverage
+```
+
+### 4.4 Key Findings
+
+- **Heartbeat Replay**: FIXED with HMAC signing — forged heartbeats now rejected
+- **Memory Poisoning**: 4 vulnerabilities found — write authentication deployed, semantic validation planned
+- **Insider Impersonation**: Fake EVO proposals accepted — proposal signing required
+- **Slow Bleed APT**: 7 micro-attacks over 3 minutes, zero detection — baseline drift detection needed
+
+> **"The system that attacks itself grows stronger."**
 
 ---
 
-## Product Tiers
+## 5. Benchmark Comparison
 
-### TIA LITE (Open Source)
-- Core agent framework (Commander Bus)
-- Basic security monitoring agents
+### Detection Performance
+
+| Metric | Target | TIA Result | Industry Avg |
+|--------|--------|-----------|--------------|
+| Detection | <300s | **12.7s** | 194 days |
+| Identification | <600s | **27.7s** | weeks |
+| Synthesis | <1800s | **27.7s** | months |
+
+### Cost Comparison
+
+| Solution | Monthly Cost | Agents | Self-Testing | Self-Healing |
+|----------|-------------|--------|-------------|-------------|
+| **TIA** | **€4.50** | **28** | **Yes (16 modules)** | **Yes** |
+| Enterprise SIEM | $2,000+ | 0 | No | No |
+| SOC Team (3 analysts) | $25,000+ | 0 | Manual | No |
+| Managed Detection (MDR) | $5,000+ | 0 | Partial | No |
+
+**TIA: 1,400,000× faster detection at 0.02% of the cost.**
+
+---
+
+## 6. Product Tiers
+
+### TIA LITE (Free, Open Source)
+- 20 monitoring agents
+- Commander Bus (HMAC-signed events)
+- Shadow Logging + Dead Man Switch
+- Alert Bus (basic dedup)
+- Fleet Manager
 - Heartbeat system
 - Community support
-- **Free forever**
 
-### TIA Enterprise (Licensed)
-- Full 26-agent ecosystem
+### TIA Enterprise (€49.99/month Alpha)
+- 28+ agents (full fleet)
+- Alert Correlation Engine (5 incident patterns)
 - EVO Engine (self-evolution)
-- Shared Subconscious (cross-agent learning)
-- Shadow Deploy Mode (autonomous improvement)
-- Project Skynet (self-testing)
+- Shared Subconscious (vector memory)
+- Self-Healing + Log Analysis
+- Project Skynet (16 attack modules)
+- 5-tier LLM fallback chain
 - Hardware-bound licensing
 - Priority support
-- **Alpha Pricing: €49.99/month** — [PayPal](https://paypal.me/osramek) | [Email](mailto:shotekk23@gmail.com)
+
+**Early adopters get locked-in pricing when we go GA.**
 
 ---
 
-## Security & Ethics
+## 7. Security & Ethics
 
 ### What TIA Does
 - ✅ Monitors your infrastructure 24/7
 - ✅ Detects threats in seconds, not months
 - ✅ Learns and evolves autonomously
 - ✅ Tests its own defenses
+- ✅ Heals itself when agents fail
 
 ### What TIA Does NOT Do
 - ❌ Phone home with your data (zero telemetry)
-- ❌ Delete your data on license expiry (graceful degradation)
+- ❌ Delete your data on license expiry (graceful degradation to LITE)
 - ❌ Require internet for core functionality
 - ❌ Replace human judgment for critical decisions
 
 ---
 
-## Roadmap
+## 8. Roadmap
 
 | Phase | Timeline | Milestones |
 |-------|----------|------------|
-| **Alpha** | Q1 2026 | 26 agents, self-testing, Docker images ✅ |
-| **Beta** | Q2 2026 | Payment integration, customer onboarding |
+| **Alpha (v0.3)** | Q1 2026 | 28 agents, self-testing, self-healing, alert correlation ✅ |
+| **Beta** | Q2 2026 | Payment integration, customer onboarding, web UI |
 | **v1.0** | Q3 2026 | Full AOP, multi-node, Kubernetes support |
-| **v2.0** | Q4 2026 | Threat intelligence marketplace, web UI |
+| **v2.0** | Q4 2026 | Threat intelligence marketplace, enterprise dashboard |
 
 ---
 
-## Getting Started
+## 9. Getting Started
 
 ```bash
 # LITE (free)
@@ -204,7 +299,7 @@ docker pull ghcr.io/ousher/tia-lite:latest
 docker run -d --name tia ghcr.io/ousher/tia-lite:latest
 
 # Enterprise (€49.99/month Alpha)
-# PayPal: https://paypal.me/osramek | Email: shotekk23@gmail.com
+# Contact: shotekk23@gmail.com | PayPal: paypal.me/osramek
 ```
 
 ---
@@ -219,47 +314,3 @@ docker run -d --name tia ghcr.io/ousher/tia-lite:latest
 *"Stop reacting in months. Start evolving in seconds."*
 
 *© 2026 TIA Framework. All Rights Reserved.*
-
----
-
-## 7. Project Skynet — Self-Testing Results (v0.2-alpha)
-
-### Methodology
-TIA includes a built-in red team framework ("Project Skynet") with 16 automated attack modules across 4 tiers:
-
-| Tier | Category | Attacks |
-|------|----------|---------|
-| T1 | Process Manipulation | SIGSTOP, Nice Bomb, Fork Bomb, Cascade |
-| T2 | Filesystem Tampering | Config Poison, Log Injection, Crontab Wipe, Symlink Swap |
-| T3 | Network/Credential | DNS Hijack, Env Pollution, Memory Poisoning |
-| T4 | Advanced Persistent | Slow Bleed (APT), Insider Impersonation, Time Warp, Resource Exhaustion |
-
-### Results — Before Hardening (Baseline)
-- **Detection Rate: 14.3%** (2/14 tests passed)
-- Only Shadow Logging silence detection and SIGSTOP detection worked
-- 12 attack vectors completely undetected
-
-### Results — After Quick Wins (Same Day)
-- **Detection Rate: 57%** (8/14 tests passed)
-- 4 hardening patches deployed in ~10 minutes:
-  1. **HMAC Heartbeats** — cryptographic signing prevents replay/spoofing
-  2. **Extended File Integrity Monitoring** — .env, resolv.conf, agent binaries, symlink detection
-  3. **Process Guardian** — nice value tampering, fork bombs, process count anomalies
-  4. **Config Guardian Extended** — API keys, DNS config, auto-rollback
-
-### Key Findings
-- **Heartbeat Replay Attack**: Killed agent + sent fake heartbeats → system believed agent was alive (FIXED: HMAC signing)
-- **Memory Poisoning**: Injected false threat intelligence into shared memory → 0.81 similarity score in searches (MITIGATION: write authentication planned)
-- **Insider Impersonation**: Fake EVO proposals with reverse shells accepted into pipeline (MITIGATION: proposal signing planned)
-- **Slow Bleed APT**: 7 micro-attacks over 3 minutes, zero detection (MITIGATION: baseline drift detection planned)
-
-### Improvement Trajectory
-```
-Day 0 (baseline):     14% detection
-Day 0 (quick wins):   57% detection  ← 4× improvement in 10 minutes
-Week 1 (target):      86% detection  ← Commander Bus signing + Subconscious guards
-Week 2 (target):     100% detection  ← Baseline drift + full coverage
-```
-
-> **TIA doesn't just monitor threats — it attacks itself to find blind spots.**
-> This is the difference between "we think we're secure" and "we proved it."
