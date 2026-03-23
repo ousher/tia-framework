@@ -143,7 +143,7 @@ docker exec tia tia-status
 | Hardware-bound license | — | ✅ |
 | Priority support | — | ✅ |
 
-**Enterprise Alpha:** €49.99/month — [Get ENT Access](https://paypal.me/sramek) | [Contact us](mailto:shotekk23@gmail.com)
+**Enterprise Alpha:** €49.99/month — [Get ENT Access](https://paypal.me/osramek) | [Contact us](mailto:shotekk23@gmail.com)
 
 ---
 
@@ -193,7 +193,7 @@ TIA LITE is released under the [Polyform Shield License 1.0.0](LICENSE.md).
 
 TIA Enterprise requires a commercial license.
 
-**🚀 Alpha Pricing: €49.99/month** — [PayPal](https://paypal.me/sramek) | [Email](mailto:shotekk23@gmail.com)
+**🚀 Alpha Pricing: €49.99/month** — [PayPal](https://paypal.me/osramek) | [Email](mailto:shotekk23@gmail.com)
 
 *Early adopters get locked-in pricing when we go GA.*
 

@@ -165,7 +165,7 @@ TIA deliberately attacks itself to measure its own immune response. A controlled
 - Project Skynet (self-testing)
 - Hardware-bound licensing
 - Priority support
-- **Alpha Pricing: €49.99/month** — [PayPal](https://paypal.me/sramek) | [Email](mailto:shotekk23@gmail.com)
+- **Alpha Pricing: €49.99/month** — [PayPal](https://paypal.me/osramek) | [Email](mailto:shotekk23@gmail.com)
 
 ---
 
@@ -204,7 +204,7 @@ docker pull ghcr.io/ousher/tia-lite:latest
 docker run -d --name tia ghcr.io/ousher/tia-lite:latest
 
 # Enterprise (€49.99/month Alpha)
-# PayPal: https://paypal.me/sramek | Email: shotekk23@gmail.com
+# PayPal: https://paypal.me/osramek | Email: shotekk23@gmail.com
 ```
 
 ---
