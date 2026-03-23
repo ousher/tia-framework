@@ -219,3 +219,47 @@ docker run -d --name tia ghcr.io/ousher/tia-lite:latest
 *"Stop reacting in months. Start evolving in seconds."*
 
 *© 2026 TIA Framework. All Rights Reserved.*
+
+---
+
+## 7. Project Skynet — Self-Testing Results (v0.2-alpha)
+
+### Methodology
+TIA includes a built-in red team framework ("Project Skynet") with 16 automated attack modules across 4 tiers:
+
+| Tier | Category | Attacks |
+|------|----------|---------|
+| T1 | Process Manipulation | SIGSTOP, Nice Bomb, Fork Bomb, Cascade |
+| T2 | Filesystem Tampering | Config Poison, Log Injection, Crontab Wipe, Symlink Swap |
+| T3 | Network/Credential | DNS Hijack, Env Pollution, Memory Poisoning |
+| T4 | Advanced Persistent | Slow Bleed (APT), Insider Impersonation, Time Warp, Resource Exhaustion |
+
+### Results — Before Hardening (Baseline)
+- **Detection Rate: 14.3%** (2/14 tests passed)
+- Only Shadow Logging silence detection and SIGSTOP detection worked
+- 12 attack vectors completely undetected
+
+### Results — After Quick Wins (Same Day)
+- **Detection Rate: 57%** (8/14 tests passed)
+- 4 hardening patches deployed in ~10 minutes:
+  1. **HMAC Heartbeats** — cryptographic signing prevents replay/spoofing
+  2. **Extended File Integrity Monitoring** — .env, resolv.conf, agent binaries, symlink detection
+  3. **Process Guardian** — nice value tampering, fork bombs, process count anomalies
+  4. **Config Guardian Extended** — API keys, DNS config, auto-rollback
+
+### Key Findings
+- **Heartbeat Replay Attack**: Killed agent + sent fake heartbeats → system believed agent was alive (FIXED: HMAC signing)
+- **Memory Poisoning**: Injected false threat intelligence into shared memory → 0.81 similarity score in searches (MITIGATION: write authentication planned)
+- **Insider Impersonation**: Fake EVO proposals with reverse shells accepted into pipeline (MITIGATION: proposal signing planned)
+- **Slow Bleed APT**: 7 micro-attacks over 3 minutes, zero detection (MITIGATION: baseline drift detection planned)
+
+### Improvement Trajectory
+```
+Day 0 (baseline):     14% detection
+Day 0 (quick wins):   57% detection  ← 4× improvement in 10 minutes
+Week 1 (target):      86% detection  ← Commander Bus signing + Subconscious guards
+Week 2 (target):     100% detection  ← Baseline drift + full coverage
+```
+
+> **TIA doesn't just monitor threats — it attacks itself to find blind spots.**
+> This is the difference between "we think we're secure" and "we proved it."
