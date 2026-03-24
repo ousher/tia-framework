@@ -122,7 +122,7 @@ HMAC-signed alert queue. 5 correlation patterns: Agent Kill, Config Tamper, Reso
 Cross-domain AI correlator. 6-phase analysis (fleet health → security events → intelligence → operations → Skynet → synthesis). Runs every 30min on Claude Sonnet. Catches what individual agents miss. Reviews EVO mutation proposals.
 
 ### 9. Telegram Inline Buttons
-[APPROVE] [REJECT] [DETAILS] [ROLLBACK] buttons delivered with every mutation proposal and incident alert. ROLLBACK requires double confirmation (separate button flow) — accidental rollbacks don't happen. Callback Handler processes responses in real-time.
+[APPROVE] [REJECT] [DETAILS] [ROLLBACK] buttons delivered with every mutation proposal and incident alert. ROLLBACK requires double confirmation (separate button flow) — accidental rollbacks don't happen. Callback Handler processes responses in real-time via @tiawatchdogbot — a dedicated independent bot that bypasses framework conflicts for clean, reliable button delivery. Stage 3 CONFIRMED OPERATIONAL: 2026-03-24.
 
 ### 10. Task Runner
 Sandboxed verifier for EVO mutations. depth=2 execution, 180s timeout, 9 whitelisted operation types. DeepSeek-only (isolated model budget). If a mutation breaks something in the sandbox, it never reaches production.
