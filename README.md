@@ -24,10 +24,12 @@
 |--------|-----------------|-----|
 | **Threat Detection** | 194 days | **12 seconds** |
 | **Monthly Cost** | $25,000+ (SOC team) | **€4.50** |
-| **Agents Working 24/7** | 0 (humans sleep) | **32** |
+| **Agents Working 24/7** | 0 (humans sleep) | **33** |
 | **Self-Testing** | Manual pentests | **16 attack modules** |
 | **Self-Healing** | Manual intervention | **Autonomous** |
 | **Alert Fatigue** | 6 alerts in 10s | **1 correlated incident** |
+| **Operational Memory** | None (starts fresh) | **Every incident since day 0** |
+| **LLM Security** | None | **Prompt injection defense** |
 | **Improvement** | — | **1,400,000× faster** |
 
 **1,400,000× improvement in detection time at 0.02% of the cost.**
@@ -73,14 +75,24 @@ That's Stage 3 of the Autonomous Operations Protocol — **live in production**.
 
 ## AOP — Autonomous Operations Protocol
 
-Three stages. All live.
+Four stages. Three live, one in development.
 
 ```
-Stage 1 — Detection    ✅ LIVE   Shadow Logging, 12s SIGSTOP detection
-Stage 2 — Reaction     ✅ LIVE   Alert Bus correlation, self-healing, auto-isolation
-Stage 3 — Evolutionary ✅ COMPLETE   EVO → Task Runner → Super Lead → Dash executes
-Stage 3.5 — Closed Loop ✅ LIVE     Detect → Act → Learn → Iterate autonomously
+Stage 1 — Detection      ✅ LIVE      Shadow Logging, 12s SIGSTOP detection
+Stage 2 — Reaction       ✅ LIVE      Alert Bus correlation, self-healing, auto-isolation
+Stage 3 — Evolutionary   ✅ COMPLETE  EVO → Task Runner → Super Lead → Dash executes
+Stage 3.5 — Closed Loop  ✅ LIVE      Detect → Act → Learn → Iterate autonomously
+Stage 4 — Chameleon      🔜 DEV       Digital Twin, Moving Target Defense, Self-Generation
 ```
+
+### What's New in v0.4-closed-loop
+
+- **Operational Memory (EFS)** — 4-layer architecture. Your Master Agent remembers every incident, every configuration change, every lesson learned since deployment. Cold boot restores 95% operational context in 10 seconds.
+- **LLM Security Layer** — Prompt injection sanitization on every AI input. Subconscious write validation prevents memory poisoning. Your agents can't be socially engineered.
+- **CVE Intelligence Agent** — Daily vulnerability posture against NVD API 2.0 + CISA KEV. 697+ packages scanned. One-tap patch approval.
+- **Cascade Protection** — Incident Responder cooldown gates (max 3/hr, 15-min dedup). HMAC-signed Commander Bus. One false positive no longer means system meltdown.
+- **Project Chameleon (Stage 4 preview)** — SSH banner rotation, honeypot ports, Digital Twin testing. Coming: full polymorphic defense.
+- **33 agents** (up from 32). **26 GOLDEN instincts** (verified threat patterns).
 
 ### Stage 3: The Recursive Loop
 
@@ -213,19 +225,24 @@ docker exec tia-lite tia-status
 
 | Capability | LITE (Free) | Enterprise (€49.99/mo) |
 |-----------|------------|------------------------|
-| Core monitoring agents | 20 | 32+ |
+| Core monitoring agents | 20 | 33+ |
 | Commander Bus (HMAC-signed) | ✅ | ✅ |
 | Shadow Logging + Dead Man Switch | ✅ | ✅ |
 | Alert Bus (basic dedup) | ✅ | ✅ |
 | Fleet Manager | ✅ | ✅ |
 | Alert Correlation Engine (5 patterns) | ❌ | ✅ |
 | EVO Engine v1.2 (self-evolution) | ❌ | ✅ |
-| Shared Subconscious (689 memories) | ❌ | ✅ |
+| Shared Subconscious (900+ memories) | ❌ | ✅ |
+| **Operational Memory (EFS)** | ❌ | ✅ |
+| **LLM Security Layer** | ❌ | ✅ |
+| **CVE Intelligence Agent** | ❌ | ✅ |
+| **Cascade Protection** | ❌ | ✅ |
 | Self-Healing + Log Analysis | ❌ | ✅ |
 | Project Skynet (16 attack modules) | ❌ | ✅ |
 | Super Lead (cross-domain AI) | ❌ | ✅ |
 | Telegram Inline Buttons + Task Runner | ❌ | ✅ |
 | AOP Stage 3 (Evolutionary Loop) | ❌ | ✅ |
+| Project Chameleon (Moving Target) | ❌ | ✅ |
 | 5-tier LLM fallback chain | ❌ | ✅ |
 | Hardware-bound license | — | ✅ |
 | Priority support | — | ✅ |
