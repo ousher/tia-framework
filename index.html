@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TIA — Threat Intelligence Autonomy</title>
-    <meta name="description" content="26 AI agents detect threats in 12 seconds on a €4.50/month VM. Self-testing, self-healing, sovereign AI security.">
+    <meta name="description" content="32 AI agents detect threats in 12 seconds on a €4.50/month VM. Self-testing, self-healing, sovereign AI security.">
     <meta property="og:title" content="TIA — Threat Intelligence Autonomy">
-    <meta property="og:description" content="Stop reacting in months. Start evolving in seconds. 26 AI agents. 12-second detection. €4.50/month.">
+    <meta property="og:description" content="Stop reacting in months. Start evolving in seconds. 32 AI agents. 12-second detection. €4.50/month.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ousher.github.io/tia-framework">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
@@ -136,6 +136,54 @@
         .feature-icon { font-size: 2rem; margin-bottom: 16px; }
         .feature-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
         .feature-card p { color: var(--muted); font-size: 0.95rem; }
+        .feature-card .badge {
+            display: inline-block;
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            color: var(--green);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+        }
+
+        /* AOP Protocol */
+        .aop-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .aop-step {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            position: relative;
+        }
+        .aop-step .step-num {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        .aop-step h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .aop-step p { color: var(--muted); font-size: 0.9rem; }
+        .aop-step .status-live {
+            display: inline-block;
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            color: var(--green);
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-top: 12px;
+        }
 
         /* Benchmark */
         .benchmark-table {
@@ -268,7 +316,7 @@
 <!-- Hero -->
 <div class="hero">
     <div class="container">
-        <div class="hero-badge">🐍 v0.2-alpha — Now Available</div>
+        <div class="hero-badge">🐍 v0.2-sovereign — Now Available</div>
         <h1>Threat Intelligence<br><span>Autonomy</span></h1>
         <p class="tagline">Stop reacting in months. Start evolving in seconds.</p>
         <div class="hero-buttons">
@@ -288,7 +336,7 @@
                 <div class="stat-note">Industry avg: 194 days</div>
             </div>
             <div>
-                <div class="stat-number">26</div>
+                <div class="stat-number">32</div>
                 <div class="stat-label">AI Agents</div>
                 <div class="stat-note">Working 24/7</div>
             </div>
@@ -318,18 +366,46 @@
             </div>
             <div class="layer">
                 <div class="layer-name">LEARNING LAYER</div>
-                <div class="layer-desc">Shared Subconscious · EVO Engine<br>"What one agent learns, all agents know"</div>
+                <div class="layer-desc">Shared Subconscious · EVO Engine · Super Lead<br>"What one agent learns, all agents know"</div>
             </div>
             <div class="layer">
                 <div class="layer-name">EXECUTION LAYER</div>
-                <div class="layer-desc">26 Agents · Commander Bus<br>"Detect, respond, evolve"</div>
+                <div class="layer-desc">32 Agents · Commander Bus · Task Runner<br>"Detect, respond, evolve"</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AOP Protocol -->
+<section style="background: var(--bg2);">
+    <div class="container">
+        <h2>AOP Protocol — Autonomous Operations Protocol</h2>
+        <p class="subtitle">Three stages of autonomous security. All three are live in production.</p>
+        <div class="aop-steps">
+            <div class="aop-step">
+                <div class="step-num">Step 1</div>
+                <h3>🔍 Detection</h3>
+                <p>Security Sentinel, Shadow Logging, File Integrity, DNS Anomaly, and 28 more agents detect threats and anomalies in real time — including the absence of expected signals.</p>
+                <div class="status-live">✅ LIVE</div>
+            </div>
+            <div class="aop-step">
+                <div class="step-num">Step 2</div>
+                <h3>⚡ Reaction &amp; Isolation</h3>
+                <p>Config Guardian auto-rolls back tampered configs. Incident Responder collects forensic evidence. Smart Notifier routes alerts with full correlation context. Human-in-the-loop for critical decisions.</p>
+                <div class="status-live">✅ LIVE</div>
+            </div>
+            <div class="aop-step">
+                <div class="step-num">Step 3</div>
+                <h3>🧬 Evolutionary Loop</h3>
+                <p>EVO Engine generates mutation → Task Runner spawns sandboxed verifier → Super Lead reviews cross-domain impact → Dash executes. The first self-modifying security loop running in production.</p>
+                <div class="status-live">✅ LIVE (first step)</div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Features -->
-<section style="background: var(--bg2);">
+<section>
     <div class="container">
         <h2>Key Innovations</h2>
         <p class="subtitle">Built different from day one.</p>
@@ -346,30 +422,55 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🧬</div>
+                <div class="badge">v1.2</div>
                 <h3>EVO Engine</h3>
-                <p>Every 4 hours, TIA analyzes its own blind spots and proposes new agents. The system designs its own improvements.</p>
+                <p>Every 4 hours, TIA analyzes its own blind spots and proposes new agents. Safe proposal types (fix_agent, add_subconscious_write) are auto-approved. Only new_agent and merge require human review.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🧪</div>
                 <h3>Project Skynet</h3>
-                <p>TIA attacks itself to measure immune response. Chaos Engineering meets AI security operations.</p>
+                <p>TIA attacks itself to measure immune response. Chaos Engineering meets AI security operations. 16 attack modules, 4 tiers of adversarial complexity.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">💰</div>
                 <h3>Smart Model Routing</h3>
-                <p>5-tier AI model strategy. 95% cost reduction while maintaining detection quality. $0.05/day for 26 agents.</p>
+                <p>5-tier AI model strategy. 95% cost reduction while maintaining detection quality. $0.05/day for 32 agents.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔒</div>
                 <h3>Sovereign Deployment</h3>
                 <p>Zero telemetry. Air-gap capable. Your data never leaves your infrastructure. Your rules.</p>
             </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <div class="badge">NEW</div>
+                <h3>Super Lead</h3>
+                <p>Cross-domain correlator running every 30 minutes. 6-phase architecture correlates security, operations, intelligence, and cost domains to surface threats invisible to individual agents.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📲</div>
+                <div class="badge">NEW</div>
+                <h3>Telegram Inline Buttons</h3>
+                <p>Mutation approval requests delivered directly to the Ops channel with [APPROVE] [REJECT] [DETAILS] [ROLLBACK] buttons. Double-confirm safety gate prevents accidental rollbacks.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <div class="badge">v2</div>
+                <h3>Alert Bus v2</h3>
+                <p>HMAC-signed alert queue with 5 incident correlation patterns: Agent Kill, Config Tamper, Resource Attack, Network Attack, Full Compromise. Smart deduplication eliminates noise.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏃</div>
+                <div class="badge">NEW</div>
+                <h3>Task Runner</h3>
+                <p>Sandboxed sub-agent spawner for safe autonomous execution. Max depth=2, whitelist of 9 task types, 10-minute timeout, DeepSeek-only sandbox. Power without risk.</p>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- Benchmark -->
-<section>
+<section style="background: var(--bg2);">
     <div class="container">
         <h2>Project Skynet Results</h2>
         <p class="subtitle">Three consecutive self-attack tests. Three different targets. All pass.</p>
@@ -413,7 +514,7 @@
 </section>
 
 <!-- Sovereign -->
-<section style="background: var(--bg2);">
+<section>
     <div class="container">
         <div class="sovereign">
             <h3>🔒 The Sovereign AI Manifesto</h3>
@@ -431,7 +532,7 @@
 </section>
 
 <!-- Pricing -->
-<section>
+<section style="background: var(--bg2);">
     <div class="container">
         <h2>Pricing</h2>
         <p class="subtitle">Enterprise security shouldn't require enterprise budgets.</p>
@@ -441,7 +542,7 @@
                 <div class="price">Free<span></span></div>
                 <div class="price-note">Forever. No strings attached.</div>
                 <ul>
-                    <li>17 monitoring agents</li>
+                    <li>20 monitoring agents</li>
                     <li>Commander Bus (JSONL)</li>
                     <li>Shadow Logging</li>
                     <li>Heartbeat system</li>
@@ -456,11 +557,14 @@
                 <div class="price">€49<span>.99/mo</span></div>
                 <div class="price-note">Alpha pricing. Locked in for early adopters.</div>
                 <ul>
-                    <li>26+ agents (full fleet)</li>
-                    <li>EVO Engine (self-evolution)</li>
+                    <li>32+ agents (full fleet)</li>
+                    <li>EVO Engine v1.2 (self-evolution)</li>
                     <li>Shared Subconscious</li>
                     <li>Shadow Deploy Mode</li>
                     <li>Project Skynet (self-testing)</li>
+                    <li>Super Lead (cross-domain AI correlator)</li>
+                    <li>Telegram inline approval buttons</li>
+                    <li>Task Runner (sandboxed verifier)</li>
                     <li>Hardware-bound license</li>
                     <li>Priority support</li>
                 </ul>
@@ -495,7 +599,7 @@
             <a href="mailto:shotekk23@gmail.com">Contact</a> ·
             <a href="https://paypal.me/osramek">Enterprise</a>
         </p>
-        <p style="margin-top: 16px;">Built with 🐕 energy in Helsinki & Prague · © 2026 TIA Framework</p>
+        <p style="margin-top: 16px;">Built with 🐕 energy in Helsinki &amp; Prague · © 2026 TIA Framework</p>
         <p style="margin-top: 8px; opacity: 0.5;">Polyform Shield License 1.0.0</p>
     </div>
 </footer>
