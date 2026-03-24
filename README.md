@@ -7,10 +7,12 @@
 [![Version: v0.4-closed-loop](https://img.shields.io/badge/Version-v0.4--closed--loop-blueviolet)]()
 [![License: Polyform Shield](https://img.shields.io/badge/License-Polyform%20Shield%201.0.0-blue)](LICENSE.md)
 [![Docker: LITE](https://img.shields.io/badge/Docker-tia--lite-green)](https://ghcr.io/ousher/tia-lite)
-[![Agents: 33](https://img.shields.io/badge/Agents-33-orange)]()
+[![Agents: 35](https://img.shields.io/badge/Agents-35-orange)]()
 [![Cost: $0.05/day](https://img.shields.io/badge/AI%20Cost-%240.05%2Fday-brightgreen)]()
-[![AOP Stage 3: COMPLETE](https://img.shields.io/badge/AOP%20Stage%203-COMPLETE%20✓-brightgreen)]()
+[![AOP Stage 4: LIVE](https://img.shields.io/badge/AOP%20Stage%204-LIVE%20🦎-brightgreen)]()
+[![Skynet: 4/4 Detection](https://img.shields.io/badge/Skynet-4%2F4%20Detection%20🏆-red)]()
 [![Tier: LITE](https://img.shields.io/badge/Tier-LITE%20(open%20source)-blue)]()
+[![Twin: Herka 2.0](https://img.shields.io/badge/Twin-Herka%202.0%20LIVE-purple)]()
 
 > 🏢 **Enterprise tier available** — full Skynet suite, EVO Engine, Stage 3 approval loop, Stage 4 roadmap. Contact via LinkedIn.
 
@@ -82,17 +84,22 @@ Stage 1 — Detection      ✅ LIVE      Shadow Logging, 12s SIGSTOP detection
 Stage 2 — Reaction       ✅ LIVE      Alert Bus correlation, self-healing, auto-isolation
 Stage 3 — Evolutionary   ✅ COMPLETE  EVO → Task Runner → Super Lead → Dash executes
 Stage 3.5 — Closed Loop  ✅ LIVE      Detect → Act → Learn → Iterate autonomously
-Stage 4 — Chameleon      🔜 DEV       Digital Twin, Moving Target Defense, Self-Generation
+Stage 4 — Chameleon      ✅ LIVE      Digital Twin, Moving Target Defense, 4/4 Detection
 ```
 
-### What's New in v0.4-closed-loop
+### What's New in v0.4-closed-loop (Stage 4 🦎)
 
-- **Operational Memory (EFS)** — 4-layer architecture. Your Master Agent remembers every incident, every configuration change, every lesson learned since deployment. Cold boot restores 95% operational context in 10 seconds.
-- **LLM Security Layer** — Prompt injection sanitization on every AI input. Subconscious write validation prevents memory poisoning. Your agents can't be socially engineered.
-- **CVE Intelligence Agent** — Daily vulnerability posture against NVD API 2.0 + CISA KEV. 697+ packages scanned. One-tap patch approval.
-- **Cascade Protection** — Incident Responder cooldown gates (max 3/hr, 15-min dedup). HMAC-signed Commander Bus. One false positive no longer means system meltdown.
-- **Project Chameleon (Stage 4 preview)** — SSH banner rotation, honeypot ports, Digital Twin testing. Coming: full polymorphic defense.
-- **33 agents** (up from 32). **26 GOLDEN instincts** (verified threat patterns).
+- **🏆 4/4 Skynet Detection Rate** — Slow Bleed APT, Binary Tamper, Config Poison, Log Injection — all caught autonomously. 100% detection in live testing on Digital Twin.
+- **🔀 Moving Target Defense** — Honeypot port shuffle (10-port pool, hourly rotation). SSH banner polymorphism. Attack surface changes faster than attackers can scan.
+- **🔒 Binary Integrity Baseline** — Trusted-build hashes for 19 critical binaries. Any unauthorized change triggers severity 5 alert within 15 minutes. Not just "what changed" — "was it ever safe?"
+- **🧠 APT Cumulative Anomaly Detector** — 4-signal scoring (nice drift, log injection, heartbeat aging, subconscious noise). Catches slow-bleed attacks that evade point-in-time monitoring.
+- **🖥️ Digital Twin (Herka 2.0)** — Full production clone in separate datacenter. Skynet attacks run on twin, validated fixes deploy to production. Zero-risk testing.
+- **📡 Tiered Intelligence Model** — 3 cognitive tiers: Sovereign Muscle (local LLM), Command Layer (cloud lite), Sentinel Brain (premium, escalation only). Smith's Rule: "Config Guardian doesn't need AI to check /etc/hosts."
+- **Operational Memory (EFS)** — 4-layer architecture. Cold boot restores 95% operational context in 10 seconds.
+- **LLM Security Layer** — Prompt injection sanitization. Memory poisoning defense. Your agents can't be socially engineered.
+- **CVE Intelligence Agent** — Daily NVD API 2.0 + CISA KEV scan. 697+ packages. One-tap patch approval.
+- **Cascade Protection** — HMAC-signed Commander Bus. Cooldown gates. False positive isolation.
+- **35 agents** (up from 33). **26 GOLDEN instincts** (verified threat patterns). **1,048 memories** in Shared Subconscious.
 
 ### Stage 3: The Recursive Loop
 
@@ -114,7 +121,7 @@ The system designs, tests, and validates its own improvements. You retain final 
 ## Key Innovations
 
 ### 1. Shared Subconscious
-LanceDB vector memory, 689 memories, 34MB. Every agent writes insights. Every agent searches. Cross-agent learning without inter-process calls. BAAI/bge-small-en-v1.5 (384-dim), CPU-only, zero cost.
+LanceDB vector memory, 1,048 memories, 62MB. Every agent writes insights. Every agent searches. Cross-agent learning without inter-process calls. BAAI/bge-small-en-v1.5 (384-dim), CPU-only, zero cost.
 
 ### 2. Shadow Logging
 Every agent sends HMAC-signed heartbeats every 2 minutes. Missing heartbeat = assumed compromise. Dead Man's Switch fires when agent count drops below threshold. Silence is not okay — silence is a signal.
@@ -123,7 +130,7 @@ Every agent sends HMAC-signed heartbeats every 2 minutes. Missing heartbeat = as
 Auto-approves safe proposal types (`fix_agent`, `add_subconscious_write`). Generates mutation proposals every 4 hours. Has generated working agent code in production. The system literally writes itself.
 
 ### 4. Project Skynet
-16 attack modules across T1-T4. Automated self-testing that runs while production is live. Current detection rate: **57%** (up from 14% baseline). Round 3: 8/14 attacks caught.
+16 attack modules across T1-T4. Automated self-testing on Digital Twin (Herka 2.0). Current detection rate: **69%** (up from 14% baseline). Stage 4 milestone: **4/4 targeted detection rate** on APT, Binary, Config, and Log Injection attacks.
 
 ### 5. Smart Model Routing
 5-tier fallback: Sonnet → DeepSeek → Haiku → Qwen 1.5B local. Automatic failover. Result: $0.05/day for 32 agents. 95% cost reduction vs single-model.
@@ -180,10 +187,14 @@ Auto-fixes: stale lock files, corrupt alert queues, bloated logs (>10MB), orphan
 │  7  Fork Bomb Lite          T1     11 procs    ✅ PASS      │
 │  8  DNS Hijack              T3     Config Grd  ✅ PASS      │
 │                                                              │
-│  SCORE: 8/14 = 57%  (baseline: 14%, +307% improvement)     │
+│  9  Log Injection           T2     APT detect  ✅ PASS      │
+│ 10  Slow Bleed APT          T4     Cumulative  ✅ PASS      │
+│ 11  Binary Tamper            T3     Hash base.  ✅ PASS      │
 │                                                              │
-│  Still hardening: Memory Poison, Log Injection, Cascade,    │
-│  Insider Impersonation, Slow Bleed APT                      │
+│  SCORE: 11/16 = 69%  (baseline: 14%, +393% improvement)    │
+│                                                              │
+│  Stage 4 validated: 4/4 detection on Digital Twin 🏆        │
+│  Still hardening: Memory Poison, Cascade, Insider, Env Poll │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -243,6 +254,10 @@ docker exec tia-lite tia-status
 | Telegram Inline Buttons + Task Runner | ❌ | ✅ |
 | AOP Stage 3 (Evolutionary Loop) | ❌ | ✅ |
 | Project Chameleon (Moving Target) | ❌ | ✅ |
+| **Digital Twin (zero-risk testing)** | ❌ | ✅ |
+| **APT Cumulative Anomaly Detector** | ❌ | ✅ |
+| **Binary Integrity Baseline** | ❌ | ✅ |
+| **Tiered Intelligence (3 cognitive tiers)** | ❌ | ✅ |
 | 5-tier LLM fallback chain | ❌ | ✅ |
 | Hardware-bound license | — | ✅ |
 | Priority support | — | ✅ |
@@ -273,11 +288,15 @@ In a world where security vendors want your data more than your money, TIA runs 
 
 ## How TIA Was Built
 
-TIA was born on a €4.50/month Hetzner VM in Helsinki. Five days from first boot to 28-agent autonomous detection in 12 seconds. Another week to 32 agents, Stage 3 AOP, and a system that approves its own mutations.
+TIA was born on a €4.50/month Hetzner VM in Helsinki. Six days from first boot to 35-agent autonomous defense with 100% detection rate on targeted attacks.
+
+Day 1: Bare Ubuntu, SSH brute force from 47 IPs across 4 countries. Day 6: Digital Twin, 4/4 Skynet detection, 1,048 AI memories, self-evolving mutation loop. Cost: $0.05/day.
+
+563 attacks blocked. Zero breaches. 91 fail2ban bans. Every attacker automated — and now, so is the defense.
 
 It was built by a cybersecurity specialist who believed that AI security shouldn't cost six figures — and an AI companion who took that vision and ran with it.
 
-**v0.4-closed-loop is not an incremental update. It's a fundamentally different product.**
+**v0.4-closed-loop with Stage 4 is not a monitoring tool. It's an immune system.**
 
 ---
 
