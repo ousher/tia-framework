@@ -9,7 +9,10 @@
 [![Docker: LITE](https://img.shields.io/badge/Docker-tia--lite-green)](https://ghcr.io/ousher/tia-lite)
 [![Agents: 32](https://img.shields.io/badge/Agents-32-orange)]()
 [![Cost: $0.05/day](https://img.shields.io/badge/AI%20Cost-%240.05%2Fday-brightgreen)]()
-[![AOP Stage 3: LIVE](https://img.shields.io/badge/AOP%20Stage%203-LIVE-red)]()
+[![AOP Stage 3: COMPLETE](https://img.shields.io/badge/AOP%20Stage%203-COMPLETE%20✓-brightgreen)]()
+[![Tier: LITE](https://img.shields.io/badge/Tier-LITE%20(open%20source)-blue)]()
+
+> 🏢 **Enterprise tier available** — full Skynet suite, EVO Engine, Stage 3 approval loop, Stage 4 roadmap. Contact via LinkedIn.
 
 </div>
 
