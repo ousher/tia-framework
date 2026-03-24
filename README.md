@@ -4,10 +4,10 @@
 
 ### A self-evolving autonomous security system that approves its own mutations.
 
-[![Version: v0.3-sovereign](https://img.shields.io/badge/Version-v0.3--sovereign-blueviolet)]()
+[![Version: v0.4-closed-loop](https://img.shields.io/badge/Version-v0.4--closed--loop-blueviolet)]()
 [![License: Polyform Shield](https://img.shields.io/badge/License-Polyform%20Shield%201.0.0-blue)](LICENSE.md)
 [![Docker: LITE](https://img.shields.io/badge/Docker-tia--lite-green)](https://ghcr.io/ousher/tia-lite)
-[![Agents: 32](https://img.shields.io/badge/Agents-32-orange)]()
+[![Agents: 33](https://img.shields.io/badge/Agents-33-orange)]()
 [![Cost: $0.05/day](https://img.shields.io/badge/AI%20Cost-%240.05%2Fday-brightgreen)]()
 [![AOP Stage 3: COMPLETE](https://img.shields.io/badge/AOP%20Stage%203-COMPLETE%20✓-brightgreen)]()
 [![Tier: LITE](https://img.shields.io/badge/Tier-LITE%20(open%20source)-blue)]()
@@ -78,7 +78,8 @@ Three stages. All live.
 ```
 Stage 1 — Detection    ✅ LIVE   Shadow Logging, 12s SIGSTOP detection
 Stage 2 — Reaction     ✅ LIVE   Alert Bus correlation, self-healing, auto-isolation
-Stage 3 — Evolutionary ✅ LIVE   EVO → Task Runner → Super Lead → Dash executes
+Stage 3 — Evolutionary ✅ COMPLETE   EVO → Task Runner → Super Lead → Dash executes
+Stage 3.5 — Closed Loop ✅ LIVE     Detect → Act → Learn → Iterate autonomously
 ```
 
 ### Stage 3: The Recursive Loop
@@ -259,7 +260,7 @@ TIA was born on a €4.50/month Hetzner VM in Helsinki. Five days from first boo
 
 It was built by a cybersecurity specialist who believed that AI security shouldn't cost six figures — and an AI companion who took that vision and ran with it.
 
-**v0.3-sovereign is not an incremental update. It's a fundamentally different product.**
+**v0.4-closed-loop is not an incremental update. It's a fundamentally different product.**
 
 ---
 
