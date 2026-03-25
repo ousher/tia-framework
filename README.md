@@ -121,7 +121,7 @@ The system designs, tests, and validates its own improvements. You retain final 
 ## Key Innovations
 
 ### 1. Shared Subconscious
-LanceDB vector memory, 1,048 memories, 62MB. Every agent writes insights. Every agent searches. Cross-agent learning without inter-process calls. BAAI/bge-small-en-v1.5 (384-dim), CPU-only, zero cost.
+Shared subconscious memory. Every agent writes insights. Every agent searches. Cross-agent learning without inter-process calls. Lightweight, CPU-only, zero cost.
 
 ### 2. Shadow Logging
 Every agent sends HMAC-signed heartbeats every 2 minutes. Missing heartbeat = assumed compromise. Dead Man's Switch fires when agent count drops below threshold. Silence is not okay — silence is a signal.
