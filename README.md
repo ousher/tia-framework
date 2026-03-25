@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🐍 TIA — Threat Intelligence Autonomy
+# 🐍 TIA — Threat Intelligence Autonomy 🐍
 
 ### A self-evolving autonomous security system that approves its own mutations.
 
