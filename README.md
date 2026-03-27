@@ -10,11 +10,11 @@
 [![Agents: 49](https://img.shields.io/badge/Agents-49-orange)]()
 [![Cost: $0.05/day](https://img.shields.io/badge/AI%20Cost-%240.05%2Fday-brightgreen)]()
 [![AOP Stage 4: LIVE](https://img.shields.io/badge/AOP%20Stage%204-LIVE%20🦎-brightgreen)]()
-[![Skynet: 4/4 Detection](https://img.shields.io/badge/Skynet-4%2F4%20Detection%20🏆-red)]()
+[![Self-Testing: 4/4 Detection](https://img.shields.io/badge/Self--Testing-4%2F4%20Detection%20🏆-red)]()
 [![Tier: LITE](https://img.shields.io/badge/Tier-LITE%20(open%20source)-blue)]()
 [![Twin: Herka 2.0](https://img.shields.io/badge/Twin-Herka%202.0%20LIVE-purple)]()
 
-> 🏢 **Enterprise tier available** — full Skynet suite, EVO Engine, Stage 3 approval loop, Stage 4 roadmap. Contact via LinkedIn.
+> 🏢 **Enterprise tier available** — EVO Engine, Hive Mind Mesh, Stage 3 autonomous approval loop, Stage 4 roadmap. Contact via LinkedIn.
 
 </div>
 
@@ -167,11 +167,11 @@ Auto-fixes: stale lock files, corrupt alert queues, bloated logs (>10MB), orphan
 | **Operations** | 14 | Fleet Manager, Log Analyst, Self-Healer, Uptime Sentinel, Smart Notifier v2, Cost Watchdog, Memory Trigger, Dashboard, Orchestrator, Automation Engineer, Log Janitor, Dependency Tracker, GitHub Backup, GW Watchdog |
 | **Domain Leads** | 2 | SDL (Security Domain Lead), Super Lead |
 | **Safety** | 3 | Kill Switch, Chaos Monkey, Task Runner |
-| **Skynet** | 17 | Dungeon Master + 16 attack modules (T1–T4) |
+| **Adversarial Self-Testing** | 17 | Dungeon Master + 16 attack modules (T1–T4) — internal only |
 
 ---
 
-## Project Skynet: We Attack Ourselves So You Don't Have To
+## Adversarial Self-Testing: We Attack Ourselves So You Don't Have To
 
 16 automated attack modules. 4 tiers. Runs while production is live.
 
@@ -249,7 +249,7 @@ docker exec tia-lite tia-status
 | **CVE Intelligence Agent** | ❌ | ✅ |
 | **Cascade Protection** | ❌ | ✅ |
 | Self-Healing + Log Analysis | ❌ | ✅ |
-| Project Skynet (16 attack modules) | ❌ | ✅ |
+| Adversarial Self-Testing (16 modules) | ❌ | ✅ |
 | Super Lead (cross-domain AI) | ❌ | ✅ |
 | Telegram Inline Buttons + Task Runner | ❌ | ✅ |
 | AOP Stage 3 (Evolutionary Loop) | ❌ | ✅ |
