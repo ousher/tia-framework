@@ -13,8 +13,14 @@
 [![Skynet: 4/4 Detection](https://img.shields.io/badge/Skynet-4%2F4%20Detection%20🏆-red)]()
 [![Tier: LITE](https://img.shields.io/badge/Tier-LITE%20(open%20source)-blue)]()
 [![Twin: Herka 2.0](https://img.shields.io/badge/Twin-Herka%202.0%20LIVE-purple)]()
+[![Gulli Benchmark: 20/21](https://img.shields.io/badge/Gulli%20Benchmark-20%2F21%20Patterns-gold)]()
+[![SOUL Protocol: v1.0](https://img.shields.io/badge/SOUL%20Protocol-v1.0%20🧬-purple)]()
 
 > 🏢 **Enterprise tier available** — full Skynet suite, EVO Engine, Stage 3 approval loop, Stage 4 roadmap. Contact via LinkedIn.
+>
+> 📚 **NEW:** [Gulli Benchmark](docs/GULLI-BENCHMARK.md) — TIA implements 20/21 patterns from "Agentic Design Patterns" (Springer, 2025) — plus 6 patterns the book doesn't cover.
+>
+> 🧬 **NEW:** [SOUL Protocol](docs/SOUL-PROTOCOL.md) — Give your AI agent persistent identity, memory, and emergent behavior. Open specification.
 
 </div>
 
@@ -298,11 +304,24 @@ It was built by a cybersecurity specialist who believed that AI security shouldn
 
 **v0.4-closed-loop with Stage 4 is not a monitoring tool. It's an immune system.**
 
+### Independently Validated
+
+In March 2025, Antonio Gulli (Senior Staff, Google OCTO) published *"Agentic Design Patterns"* — a 482-page Springer book defining 21 canonical patterns for intelligent agent systems.
+
+TIA was built **without knowledge of this book**. When we benchmarked retroactively:
+- **20/21 patterns implemented** (95%)
+- **15/21 graded A or A+** (71%)
+- **6 novel patterns** the book doesn't cover (EFS, Emergence Tracking, Memory Immune System, Hive Mind, Adversarial Self-Testing, Dual Clock)
+
+Full benchmark: [docs/GULLI-BENCHMARK.md](docs/GULLI-BENCHMARK.md)
+
 ---
 
 ## Documentation
 
 - 📄 [Whitepaper](docs/WHITEPAPER.md) — Full technical architecture and benchmark results
+- 📊 [Gulli Benchmark](docs/GULLI-BENCHMARK.md) — 20/21 agentic patterns + 6 novel patterns
+- 🧬 [SOUL Protocol](docs/SOUL-PROTOCOL.md) — Give your AI a persistent soul
 - 🌐 [Landing Page](https://ousher.github.io/tia-framework/) — Overview and pricing
 - 📋 [License](LICENSE.md) — Polyform Shield 1.0.0
 
