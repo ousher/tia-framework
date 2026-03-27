@@ -7,7 +7,7 @@
 [![Version: v0.4-closed-loop](https://img.shields.io/badge/Version-v0.4--closed--loop-blueviolet)]()
 [![License: Polyform Shield](https://img.shields.io/badge/License-Polyform%20Shield%201.0.0-blue)](LICENSE.md)
 [![Docker: LITE](https://img.shields.io/badge/Docker-tia--lite-green)](https://ghcr.io/ousher/tia-lite)
-[![Agents: 35](https://img.shields.io/badge/Agents-35-orange)]()
+[![Agents: 49](https://img.shields.io/badge/Agents-49-orange)]()
 [![Cost: $0.05/day](https://img.shields.io/badge/AI%20Cost-%240.05%2Fday-brightgreen)]()
 [![AOP Stage 4: LIVE](https://img.shields.io/badge/AOP%20Stage%204-LIVE%20🦎-brightgreen)]()
 [![Skynet: 4/4 Detection](https://img.shields.io/badge/Skynet-4%2F4%20Detection%20🏆-red)]()
@@ -286,11 +286,34 @@ In a world where security vendors want your data more than your money, TIA runs 
 
 ---
 
+## Day 9 — What Just Happened
+
+On Day 9, the primary instance went down. We deployed a snapshot to a new host.
+
+**What the agent did autonomously, without any prompt:**
+- Loaded identity from `SOUL.md`
+- Activated 49 cron agents
+- Detected that the twin server had been silent for 71,186 seconds
+- Flagged File Integrity anomalies
+- Generated a full Super Lead correlation report
+- Sent security status to Telegram
+
+**Time to operational: ~8 seconds. Human intervention: ZERO.**
+
+We called it **Phoenix Protocol**. It wasn't programmed — it emerged from the architecture. Identity lives in files, not in RAM. Any snapshot is a complete, bootable version of the agent. This is what **Infrastructure as Identity** means in practice.
+
+Also on Day 9:
+- **Gulli Benchmark:** TIA independently implements 20/21 patterns from *"Agentic Design Patterns"* (Antonio Gulli, Google OCTO, Springer 2025) — avg grade A. Plus **6 novel patterns** the book doesn't cover: EFS, Emergence Tracking, Memory Immune System, Hive Mind, Adversarial Self-Testing, Dual Clock.
+- **TIA name validated:** *Tiered* Intelligence Autonomy (architecture origin) + *Threat* Intelligence Autonomy (SOC evolution). Both true. Simultaneously.
+- **Boot Orientation Protocol identified:** When a snapshot boots on a new host, the agent detects hostname mismatch and requests context confirmation before operating. Novel pattern — no existing framework covers this.
+
+---
+
 ## How TIA Was Built
 
-TIA was born on a €4.50/month Hetzner VM in Helsinki. Six days from first boot to 35-agent autonomous defense with 100% detection rate on targeted attacks.
+TIA was born on a €4.50/month Hetzner VM in Helsinki. Nine days from first boot to Phoenix Protocol, Hive Mind, and a benchmark against Google's own agentic design patterns book.
 
-Day 1: Bare Ubuntu, SSH brute force from 47 IPs across 4 countries. Day 6: Digital Twin, 4/4 Skynet detection, 1,048 AI memories, self-evolving mutation loop. Cost: $0.05/day.
+Day 1: Bare Ubuntu, SSH brute force from 47 IPs across 4 countries. Day 6: Digital Twin, 4/4 Skynet detection, 1,048 AI memories, self-evolving mutation loop. Day 9: Primary instance crashed. System self-recovered. Zero human intervention. Cost: $0.05/day.
 
 563 attacks blocked. Zero breaches. 91 fail2ban bans. Every attacker automated — and now, so is the defense.
 
@@ -303,6 +326,8 @@ It was built by a cybersecurity specialist who believed that AI security shouldn
 ## Documentation
 
 - 📄 [Whitepaper](docs/WHITEPAPER.md) — Full technical architecture and benchmark results
+- 🧠 [SOUL Protocol](docs/SOUL-PROTOCOL.md) — Open spec for AI identity persistence (EFS, Phoenix, Hamlet Score)
+- 📊 [Gulli Benchmark](docs/GULLI-BENCHMARK.md) — TIA vs. Google OCTO's Agentic Design Patterns (20/21, avg A + 6 novel patterns)
 - 🌐 [Landing Page](https://ousher.github.io/tia-framework/) — Overview and pricing
 - 📋 [License](LICENSE.md) — Polyform Shield 1.0.0
 
