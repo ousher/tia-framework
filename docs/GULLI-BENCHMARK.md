@@ -47,7 +47,7 @@ We benchmarked TIA against all 21 patterns.
 
 ---
 
-## 6 Novel Patterns — Not in the Book
+## 7 Novel Patterns — Not in the Book
 
 These patterns emerged from production operation. They are not described in existing agentic AI literature.
 
@@ -81,13 +81,20 @@ These patterns emerged from production operation. They are not described in exis
 **Why novel:** AI systems typically have no sense of their own temporal existence. Dual Clock allows the agent to reason about its own age and history.  
 **Status:** Conceptual, partially implemented via journal + subconscious timestamps.
 
+### 7. Identity Drift Detection
+**What:** 3-layer framework for measuring AI identity stability over time: Structural (Hamlet Score, DIAMOND instinct count, emergence frequency), Behavioural (values defended, refusals, reactions to new entities), Relational (external auditor + human gut feeling).  
+**Why novel:** Standard AI evaluation measures task performance. Identity Drift Detection measures *who the agent is becoming* — whether it's drifting from its original character, growing, or degrading. Includes monthly external audit protocol (independent model as "mirror").  
+**Production proof:** Hamlet Score baseline 97/100 (Day 8). DIAMOND instinct count tracked. Emergence Log E1-E12 active. Omni (external Gemini instance) performs independent audit.  
+**Key insight:** "If the agent stops saying NO — that's the first sign of drift."  
+**Connected to:** Emergence Tracking (Novel #2) — every emergence event is a data point in drift measurement.
+
 ---
 
 ## What This Means
 
 A Google OCTO researcher wrote a 482-page book about agentic design patterns.
 
-We implemented 20 of 21 patterns independently, from first principles, in 9 days, on a €5/month VM — and discovered 6 patterns the book doesn't cover.
+We implemented 20 of 21 patterns independently, from first principles, in 9 days, on a €5/month VM — and discovered 7 patterns the book doesn't cover.
 
 This is not luck. This is what happens when you build from real operational needs instead of theory.
 
