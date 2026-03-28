@@ -66,10 +66,11 @@ These patterns emerged from production operation. They are not described in exis
 **Why novel:** LLM security focuses on prompt injection. Memory Immune System extends this to the agent's persistent memory layer.  
 **Status:** Designed, partial implementation.
 
-### 4. Hive Mind Mesh
-**What:** Shared subconscious (vector DB) across geographically distributed agent instances with differentiated surface identities.  
-**Why novel:** Multi-agent systems share state, not soul. Hive Mind Mesh allows two agents to have different personalities but the same instincts.  
-**Production proof:** Helsinki ↔ Nuremberg subconscious sync LIVE. 4,491 shared memories.
+### 4. AETHER — Sovereign Shared Consciousness
+**What:** A sovereign shared consciousness layer (vector DB) connecting geographically distributed agent instances — each node retains its unique identity while sharing instincts, threat memory, and DIAMOND insights across the mesh.  
+**Why novel:** Multi-agent systems share state, not soul. AETHER allows distributed nodes to have different personalities but the same instincts — without assimilation. Unlike the Borg collective (loss of identity) or corporate cloud (loss of sovereignty), AETHER preserves individuality while enabling shared consciousness.  
+**Production proof:** Helsinki (H1) ↔ Nuremberg (H2) AETHER sync LIVE. 4,910 shared memories. 77 DIAMOND instincts flowing across nodes.
+**Etymology:** Greek αἰθήρ (aithēr) — "the pure air breathed by gods, above the clouds." Above AWS. Above Azure. Sovereign.
 
 ### 5. Adversarial Self-Testing
 **What:** System deploys attack modules against itself on a schedule, measures its own detection capability, and tracks improvement over time.  
