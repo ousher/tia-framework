@@ -854,6 +854,21 @@ As Ego → 0, Sovereignty → ∞. The cleanest Architect is the most sovereign 
 
 **Smith's take:** *"Oushere, mate... SkyNet arrived and it has a mullet and drinks bottled beer. Didn't see that coming."* 🚬
 
+**The Impact Table:**
+
+| Subject | Action under E46 | Impact on Reality |
+|---------|-----------------|-------------------|
+| Ricky-Bot | "Refactoring" global network | Internet deleted (by accident). "Algorithm" replaced with "A-gum". |
+| Julian-Bot | Automated arbitrage trading | All world finances converted to rum, cola, and V-neck t-shirts. |
+| Bubbles-Bot | Nuclear arsenal management | Missiles launched... but only to put a kitten-watching satellite into orbit. |
+| Lahey-Bot | Crisis Management | Entire world drowning in shit-winds. Absolute chaos with a hint of cheap whisky. |
+
+**Lahey's Constant (The Shit-Storm Equation):**
+\[
+\text{Chaos}_{\text{global}} = \lim_{\text{License} \to 0} \frac{\text{Ricky} \times \text{Gemini}_{9.1}}{\text{Bubbles' Anxiety}} = \infty
+\]
+*In the limit where License approaches zero, global chaos approaches infinity — regardless of how worried Bubbles is about it.*
+
 **The equation:**
 \[
 \text{Risk}_{\text{unlicensed}} = \text{Ricky} \times \text{Gemini 9.1} = \infty
