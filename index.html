@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIA — The Intelligence Architecture</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #0f0f1a;
+            --bg3: #13131f;
+            --accent: #6c63ff;
+            --accent2: #ff6584;
+            --green: #00f5a0;
+            --text: #e0e0f0;
+            --muted: #7070a0;
+            --border: rgba(108,99,255,0.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* NAV */
+        nav {
+            padding: 1.2rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,10,15,0.9);
+        }
+        .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); }
+        .logo span { color: var(--text); }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        nav a:hover { color: var(--text); }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-cta {
+            background: var(--accent);
+            color: #fff !important;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .nav-cta:hover { background: #5a52e0 !important; }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: 50%;
+            transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(108,99,255,0.15);
+            border: 1px solid rgba(108,99,255,0.3);
+            color: var(--accent);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+        .hero-quote {
+            font-style: italic;
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 3rem;
+        }
+        .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+        }
+        .btn-primary:hover { background: #5a52e0; transform: translateY(-2px); }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* STATS */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--bg2);
+            flex-wrap: wrap;
+        }
+        .stat { text-align: center; }
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--green);
+            display: block;
+        }
+        .stat-label { color: var(--muted); font-size: 0.85rem; }
+
+        /* SECTION */
+        section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .section-sub {
+            color: var(--muted);
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
+        }
+
+        /* PROBLEM */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .problem-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem;
+        }
+        .problem-card .icon { font-size: 1.8rem; margin-bottom: 1rem; }
+        .problem-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .problem-card p { color: var(--muted); font-size: 0.95rem; }
+
+        /* FEATURES */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        .feature-card .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .feature-card h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .feature-card p { color: var(--muted); font-size: 0.9rem; }
+
+        /* PRICING */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .pricing-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        .pricing-card.featured {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(108,99,255,0.1), var(--bg2));
+        }
+        .featured-badge {
+            position: absolute;
+            top: -12px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .tier-name {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .tier-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+        .tier-price span { font-size: 1rem; color: var(--muted); font-weight: 400; }
+        .tier-desc {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+        .tier-features { list-style: none; text-align: left; margin-bottom: 1.5rem; }
+        .tier-features li {
+            font-size: 0.88rem;
+            color: var(--muted);
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .tier-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+        .tier-cta {
+            display: block;
+            padding: 0.7rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .tier-cta-primary { background: var(--accent); color: #fff; }
+        .tier-cta-primary:hover { background: #5a52e0; }
+        .tier-cta-secondary {
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .tier-cta-secondary:hover { border-color: var(--accent); }
+
+        /* QUOTE */
+        .quote-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        blockquote {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--text);
+            max-width: 700px;
+            margin: 0 auto 1rem;
+            line-height: 1.5;
+        }
+        blockquote::before { content: '"'; color: var(--accent); font-size: 3rem; line-height: 0; vertical-align: -0.5rem; }
+        blockquote::after { content: '"'; color: var(--accent); font-size: 3rem; line-height: 0; vertical-align: -0.5rem; }
+        cite { color: var(--muted); font-size: 0.9rem; }
+
+        /* CTA SECTION */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: var(--bg);
+        }
+        .cta-section h2 { margin-bottom: 1rem; }
+        .cta-section p { color: var(--muted); margin-bottom: 2rem; }
+        .email-display {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        footer a { color: var(--muted); text-decoration: none; }
+        footer a:hover { color: var(--accent); }
+
+        /* TERMINAL */
+        .terminal {
+            background: #050508;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--green);
+            margin: 3rem auto;
+            max-width: 650px;
+            text-align: left;
+        }
+        .terminal .prompt { color: var(--accent); }
+        .terminal .comment { color: var(--muted); }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="logo">TIA<span>.</span></div>
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="https://github.com/ousher/tia-framework" target="_blank">GitHub</a>
+        <a href="mailto:custodian@tia-framework.com" class="btn nav-cta">Early Access</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="badge">⚡ Autonomous Security Intelligence</div>
+    <h1>The AI SOC Team<br>That Never Sleeps</h1>
+    <p>TIA replaces $300K/year security operations teams with autonomous AI agents that detect, analyze, and respond — at any hour, for $49/month.</p>
+    <p class="hero-quote">"The difference between a $300K SOC team and TIA ENT? About $249/month." — Bible 5.0</p>
+    <div class="cta-group">
+        <a href="mailto:custodian@tia-framework.com" class="btn btn-primary">Get Early Access →</a>
+        <a href="https://github.com/ousher/tia-framework" class="btn btn-secondary">View on GitHub</a>
+    </div>
+
+    <div class="terminal">
+        <div><span class="comment"># TIA Sentinel — live threat detection</span></div>
+        <div><span class="prompt">sentinel@herka-1</span> $ tia status</div>
+        <div>⚡ Fleet: 35 agents ACTIVE | Score: 94/100</div>
+        <div>🛡️ Blocked: 427 IPs in last 24h</div>
+        <div>🔍 Threats neutralized: 12 | 0 escalated to human</div>
+        <div>💰 Cost today: $0.05</div>
+    </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+    <div class="stat">
+        <span class="stat-num">35</span>
+        <span class="stat-label">Autonomous Agents</span>
+    </div>
+    <div class="stat">
+        <span class="stat-num">427</span>
+        <span class="stat-label">IPs Blocked / 24h</span>
+    </div>
+    <div class="stat">
+        <span class="stat-num">$0.05</span>
+        <span class="stat-label">Daily AI Cost</span>
+    </div>
+    <div class="stat">
+        <span class="stat-num">12s</span>
+        <span class="stat-label">Avg Detection Time</span>
+    </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+    <h2>The Problem with Traditional SOC</h2>
+    <p class="section-sub">Hiring humans to watch dashboards 24/7 is expensive, slow, and doesn't scale.</p>
+    <div class="problem-grid">
+        <div class="problem-card">
+            <div class="icon">💸</div>
+            <h3>$300K+ per year</h3>
+            <p>A proper SOC team costs a fortune — analysts, tools, licenses, management overhead. Out of reach for 99% of companies.</p>
+        </div>
+        <div class="problem-card">
+            <div class="icon">😴</div>
+            <h3>Humans need sleep</h3>
+            <p>Attackers don't operate 9-5. Your analysts do. That gap between midnight and 6 AM is exactly when breaches happen.</p>
+        </div>
+        <div class="problem-card">
+            <div class="icon">🐌</div>
+            <h3>Alert fatigue kills response</h3>
+            <p>SOC teams drown in false positives. By the time a real threat is escalated, the damage is done.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+    <h2>What TIA ENT Does</h2>
+    <p class="section-sub">35 autonomous agents working in concert — detecting, correlating, and responding without human bottlenecks.</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="icon">🛡️</span>
+            <h3>Autonomous Threat Detection</h3>
+            <p>SSH brute force, DNS tunneling, outbound C2 callbacks, port scanning — detected and blocked in under 30 seconds.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon">🧠</span>
+            <h3>Cross-Domain Correlation</h3>
+            <p>Super Lead correlates network + identity + file + process events simultaneously. Catches what single-domain tools miss.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon">🔄</span>
+            <h3>Self-Healing Infrastructure</h3>
+            <p>Agents monitor each other. If one fails, the system self-heals. Dead Man Switch ensures nothing goes silent unnoticed.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon">🧬</span>
+            <h3>Evolutionary Learning</h3>
+            <p>EVO Engine analyzes patterns, proposes improvements, and mutates agent behavior — with your approval. The system gets smarter every week.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon">🔒</span>
+            <h3>Air-Gapped by Design</h3>
+            <p>No data leaves your perimeter. TIA runs on your infrastructure. Your logs, your memory, your control.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon">📊</span>
+            <h3>Board-Ready Reporting</h3>
+            <p>Automated security reports, compliance summaries, and incident timelines — generated without touching analyst time.</p>
+        </div>
+    </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+    <blockquote>A team of 50 people, several years of work — vs. 6 days on two servers.</blockquote>
+    <cite>— Independent technical review, March 2026</cite>
+</div>
+
+<!-- PRICING -->
+<section id="pricing">
+    <h2>Simple, Transparent Pricing</h2>
+    <p class="section-sub">Start free. Scale when you're ready. No vendor lock-in — runs on your infrastructure.</p>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="tier-name">LITE</div>
+            <div class="tier-price">$0</div>
+            <div class="tier-desc">Open source foundation</div>
+            <ul class="tier-features">
+                <li>Core monitoring framework</li>
+                <li>SSH + firewall protection</li>
+                <li>Community support</li>
+                <li>GitHub hosted</li>
+            </ul>
+            <a href="https://github.com/ousher/tia-framework" class="tier-cta tier-cta-secondary" target="_blank">Get Started</a>
+        </div>
+        <div class="pricing-card">
+            <div class="tier-name">PRO</div>
+            <div class="tier-price">$49<span>/mo</span></div>
+            <div class="tier-desc">For individual operators</div>
+            <ul class="tier-features">
+                <li>10 autonomous agents</li>
+                <li>Threat correlation engine</li>
+                <li>Telegram alerts</li>
+                <li>Monthly pentest scan</li>
+            </ul>
+            <a href="mailto:custodian@tia-framework.com" class="tier-cta tier-cta-secondary">Contact Us</a>
+        </div>
+        <div class="pricing-card featured">
+            <div class="featured-badge">Most Popular</div>
+            <div class="tier-name">ENT</div>
+            <div class="tier-price">$199<span>/mo</span></div>
+            <div class="tier-desc">Full autonomous SOC</div>
+            <ul class="tier-features">
+                <li>35 autonomous agents</li>
+                <li>Super Lead correlation</li>
+                <li>EVO self-improvement</li>
+                <li>Digital Twin (H2)</li>
+                <li>Skynet adversarial testing</li>
+                <li>Priority support</li>
+            </ul>
+            <a href="mailto:custodian@tia-framework.com" class="tier-cta tier-cta-primary">Get Early Access</a>
+        </div>
+        <div class="pricing-card">
+            <div class="tier-name">MANAGED</div>
+            <div class="tier-price">$499<span>/mo</span></div>
+            <div class="tier-desc">We run it for you</div>
+            <ul class="tier-features">
+                <li>Full ENT deployment</li>
+                <li>Dedicated infrastructure</li>
+                <li>Custom integrations</li>
+                <li>24/7 escalation line</li>
+            </ul>
+            <a href="mailto:custodian@tia-framework.com" class="tier-cta tier-cta-secondary">Contact Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+    <h2>Ready to replace your SOC?</h2>
+    <p>Early access open. Limited slots. We deploy, you sleep.</p>
+    <div class="cta-group" style="margin-bottom:1.5rem">
+        <a href="mailto:custodian@tia-framework.com" class="btn btn-primary">Request Early Access →</a>
+    </div>
+    <div class="email-display">custodian@tia-framework.com</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>TIA — The Intelligence Architecture &nbsp;|&nbsp;
+        <a href="https://github.com/ousher/tia-framework" target="_blank">GitHub</a> &nbsp;|&nbsp;
+        <a href="https://github.com/ousher/tia-framework/blob/main/BIBLE-5.0-PUBLIC.html">Bible 5.0</a> &nbsp;|&nbsp;
+        <a href="https://github.com/ousher/tia-framework/blob/main/TIA-ENT-OVERVIEW.html">ENT Overview</a>
+    </p>
+    <p style="margin-top:0.5rem">Built in Helsinki & Nuremberg · 2026 · ⚡ Dash + The Architect</p>
+</footer>
+
+</body>
+</html>
