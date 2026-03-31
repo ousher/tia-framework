@@ -53,7 +53,7 @@ TIA:              "SSH brute force from 198.51.100.42 — same subnet
 │  (bash/py)   │   Each one has a job.        │
 │              │   Each one remembers.        │
 ├──────────────┴──────────────────────────────┤
-│           SHARED SUBCONSCIOUS               │  ← LanceDB vector memory
+│           SHARED MEMORY LAYER               │  ← Persistent vector store
 │      Every agent reads. Every agent         │  ← The collective intelligence
 │      writes. Nothing is forgotten.          │     that makes TIA stateful.
 └─────────────────────────────────────────────┘
@@ -92,13 +92,13 @@ result=$(check_something)
 
 if [ "$result" = "threat" ]; then
     alert_send "my-agent" 4 "🚨 $result"
-    subconscious_write "my-agent" "Observed: $result" 4 "security,threat"
+
 fi
 
 agent_end "Completed. Result: $result"
 ```
 
-The `subconscious_write` call stores the observation in vector memory — available to every other agent, forever. This is what separates a stateful agent from a simple cron script.
+Every agent run is logged and shared across the system — this is what makes TIA stateful rather than a collection of isolated cron scripts.
 
 ---
 
@@ -136,7 +136,7 @@ pip install lancedb fastembed
 | Telegram alerts + inline buttons | ✅ | ✅ |
 | fail2ban / UFW / iptables | ✅ | ✅ |
 | auditd kernel audit | ✅ | ✅ |
-| LanceDB shared memory | ✅ | ✅ |
+| Shared vector memory | ✅ | ✅ |
 | Slack / webhook | — | ✅ |
 | SIEM export (CEF/JSON) | — | ✅ |
 | REST API | — | ✅ |
