@@ -94,8 +94,25 @@ MIT-0 — Free to use, modify, and redistribute. No attribution required.
 
 ---
 
-## Ready for More?
+## 🔒 TIA ENT — Enterprise Edition
 
-**[→ TIA ENT — Enterprise Edition](./TIA-ENT-OVERVIEW.md)**
-Full Custodian fleet. Cross-realm threat correlation. Immutable audit trail. Air-gapped by design.
-*$249/month. Early access open.*
+> *"The difference between a $300K SOC team and TIA ENT? About $249/month."*
+
+**Status: In Development** | [Full details →](./TIA-ENT-OVERVIEW.md)
+
+TIA LITE gives you the foundation. TIA ENT is the full operational deployment.
+
+- **Full Custodian fleet** — stateful AI agents anchored to your security team
+- **Cross-realm threat correlation** — network, identity, endpoint, and human behavior simultaneously
+- **Immutable audit trail** — every AI decision cryptographically signed and logged
+- **Air-gapped by design** — no data leaves your perimeter. Ever.
+- **Autonomous threat response** — detect, analyze, contain. Without waking anyone at 3 AM.
+
+| Tier | Price | 
+|------|-------|
+| LITE | Free |
+| PRO | $49/mo |
+| ENT | $199/mo |
+| MANAGED | $499/mo |
+
+**Early access open → custodian@tia-framework.com**
