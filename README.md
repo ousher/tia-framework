@@ -63,7 +63,7 @@ Every agent sources two libraries and follows a consistent lifecycle:
 # my-agent.sh
 
 source agent-lifecycle.sh   # start/end hooks, exit trap
-source agent-lib.sh         # alert_send(), shared_write(), event_log()
+source agent-lib.sh         # alert_send(), event_log()
 
 agent_start "my-agent" "What this agent does"
 
@@ -74,18 +74,15 @@ new_ips=$(grep "Failed password" /var/log/auth.log \
 
 # ── analyze ──────────────────────────────────────────
 if [ "$failed_logins" -gt 10 ]; then
-    alert_send "my-agent" 4 "🚨 Brute-force: $failed_logins attempts from: $new_ips"
+    alert_send "my-agent" 4 "Brute-force: $failed_logins attempts from: $new_ips"
 fi
-
-# ── memory ───────────────────────────────────────────
-shared_write "my-agent" "Auth failures: $failed_logins" 2 "ssh,auth"
 
 agent_end "Checked auth log. Failures: $failed_logins"
 ```
 
 **Lifecycle guarantees:**
 - `agent_start` registers the run on the event bus
-- `agent_end` writes a summary + triggers memory dedup
+- `agent_end` writes a summary and marks the run complete
 - Exit trap catches crashes and logs them as `UNEXPECTED_EXIT`
 
 ---
