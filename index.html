@@ -6,19 +6,20 @@
     <title>TIA — Autonomous Security Intelligence</title>
     <style>
         :root {
-            --bg: #080810;
-            --bg2: #0d0d1a;
-            --bg3: #111120;
-            --accent: #7c3aed;
-            --accent2: #a855f7;
+            --bg: #0c0a1e;
+            --bg2: #12102a;
+            --bg3: #181535;
+            --accent: #8b5cf6;
+            --accent2: #c4b5fd;
+            --gold: #f59e0b;
             --red: #ef4444;
-            --green: #22c55e;
-            --yellow: #eab308;
-            --cyan: #06b6d4;
-            --text: #f1f5f9;
-            --muted: #64748b;
-            --border: rgba(124,58,237,0.2);
-            --border2: rgba(255,255,255,0.06);
+            --green: #34d399;
+            --yellow: #fbbf24;
+            --cyan: #818cf8;
+            --text: #f8f7ff;
+            --muted: #7c7a9e;
+            --border: rgba(139,92,246,0.2);
+            --border2: rgba(255,255,255,0.07);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -70,7 +71,7 @@
             position: absolute; top: 10%; left: 50%;
             transform: translateX(-50%);
             width: 900px; height: 500px;
-            background: radial-gradient(ellipse, rgba(124,58,237,0.15) 0%, transparent 65%);
+            background: radial-gradient(ellipse, rgba(139,92,246,0.18) 0%, rgba(99,102,241,0.06) 40%, transparent 70%);
             pointer-events: none;
         }
         .threat-badge {
@@ -305,17 +306,20 @@
 
 <!-- HERO -->
 <div class="hero">
-    <div class="hero-glow"></div>
+    <div class="hero-glow" style="top:5%;"></div>
+    <!-- aether rings -->
+    <div style="position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;border:1px solid rgba(139,92,246,0.08);pointer-events:none;"></div>
+    <div style="position:absolute;top:15%;left:50%;transform:translateX(-50%);width:850px;height:850px;border-radius:50%;border:1px solid rgba(196,181,253,0.04);pointer-events:none;"></div>
     <div class="threat-badge">
         <div class="dot-red"></div>
-        Live threats detected right now
+        Industry 5.0 · Stateful AI Security
     </div>
     <h1>
-        Your network is<br>being probed.<br>
-        <span class="line2">TIA already knows.</span>
+        Security that thinks.<br>Remembers. Evolves.<br>
+        <span class="line2">And never forgets you.</span>
     </h1>
     <p class="hero-sub">
-        35 autonomous AI agents that detect, analyze, and respond to threats — before your human team even wakes up.
+        35 stateful AI agents working alongside your team — detecting threats, learning from every incident, and getting smarter every week.
     </p>
     <div class="hero-cta">
         <a href="mailto:shotekk23@gmail.com" class="btn btn-accent">Request Early Access →</a>
