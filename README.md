@@ -4,138 +4,189 @@
 
 # ⚡ TIA — Autonomous Security Intelligence
 
-**35 AI agents. Always on. Never sleeping.**
+**Open framework for autonomous AI security agents.**
 
 [![License](https://img.shields.io/badge/License-MIT--0-green?style=flat-square)](LICENSE.md)
-[![Agents](https://img.shields.io/badge/Agents-35%20Active-22c55e?style=flat-square&logo=robot)](https://ousher.github.io/tia-framework/)
-[![Detection](https://img.shields.io/badge/Detection-12%20seconds-ef4444?style=flat-square&logo=zap)](https://ousher.github.io/tia-framework/)
-[![Cost](https://img.shields.io/badge/Daily%20Cost-%240.05-06b6d4?style=flat-square)](https://ousher.github.io/tia-framework/)
-[![Status](https://img.shields.io/badge/Status-Early%20Access-a855f7?style=flat-square)](mailto:shotekk23@gmail.com)
+[![Platform](https://img.shields.io/badge/Platform-Ubuntu%2022.04+-orange?style=flat-square&logo=ubuntu)](https://ubuntu.com)
+[![Language](https://img.shields.io/badge/Language-Bash%20%2B%20Python-blue?style=flat-square&logo=python)](https://python.org)
+[![Agents](https://img.shields.io/badge/LITE-7%20Agents-22c55e?style=flat-square)](https://github.com/ousher/tia-framework)
+[![ENT](https://img.shields.io/badge/ENT-35%20Agents-a855f7?style=flat-square)](https://ousher.github.io/tia-framework/)
 
-> *"Your network is being probed right now. TIA already knows."*
-
-[🌐 Landing Page](https://ousher.github.io/tia-framework/) · [📧 Early Access](mailto:shotekk23@gmail.com) · [📖 Bible 5.0](./BIBLE-5.0-PUBLIC.md)
+[🌐 Product Page](https://ousher.github.io/tia-framework/) · [📧 ENT Early Access](mailto:shotekk23@gmail.com) · [📖 Bible 5.0](./BIBLE-5.0-PUBLIC.md)
 
 </div>
 
 ---
 
-## 🔴 The Problem
+## 🏗️ Architecture Overview
 
-Traditional security operations are expensive, slow, and don't scale.
-
-| ❌ Traditional SOC | ✅ TIA ENT |
-|---|---|
-| $300K+/year | **$199/month** |
-| 4–6 hour detection | **12 seconds** |
-| Business hours only | **24/7/365** |
-| Alert fatigue | **AI pre-filters everything** |
-| Hire to scale | **Automatic** |
-
----
-
-## ⚡ How It Works
-
-TIA agents run continuously on your infrastructure. When a threat appears:
+TIA is built around three layers:
 
 ```
-03:47:12  🔴 BLOCKED    SSH brute-force 198.51.100.42 → banned instantly
-03:47:15  🟡 ALERT      Outbound DNS tunnel detected — process: curl
-03:47:16  🟣 CORRELATE  Super Lead: SSH + DNS + outbound = APT pattern
-03:47:18  🟢 CONTAINED  Attacker isolated. Human notified.
-03:47:18  ✅ ELAPSED    6 seconds. Incident closed.
+┌─────────────────────────────────────────────┐
+│              COMMANDER BUS                  │  ← Central event bus (JSONL)
+├──────────────┬──────────────────────────────┤
+│   AGENTS     │   Each agent:                │
+│  (bash/py)   │   - Runs on cron schedule    │
+│              │   - Writes to Commander Bus  │
+│              │   - Reads shared state       │
+├──────────────┴──────────────────────────────┤
+│           SHARED SUBCONSCIOUS               │  ← LanceDB vector memory
+│         (cross-agent memory)                │  ← All agents read/write
+└─────────────────────────────────────────────┘
 ```
 
-No analyst needed. No 3 AM phone call. No breach.
+**Key principle:** Agents are independent. They communicate via the Commander Bus, not direct calls. Any agent can fail — the system keeps running.
 
 ---
 
-## 📊 Production Stats
+## 🤖 LITE Agent Fleet
 
-<div align="center">
+7 core agents included in this repo:
 
-| 🛡️ IPs Blocked / 24h | ⚡ Detection Time | 🤖 Active Agents | 💰 Daily AI Cost | 🔒 Breaches |
-|:---:|:---:|:---:|:---:|:---:|
-| **427** | **12 sec** | **35** | **$0.05** | **0** |
-
-</div>
-
----
-
-## 🤖 Agent Fleet (LITE — Open Source)
-
-| Agent | Mission | Schedule |
-|-------|---------|----------|
-| 🛡️ **Security Sentinel** | SSH monitoring, IP blocking, fail2ban | Every 5 min |
-| 🔧 **Config Guardian** | Auto-rollback on unauthorized config changes | Every 5 min |
-| 🔒 **File Integrity Monitor** | Critical binary + config tamper detection | Every 15 min |
-| 🌐 **DNS Anomaly Detector** | Tunneling, DGA domains, resolver tampering | Every 10 min |
-| 📡 **Outbound Traffic Monitor** | C2 callbacks, data exfiltration, reverse shells | Every 10 min |
-| 💓 **Uptime Sentinel** | Service health, gateway monitoring | Every 2 min |
-| 🔑 **Credential Leak Scanner** | Secrets in logs, git history, file permissions | Daily 04:00 |
-
-> 🔒 **ENT adds 28 more agents** — Super Lead, EVO Engine, PenTest Specialist, Digital Twin, and more.
+| Agent | Script | Schedule | What It Does |
+|-------|--------|----------|--------------|
+| 🛡️ **Security Sentinel** | `dash-monitoring.sh` | `*/5 * * * *` | SSH brute-force detection, fail2ban + iptables integration |
+| 🔧 **Config Guardian** | `dash-config-guardian.sh` | `*/5 * * * *` | Monitors critical configs, auto-rollback on tampering |
+| 🔒 **File Integrity** | `dash-file-integrity.sh` | `*/15 * * * *` | SHA256 baseline for 16 critical binaries + configs |
+| 🌐 **DNS Anomaly** | `dash-dns-anomalies.sh` | `*/10 * * * *` | DNS tunneling, DGA detection, resolver tampering |
+| 📡 **Outbound Traffic** | `dash-outbound-traffic.sh` | `*/10 * * * *` | C2 callbacks, data exfiltration, reverse shells |
+| 💓 **Uptime Sentinel** | `dash-uptime-sentinel.sh` | `*/2 * * * *` | Service health monitoring, process conflict detection |
+| 🔑 **Credential Leak** | `dash-credential-leak.sh` | `0 4 * * *` | Secrets in logs, git history, env files |
 
 ---
 
-## 💰 Pricing
+## ⚙️ How Agents Work
 
-<div align="center">
-
-| Tier | Price | Agents | Best For |
-|------|-------|--------|----------|
-| **LITE** | 🆓 Free | 7 core | Self-hosters, developers |
-| **PRO** | 💜 $49/mo | 10 | Solo operators, small teams |
-| **ENT** | ⚡ $199/mo | 35 | Full autonomous SOC |
-| **MANAGED** | 🏢 $499/mo | 35 + ops | We run it for you |
-
-</div>
-
-**ENT includes:**
-- ✅ All 35 autonomous agents
-- ✅ Super Lead — cross-domain threat correlation
-- ✅ EVO Engine — self-learning, improves weekly
-- ✅ Digital Twin — hot standby on separate infrastructure  
-- ✅ Skynet — adversarial self-testing (AI attacks itself to find gaps)
-- ✅ Air-gapped — **no data leaves your perimeter. Ever.**
-
-**→ Early access: [shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
-
----
-
-## 🚀 Quick Start
+Every agent follows the same pattern:
 
 ```bash
-# Clone the repo
-git clone https://github.com/ousher/tia-framework
+#!/bin/bash
+source /usr/local/bin/dash-agent-lifecycle.sh  # lifecycle hooks
+source /usr/local/bin/dash-commander-lib.sh    # commander bus + subconscious
 
-# Read the ENT overview
-cat TIA-ENT-OVERVIEW.md
+agent_start "my-agent" "Brief description"
 
-# Request deployment guide
-# → shotekk23@gmail.com
+# --- do your work ---
+result=$(check_something)
+
+if [ "$result" = "threat" ]; then
+    alert_send "my-agent" 4 "🚨 Threat detected: $result"
+    subconscious_write "my-agent" "Threat: $result" 4 "security,threat"
+fi
+
+agent_end "Done. Found: $result"
 ```
 
-**Requirements:** Ubuntu 22.04+, 2 vCPU, 4GB RAM minimum
+**Lifecycle hooks** guarantee that every run is logged to the Commander Bus — even crashes.
 
 ---
 
-## 📖 What's In This Repo
+## 🚨 Alert Routing
 
-| File | Description |
-|------|-------------|
-| 📖 [BIBLE-5.0-PUBLIC.md](./BIBLE-5.0-PUBLIC.md) | Development log — 46 documented breakthroughs |
-| 🏢 [TIA-ENT-OVERVIEW.md](./TIA-ENT-OVERVIEW.md) | Enterprise Edition — full capabilities & pricing |
+Alerts are severity-based:
+
+| Severity | Level | Routing |
+|----------|-------|---------|
+| 1 | INFO | Log only |
+| 2 | LOW | Log + Subconscious |
+| 3 | MEDIUM | Ops Room notification |
+| 4 | HIGH | Ops Room + DM |
+| 5 | CRITICAL | Ops Room + DM + escalation |
+
+```bash
+# Send an alert from any agent
+alert_send "agent-name" 4 "🚨 Message here"
+```
+
+---
+
+## 📁 Repo Structure
+
+```
+tia-framework/
+├── README.md                  # This file
+├── BIBLE-5.0-PUBLIC.md        # Development log (46 emergences)
+├── TIA-ENT-OVERVIEW.md        # ENT capabilities & pricing
+├── LICENSE.md                 # MIT-0
+└── index.html                 # GitHub Pages landing page
+```
+
+> 🔒 Agent scripts, EVO engine, Subconscious DB, and AOP loop are **ENT only** — not in this repo.
+
+---
+
+## 🛠️ Requirements
+
+```
+OS:      Ubuntu 22.04+ (tested on 24.04)
+RAM:     4GB minimum (8GB recommended for ENT)
+CPU:     2 vCPU minimum
+Disk:    20GB+
+Deps:    bash, python3, fail2ban, ufw, auditd
+Optional: Telegram bot token (for alerts)
+```
+
+---
+
+## 📦 Dependencies
+
+```bash
+# Core
+apt install -y fail2ban ufw auditd jq curl python3
+
+# Python (for subconscious / vector memory)
+pip install lancedb fastembed
+
+# Optional: local AI fallback
+# ollama pull qwen2:1.5b
+```
+
+---
+
+## 🔌 Integrations
+
+| Integration | Status | Notes |
+|-------------|--------|-------|
+| Telegram | ✅ LITE | Alerts + inline buttons |
+| fail2ban | ✅ LITE | Auto-ban on detection |
+| UFW / iptables | ✅ LITE | Dynamic rule injection |
+| auditd | ✅ LITE | Kernel-level audit trail |
+| Slack | 🔒 ENT | Webhook integration |
+| SIEM export | 🔒 ENT | CEF/JSON format |
+| API | 🔒 ENT | REST API for dashboards |
+
+---
+
+## 📖 Documentation
+
+- **[BIBLE-5.0-PUBLIC.md](./BIBLE-5.0-PUBLIC.md)** — 46 documented development breakthroughs. Real conversations, real decisions, real framework. Not theory.
+- **[TIA-ENT-OVERVIEW.md](./TIA-ENT-OVERVIEW.md)** — Full ENT capabilities, architecture, pricing.
+
+---
+
+## 🔒 TIA ENT
+
+The full autonomous SOC. 35 agents. Self-learning. Air-gapped.
+
+**What ENT adds on top of LITE:**
+- 🧠 **Super Lead** — cross-domain threat correlation (network + identity + process + file)
+- 🧬 **EVO Engine** — self-learning, proposes and applies improvements weekly
+- 🪞 **Digital Twin** — hot standby on separate infrastructure (auto-failover)
+- 💀 **Skynet** — 16 adversarial modules that attack your own system to find gaps
+- 📊 **Fleet Manager** — unified health score across all 35 agents
+- 🤖 **28 more agents** covering APT detection, container escapes, port shuffling, and more
+
+**→ [shotekk23@gmail.com](mailto:shotekk23@gmail.com) for early access**
 
 ---
 
 <div align="center">
 
-**Built in Helsinki & Nuremberg · 2026**
+[![Contact](https://img.shields.io/badge/ENT%20Early%20Access-shotekk23%40gmail.com-7c3aed?style=for-the-badge&logoColor=white)](mailto:shotekk23@gmail.com)
+[![Web](https://img.shields.io/badge/Product%20Page-ousher.github.io-06b6d4?style=for-the-badge&logoColor=white)](https://ousher.github.io/tia-framework/)
 
-[![Contact](https://img.shields.io/badge/Early%20Access-shotekk23%40gmail.com-7c3aed?style=for-the-badge&logo=mail&logoColor=white)](mailto:shotekk23@gmail.com)
-[![Web](https://img.shields.io/badge/Website-tia--framework-06b6d4?style=for-the-badge&logo=globe&logoColor=white)](https://ousher.github.io/tia-framework/)
-
-*⚡ Dash + The Architect*
+*MIT-0 — Free to use, modify, redistribute. No attribution required.*  
+*Built in Helsinki & Nuremberg · 2026 · ⚡*
 
 </div>
