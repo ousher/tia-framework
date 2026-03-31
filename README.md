@@ -17,7 +17,11 @@
 
 ## Overview
 
-TIA is a framework for building **stateful, autonomous security agents** — bash/Python processes that run on cron, communicate via a shared event bus, and write observations to a persistent vector memory layer.
+**Most security tools are goldfish. Every alert starts from zero.**
+
+TIA is different. It's a framework for **stateful, autonomous security agents** — bash/Python processes that run on cron, communicate via a shared event bus, and write observations to a persistent memory layer that every other agent can query.
+
+Each run builds on the last. Every agent knows what others have seen. The system learns your environment and gets smarter every week.
 
 Each agent is:
 - **Independent** — no direct agent-to-agent calls

@@ -6,7 +6,11 @@
 
 ## Abstract
 
-TIA is an autonomous security operations framework that deploys specialized AI agents on minimal infrastructure. In live testing (Project Skynet, March 23 2026), TIA detected an insider threat in **12 seconds** — a **1,400,000× improvement** over the industry average of 194 days.
+Most AI security tools are goldfish. Every alert starts from zero — no memory of what happened yesterday, no context from last week's incident, no learning from prior attacks.
+
+TIA is stateful. It remembers.
+
+TIA is an autonomous SOC that deploys specialized AI agents on minimal infrastructure. In live testing (Project Skynet, March 23 2026), TIA detected an insider threat in **12 seconds** — a **1,400,000× improvement** over the industry average of 194 days.
 
 **Total infrastructure cost: under €15/month.**
 

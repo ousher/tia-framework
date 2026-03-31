@@ -5,6 +5,10 @@
 
 ## Overview
 
+**Most AI security tools are goldfish. Every alert starts from zero.**
+
+TIA is stateful — it remembers every incident, learns your environment, and gets smarter every week. Not a tool. An autonomous SOC.
+
 TIA LITE gives you the foundation — 7 core security agents, event bus, heartbeat monitoring.
 
 TIA Enterprise is the full operational deployment: 35 agents, autonomous threat correlation, self-evolution, and adversarial self-testing — running continuously on your infrastructure.
