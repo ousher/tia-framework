@@ -163,6 +163,7 @@ Where LITE gives you the foundation, ENT gives you the **living system**:
 
 | | |
 |--|--|
+| [WHITEPAPER.md](./WHITEPAPER.md) | Technical whitepaper — benchmarks, architecture, Project Skynet results |
 | [BIBLE-5.0-PUBLIC.md](./BIBLE-5.0-PUBLIC.md) | 46 documented breakthroughs — a real log of how TIA was built |
 | [TIA-ENT-OVERVIEW.md](./TIA-ENT-OVERVIEW.md) | ENT architecture, capabilities, and pricing |
 
