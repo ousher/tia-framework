@@ -91,3 +91,11 @@ For advanced implementation: custodian@tia-framework.com
 MIT-0 — Free to use, modify, and redistribute. No attribution required.
 
 *Build something real.*
+
+---
+
+## Ready for More?
+
+**[→ TIA ENT — Enterprise Edition](./TIA-ENT-OVERVIEW.md)**
+Full Custodian fleet. Cross-realm threat correlation. Immutable audit trail. Air-gapped by design.
+*$249/month. Early access open.*
