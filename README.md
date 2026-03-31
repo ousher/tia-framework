@@ -62,20 +62,7 @@ Every agent sources two libraries and follows a consistent lifecycle:
 #!/bin/bash
 # my-agent.sh
 
-source agent-lifecycle.sh   # start/end hooks, exit trap
-source agent-lib.sh         # alert_send(), event_log()
-
-agent_start "my-agent" "What this agent does"
-
-# ── collect ──────────────────────────────────────────
-failed_logins=$(grep "Failed password" /var/log/auth.log | wc -l)
-new_ips=$(grep "Failed password" /var/log/auth.log \
-    | awk '{print $(NF-3)}' | sort -u)
-
-# ── analyze ──────────────────────────────────────────
-if [ "$failed_logins" -gt 10 ]; then
-    alert_send "my-agent" 4 "Brute-force: $failed_logins attempts from: $new_ips"
-fi
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 agent_end "Checked auth log. Failures: $failed_logins"
 ```
