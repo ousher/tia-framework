@@ -2,7 +2,7 @@
 
 ![TIA Banner](https://img.shields.io/badge/TIA-Autonomous%20Security%20Intelligence-7c3aed?style=for-the-badge&logoColor=white)
 
-# ⚡ TIA — The Intelligence Architecture
+# 🧬 TIA — The Intelligence Architecture 🧬
 
 [![License](https://img.shields.io/badge/License-MIT--0-brightgreen?style=flat-square)](LICENSE.md)
 [![Platform](https://img.shields.io/badge/Platform-Ubuntu%2022.04+-orange?style=flat-square&logo=ubuntu)](https://ubuntu.com)
