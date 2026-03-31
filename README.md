@@ -47,7 +47,7 @@ TIA:              "SSH brute force from 198.51.100.42 — same subnet
 
 ```
 ┌─────────────────────────────────────────────┐
-│              COMMANDER BUS                  │  ← Shared event stream (JSONL)
+│              EVENT BUS                      │  ← Shared event stream
 ├──────────────┬──────────────────────────────┤
 │   AGENTS     │   Independent. Resilient.    │
 │  (bash/py)   │   Each one has a job.        │
@@ -59,7 +59,7 @@ TIA:              "SSH brute force from 198.51.100.42 — same subnet
 └─────────────────────────────────────────────┘
 ```
 
-Agents are decoupled — they communicate through the Commander Bus, not direct calls. Any single agent can fail. The system keeps running. The memory persists.
+Agents are decoupled — they communicate through the event bus, not direct calls. Any single agent can fail. The system keeps running. The memory persists.
 
 ---
 
@@ -83,8 +83,8 @@ Every TIA agent follows a simple, stateful pattern:
 
 ```bash
 #!/bin/bash
-source /usr/local/bin/dash-agent-lifecycle.sh  # stateful hooks
-source /usr/local/bin/dash-commander-lib.sh    # bus + memory
+source agent-lifecycle.sh  # stateful hooks
+source agent-lib.sh    # shared state
 
 agent_start "my-agent" "What this agent does"
 
@@ -121,7 +121,7 @@ Every agent run is logged and shared across the system — this is what makes TI
 # RAM: 4GB min · CPU: 2 vCPU min · Disk: 20GB+
 
 apt install -y fail2ban ufw auditd jq curl python3 python3-pip
-pip install lancedb fastembed
+pip install -r requirements.txt
 
 # Optional local AI fallback (no API key needed)
 # ollama pull qwen2:1.5b
