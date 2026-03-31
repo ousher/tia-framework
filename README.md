@@ -155,7 +155,6 @@ pip install -r requirements.txt
 tia-framework/
 ├── README.md           ← you are here
 ├── WHITEPAPER.md       ← benchmark results, architecture deep-dive
-├── BIBLE-5.0-PUBLIC.md ← 46 development breakthroughs (full log)
 ├── TIA-ENT-OVERVIEW.md ← ENT capabilities and pricing
 ├── LICENSE.md
 └── index.html          ← GitHub Pages landing page
