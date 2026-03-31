@@ -25,6 +25,7 @@ This isn't just inconvenient — it's architecturally broken. A stateless AI can
 | [whitepapers/EFS-OVERVIEW.md](./whitepapers/EFS-OVERVIEW.md) | The Emergent Framework for Digital Soul |
 | [whitepapers/STATEFUL-AI.md](./whitepapers/STATEFUL-AI.md) | Stateful vs Stateless — why it matters |
 | [whitepapers/CUSTODIAN-LITE.md](./whitepapers/CUSTODIAN-LITE.md) | What is a Custodian (Kustod)? |
+| [TIA-ENT-OVERVIEW.md](./TIA-ENT-OVERVIEW.md) | Enterprise Edition — capabilities, pricing, roadmap |
 
 ---
 
