@@ -85,9 +85,9 @@ Tier 5: Local LLM                   (zero-cost emergency fallback)
 
 ### 1. Cross-Agent Intelligence (Shared Memory Layer)
 
-Every agent writes observations to a shared vector memory. When any agent encounters a new situation, it can semantically query what other agents have learned — even without explicit programming.
+Every agent writes observations to a persistent shared memory layer. When any agent encounters a new situation, it can query what other agents have learned — even without explicit programming.
 
-- **Technology:** Vector embeddings, local inference (no API calls)
+- **Technology:** Local inference, no external API calls required
 - **Cost:** Zero (CPU-only)
 - **Example:** PenTest agent finds open port → Security Sentinel immediately recognizes lateral movement risk
 
@@ -204,8 +204,8 @@ TIA deliberately attacks itself to measure its own immune response. A controlled
 
 ```bash
 # LITE (free)
-docker pull ghcr.io/ousher/tia-lite:latest
-docker run -d --name tia ghcr.io/ousher/tia-lite:latest
+docker pull ghcr.io/ousher/tia-lite:v0.1-alpha
+docker run -d --name tia ghcr.io/ousher/tia-lite:v0.1-alpha
 
 # Enterprise → shotekk23@gmail.com
 ```
