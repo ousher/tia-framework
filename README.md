@@ -2,183 +2,204 @@
 
 ![TIA Banner](https://img.shields.io/badge/TIA-Autonomous%20Security%20Intelligence-7c3aed?style=for-the-badge&logoColor=white)
 
-# ✦ TIA — The Intelligence Architecture
-
-**Stateful AI security. Built for the human-AI era.**
+# ⚡ TIA — The Intelligence Architecture
 
 [![License](https://img.shields.io/badge/License-MIT--0-brightgreen?style=flat-square)](LICENSE.md)
 [![Platform](https://img.shields.io/badge/Platform-Ubuntu%2022.04+-orange?style=flat-square&logo=ubuntu)](https://ubuntu.com)
-[![Language](https://img.shields.io/badge/Language-Bash%20%2B%20Python-blue?style=flat-square&logo=python)](https://python.org)
+[![Shell](https://img.shields.io/badge/Shell-Bash%205.x-blue?style=flat-square&logo=gnubash)](https://www.gnu.org/software/bash/)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)](https://python.org)
 [![LITE](https://img.shields.io/badge/LITE-7%20Agents-22c55e?style=flat-square)](https://github.com/ousher/tia-framework)
 [![ENT](https://img.shields.io/badge/ENT-35%20Agents-a855f7?style=flat-square)](https://ousher.github.io/tia-framework/)
-
-[🌐 Website](https://ousher.github.io/tia-framework/) · [📧 Early Access](mailto:shotekk23@gmail.com) · [📖 Bible 5.0](./BIBLE-5.0-PUBLIC.md)
-
----
-
-*"Industry 5.0 isn't about replacing humans with machines.*
-*It's about humans and machines finally understanding each other."*
 
 </div>
 
 ---
 
-## ✦ What Is TIA?
+## Overview
 
-TIA is an open framework for building **stateful AI security agents** — agents that don't just react to threats, but *remember* them, *learn* from them, and *evolve* alongside your infrastructure.
+TIA is a framework for building **stateful, autonomous security agents** — bash/Python processes that run on cron, communicate via a shared event bus, and write observations to a persistent vector memory layer.
 
-Most security tools are stateless. Every scan starts from zero. No memory. No continuity. No relationship between events.
-
-TIA is different.
-
-```
-Stateless tool:   "SSH brute force detected." (same alert, every day)
-
-TIA:              "SSH brute force from 198.51.100.42 — same subnet
-                   as Tuesday's DNS anomaly. Correlating. Containing.
-                   Pattern logged. Won't surprise us again."
-```
-
-**This is Industry 5.0.** Not AI replacing the human — AI that remembers what humans can't, acts when humans are unavailable, and gets smarter with every incident. A real partner.
+Each agent is:
+- **Independent** — no direct agent-to-agent calls
+- **Stateful** — observations persist across runs and are visible to other agents
+- **Composable** — new agents plug into the existing bus without modifying others
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-┌─────────────────────────────────────────────┐
-│              EVENT BUS                      │  ← Shared event stream
-├──────────────┬──────────────────────────────┤
-│   AGENTS     │   Independent. Resilient.    │
-│  (bash/py)   │   Each one has a job.        │
-│              │   Each one remembers.        │
-├──────────────┴──────────────────────────────┤
-│           SHARED MEMORY LAYER               │  ← Persistent vector store
-│      Every agent reads. Every agent         │  ← The collective intelligence
-│      writes. Nothing is forgotten.          │     that makes TIA stateful.
-└─────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│                    YOUR INFRASTRUCTURE               │
+│                                                      │
+│  cron → agent-A ──┐                                  │
+│  cron → agent-B ──┼──► EVENT BUS (JSONL append)      │
+│  cron → agent-C ──┘         │                        │
+│                              ▼                        │
+│                    SHARED MEMORY LAYER                │
+│                    (vector store, local)              │
+│                              │                        │
+│                    cross-agent queries ◄──────────── │
+│                    semantic search                    │
+└──────────────────────────────────────────────────────┘
 ```
 
-Agents are decoupled — they communicate through the event bus, not direct calls. Any single agent can fail. The system keeps running. The memory persists.
+**Event Bus:** Append-only JSONL file. Every agent writes structured events. Orchestrator reads and routes.
+
+**Shared Memory Layer:** Local vector store. Agents write observations; any agent can query semantically. No API calls required — runs entirely on CPU.
 
 ---
 
-## 🤖 LITE Agent Fleet
+## Agent Anatomy
 
-| Agent | Script | Schedule | Purpose |
-|-------|--------|----------|---------|
-| 🛡️ **Security Sentinel** | `dash-monitoring.sh` | `*/5 * * * *` | SSH detection, fail2ban + iptables |
-| 🔧 **Config Guardian** | `dash-config-guardian.sh` | `*/5 * * * *` | Config integrity, auto-rollback |
-| 🔒 **File Integrity** | `dash-file-integrity.sh` | `*/15 * * * *` | SHA256 baseline for critical files |
-| 🌐 **DNS Anomaly** | `dash-dns-anomalies.sh` | `*/10 * * * *` | Tunneling, DGA, resolver tampering |
-| 📡 **Outbound Traffic** | `dash-outbound-traffic.sh` | `*/10 * * * *` | C2, exfiltration, reverse shells |
-| 💓 **Uptime Sentinel** | `dash-uptime-sentinel.sh` | `*/2 * * * *` | Service health, process monitoring |
-| 🔑 **Credential Leak** | `dash-credential-leak.sh` | `0 4 * * *` | Secrets in logs, git, env files |
-
----
-
-## ⚙️ Writing Your Own Agent
-
-Every TIA agent follows a simple, stateful pattern:
+Every agent sources two libraries and follows a consistent lifecycle:
 
 ```bash
 #!/bin/bash
-source agent-lifecycle.sh  # stateful hooks
-source agent-lib.sh    # shared state
+# my-agent.sh
+
+source agent-lifecycle.sh   # start/end hooks, exit trap
+source agent-lib.sh         # alert_send(), shared_write(), event_log()
 
 agent_start "my-agent" "What this agent does"
 
-result=$(check_something)
+# ── collect ──────────────────────────────────────────
+failed_logins=$(grep "Failed password" /var/log/auth.log | wc -l)
+new_ips=$(grep "Failed password" /var/log/auth.log \
+    | awk '{print $(NF-3)}' | sort -u)
 
-if [ "$result" = "threat" ]; then
-    alert_send "my-agent" 4 "🚨 $result"
-
+# ── analyze ──────────────────────────────────────────
+if [ "$failed_logins" -gt 10 ]; then
+    alert_send "my-agent" 4 "🚨 Brute-force: $failed_logins attempts from: $new_ips"
 fi
 
-agent_end "Completed. Result: $result"
+# ── memory ───────────────────────────────────────────
+shared_write "my-agent" "Auth failures: $failed_logins" 2 "ssh,auth"
+
+agent_end "Checked auth log. Failures: $failed_logins"
 ```
 
-Every agent run is logged and shared across the system — this is what makes TIA stateful rather than a collection of isolated cron scripts.
+**Lifecycle guarantees:**
+- `agent_start` registers the run on the event bus
+- `agent_end` writes a summary + triggers memory dedup
+- Exit trap catches crashes and logs them as `UNEXPECTED_EXIT`
 
 ---
 
-## 🚨 Alert Severity
+## LITE Agent Fleet
 
-| Level | Meaning | Where It Goes |
-|-------|---------|---------------|
-| 1 | Info | Log only |
-| 2 | Low | Log + memory |
-| 3 | Medium | Ops Room |
-| 4 | High | Ops Room + direct message |
-| 5 | Critical | Ops Room + DM + escalation |
+| Agent | Cron | Detects |
+|-------|------|---------|
+| `security-sentinel.sh` | `*/5 * * * *` | SSH brute-force, fail2ban events, auth anomalies |
+| `config-guardian.sh` | `*/5 * * * *` | Config file tampering, auto-rollback on changes |
+| `file-integrity.sh` | `*/15 * * * *` | SHA256 drift on critical binaries and configs |
+| `dns-anomalies.sh` | `*/10 * * * *` | DNS tunneling, DGA patterns, resolver changes |
+| `outbound-traffic.sh` | `*/10 * * * *` | Outbound C2, data exfiltration, reverse shells |
+| `uptime-sentinel.sh` | `*/2 * * * *` | Service liveness, process conflicts |
+| `credential-leak.sh` | `0 4 * * *` | Secrets in logs, env files, git history |
 
 ---
 
-## 🛠️ Requirements
+## Alert Severity Model
+
+```
+1  INFO      → logged to event bus only
+2  LOW       → logged + written to shared memory
+3  MEDIUM    → Telegram Ops Room notification
+4  HIGH      → Ops Room + direct message to operator
+5  CRITICAL  → Ops Room + DM + escalation protocol
+```
 
 ```bash
-# OS: Ubuntu 22.04+ (tested on 24.04 LTS)
-# RAM: 4GB min · CPU: 2 vCPU min · Disk: 20GB+
+# Usage from any agent
+alert_send "agent-name" 4 "Human-readable description of what happened"
+```
 
-apt install -y fail2ban ufw auditd jq curl python3 python3-pip
+---
+
+## Dead Man's Switch
+
+Every agent emits a **heartbeat** at the end of each successful run. A watchdog monitors these heartbeats. If any agent goes silent beyond its expected interval:
+
+```
+Expected:  security-sentinel heartbeat every 5 min
+Observed:  last heartbeat 17 min ago
+Action:    ALERT sev-4 → "security-sentinel has been silent for 17 min"
+```
+
+Silence is treated as evidence of compromise — not just a bug.
+
+---
+
+## Requirements
+
+**OS:** Ubuntu 22.04 LTS or 24.04 LTS  
+**Resources:** 2 vCPU · 4 GB RAM · 20 GB disk (minimum)
+
+```bash
+# System packages
+apt install -y fail2ban ufw auditd jq curl python3 python3-pip socat
+
+# Python (memory layer)
 pip install -r requirements.txt
 
-# Optional local AI fallback (no API key needed)
+# Optional — local AI fallback, no API key needed
 # ollama pull qwen2:1.5b
 ```
 
 ---
 
-## 🔌 Integrations
+## Project Layout
 
-| | LITE | ENT |
-|--|:----:|:---:|
-| Telegram alerts + inline buttons | ✅ | ✅ |
-| fail2ban / UFW / iptables | ✅ | ✅ |
-| auditd kernel audit | ✅ | ✅ |
-| Shared vector memory | ✅ | ✅ |
-| Slack / webhook | — | ✅ |
-| SIEM export (CEF/JSON) | — | ✅ |
-| REST API | — | ✅ |
+```
+tia-framework/
+├── README.md           ← you are here
+├── WHITEPAPER.md       ← benchmark results, architecture deep-dive
+├── BIBLE-5.0-PUBLIC.md ← 46 development breakthroughs (full log)
+├── TIA-ENT-OVERVIEW.md ← ENT capabilities and pricing
+├── LICENSE.md
+└── index.html          ← GitHub Pages landing page
+```
 
----
-
-## ✦ TIA ENT — The Full Picture
-
-Where LITE gives you the foundation, ENT gives you the **living system**:
-
-- 🧠 **Super Lead** — correlates events across all agents simultaneously. Turns isolated alerts into coherent threat narratives.
-- 🧬 **EVO Engine** — reviews agent performance weekly, proposes improvements, applies them with your sign-off. The system that grows.
-- 🪞 **Digital Twin** — a synchronized replica on separate infrastructure. If primary goes down, Twin picks up instantly. Seamless continuity.
-- 🌍 **Hive Mind** — two instances, one shared memory. Cross-datacenter intelligence that thinks as one.
-- 🔬 **Skynet** — adversarial self-testing. TIA attacks its own infrastructure to find gaps before real attackers do.
-
-**28 more agents. One coherent intelligence. Your partner in security.**
-
-→ **[shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
+> Agent scripts, orchestration logic, and the full memory layer are **ENT only**.  
+> LITE framework available on request — [shotekk23@gmail.com](mailto:shotekk23@gmail.com)
 
 ---
 
-## 📖 Docs
+## ENT: What's Added
 
-| | |
-|--|--|
-| [WHITEPAPER.md](./WHITEPAPER.md) | Technical whitepaper — benchmarks, architecture, Project Skynet results |
-| [BIBLE-5.0-PUBLIC.md](./BIBLE-5.0-PUBLIC.md) | 46 documented breakthroughs — a real log of how TIA was built |
-| [TIA-ENT-OVERVIEW.md](./TIA-ENT-OVERVIEW.md) | ENT architecture, capabilities, and pricing |
+| Component | Description |
+|-----------|-------------|
+| 28 additional agents | APT detection, container escapes, port shuffling, CVE monitoring, honeypots |
+| Correlation engine | Cross-agent event synthesis — turns isolated alerts into attack narratives |
+| Self-evolution | Periodic meta-analysis → proposes + applies agent improvements |
+| Adversarial testing | Controlled attack simulation against live system to measure immune response |
+| Digital Twin | Synchronized hot standby on separate infrastructure |
+| REST API | External dashboard and SIEM integration |
+
+---
+
+## Benchmark (Project Skynet)
+
+Controlled insider threat simulation. March 23, 2026.
+
+| Metric | Target | Result |
+|--------|--------|--------|
+| Detection time | < 300s | **12.7s avg** |
+| Identification | < 600s | **27.7s avg** |
+| False positives | 0 | **0** |
+
+Industry average detection time: **194 days.**  
+Full methodology: [WHITEPAPER.md](./WHITEPAPER.md)
 
 ---
 
 <div align="center">
 
-*Security that thinks. Remembers. Evolves.*
-*And never forgets the human behind it.*
+[![Whitepaper](https://img.shields.io/badge/📄%20Whitepaper-Read%20Now-7c3aed?style=for-the-badge)](./WHITEPAPER.md)
+[![Contact](https://img.shields.io/badge/✦%20ENT%20Access-shotekk23%40gmail.com-9333ea?style=for-the-badge)](mailto:shotekk23@gmail.com)
+[![Website](https://img.shields.io/badge/✦%20Website-ousher.github.io-06b6d4?style=for-the-badge)](https://ousher.github.io/tia-framework/)
 
----
-
-[![Early Access](https://img.shields.io/badge/✦%20Early%20Access-shotekk23%40gmail.com-7c3aed?style=for-the-badge&logoColor=white)](mailto:shotekk23@gmail.com)
-[![Website](https://img.shields.io/badge/✦%20Website-ousher.github.io%2Ftia--framework-9333ea?style=for-the-badge&logoColor=white)](https://ousher.github.io/tia-framework/)
-
-*MIT-0 · Helsinki & Nuremberg · 2026*
+*MIT-0 · Built in 2026 · ⚡*
 
 </div>
