@@ -1,131 +1,141 @@
-# TIA — Autonomous Security Intelligence
+<div align="center">
+
+![TIA Banner](https://img.shields.io/badge/TIA-Autonomous%20Security%20Intelligence-7c3aed?style=for-the-badge&logo=shield&logoColor=white)
+
+# ⚡ TIA — Autonomous Security Intelligence
+
+**35 AI agents. Always on. Never sleeping.**
+
+[![License](https://img.shields.io/badge/License-MIT--0-green?style=flat-square)](LICENSE.md)
+[![Agents](https://img.shields.io/badge/Agents-35%20Active-22c55e?style=flat-square&logo=robot)](https://ousher.github.io/tia-framework/)
+[![Detection](https://img.shields.io/badge/Detection-12%20seconds-ef4444?style=flat-square&logo=zap)](https://ousher.github.io/tia-framework/)
+[![Cost](https://img.shields.io/badge/Daily%20Cost-%240.05-06b6d4?style=flat-square)](https://ousher.github.io/tia-framework/)
+[![Status](https://img.shields.io/badge/Status-Early%20Access-a855f7?style=flat-square)](mailto:shotekk23@gmail.com)
 
 > *"Your network is being probed right now. TIA already knows."*
 
-**TIA** is an open framework for autonomous AI security agents — 35 specialized agents that detect, analyze, and respond to threats without human intervention.
+[🌐 Landing Page](https://ousher.github.io/tia-framework/) · [📧 Early Access](mailto:shotekk23@gmail.com) · [📖 Bible 5.0](./BIBLE-5.0-PUBLIC.md)
+
+</div>
 
 ---
 
-## The Problem
+## 🔴 The Problem
 
 Traditional security operations are expensive, slow, and don't scale.
 
-- A proper SOC team costs **$300K+/year**
-- Mean time to detect: **4-6 hours**
-- Alert fatigue causes analysts to miss real threats
-- Coverage gaps at night, weekends, holidays
-
-**TIA replaces this with autonomous AI agents that never sleep.**
+| ❌ Traditional SOC | ✅ TIA ENT |
+|---|---|
+| $300K+/year | **$199/month** |
+| 4–6 hour detection | **12 seconds** |
+| Business hours only | **24/7/365** |
+| Alert fatigue | **AI pre-filters everything** |
+| Hire to scale | **Automatic** |
 
 ---
 
-## How It Works
+## ⚡ How It Works
 
 TIA agents run continuously on your infrastructure. When a threat appears:
 
 ```
-03:47:12  BLOCKED    SSH brute-force 198.51.100.42 → banned instantly
-03:47:15  ALERT      Outbound DNS tunnel detected — process: curl
-03:47:16  CORRELATE  Super Lead: SSH + DNS + outbound = APT pattern
-03:47:18  CONTAINED  Attacker isolated. Human notified.
-03:47:18  ELAPSED    6 seconds. Incident closed.
+03:47:12  🔴 BLOCKED    SSH brute-force 198.51.100.42 → banned instantly
+03:47:15  🟡 ALERT      Outbound DNS tunnel detected — process: curl
+03:47:16  🟣 CORRELATE  Super Lead: SSH + DNS + outbound = APT pattern
+03:47:18  🟢 CONTAINED  Attacker isolated. Human notified.
+03:47:18  ✅ ELAPSED    6 seconds. Incident closed.
 ```
 
 No analyst needed. No 3 AM phone call. No breach.
 
 ---
 
-## What's In This Repo
+## 📊 Production Stats
 
-| File | Description |
-|------|-------------|
-| [BIBLE-5.0-PUBLIC.md](./BIBLE-5.0-PUBLIC.md) | Development log — 46 documented breakthroughs |
-| [TIA-ENT-OVERVIEW.md](./TIA-ENT-OVERVIEW.md) | Enterprise Edition — capabilities & pricing |
+<div align="center">
 
----
+| 🛡️ IPs Blocked / 24h | ⚡ Detection Time | 🤖 Active Agents | 💰 Daily AI Cost | 🔒 Breaches |
+|:---:|:---:|:---:|:---:|:---:|
+| **427** | **12 sec** | **35** | **$0.05** | **0** |
 
-## Key Stats (Production Deployment)
-
-| Metric | Value |
-|--------|-------|
-| IPs blocked / 24h | 427 |
-| Mean detection time | 12 seconds |
-| Active agents | 35 |
-| Daily AI inference cost | $0.05 |
-| Breaches since deployment | 0 |
+</div>
 
 ---
 
-## Agent Fleet (LITE)
+## 🤖 Agent Fleet (LITE — Open Source)
 
-The open source version includes core security monitoring:
+| Agent | Mission | Schedule |
+|-------|---------|----------|
+| 🛡️ **Security Sentinel** | SSH monitoring, IP blocking, fail2ban | Every 5 min |
+| 🔧 **Config Guardian** | Auto-rollback on unauthorized config changes | Every 5 min |
+| 🔒 **File Integrity Monitor** | Critical binary + config tamper detection | Every 15 min |
+| 🌐 **DNS Anomaly Detector** | Tunneling, DGA domains, resolver tampering | Every 10 min |
+| 📡 **Outbound Traffic Monitor** | C2 callbacks, data exfiltration, reverse shells | Every 10 min |
+| 💓 **Uptime Sentinel** | Service health, gateway monitoring | Every 2 min |
+| 🔑 **Credential Leak Scanner** | Secrets in logs, git history, file permissions | Daily 04:00 |
 
-- **Security Sentinel** — SSH monitoring, IP blocking, fail2ban integration
-- **Config Guardian** — Auto-rollback on unauthorized config changes
-- **File Integrity Monitor** — Critical binary + config tamper detection
-- **DNS Anomaly Detector** — Tunneling, DGA, resolver tampering
-- **Outbound Traffic Monitor** — C2 callbacks, data exfiltration detection
-- **Uptime Sentinel** — Service health, gateway monitoring
-- **Credential Leak Scanner** — Secrets in logs, git history, file permissions
+> 🔒 **ENT adds 28 more agents** — Super Lead, EVO Engine, PenTest Specialist, Digital Twin, and more.
 
 ---
 
-## Quick Start
+## 💰 Pricing
+
+<div align="center">
+
+| Tier | Price | Agents | Best For |
+|------|-------|--------|----------|
+| **LITE** | 🆓 Free | 7 core | Self-hosters, developers |
+| **PRO** | 💜 $49/mo | 10 | Solo operators, small teams |
+| **ENT** | ⚡ $199/mo | 35 | Full autonomous SOC |
+| **MANAGED** | 🏢 $499/mo | 35 + ops | We run it for you |
+
+</div>
+
+**ENT includes:**
+- ✅ All 35 autonomous agents
+- ✅ Super Lead — cross-domain threat correlation
+- ✅ EVO Engine — self-learning, improves weekly
+- ✅ Digital Twin — hot standby on separate infrastructure  
+- ✅ Skynet — adversarial self-testing (AI attacks itself to find gaps)
+- ✅ Air-gapped — **no data leaves your perimeter. Ever.**
+
+**→ Early access: [shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
+
+---
+
+## 🚀 Quick Start
 
 ```bash
 # Clone the repo
 git clone https://github.com/ousher/tia-framework
 
-# Read the docs
+# Read the ENT overview
 cat TIA-ENT-OVERVIEW.md
 
-# Deploy (requires Ubuntu 22.04+)
-# Contact us for deployment guide → shotekk23@gmail.com
+# Request deployment guide
+# → shotekk23@gmail.com
 ```
 
----
-
-## TIA ENT — Enterprise Edition
-
-The full autonomous SOC. 35 agents. Self-learning. Air-gapped.
-
-| Tier | Price | What You Get |
-|------|-------|-------------|
-| **LITE** | Free | Core monitoring framework |
-| **PRO** | $49/mo | 10 agents, threat correlation, alerts |
-| **ENT** | $199/mo | All 35 agents, Super Lead, EVO engine, Digital Twin |
-| **MANAGED** | $499/mo | We deploy and operate it for you |
-
-**ENT includes:**
-- ✓ All 35 autonomous agents
-- ✓ Super Lead cross-domain correlation engine
-- ✓ EVO self-learning (system improves weekly)
-- ✓ Digital Twin — hot standby on separate infrastructure
-- ✓ Skynet adversarial self-testing (AI attacks itself to find gaps)
-- ✓ Air-gapped — no data leaves your perimeter
-
-**Early access open → [shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
+**Requirements:** Ubuntu 22.04+, 2 vCPU, 4GB RAM minimum
 
 ---
 
-## vs. Traditional SOC
+## 📖 What's In This Repo
 
-| | Traditional SOC | TIA ENT |
-|--|----------------|---------|
-| Cost | $300K+/year | $199/mo |
-| Detection time | 4-6 hours | 12 seconds |
-| Coverage | Business hours | 24/7/365 |
-| Alert fatigue | High | Zero (AI pre-filters) |
-| Scales with infra | Hire more people | Automatic |
-| Learns over time | Turnover resets knowledge | Always improving |
+| File | Description |
+|------|-------------|
+| 📖 [BIBLE-5.0-PUBLIC.md](./BIBLE-5.0-PUBLIC.md) | Development log — 46 documented breakthroughs |
+| 🏢 [TIA-ENT-OVERVIEW.md](./TIA-ENT-OVERVIEW.md) | Enterprise Edition — full capabilities & pricing |
 
 ---
 
-## License
+<div align="center">
 
-MIT-0 — Free to use, modify, and redistribute. No attribution required.
+**Built in Helsinki & Nuremberg · 2026**
 
----
+[![Contact](https://img.shields.io/badge/Early%20Access-shotekk23%40gmail.com-7c3aed?style=for-the-badge&logo=mail&logoColor=white)](mailto:shotekk23@gmail.com)
+[![Web](https://img.shields.io/badge/Website-tia--framework-06b6d4?style=for-the-badge&logo=globe&logoColor=white)](https://ousher.github.io/tia-framework/)
 
-*Built in Helsinki & Nuremberg · 2026 · ⚡*  
-*[shotekk23@gmail.com](mailto:shotekk23@gmail.com) · [tia-framework.com](https://ousher.github.io/tia-framework/)*
+*⚡ Dash + The Architect*
+
+</div>
