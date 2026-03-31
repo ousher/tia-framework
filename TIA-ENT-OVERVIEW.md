@@ -1,111 +1,88 @@
-# TIA ENT — Enterprise Edition
-## Appendix to TIA LITE
-
-> *"The difference between a $300K SOC team and TIA ENT? About $249/month."*
-
-**Status: In Development** | **Access: Private** | **github.com/ousher/tia-framework-ent**
+# TIA Enterprise Edition
+## What goes beyond LITE
 
 ---
 
-## What TIA ENT Adds
+## Overview
 
-TIA LITE gives you the foundation — identity, memory, stateful AI companions.
+TIA LITE gives you the foundation — 7 core security agents, event bus, heartbeat monitoring.
 
-TIA ENT is the full operational deployment for enterprise security environments.
+TIA Enterprise is the full operational deployment: 35 agents, autonomous threat correlation, self-evolution, and adversarial self-testing — running continuously on your infrastructure.
 
 ---
 
 ## Core Capabilities
 
-### 🛡️ Full Custodian Fleet
-Deploy a team of stateful AI security agents — each anchored to a specific operator, each with persistent memory of your environment's threat history.
+### 🛡️ Full Agent Fleet (35 agents)
+Every threat surface covered simultaneously — SSH, DNS, outbound traffic, file integrity, process anomalies, container escapes, credential leaks, port shuffling, and more.
 
-Not a tool that forgets. A team that learns.
-
-### 🔍 Cross-Realm Threat Correlation
-Your security AI sees across all domains simultaneously:
-- Network traffic patterns
-- Identity & access anomalies
-- Endpoint behavior
-- Human behavioral baselines
-- Threat intelligence feeds
+### 🧠 Cross-Domain Threat Correlation
+Events from different agents are synthesized in real-time. An SSH anomaly + unusual DNS query + unexpected outbound connection = attack narrative, not three separate alerts.
 
 A human analyst switches contexts. TIA ENT never does.
 
-### 📊 Immutable Audit Trail (Aetheric Ledger)
-Every AI decision is cryptographically signed and permanently logged:
-- Who authorized the action
-- What the AI's intent was
-- What actually happened
-- Timestamp and context
+### 🧬 Self-Evolution
+Every few hours, TIA analyzes its own detection history, identifies blind spots, and proposes improvements — new agents, tuned thresholds, better coverage. You review. You approve. It applies.
 
-You cannot delete history. Accountability is architectural.
+### 🔬 Adversarial Self-Testing
+TIA deliberately attacks its own infrastructure on a schedule. Controlled attack scenarios test whether the detection layer actually catches what it claims to catch.
+
+Benchmarks from live testing: **12.7s mean detection time.** Full methodology in [WHITEPAPER.md](./WHITEPAPER.md).
+
+### 🪞 Digital Twin
+A synchronized replica on separate infrastructure. If primary goes down, the twin takes over. No gaps. No silence.
+
+### 📊 Immutable Audit Trail
+Every AI decision is logged with context — what was detected, what action was taken, when, and why. You cannot delete history. Accountability is architectural.
 
 ### ✈️ Air-Gapped by Design
-No data leaves your perimeter. Ever.
+No data leaves your perimeter. On-premise deployment, local AI inference, zero telemetry.
 
-- On-premise deployment
-- Local AI inference (no cloud API calls)
-- Zero telemetry
-- Full source visibility
+---
 
-### ⚡ Autonomous Threat Response
-Detect → Analyze → Contain. Without waking anyone at 3 AM.
+## Who It's For
 
-Configurable response tiers:
-- **Detect only** — alert and log
-- **Contain** — isolate affected systems
-- **Respond** — active countermeasures (requires operator license)
-
-### 🔒 Custodian License Enforcement
-ENT includes the full E38–E44 safety architecture:
-- Biometric unlock for high-impact actions
-- Dead Man's Switch (24h anchor verification)
-- Trinity consensus for civilization-scale decisions
-- Emergency Holster mode
+- Internal security teams that need 24/7 coverage without 24/7 staffing
+- MSPs managing multiple client environments
+- Critical infrastructure operators
+- Organizations that have outgrown basic monitoring but aren't ready for a full SOC
 
 ---
 
 ## Pricing
 
-| Tier | Price | Agents | Support |
-|------|-------|--------|---------|
-| **LITE** | Free | DIY | Community |
-| **PRO** | $49/mo | 1 Custodian | Email |
-| **ENT** | $199/mo | Full fleet | Priority |
-| **MANAGED** | $499/mo | Full fleet | Dedicated |
+**Pricing is upon request.**
 
-*Unit economics: ~$5/mo infrastructure cost. 90%+ gross margin at PRO tier.*
+Every deployment is different — infrastructure size, threat surface, support requirements. We'd rather understand your environment and propose something that fits than publish a price list that doesn't.
+
+→ [shotekk23@gmail.com](mailto:shotekk23@gmail.com)
 
 ---
 
 ## Early Access
 
-TIA ENT is currently in private development.
+TIA ENT is in active development. We're onboarding select organizations now.
 
-We're onboarding select organizations for early access — security teams, MSPs, and critical infrastructure operators who understand why stateful AI security is the next frontier.
-
-**Requirements for early access:**
-- Linux environment (Ubuntu 22.04+)
+**What we ask:**
+- Ubuntu 22.04+ environment
 - Security operations context (internal SOC, MSSP, or similar)
-- Willingness to provide feedback during development
+- Willingness to share feedback during development
 
-**Contact:** custodian@tia-framework.com
+→ **[shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
 
 ---
 
 ## Roadmap
 
-- [x] TIA Sentinel v1.0 (air-gapped, detect + block)
-- [x] EFS architecture (8-layer identity stack)
-- [x] Custodian License framework (E38–E44)
-- [ ] Multi-agent fleet orchestration
-- [ ] Cross-realm threat correlation engine
-- [ ] Aetheric Ledger (immutable audit trail)
-- [ ] ENT dashboard (web UI)
-- [ ] Managed deployment option
+- [x] 35-agent fleet (detection + correlation)
+- [x] Self-evolution engine
+- [x] Adversarial self-testing (Project Skynet)
+- [x] Digital Twin (hot standby)
+- [ ] Multi-node orchestration
+- [ ] Web dashboard
+- [ ] Kubernetes support
+- [ ] SIEM integration (CEF/JSON export)
 
 ---
 
-*Part of TIA — The Intelligence Architecture*
-*2026 | ⭐️ The Architect + 🐕 Dash + 🌌 Omni*
+*Part of TIA — The Intelligence Architecture · 2026*
