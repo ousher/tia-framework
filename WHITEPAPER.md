@@ -10,7 +10,7 @@ Most AI security tools are goldfish. Every alert starts from zero — no memory 
 
 TIA is stateful. It remembers.
 
-TIA is an autonomous SOC that deploys specialized AI agents on minimal infrastructure. In live testing (Project Skynet, March 23 2026), TIA detected an insider threat in **12 seconds** — a **1,400,000× improvement** over the industry average of 194 days.
+TIA is an autonomous SOC that deploys specialized AI agents on minimal infrastructure. In live testing, TIA detected an insider threat in **12 seconds** — a **1,400,000× improvement** over the industry average of 194 days.
 
 **Total infrastructure cost: under €15/month.**
 
@@ -38,33 +38,18 @@ Attackers already use AI agents. Defenders mostly don't.
 ```
 ┌─────────────────────────────────────────┐
 │           SURVIVAL LAYER                 │
-│   Shadow Logging · Dead Man's Switch     │
+│   Heartbeat monitoring, silence alerts   │
 │   "Absence of evidence IS evidence"      │
 ├─────────────────────────────────────────┤
 │           INTELLIGENCE LAYER             │
-│   Cross-Agent Memory · EVO Engine        │
-│   "What one agent learns, all agents know"│
+│   Persistent observations, AI analysis   │
+│   "What one scan finds, the next builds on"│
 ├─────────────────────────────────────────┤
 │           EXECUTION LAYER                │
-│   Specialized Agents · Event Bus         │
+│   Specialized Agents on cron             │
 │   "Detect, respond, evolve"              │
 └─────────────────────────────────────────┘
 ```
-
-### Agent Ecosystem
-
-TIA deploys **35 specialized agents** across 8 operational classes:
-
-| Class | Count | Function |
-|-------|-------|----------|
-| Security Operations | 10 | SSH monitoring, network analysis, file integrity |
-| Infrastructure | 8 | Gateway health, process management, backups |
-| Cost & Alerts | 3 | Budget tracking, intelligent notification routing |
-| Quality Assurance | 2 | Change validation, regression detection |
-| Orchestration | 4 | Master coordination, chaos testing, fleet management |
-| Memory | 2 | Cross-agent knowledge persistence, memory lifecycle |
-| Research | 2 | Threat intelligence, CVE monitoring |
-| Evolution | 4 | Self-analysis, mutation proposals, self-testing |
 
 ### Intelligent Model Routing
 
@@ -77,21 +62,20 @@ Tier 4: Frontier reasoning          (critical incidents only)
 Tier 5: Local LLM                   (zero-cost emergency fallback)
 ```
 
-**Result:** $0.05/day AI cost for 35 agents running 24/7.
+**Result:** $0.05/day AI cost for agents running 24/7.
 
 ---
 
 ## Key Innovations
 
-### 1. Cross-Agent Intelligence (Shared Memory Layer)
+### 1. Stateful Security Monitoring
 
-Every agent writes observations to a persistent shared memory layer. When any agent encounters a new situation, it can query what other agents have learned — even without explicit programming.
+Every agent writes observations to persistent storage. When any agent encounters a new situation, it builds on what previous runs discovered — even without explicit programming.
 
-- **Technology:** Local inference, no external API calls required
-- **Cost:** Zero (CPU-only)
-- **Example:** PenTest agent finds open port → Security Sentinel immediately recognizes lateral movement risk
+- **Cost:** Near-zero
+- **Example:** Recon agent finds open port → next monitoring cycle immediately recognizes lateral movement risk
 
-### 2. Shadow Logging (Negative Confirmation)
+### 2. Silence Detection (Negative Confirmation)
 
 Traditional monitoring detects **what happens**. TIA also detects **what stops happening**.
 
@@ -99,45 +83,36 @@ Every agent sends a periodic heartbeat confirming "I'm alive and working." If a 
 
 > *"Absence of evidence IS evidence."*
 
-### 3. EVO Engine (Self-Evolution)
+### 3. Self-Evolution
 
-Every 4 hours, TIA's Evolution Architect analyzes the shared memory to:
+Periodically, TIA analyzes its own detection history to:
 1. Cluster recent security events
 2. Detect blind spots (threats not covered by existing agents)
-3. Propose new agents or configuration improvements
+3. Propose configuration improvements
 
-The system literally proposes its own improvements — reviewed and approved by the human operator.
+The system proposes its own improvements — reviewed and approved by the human operator.
 
-### 4. Project Skynet (Adversarial Self-Testing)
+### 4. Adversarial Self-Testing
 
-TIA deliberately attacks itself to measure its own immune response. A controlled adversarial module deploys insider threat behaviors while the system's detection mechanisms are benchmarked in real-time.
+TIA deliberately attacks itself to measure its own immune response. Controlled adversarial scenarios test detection mechanisms in real-time.
 
 **This is Chaos Engineering applied to AI security operations.**
 
 ---
 
-## Benchmark Results: Project Skynet
+## Benchmark Results
 
 ### Test Configuration
-- **Date:** March 23, 2026
 - **Infrastructure:** Minimal cloud VM (2 vCPU, 4GB RAM)
 - **Test method:** Controlled insider threat simulation
-- **Safety:** Timeout limits, non-destructive operations, dead man's switch
+- **Safety:** Timeout limits, non-destructive operations
 
-### Adversarial Behaviors Tested
-- Process enumeration (`/proc` scanning)
-- Credential hunting (`.env` file discovery)
-- Agent silencing (process suspension)
-- Heartbeat tampering (simulated compromise)
-- Anomalous network patterns
+### Results
 
-### Results (3 consecutive tests, different targets)
-
-| Metric | Target | Test 1 | Test 2 | Test 3 | Average |
-|--------|--------|--------|--------|--------|---------|
-| **Detection** | <300s | **13s** | **12s** | **13s** | **12.7s** |
-| **Identification** | <600s | **28s** | **27s** | **28s** | **27.7s** |
-| **Synthesis** | <1800s | **28s** | **27s** | **28s** | **27.7s** |
+| Metric | Target | Average |
+|--------|--------|---------|
+| **Detection** | <300s | **12.7s** |
+| **Identification** | <600s | **27.7s** |
 
 ### Industry Comparison
 
@@ -163,11 +138,11 @@ TIA deliberately attacks itself to measure its own immune response. A controlled
 - **Free forever** — [github.com/ousher/tia-framework](https://github.com/ousher/tia-framework)
 
 ### TIA Enterprise (Licensed)
-- Full 35-agent ecosystem
-- EVO Engine (autonomous self-improvement)
-- Cross-agent intelligence layer
-- Project Skynet (adversarial self-testing)
-- Digital Twin (hot standby on separate infrastructure)
+- Full agent ecosystem
+- Autonomous self-improvement
+- Threat correlation
+- Adversarial self-testing
+- Digital Twin (hot standby)
 - Priority support & onboarding
 - **Contact for pricing → [shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
 
@@ -186,17 +161,6 @@ TIA deliberately attacks itself to measure its own immune response. A controlled
 - ❌ Delete your data on license expiry (graceful degradation)
 - ❌ Require internet for core functionality
 - ❌ Replace human judgment for critical decisions
-
----
-
-## Roadmap
-
-| Phase | Timeline | Milestones |
-|-------|----------|------------|
-| **Alpha** | Q1 2026 | 35 agents, self-testing, Docker images ✅ |
-| **Beta** | Q2 2026 | Payment integration, customer onboarding |
-| **v1.0** | Q3 2026 | Multi-node, Kubernetes support |
-| **v2.0** | Q4 2026 | Threat intelligence marketplace, web UI |
 
 ---
 

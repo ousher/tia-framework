@@ -9,24 +9,24 @@
 
 TIA is stateful — it remembers every incident, learns your environment, and gets smarter every week. Not a tool. An autonomous SOC.
 
-TIA LITE gives you the foundation — 7 core security agents, event bus, heartbeat monitoring.
+TIA LITE gives you the foundation — 7 core security agents, heartbeat monitoring, alerting.
 
-TIA Enterprise is the full operational deployment: 35 agents, autonomous threat correlation, self-evolution, and adversarial self-testing — running continuously on your infrastructure.
+TIA Enterprise is the full operational deployment: expanded agent fleet, autonomous threat correlation, self-improvement, and adversarial self-testing — running continuously on your infrastructure.
 
 ---
 
 ## Core Capabilities
 
-### 🛡️ Full Agent Fleet (35 agents)
-Every threat surface covered simultaneously — SSH, DNS, outbound traffic, file integrity, process anomalies, container escapes, credential leaks, port shuffling, and more.
+### 🛡️ Full Agent Fleet
+Every threat surface covered simultaneously — SSH, DNS, outbound traffic, file integrity, process anomalies, container escapes, credential leaks, and more.
 
-### 🧠 Cross-Domain Threat Correlation
+### 🧠 Threat Correlation
 Events from different agents are synthesized in real-time. An SSH anomaly + unusual DNS query + unexpected outbound connection = attack narrative, not three separate alerts.
 
 A human analyst switches contexts. TIA ENT never does.
 
-### 🧬 Self-Evolution
-Every few hours, TIA analyzes its own detection history, identifies blind spots, and proposes improvements — new agents, tuned thresholds, better coverage. You review. You approve. It applies.
+### 🧬 Self-Improvement
+Periodically, TIA analyzes its own detection history, identifies blind spots, and proposes improvements — tuned thresholds, better coverage, new detection rules. You review. You approve. It applies.
 
 ### 🔬 Adversarial Self-Testing
 TIA deliberately attacks its own infrastructure on a schedule. Controlled attack scenarios test whether the detection layer actually catches what it claims to catch.
@@ -37,7 +37,7 @@ Benchmarks from live testing: **12.7s mean detection time.** Full methodology in
 A synchronized replica on separate infrastructure. If primary goes down, the twin takes over. No gaps. No silence.
 
 ### 📊 Immutable Audit Trail
-Every AI decision is logged with context — what was detected, what action was taken, when, and why. You cannot delete history. Accountability is architectural.
+Every AI decision is logged with context — what was detected, what action was taken, when, and why. Accountability is architectural.
 
 ### ✈️ Air-Gapped by Design
 No data leaves your perimeter. On-premise deployment, local AI inference, zero telemetry.
@@ -78,9 +78,9 @@ TIA ENT is in active development. We're onboarding select organizations now.
 
 ## Roadmap
 
-- [x] 35-agent fleet (detection + correlation)
-- [x] Self-evolution engine
-- [x] Adversarial self-testing (Project Skynet)
+- [x] Full agent fleet (detection + correlation)
+- [x] Self-improvement engine
+- [x] Adversarial self-testing
 - [x] Digital Twin (hot standby)
 - [ ] Multi-node orchestration
 - [ ] Web dashboard

@@ -48,13 +48,9 @@ Commercial licenses are available for:
 
 ## 🏗️ WHAT IS TIA?
 
-TIA (Tiered Intelligence Architecture) is a framework for deploying AI operations teams consisting of:
-- **Master Agent ("The Commander"):** Adaptive AI orchestrator
-- **13+ Specialized Minions:** Battle-tested operational agents
-- **Commander Bus:** Priority queue, shared state, rate limiting, circuit breaker
-- **Smart Model Routing:** Cost-optimized AI model allocation
+TIA (Tiered Intelligence Architecture) is a framework for deploying autonomous AI security agents that monitor, detect, and respond to threats on your infrastructure — 24/7, at minimal cost.
 
-Developed and validated in production by Ondrej Sramek and Dash (AI Operations Lead).
+Developed and validated in production by Ondrej Sramek.
 
 ---
 

@@ -176,7 +176,7 @@ tia-framework/
 
 ---
 
-## Benchmark (Project Skynet)
+## Benchmark
 
 Controlled insider threat simulation. March 23, 2026.
 
