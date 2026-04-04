@@ -33,33 +33,54 @@ Each agent is:
 ## Architecture
 
 ```
-?????????
-└──────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│              TIA Framework                   │
+│                                              │
+│  ⏰ Scheduler (cron)                         │
+│     │                                        │
+│     ▼                                        │
+│  ┌──────────────────────────────────┐        │
+│  │      AI Security Agents          │        │
+│  │                                  │        │
+│  │  🔍 Monitoring    🧪 Vuln Scan   │        │
+│  │  🔒 File Integrity 🌐 Network    │        │
+│  │  🚨 Incident Response            │        │
+│  └──────────┬───────────┬───────────┘        │
+│             │           │                    │
+│             ▼           ▼                    │
+│     📡 Alerts     📊 Reports                 │
+│         │              │                     │
+│         ▼              ▼                     │
+│  📲 Notifications  🖥️ SIEM Dashboard         │
+│                                              │
+└─────────────────────────────────────────────┘
+         Runs on any Linux VM ($5/mo)
 ```
 
-**Event Bus:** 
-
-**Shared Memory Layer:** 
+Agents run independently on cron, produce alerts and reports, and feed into your existing SIEM or notification channels.
 
 ---
 
 ## Agent Anatomy
 
-Every agent sources two libraries and follows a consistent lifecycle:
+Each agent is a standalone bash/Python script with a consistent pattern:
 
 ```bash
 #!/bin/bash
-# my-agent.sh
+# my-agent.sh — runs via cron, checks one thing, reports findings
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# ... detection logic here ...
 
-agent_end "Checked auth log. Failures: $failed_logins"
+# Alert if something is wrong
+if [ "$failed_logins" -gt 10 ]; then
+    alert_send "auth-monitor" 3 "Unusual auth failures: $failed_logins"
+fi
 ```
 
-**Lifecycle guarantees:**
-- `agent_start` registers the run on the event bus
-- `agent_end` writes a summary and marks the run complete
-- Exit trap catches crashes and logs them as `UNEXPECTED_EXIT`
+**Design principles:**
+- Each agent checks one attack surface
+- Results are logged and optionally sent as alerts
+- Crash recovery built-in — failures are detected automatically
 
 ---
 
@@ -80,8 +101,8 @@ agent_end "Checked auth log. Failures: $failed_logins"
 ## Alert Severity Model
 
 ```
-1  INFO      → logged to event bus only
-2  LOW       → logged + written to shared memory
+1  INFO      → logged only
+2  LOW       → logged + stored for analysis
 3  MEDIUM    → Telegram Ops Room notification
 4  HIGH      → Ops Room + direct message to operator
 5  CRITICAL  → Ops Room + DM + escalation protocol
