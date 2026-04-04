@@ -33,18 +33,7 @@ Each agent is:
 ## Architecture
 
 ```
-┌──────────────────────────────────────────────────────┐
-│                    YOUR INFRASTRUCTURE               │
-│                                                      │
-│  cron → agent-A ──┐                                  │
-│  cron → agent-B ──┼──► EVENT BUS (JSONL append)      │
-│  cron → agent-C ──┘         │                        │
-│                              ▼                        │
-│                    SHARED MEMORY LAYER                │
-│                    (vector store, local)              │
-│                              │                        │
-│                    cross-agent queries ◄──────────── │
-│                    semantic search                    │
+?????????
 └──────────────────────────────────────────────────────┘
 ```
 
