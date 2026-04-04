@@ -37,9 +37,9 @@ Each agent is:
 └──────────────────────────────────────────────────────┘
 ```
 
-**Event Bus:** Append-only JSONL file. Every agent writes structured events. Orchestrator reads and routes.
+**Event Bus:** 
 
-**Shared Memory Layer:** Local vector store. Agents write observations; any agent can query semantically. No API calls required — runs entirely on CPU.
+**Shared Memory Layer:** 
 
 ---
 
