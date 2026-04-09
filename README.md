@@ -169,9 +169,9 @@ tia-framework/
 |-----------|-------------|
 | 28 additional agents | APT detection, container escapes, port shuffling, CVE monitoring, honeypots |
 | Correlation engine | Cross-agent event synthesis — turns isolated alerts into attack narratives |
-| Self-evolution | Periodic meta-analysis → proposes + applies agent improvements |
-| Adversarial testing | Controlled attack simulation against live system to measure immune response |
-| Digital Twin | Synchronized hot standby on separate infrastructure |
+| Adaptive detection engine | Periodic analysis → proposes + applies detection improvements |
+| Automated resilience testing | Controlled attack simulation against live system to verify immune response |
+| Hot standby replica | Synchronized replica on separate infrastructure |
 | REST API | External dashboard and SIEM integration |
 
 ---

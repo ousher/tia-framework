@@ -83,18 +83,18 @@ Every agent sends a periodic heartbeat confirming "I'm alive and working." If a 
 
 > *"Absence of evidence IS evidence."*
 
-### 3. Self-Evolution
+### 3. Adaptive Learning
 
 Periodically, TIA analyzes its own detection history to:
 1. Cluster recent security events
-2. Detect blind spots (threats not covered by existing agents)
+2. Identify coverage gaps (threats not covered by existing agents)
 3. Propose configuration improvements
 
 The system proposes its own improvements — reviewed and approved by the human operator.
 
-### 4. Adversarial Self-Testing
+### 4. Automated Resilience Testing
 
-TIA deliberately attacks itself to measure its own immune response. Controlled adversarial scenarios test detection mechanisms in real-time.
+TIA runs controlled attack simulations against its own detection layer to verify that defenses work as expected. Automated test scenarios validate detection mechanisms in real-time.
 
 **This is Chaos Engineering applied to AI security operations.**
 
@@ -139,10 +139,10 @@ TIA deliberately attacks itself to measure its own immune response. Controlled a
 
 ### TIA Enterprise (Licensed)
 - Full agent ecosystem
-- Autonomous self-improvement
+- Adaptive detection engine
 - Threat correlation
-- Adversarial self-testing
-- Digital Twin (hot standby)
+- Automated resilience testing
+- Hot standby replica
 - Priority support & onboarding
 - **Contact for pricing → [shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
 

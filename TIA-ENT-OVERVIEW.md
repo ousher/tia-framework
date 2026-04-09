@@ -11,7 +11,7 @@ TIA is stateful — it remembers every incident, learns your environment, and ge
 
 TIA LITE gives you the foundation — 7 core security agents, heartbeat monitoring, alerting.
 
-TIA Enterprise is the full operational deployment: expanded agent fleet, autonomous threat correlation, self-improvement, and adversarial self-testing — running continuously on your infrastructure.
+TIA Enterprise is the full operational deployment: expanded agent fleet, autonomous threat correlation, adaptive detection, and automated resilience testing — running continuously on your infrastructure.
 
 ---
 
@@ -25,16 +25,16 @@ Events from different agents are synthesized in real-time. An SSH anomaly + unus
 
 A human analyst switches contexts. TIA ENT never does.
 
-### 🧬 Self-Improvement
-Periodically, TIA analyzes its own detection history, identifies blind spots, and proposes improvements — tuned thresholds, better coverage, new detection rules. You review. You approve. It applies.
+### 🧬 Adaptive Detection Engine
+Periodically, TIA analyzes its own detection history, identifies coverage gaps, and proposes improvements — tuned thresholds, better coverage, new detection rules. You review. You approve. It applies.
 
-### 🔬 Adversarial Self-Testing
-TIA deliberately attacks its own infrastructure on a schedule. Controlled attack scenarios test whether the detection layer actually catches what it claims to catch.
+### 🔬 Automated Resilience Testing
+TIA runs controlled attack simulations against its own detection layer on a schedule — verifying that defenses catch what they claim to catch.
 
 Benchmarks from live testing: **12.7s mean detection time.** Full methodology in [WHITEPAPER.md](./WHITEPAPER.md).
 
-### 🪞 Digital Twin
-A synchronized replica on separate infrastructure. If primary goes down, the twin takes over. No gaps. No silence.
+### 🪞 Hot Standby Replica
+A synchronized replica on separate infrastructure. If primary goes down, the standby takes over. No gaps. No silence.
 
 ### 📊 Immutable Audit Trail
 Every AI decision is logged with context — what was detected, what action was taken, when, and why. Accountability is architectural.
@@ -79,9 +79,9 @@ TIA ENT is in active development. We're onboarding select organizations now.
 ## Roadmap
 
 - [x] Full agent fleet (detection + correlation)
-- [x] Self-improvement engine
-- [x] Adversarial self-testing
-- [x] Digital Twin (hot standby)
+- [x] Adaptive detection engine
+- [x] Automated resilience testing
+- [x] Hot standby replica
 - [ ] Multi-node orchestration
 - [ ] Web dashboard
 - [ ] Kubernetes support
