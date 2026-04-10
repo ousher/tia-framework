@@ -96,6 +96,47 @@
   }
 
   .nav-cta:hover { background: rgba(0,255,136,0.1); }
+/* === HAMBURGER === */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    width: 20px;
+    height: 2px;
+    background: var(--text-dim);
+    transition: all 0.3s;
+  }
+
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(7,7,13,0.95);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      padding: 16px 24px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 14px; }
+  }
 
   /* === STATUS BAR === */
   .status-bar {
@@ -433,7 +474,7 @@
 
   /* === MOBILE === */
   @media (max-width: 768px) {
-    .nav-links a:not(.nav-cta) { display: none; }
+    /* hamburger handles mobile nav */
     .nav-links { gap: 12px; }
 
     .live-feed { transform: translateX(320px); }
@@ -463,6 +504,9 @@
       <a href="demo.html">Live Demo</a>
       <a href="efs.html">EFS</a>
       <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+    <div class="hamburger" onclick="this.classList.toggle('active');this.parentElement.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
     </div>
   </div>
 </nav>
