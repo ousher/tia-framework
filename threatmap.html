@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TIA — Cyber Threat Map</title>
-<meta name="description" content="Live cyber threat intelligence map powered by TIA autonomous security operations. Real-time C2 servers, malware URLs, and blocked attacks.">
+<meta name="description" content="Live cyber threat intelligence map powered by TIA autonomous security operations. Real-time C2 servers and malware URLs from public threat intelligence feeds.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
@@ -243,48 +243,6 @@
     50% { opacity: 1; box-shadow: 0 0 8px var(--orange), 0 0 14px rgba(255,136,68,0.3); }
   }
 
-  .marker-blocked {
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    position: relative;
-  }
-
-  .marker-blocked::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 6px; height: 6px;
-    background: var(--green);
-    border-radius: 50%;
-    box-shadow: 0 0 4px var(--green);
-  }
-
-  .marker-blocked::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 14px; height: 14px;
-    border: 1px solid var(--green);
-    border-radius: 50%;
-    animation: ripple-out 2s ease-out forwards;
-  }
-
-  @keyframes ripple-out {
-    0% { width: 6px; height: 6px; opacity: 1; }
-    100% { width: 30px; height: 30px; opacity: 0; }
-  }
-
-  .marker-blocked.faded::before {
-    opacity: 0.3;
-    box-shadow: none;
-  }
-
-  .marker-blocked.faded::after {
-    display: none;
-  }
-
   /* === CONTROL PANEL === */
   .control-panel {
     position: fixed;
@@ -432,7 +390,6 @@
 
   .feed-type.c2 { color: var(--red); background: rgba(255,68,68,0.1); }
   .feed-type.malware { color: var(--orange); background: rgba(255,136,68,0.1); }
-  .feed-type.blocked { color: var(--green); background: rgba(0,255,136,0.1); }
 
   .feed-item .feed-detail { color: var(--text-dim); }
   .feed-item .feed-time { color: var(--text-muted); font-size: 9px; margin-top: 2px; }
@@ -540,12 +497,6 @@
     <span class="control-dot" style="background: var(--orange);"></span>
     Malware URLs
   </label>
-  <label class="control-item">
-    <input type="checkbox" id="toggle-blocked" checked>
-    <span class="control-check"></span>
-    <span class="control-dot" style="background: var(--green);"></span>
-    TIA Blocked
-  </label>
 </div>
 
 <div class="live-feed" id="live-feed">
@@ -627,10 +578,6 @@
   // === LAYER GROUPS ===
   const c2Layer = L.layerGroup().addTo(map);
   const malwareLayer = L.layerGroup().addTo(map);
-  const blockedLayer = L.layerGroup().addTo(map);
-
-  const blockedMarkers = [];
-  const MAX_BLOCKED = 40;
 
   // === ICONS ===
   function c2Icon() {
@@ -641,10 +588,6 @@
     return L.divIcon({ className: '', html: '<div class="marker-malware"></div>', iconSize: [8, 8], iconAnchor: [4, 4] });
   }
 
-  function blockedIcon() {
-    return L.divIcon({ className: '', html: '<div class="marker-blocked"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });
-  }
-
   // === LIVE FEED ===
   const feedList = document.getElementById('feed-list');
   const MAX_FEED = 25;
@@ -652,7 +595,7 @@
   function addFeedItem(type, detail) {
     const item = document.createElement('div');
     item.className = 'feed-item';
-    const cls = type === 'C2' ? 'c2' : type === 'MALWARE' ? 'malware' : 'blocked';
+    const cls = type === 'C2' ? 'c2' : 'malware';
     item.innerHTML = '<span class="feed-type ' + cls + '">' + type + '</span> ' +
       '<span class="feed-detail">' + detail + '</span>' +
       '<div class="feed-time">' + now() + '</div>';
@@ -746,56 +689,6 @@
     return sampled.length;
   }
 
-  // === TIA BLOCKED EVENTS ===
-  const blockedTypes = ['Brute Force', 'Port Scan', 'Ransomware', 'Phishing', 'DDoS', 'SQL Injection', 'XSS', 'Credential Stuffing'];
-
-  function addBlockedEvent() {
-    const cc = randomCountry();
-    const coords = countryCoords[cc];
-    if (!coords) return;
-    const pos = jitter(coords, 2);
-    const type = blockedTypes[Math.floor(Math.random() * blockedTypes.length)];
-    const marker = L.marker(pos, { icon: blockedIcon() }).addTo(blockedLayer);
-    marker.bindPopup(
-      '<div style="color:var(--green);font-weight:700;margin-bottom:4px;">TIA BLOCKED</div>' +
-      '<div>Type: ' + type + '</div>' +
-      '<div>Country: ' + cc + '</div>' +
-      '<div>Status: <span style="color:var(--green);">NEUTRALIZED</span></div>'
-    );
-    addFeedItem('BLOCKED', cc + ' &mdash; ' + type + ' &mdash; NEUTRALIZED');
-
-    const entry = { marker: marker, time: Date.now() };
-    blockedMarkers.push(entry);
-
-    // Fade after 20s
-    setTimeout(function() {
-      const el = marker.getElement();
-      if (el) {
-        const inner = el.querySelector('.marker-blocked');
-        if (inner) inner.classList.add('faded');
-      }
-    }, 20000);
-
-    // Remove after 60s
-    setTimeout(function() {
-      blockedLayer.removeLayer(marker);
-      const idx = blockedMarkers.indexOf(entry);
-      if (idx > -1) blockedMarkers.splice(idx, 1);
-    }, 60000);
-
-    // Cap
-    if (blockedMarkers.length > MAX_BLOCKED) {
-      const old = blockedMarkers.shift();
-      blockedLayer.removeLayer(old.marker);
-    }
-  }
-
-  function spawnInitialBlocked() {
-    for (let i = 0; i < 25; i++) {
-      setTimeout(addBlockedEvent, i * 200);
-    }
-  }
-
   // === DATA LOADING ===
   let totalC2 = 0, totalMalware = 0;
 
@@ -843,10 +736,6 @@
   document.getElementById('toggle-malware').addEventListener('change', function() {
     this.checked ? map.addLayer(malwareLayer) : map.removeLayer(malwareLayer);
   });
-  document.getElementById('toggle-blocked').addEventListener('change', function() {
-    this.checked ? map.addLayer(blockedLayer) : map.removeLayer(blockedLayer);
-  });
-
   // === FEED TOGGLE ===
   window.toggleFeed = function() {
     const feed = document.getElementById('live-feed');
@@ -856,20 +745,9 @@
 
   // === INIT ===
   loadAllData();
-  spawnInitialBlocked();
 
   // Refresh data every 5 minutes
   setInterval(loadAllData, 5 * 60 * 1000);
-
-  // New blocked events every 10-20 seconds
-  function scheduleBlocked() {
-    const delay = 10000 + Math.random() * 10000;
-    setTimeout(function() {
-      addBlockedEvent();
-      scheduleBlocked();
-    }, delay);
-  }
-  scheduleBlocked();
 
 })();
 </script>
