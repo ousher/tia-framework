@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="wave-wide.png" alt="TIA" width="600">
+<img src="tia-landing.png" alt="TIA" width="800">
 
 # TIA — Autonomous AI Security Operations
 
