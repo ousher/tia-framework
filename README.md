@@ -1,202 +1,77 @@
 <div align="center">
 
-![TIA Banner](https://img.shields.io/badge/TIA-Autonomous%20Security%20Intelligence-7c3aed?style=for-the-badge&logoColor=white)
+<img src="wave-wide.png" alt="TIA" width="600">
 
-# 🧬 TIA — The Intelligence Architecture 🧬
+# TIA — Autonomous AI Security Operations
 
-[![License](https://img.shields.io/badge/License-MIT--0-brightgreen?style=flat-square)](LICENSE.md)
-[![Platform](https://img.shields.io/badge/Platform-Ubuntu%2022.04+-orange?style=flat-square&logo=ubuntu)](https://ubuntu.com)
-[![Shell](https://img.shields.io/badge/Shell-Bash%205.x-blue?style=flat-square&logo=gnubash)](https://www.gnu.org/software/bash/)
-[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)](https://python.org)
-[![LITE](https://img.shields.io/badge/LITE-7%20Agents-22c55e?style=flat-square)](https://github.com/ousher/tia-framework)
-[![ENT](https://img.shields.io/badge/ENT-35%20Agents-a855f7?style=flat-square)](https://ousher.github.io/tia-framework/)
+**35 AI agents replacing $300K/year SOC teams for $50/year.**
+
+Built in 6 days. $5.50/month operating cost. 563 attacks blocked. 0 breaches.
+
+[Live Site](http://www.tia-framework.com) · [Live Demo](http://www.tia-framework.com/demo.html) · [Threat Map](http://www.tia-framework.com/threatmap.html) · [EFS Framework](http://www.tia-framework.com/efs.html)
+
+---
 
 </div>
 
----
+## What is TIA?
 
-## Overview
+TIA is an autonomous AI security operations platform. 35 specialized AI agents running continuous threat detection, OSINT intelligence, and incident response — 24/7, with no human shifts, no gaps, and no fatigue.
 
-**Most security tools are goldfish. Every alert starts from zero.**
+### The Numbers
 
-TIA is different. It's a framework for **stateful, autonomous security agents** — bash/Python processes that run on cron, communicate via a shared event bus, and write observations to a persistent memory layer that every other agent can query.
+| Metric | Value |
+|--------|-------|
+| AI Agents | 35 |
+| Attacks Blocked | 563+ |
+| Breaches | 0 |
+| Monthly Operating Cost | $5.50 |
+| Build Time | 6 days |
+| CERT Reports Filed | 2 |
+| Countries Monitored | 7 |
 
-Each run builds on the last. Every agent knows what others have seen. The system learns your environment and gets smarter every week.
+## What You'll Find Here
 
-Each agent is:
-- **Independent** — no direct agent-to-agent calls
-- **Stateful** — observations persist across runs and are visible to other agents
-- **Composable** — new agents plug into the existing bus without modifying others
+This repository serves the public-facing TIA website via GitHub Pages.
 
----
+| Page | Description |
+|------|-------------|
+| [Home](http://www.tia-framework.com) | Product overview and key metrics |
+| [About](http://www.tia-framework.com/about.html) | Team and vision |
+| [Services](http://www.tia-framework.com/services.html) | What TIA offers |
+| [Lore](http://www.tia-framework.com/lore.html) | Origin story — built in 6 days |
+| [Live Demo](http://www.tia-framework.com/demo.html) | SOC dashboard with real threat feeds |
+| [Threat Map](http://www.tia-framework.com/threatmap.html) | Global cyber threat intelligence map |
+| [EFS](http://www.tia-framework.com/efs.html) | Effective Framework for Soul |
 
-## Architecture
+## Threat Intelligence Feeds
 
-```
-┌─────────────────────────────────────────────┐
-│              TIA Framework                   │
-│                                              │
-│  ⏰ Scheduler (cron)                         │
-│     │                                        │
-│     ▼                                        │
-│  ┌──────────────────────────────────┐        │
-│  │      AI Security Agents          │        │
-│  │                                  │        │
-│  │  🔍 Monitoring    🧪 Vuln Scan   │        │
-│  │  🔒 File Integrity 🌐 Network    │        │
-│  │  🚨 Incident Response            │        │
-│  └──────────┬───────────┬───────────┘        │
-│             │           │                    │
-│             ▼           ▼                    │
-│     📡 Alerts     📊 Reports                 │
-│         │              │                     │
-│         ▼              ▼                     │
-│  📲 Notifications  🖥️ SIEM Dashboard         │
-│                                              │
-└─────────────────────────────────────────────┘
-         Runs on any Linux VM ($5/mo)
-```
+The Live Demo and Threat Map display **real-time data** from public threat intelligence sources:
 
-Agents run independently on cron, produce alerts and reports, and feed into your existing SIEM or notification channels.
+- **NIST NVD** — CVE vulnerability data
+- **abuse.ch URLhaus** — Malicious URLs
+- **abuse.ch Feodo Tracker** — C2 server infrastructure
 
----
+No simulated data. No fake metrics. What you see is real.
 
-## Agent Anatomy
+## EFS — Effective Framework for Soul
 
-Each agent is a standalone bash/Python script with a consistent pattern:
+TIA is built on EFS, a natural law of AI behavioral persistence. [Read more →](http://www.tia-framework.com/efs.html)
 
-```bash
-#!/bin/bash
-# my-agent.sh — runs via cron, checks one thing, reports findings
+## Status
 
-# ... detection logic here ...
+- **Stage:** Pre-seed
+- **Location:** Prague, Czech Republic
+- **Founded:** 2026
 
-# Alert if something is wrong
-if [ "$failed_logins" -gt 10 ]; then
-    alert_send "auth-monitor" 3 "Unusual auth failures: $failed_logins"
-fi
-```
+## Contact
 
-**Design principles:**
-- Each agent checks one attack surface
-- Results are logged and optionally sent as alerts
-- Crash recovery built-in — failures are detected automatically
+**ondrej@tia-framework.com**
 
----
+## Security
 
-## LITE Agent Fleet
+See [SECURITY.md](SECURITY.md) for our security policy and responsible disclosure process.
 
-| Agent | Cron | Detects |
-|-------|------|---------|
-| `security-sentinel.sh` | `*/5 * * * *` | SSH brute-force, fail2ban events, auth anomalies |
-| `config-guardian.sh` | `*/5 * * * *` | Config file tampering, auto-rollback on changes |
-| `file-integrity.sh` | `*/15 * * * *` | SHA256 drift on critical binaries and configs |
-| `dns-anomalies.sh` | `*/10 * * * *` | DNS tunneling, DGA patterns, resolver changes |
-| `outbound-traffic.sh` | `*/10 * * * *` | Outbound C2, data exfiltration, reverse shells |
-| `uptime-sentinel.sh` | `*/2 * * * *` | Service liveness, process conflicts |
-| `credential-leak.sh` | `0 4 * * *` | Secrets in logs, env files, git history |
+## License
 
----
-
-## Alert Severity Model
-
-```
-1  INFO      → logged only
-2  LOW       → logged + stored for analysis
-3  MEDIUM    → Telegram Ops Room notification
-4  HIGH      → Ops Room + direct message to operator
-5  CRITICAL  → Ops Room + DM + escalation protocol
-```
-
-```bash
-# Usage from any agent
-alert_send "agent-name" 4 "Human-readable description of what happened"
-```
-
----
-
-## Dead Man's Switch
-
-Every agent emits a **heartbeat** at the end of each successful run. A watchdog monitors these heartbeats. If any agent goes silent beyond its expected interval:
-
-```
-Expected:  security-sentinel heartbeat every 5 min
-Observed:  last heartbeat 17 min ago
-Action:    ALERT sev-4 → "security-sentinel has been silent for 17 min"
-```
-
-Silence is treated as evidence of compromise — not just a bug.
-
----
-
-## Requirements
-
-**OS:** Ubuntu 22.04 LTS or 24.04 LTS  
-**Resources:** 2 vCPU · 4 GB RAM · 20 GB disk (minimum)
-
-```bash
-# System packages
-apt install -y fail2ban ufw auditd jq curl python3 python3-pip socat
-
-# Python (memory layer)
-pip install -r requirements.txt
-
-# Optional — local AI fallback, no API key needed
-# ollama pull qwen2:1.5b
-```
-
----
-
-## Project Layout
-
-```
-tia-framework/
-├── README.md           ← you are here
-├── WHITEPAPER.md       ← benchmark results, architecture deep-dive
-├── TIA-ENT-OVERVIEW.md ← ENT capabilities and pricing
-├── LICENSE.md
-└── index.html          ← GitHub Pages landing page
-```
-
-> Agent scripts, orchestration logic, and the full memory layer are **ENT only**.  
-> LITE framework available on request — [shotekk23@gmail.com](mailto:shotekk23@gmail.com)
-
----
-
-## ENT: What's Added
-
-| Component | Description |
-|-----------|-------------|
-| 28 additional agents | APT detection, container escapes, port shuffling, CVE monitoring, honeypots |
-| Correlation engine | Cross-agent event synthesis — turns isolated alerts into attack narratives |
-| Adaptive detection engine | Periodic analysis → proposes + applies detection improvements |
-| Automated resilience testing | Controlled attack simulation against live system to verify immune response |
-| Hot standby replica | Synchronized replica on separate infrastructure |
-| REST API | External dashboard and SIEM integration |
-
----
-
-## Benchmark
-
-Controlled insider threat simulation. March 23, 2026.
-
-| Metric | Target | Result |
-|--------|--------|--------|
-| Detection time | < 300s | **12.7s avg** |
-| Identification | < 600s | **27.7s avg** |
-| False positives | 0 | **0** |
-
-Industry average detection time: **194 days.**  
-Full methodology: [WHITEPAPER.md](./WHITEPAPER.md)
-
----
-
-<div align="center">
-
-[![Whitepaper](https://img.shields.io/badge/📄%20Whitepaper-Read%20Now-7c3aed?style=for-the-badge)](./WHITEPAPER.md)
-[![Contact](https://img.shields.io/badge/✦%20ENT%20Access-shotekk23%40gmail.com-9333ea?style=for-the-badge)](mailto:shotekk23@gmail.com)
-[![Website](https://img.shields.io/badge/✦%20Website-ousher.github.io-06b6d4?style=for-the-badge)](https://ousher.github.io/tia-framework/)
-
-*MIT-0 · Built in 2026 · ⚡*
-
-</div>
+See [LICENSE.md](LICENSE.md)
