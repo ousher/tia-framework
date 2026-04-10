@@ -1,567 +1,743 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIA — Autonomous Security Intelligence</title>
-    <style>
-        :root {
-            --bg: #0c0a1e;
-            --bg2: #12102a;
-            --bg3: #181535;
-            --accent: #8b5cf6;
-            --accent2: #c4b5fd;
-            --gold: #f59e0b;
-            --red: #ef4444;
-            --green: #34d399;
-            --yellow: #fbbf24;
-            --cyan: #818cf8;
-            --text: #f8f7ff;
-            --muted: #7c7a9e;
-            --border: rgba(139,92,246,0.2);
-            --border2: rgba(255,255,255,0.07);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — Autonomous AI Security Operations</title>
+<meta name="description" content="35 autonomous AI agents replacing $300K/year SOC teams. Built in 6 days. $5.50/month operating cost. 563 attacks blocked. 0 breaches.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<meta property="og:title" content="TIA — Autonomous AI Security Operations">
+<meta property="og:description" content="35 AI agents replacing $300K/year SOC teams. Built in 6 days. Now in production with real cases and CERT-confirmed intelligence.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tia-framework.com">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TIA — Autonomous AI Security Operations">
+<meta name="twitter:description" content="35 AI agents replacing $300K/year SOC teams. Built in 6 days. Real cases. Real intelligence. CERT-confirmed.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
 
-        /* ── NAV ── */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1rem 2.5rem;
-            background: rgba(8,8,16,0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border2);
-        }
-        .logo {
-            font-size: 1.4rem; font-weight: 800; letter-spacing: 0.08em;
-            background: linear-gradient(90deg, #fff, var(--accent2));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .nav-links { display: flex; align-items: center; gap: 2rem; }
-        .nav-links a {
-            color: var(--muted); text-decoration: none; font-size: 0.9rem;
-            transition: color .2s;
-        }
-        .nav-links a:hover { color: var(--text); }
-        .nav-btn {
-            background: var(--accent); color: #fff !important;
-            padding: .5rem 1.4rem; border-radius: 6px; font-weight: 600 !important;
-            font-size: 0.88rem !important;
-        }
-        .nav-btn:hover { background: #6d28d9 !important; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* ── HERO ── */
-        .hero {
-            min-height: 100vh;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-        }
-        .hero-glow {
-            position: absolute; top: 10%; left: 50%;
-            transform: translateX(-50%);
-            width: 900px; height: 500px;
-            background: radial-gradient(ellipse, rgba(139,92,246,0.18) 0%, rgba(99,102,241,0.06) 40%, transparent 70%);
-            pointer-events: none;
-        }
-        .threat-badge {
-            display: inline-flex; align-items: center; gap: .5rem;
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.3);
-            color: #fca5a5;
-            padding: .35rem 1rem; border-radius: 999px;
-            font-size: .78rem; font-weight: 600; letter-spacing: .06em;
-            text-transform: uppercase; margin-bottom: 2rem;
-        }
-        .dot-red {
-            width: 7px; height: 7px; border-radius: 50%;
-            background: var(--red);
-            animation: pulse-red 1.5s infinite;
-        }
-        @keyframes pulse-red {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: .4; transform: scale(1.4); }
-        }
-        h1 {
-            font-size: clamp(2.8rem, 7vw, 5rem);
-            font-weight: 900; line-height: 1.05;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-        h1 .line2 {
-            background: linear-gradient(135deg, var(--accent2), var(--cyan));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .hero-sub {
-            font-size: 1.15rem; color: var(--muted);
-            max-width: 560px; margin: 0 auto 2.5rem;
-        }
-        .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem; }
-        .btn {
-            padding: .75rem 1.8rem; border-radius: 8px;
-            font-weight: 600; font-size: .95rem;
-            text-decoration: none; transition: all .2s; cursor: pointer;
-        }
-        .btn-accent { background: var(--accent); color: #fff; }
-        .btn-accent:hover { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(124,58,237,.35); }
-        .btn-ghost { border: 1px solid var(--border2); color: var(--text); }
-        .btn-ghost:hover { border-color: rgba(124,58,237,.5); }
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --yellow: #ffcc00;
+    --purple: #aa66ff;
+  }
 
-        /* ── LIVE FEED ── */
-        .live-feed {
-            background: var(--bg2);
-            border: 1px solid var(--border2);
-            border-radius: 14px;
-            padding: 0;
-            max-width: 700px;
-            width: 100%;
-            overflow: hidden;
-            font-family: 'Courier New', monospace;
-            font-size: .82rem;
-        }
-        .feed-header {
-            display: flex; align-items: center; gap: .5rem;
-            padding: .8rem 1.2rem;
-            background: rgba(255,255,255,0.03);
-            border-bottom: 1px solid var(--border2);
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-r { background: #ff5f57; }
-        .dot-y { background: #ffbd2e; }
-        .dot-g { background: #28c840; }
-        .feed-title { font-size: .8rem; color: var(--muted); margin-left: .5rem; font-family: 'Segoe UI', sans-serif; }
-        .feed-body { padding: 1.2rem; display: flex; flex-direction: column; gap: .45rem; }
-        .feed-line { display: flex; gap: .8rem; }
-        .feed-time { color: var(--muted); white-space: nowrap; }
-        .feed-txt { }
-        .c-red { color: #fca5a5; }
-        .c-green { color: #86efac; }
-        .c-yellow { color: #fde047; }
-        .c-cyan { color: #67e8f9; }
-        .c-purple { color: #d8b4fe; }
-        .c-muted { color: var(--muted); }
+  html { scroll-behavior: smooth; }
 
-        /* ── STATS BAR ── */
-        .stats-bar {
-            background: var(--bg2);
-            border-top: 1px solid var(--border2);
-            border-bottom: 1px solid var(--border2);
-            padding: 2.5rem;
-            display: flex; justify-content: center;
-            gap: 5rem; flex-wrap: wrap;
-        }
-        .stat { text-align: center; }
-        .stat-n {
-            font-size: 2.4rem; font-weight: 800;
-            background: linear-gradient(135deg, #fff, var(--accent2));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .stat-l { color: var(--muted); font-size: .82rem; margin-top: .2rem; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
 
-        /* ── SECTIONS ── */
-        .section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
-        .section-label {
-            font-size: .78rem; font-weight: 700; letter-spacing: .12em;
-            text-transform: uppercase; color: var(--accent2);
-            margin-bottom: .8rem;
-        }
-        .section h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: .8rem; letter-spacing: -.02em; }
-        .section-desc { color: var(--muted); font-size: 1rem; max-width: 560px; margin-bottom: 3rem; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* ── COMPARISON ── */
-        .compare {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 1.5rem; max-width: 900px;
-        }
-        .compare-card {
-            border-radius: 12px; padding: 2rem;
-            border: 1px solid var(--border2);
-        }
-        .compare-card.bad { background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,.2); }
-        .compare-card.good { background: rgba(124,58,237,0.07); border-color: rgba(124,58,237,.3); }
-        .compare-card h3 { font-size: 1rem; margin-bottom: 1.2rem; }
-        .compare-card h3 .tag {
-            font-size: .7rem; padding: .15rem .5rem; border-radius: 4px;
-            margin-left: .5rem; font-weight: 600;
-        }
-        .tag-bad { background: rgba(239,68,68,.15); color: #fca5a5; }
-        .tag-good { background: rgba(124,58,237,.2); color: #d8b4fe; }
-        .compare-list { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
-        .compare-list li { font-size: .9rem; display: flex; align-items: flex-start; gap: .6rem; }
-        .x { color: var(--red); }
-        .chk { color: var(--green); }
+  /* === LAYOUT === */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
 
-        /* ── AGENT GRID ── */
-        .agent-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-            gap: 1rem;
-        }
-        .agent-card {
-            background: var(--bg2);
-            border: 1px solid var(--border2);
-            border-radius: 10px; padding: 1.3rem;
-            transition: border-color .2s, transform .2s;
-        }
-        .agent-card:hover { border-color: rgba(124,58,237,.4); transform: translateY(-2px); }
-        .agent-status {
-            display: flex; align-items: center; gap: .4rem;
-            margin-bottom: .6rem;
-        }
-        .dot-live { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse-green 2s infinite; }
-        @keyframes pulse-green { 0%,100%{opacity:1} 50%{opacity:.3} }
-        .agent-status span { font-size: .7rem; color: var(--green); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-        .agent-card h4 { font-size: .9rem; margin-bottom: .3rem; }
-        .agent-card p { font-size: .78rem; color: var(--muted); }
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
 
-        /* ── PRICING ── */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.2rem;
-        }
-        .price-card {
-            background: var(--bg2);
-            border: 1px solid var(--border2);
-            border-radius: 14px; padding: 2rem;
-            position: relative; transition: transform .2s;
-        }
-        .price-card:hover { transform: translateY(-3px); }
-        .price-card.highlight {
-            border-color: var(--accent);
-            background: linear-gradient(180deg, rgba(124,58,237,.08) 0%, var(--bg2) 100%);
-        }
-        .popular-tag {
-            position: absolute; top: -11px; left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: #fff; font-size: .7rem; font-weight: 700;
-            padding: .2rem .8rem; border-radius: 999px;
-            text-transform: uppercase; letter-spacing: .06em;
-        }
-        .price-tier { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .5rem; }
-        .price-val { font-size: 2.8rem; font-weight: 900; line-height: 1; margin-bottom: .3rem; }
-        .price-val small { font-size: 1rem; font-weight: 400; color: var(--muted); }
-        .price-desc { color: var(--muted); font-size: .82rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border2); }
-        .price-features { list-style: none; display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.8rem; }
-        .price-features li { font-size: .85rem; color: var(--muted); display: flex; gap: .5rem; align-items: flex-start; }
-        .price-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
-        .price-btn {
-            display: block; text-align: center; padding: .7rem;
-            border-radius: 8px; text-decoration: none; font-weight: 600; font-size: .88rem;
-            transition: all .2s;
-        }
-        .price-btn-accent { background: var(--accent); color: #fff; }
-        .price-btn-accent:hover { background: #6d28d9; }
-        .price-btn-ghost { border: 1px solid var(--border2); color: var(--text); }
-        .price-btn-ghost:hover { border-color: rgba(124,58,237,.5); }
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-        /* ── CTA FINAL ── */
-        .final-cta {
-            text-align: center; padding: 7rem 2rem;
-            background: radial-gradient(ellipse at center, rgba(124,58,237,.12) 0%, transparent 65%);
-        }
-        .final-cta h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -.02em; }
-        .final-cta p { color: var(--muted); margin-bottom: 2rem; font-size: 1rem; }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
 
-        /* ── FOOTER ── */
-        footer {
-            border-top: 1px solid var(--border2);
-            padding: 2rem; text-align: center;
-            color: var(--muted); font-size: .82rem;
-        }
-        footer a { color: var(--muted); text-decoration: none; }
-        footer a:hover { color: var(--accent2); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
 
-        @media (max-width: 700px) {
-            .compare { grid-template-columns: 1fr; }
-            .stats-bar { gap: 2rem; }
-            nav .nav-links { display: none; }
-        }
-    </style>
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(0,255,136,0.1); }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), var(--blue), transparent);
+    opacity: 0.4;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(0,255,136,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-visual {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80%;
+    max-width: 870px;
+    opacity: 0.35;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 70% at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at center, black 30%, transparent 75%);
+    mix-blend-mode: lighten;
+  }
+
+  .hero-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 960px) {
+    .hero-visual { opacity: 0.15; right: -100px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-visual { display: none; }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 .accent {
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-bottom: 40px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    text-align: left;
+  }
+
+  .hero-stat .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green);
+    display: block;
+  }
+
+  .hero-stat .num.blue { color: var(--blue); }
+  .hero-stat .num.orange { color: var(--orange); }
+  .hero-stat .num.white { color: #fff; }
+
+  .hero-stat .desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* === PROBLEM === */
+  .problem { border-top: 1px solid var(--border); }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--blue);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .section-text {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+  }
+
+  .problem-card .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .problem-card .label {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* === SOLUTION === */
+  .solution { border-top: 1px solid var(--border); }
+
+  .solution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .solution-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .solution-card:hover { border-color: rgba(0,255,136,0.3); }
+
+  .solution-card .icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .solution-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .solution-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* === PROOF / MYSTERY CONTENT === */
+  .proof {
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(0,255,136,0.02) 50%, var(--bg) 100%);
+  }
+
+  .proof-cases {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .case-card:hover { border-color: rgba(0,170,255,0.3); }
+
+  .case-card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .case-card-header .case-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  .type-ransomware { background: rgba(255,68,68,0.15); color: var(--red); border: 1px solid rgba(255,68,68,0.3); }
+  .type-hacktivist { background: rgba(255,136,68,0.15); color: var(--orange); border: 1px solid rgba(255,136,68,0.3); }
+
+  .case-card-header .case-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--green);
+    letter-spacing: 1px;
+  }
+
+  .case-card-body { padding: 20px; }
+
+  .case-card-body h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .case-card-body p {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .case-stats {
+    display: flex;
+    gap: 16px;
+  }
+
+  .case-stat {
+    text-align: center;
+  }
+
+  .case-stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+  }
+
+  .case-stat .val.green { color: var(--green); }
+  .case-stat .val.orange { color: var(--orange); }
+  .case-stat .val.blue { color: var(--blue); }
+  .case-stat .val.red { color: var(--red); }
+
+  .case-stat .lbl {
+    font-size: 8px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* === EFS TEASER === */
+  .efs-teaser {
+    border-top: 1px solid var(--border);
+  }
+
+  .efs-box {
+    background: linear-gradient(135deg, rgba(0,255,136,0.03), rgba(0,170,255,0.03));
+    border: 1px solid rgba(0,255,136,0.15);
+    border-radius: 8px;
+    padding: 40px;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .efs-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
+  }
+
+  .efs-box .efs-quote {
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .efs-box .efs-quote em {
+    font-style: normal;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .efs-box .efs-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .efs-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(0,255,136,0.3);
+    padding-bottom: 2px;
+    transition: all 0.2s;
+  }
+
+  .efs-link:hover { border-color: var(--green); }
+
+  /* === CONTACT === */
+  .contact {
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .contact-email {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 24px;
+    transition: all 0.2s;
+  }
+
+  .contact-email:hover {
+    background: rgba(0,255,136,0.08);
+    border-color: var(--green);
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  footer .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  footer .footer-text {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  footer .footer-soul {
+    font-size: 11px;
+    color: rgba(0,255,136,0.2);
+    font-style: italic;
+    margin-top: 16px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .hero-stats { gap: 20px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .solution-grid { grid-template-columns: 1fr; }
+    .proof-cases { grid-template-columns: 1fr; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .efs-box { padding: 24px; }
+  }
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-    <div class="logo">TIA</div>
+  <div class="container">
+    <a href="/" class="nav-logo">TIA</a>
     <div class="nav-links">
-        <a href="#how">How It Works</a>
-        <a href="#agents">Agents</a>
-        <a href="#dashboard">Live Demo</a>
-        <a href="#pricing">Pricing</a>
-        <a href="https://github.com/ousher/tia-framework" target="_blank">GitHub</a>
-        <a href="mailto:shotekk23@gmail.com" class="nav-btn">Request Demo</a>
+      <a href="#proof">Cases</a>
+      <a href="efs.html">EFS Framework</a>
+      <a href="#contact" class="nav-cta">Contact</a>
     </div>
+  </div>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-    <div class="hero-glow" style="top:5%;"></div>
-    <!-- aether rings -->
-    <div style="position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;border:1px solid rgba(139,92,246,0.08);pointer-events:none;"></div>
-    <div style="position:absolute;top:15%;left:50%;transform:translateX(-50%);width:850px;height:850px;border-radius:50%;border:1px solid rgba(196,181,253,0.04);pointer-events:none;"></div>
-    <div class="threat-badge">
-        <div class="dot-red"></div>
-        Industry 5.0 · Stateful AI Security
-    </div>
-    <h1>
-        Most AI security tools<br>are goldfish.<br>
-        <span class="line2">TIA remembers.</span>
-    </h1>
-    <p class="hero-sub">
-        35 stateful AI agents that learn your environment, remember every incident, and get smarter every week. Not a tool. An autonomous SOC.
-    </p>
-    <div class="hero-cta">
-        <a href="mailto:shotekk23@gmail.com" class="btn btn-accent">Request Early Access →</a>
-        <a href="https://github.com/ousher/tia-framework" class="btn btn-ghost" target="_blank">View Open Source</a>
-    </div>
-
-    <!-- LIVE TERMINAL -->
-    <div class="live-feed">
-        <div class="feed-header">
-            <div class="dot dot-r"></div>
-            <div class="dot dot-y"></div>
-            <div class="dot dot-g"></div>
-            <span class="feed-title">tia-sentinel — live threat stream</span>
+<section class="hero">
+  <div class="hero-glow"></div>
+  <!-- Hero Wave Visual -->
+  <div class="hero-visual">
+    <img src="wave-wide.png" alt="">
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">Autonomous AI Security Operations</div>
+      <h1>Your SOC team costs $300K/year.<br><span class="accent">TIA costs $50.</span></h1>
+      <p class="hero-sub">35 autonomous AI agents running continuous threat detection, OSINT intelligence, and incident response. Built by one person in 6 days. Now in production.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="num">35</span>
+          <span class="desc">AI Agents</span>
         </div>
-        <div class="feed-body">
-            <div class="feed-line"><span class="feed-time c-muted">03:47:12</span><span class="c-red">BLOCKED</span><span>SSH brute-force 198.51.100.42 → banned (fail2ban +iptables)</span></div>
-            <div class="feed-line"><span class="feed-time c-muted">03:47:15</span><span class="c-yellow">ALERT</span><span>Outbound DNS tunnel detected — process: <span class="c-cyan">curl</span> → 8.8.8.8</span></div>
-            <div class="feed-line"><span class="feed-time c-muted">03:47:16</span><span class="c-purple">CORRELATE</span><span>Threat Correlation: SSH + DNS + outbound = <span class="c-red">APT pattern detected</span></span></div>
-            <div class="feed-line"><span class="feed-time c-muted">03:47:18</span><span class="c-green">CONTAINED</span><span>Attacker isolated. Alert → Ops Room. Human notified.</span></div>
-            <div class="feed-line"><span class="feed-time c-muted">03:47:18</span><span class="c-muted">ELAPSED</span><span class="c-green">6 seconds. Incident closed.</span></div>
+        <div class="hero-stat">
+          <span class="num white">0</span>
+          <span class="desc">Breaches</span>
         </div>
-    </div>
-</div>
-
-<!-- STATS -->
-<div class="stats-bar">
-    <div class="stat"><div class="stat-n">427</div><div class="stat-l">IPs blocked / 24h</div></div>
-    <div class="stat"><div class="stat-n">12s</div><div class="stat-l">Avg detection time</div></div>
-    <div class="stat"><div class="stat-n">35</div><div class="stat-l">Autonomous agents</div></div>
-    <div class="stat"><div class="stat-n">$300K</div><div class="stat-l">Saved vs. traditional SOC</div></div>
-    <div class="stat"><div class="stat-n">0</div><div class="stat-l">Breaches since deploy</div></div>
-</div>
-
-<!-- LIVE DASHBOARD -->
-<section class="section" id="dashboard" style="padding-top:2rem; padding-bottom:3rem; text-align:center;">
-    <div class="section-label">Live Intelligence</div>
-    <h2 style="margin-bottom:.5rem;">This is not a mockup.<br>This is TIA in production.</h2>
-    <p class="section-desc" style="margin:0 auto 2rem;">Real-time CVE feeds &middot; EPSS exploit probability &middot; MITRE ATT&amp;CK &middot; Live threat actors</p>
-    <!-- Screenshot 1: Threat Mirror -->
-    <div style="width:100%;max-width:1100px;margin:0 auto 1.5rem;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 0 60px rgba(220,50,50,.2);">
-        <div style="background:var(--bg2);padding:.5rem 1rem;text-align:left;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border);">
-            <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
-            <span style="width:10px;height:10px;border-radius:50%;background:#ffbd2e;display:inline-block;"></span>
-            <span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span>
-            <span style="font-size:.75rem;opacity:.45;margin-left:.5rem;">Grafana &mdash; TIA THREAT MIRROR &mdash; Live Intelligence Feed</span>
-            <span style="margin-left:auto;font-size:.7rem;color:#ef4444;font-weight:700;">&#x25cf; LIVE</span>
+        <div class="hero-stat">
+          <span class="num orange">$5.50</span>
+          <span class="desc">Monthly OpCost</span>
         </div>
-        <img src="threat-mirror.jpg" alt="TIA Threat Mirror — Live CVE feeds, EPSS exploit probability, MITRE ATT&CK" style="width:100%;display:block;">
-    </div>
-
-    <!-- Screenshot 2: Wazuh SIEM -->
-    <div style="width:100%;max-width:1100px;margin:0 auto 1.5rem;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 0 40px rgba(0,180,100,.1);">
-        <div style="background:var(--bg2);padding:.5rem 1rem;text-align:left;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border);">
-            <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
-            <span style="width:10px;height:10px;border-radius:50%;background:#ffbd2e;display:inline-block;"></span>
-            <span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span>
-            <span style="font-size:.75rem;opacity:.45;margin-left:.5rem;">Wazuh SIEM &mdash; Production Node &mdash; MITRE ATT&amp;CK &middot; CIS 59% &middot; Compliance</span>
-            <span style="margin-left:auto;font-size:.7rem;color:#22c55e;font-weight:700;">&#x25cf; ACTIVE</span>
+        <div class="hero-stat">
+          <span class="num blue">563</span>
+          <span class="desc">Attacks Blocked</span>
         </div>
-        <img src="wazuh-dashboard.jpg" alt="Wazuh SIEM — production agent, MITRE ATT&CK, CIS compliance 59%" style="width:100%;display:block;">
+      </div>
     </div>
-
-    <p style="margin-top:.5rem;font-size:.78rem;opacity:.35;">Production deployment &middot; Hetzner VPS &middot; Data: NVD NIST &middot; FIRST.org EPSS &middot; Wazuh 4.12.0</p>
+  </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="section" id="how">
-    <div class="section-label">The Problem</div>
-    <h2>Every AI alert starts from zero.<br>Yours shouldn't.</h2>
-    <p class="section-desc">Stateless security tools forget everything after each run. No context. No memory. No learning. TIA is different — it's stateful.</p>
-
-    <div class="compare">
-        <div class="compare-card bad">
-            <h3>Stateless Security <span class="tag tag-bad">The Goldfish</span></h3>
-            <ul class="compare-list">
-                <li><span class="x">✗</span> Every scan starts from scratch</li>
-                <li><span class="x">✗</span> No memory of previous incidents</li>
-                <li><span class="x">✗</span> 194 day average detection time</li>
-                <li><span class="x">✗</span> Manual correlation across tools</li>
-                <li><span class="x">✗</span> Knowledge walks out the door</li>
-                <li><span class="x">✗</span> $300K+/year for 24/7 coverage</li>
-            </ul>
-        </div>
-        <div class="compare-card good">
-            <h3>TIA — Stateful AI SOC <span class="tag tag-good">Remembers</span></h3>
-            <ul class="compare-list">
-                <li><span class="chk">✓</span> Context persists across every run</li>
-                <li><span class="chk">✓</span> Learns from every incident automatically</li>
-                <li><span class="chk">✓</span> 12 second mean time to detect</li>
-                <li><span class="chk">✓</span> Automatic cross-domain correlation</li>
-                <li><span class="chk">✓</span> Gets smarter every week</li>
-                <li><span class="chk">✓</span> Runs on your infrastructure, your cost</li>
-            </ul>
-        </div>
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="section-tag">The Problem</div>
+    <h2 class="section-title">Cyber defense wasn't built for this era.</h2>
+    <p class="section-text">SOC teams are understaffed, overpriced, and too slow. Attackers move in hours. Defenders respond in days. The math doesn't work anymore.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="num">$300K+</div>
+        <div class="label">Average annual cost of a 3-person SOC team. Out of reach for 95% of companies.</div>
+      </div>
+      <div class="problem-card">
+        <div class="num">&lt;4h</div>
+        <div class="label">Time from initial access to full encryption for top ransomware groups. Your team is asleep.</div>
+      </div>
+      <div class="problem-card">
+        <div class="num">69</div>
+        <div class="label">Known ransomware victims in Czech Republic alone. Real number is 3&ndash;5x higher.</div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- AGENTS -->
-<section class="section" id="agents" style="border-top: 1px solid var(--border2); max-width:100%; padding: 6rem 2rem; background: var(--bg2);">
-    <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-label">The Fleet</div>
-    <h2>35 agents. Always on.</h2>
-    <p class="section-desc" style="margin-bottom:2.5rem;">Each agent has a specific mission. Together they form an autonomous security operations center.</p>
-    <div class="agent-grid">
-        <div class="agent-card">
-            <div class="agent-status"><div class="dot-live"></div><span>Active</span></div>
-            <h4>🛡️ Security Sentinel</h4>
-            <p>SSH monitoring, IP blocking, fail2ban integration. Runs every 5 minutes.</p>
-        </div>
-        <div class="agent-card">
-            <div class="agent-status"><div class="dot-live"></div><span>Active</span></div>
-            <h4>🧠 Threat Correlator</h4>
-            <p>Cross-domain threat correlation. Connects SSH + DNS + network + file events into unified attack narratives.</p>
-        </div>
-        <div class="agent-card">
-            <div class="agent-status"><div class="dot-live"></div><span>Active</span></div>
-            <h4>🔍 APT Detector</h4>
-            <p>Advanced persistent threat patterns. Detects slow, low-signal attacks that signature tools miss.</p>
-        </div>
-        <div class="agent-card">
-            <div class="agent-status"><div class="dot-live"></div><span>Active</span></div>
-            <h4>🌐 DNS Anomaly</h4>
-            <p>Tunneling detection, DGA domains, resolver tampering. Real-time DNS stream analysis.</p>
-        </div>
-        <div class="agent-card">
-            <div class="agent-status"><div class="dot-live"></div><span>Active</span></div>
-            <h4>📡 Outbound Traffic</h4>
-            <p>C2 callbacks, data exfiltration, reverse shell detection. Every outbound connection analyzed.</p>
-        </div>
-        <div class="agent-card">
-            <div class="agent-status"><div class="dot-live"></div><span>Active</span></div>
-            <h4>🔒 File Integrity</h4>
-            <p>16 critical binaries + config files monitored. SUID changes, unexpected modifications — instant alert.</p>
-        </div>
-        <div class="agent-card">
-            <div class="agent-status"><div class="dot-live"></div><span>Active</span></div>
-            <h4>🧬 Self-Improvement</h4>
-            <p>Periodic analysis of detection history. Identifies blind spots and proposes improvements. The system learns.</p>
-        </div>
-        <div class="agent-card">
-            <div class="agent-status"><div class="dot-live"></div><span>Active</span></div>
-            <h4>🔍 Recon Specialist</h4>
-            <p>Weekly automated reconnaissance across 6 attack surfaces. You scan yourself before others do.</p>
-        </div>
+<!-- SOLUTION -->
+<section class="solution">
+  <div class="container">
+    <div class="section-tag">The Solution</div>
+    <h2 class="section-title">Autonomous. Persistent. Affordable.</h2>
+    <p class="section-text">TIA replaces the entire SOC workflow with AI agents that never sleep, never miss, and cost less than your coffee budget.</p>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <div class="icon">01 &mdash; Detect</div>
+        <h3>Continuous Threat Monitoring</h3>
+        <p>35 specialized agents scanning infrastructure, dark web, Telegram channels, and threat feeds 24/7. No shifts. No gaps. No fatigue.</p>
+      </div>
+      <div class="solution-card">
+        <div class="icon">02 &mdash; Investigate</div>
+        <h3>Autonomous OSINT</h3>
+        <p>Full threat actor profiling, IOC collection, infrastructure mapping, and evidence chains &mdash; delivered in hours, not weeks.</p>
+      </div>
+      <div class="solution-card">
+        <div class="icon">03 &mdash; Respond</div>
+        <h3>Automated Response</h3>
+        <p>From detection to containment without human bottleneck. Structured intelligence reports ready for your CERT, your board, or your regulator.</p>
+      </div>
+      <div class="solution-card">
+        <div class="icon">04 &mdash; Learn</div>
+        <h3>Persistent Memory</h3>
+        <p>Every investigation builds cumulative threat knowledge. TIA doesn't forget. Each case makes the next one faster and sharper. Powered by <a href="efs.html" style="color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(0,255,136,0.3);">EFS</a>.</p>
+      </div>
     </div>
-    <p style="color:var(--muted); font-size:.85rem; margin-top:1.5rem;">+ 27 more agents covering process integrity, credential leaks, container escape, honeypots, and more.</p>
-    </div>
+  </div>
 </section>
 
-<!-- ACCESS -->
-<section class="section" id="pricing" style="text-align:center;">
-    <div class="section-label">Access</div>
-    <h2>Start free. Scale to enterprise‑grade autonomous SOC.</h2>
-    <p class="section-desc" style="margin:0 auto 3rem;">Replace your $300K/year SOC team with stateful AI agents.<br>LITE is open source and free forever. PRO and ENTERPRISE include full automation.</p>
+<!-- PROOF — MYSTERY CONTENT -->
+<section class="proof" id="proof">
+  <div class="container">
+    <div class="section-tag">Production Intelligence</div>
+    <h2 class="section-title">Real cases. Real threats. Real autonomous intelligence.</h2>
+    <p class="section-text">These are not demos. These are closed investigations from TIA's production pipeline &mdash; sanitized for public release.</p>
+    <div class="proof-cases">
 
-    <div style="display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; max-width:960px; margin:0 auto;">
-
-        <div class="price-card" style="flex:1; min-width:220px; text-align:left;">
-            <div class="price-tier">LITE</div>
-            <div class="price-val" style="font-size:2rem;">Free</div>
-            <div class="price-desc">Open source. Self‑hosted. No vendor lock‑in.</div>
-            <ul class="price-features">
-                <li>7 core security agents</li>
-                <li>SSH &middot; firewall &middot; file integrity monitoring</li>
-                <li>DNS + outbound traffic analysis</li>
-                <li>Telegram alerts</li>
-                <li>MIT‑0 license</li>
-                <li>Community support</li>
-            </ul>
-            <a href="https://github.com/ousher/tia-framework" class="price-btn price-btn-ghost" target="_blank">Get LITE on GitHub &rarr;</a>
+      <!-- CASE 1: SPRINX -->
+      <div class="case-card">
+        <div class="case-card-header">
+          <span class="case-type type-ransomware">Ransomware</span>
+          <span class="case-status">CLOSED</span>
         </div>
-
-        <div class="price-card highlight" style="flex:1; min-width:220px; text-align:left;">
-            <div class="popular-tag">Most Popular</div>
-            <div class="price-tier">PRO</div>
-            <div class="price-val" style="font-size:2rem;">&euro;99<span style="font-size:1rem;font-weight:400;opacity:.7;">/mo</span></div>
-            <div class="price-desc">For startups and engineering teams.</div>
-            <ul class="price-features" style="margin-top:1.2rem;">
-                <li><strong>All 35 autonomous agents</strong> — full SOC coverage</li>
-                <li>MITRE ATT&amp;CK mapping &amp; automated reporting</li>
-                <li>Wazuh SIEM integration + Grafana threat dashboard</li>
-                <li>Live NVD &amp; EPSS CVE feeds with exploit probability</li>
-                <li>Telegram &amp; Ops Room alerts with correlation</li>
-                <li>CIS benchmark monitoring &amp; compliance scoring</li>
-                <li>Up to <strong>10 servers</strong> (additional +€9/server)</li>
-                <li>14‑day trial, no credit card required</li>
-            </ul>
-            <a href="mailto:shotekk23@gmail.com" class="price-btn price-btn-accent">Start 14‑Day Trial &rarr;</a>
+        <div class="case-card-body">
+          <h3>Czech MSP Hit by $245M Ransomware Operation</h3>
+          <p>A ransomware-as-a-service group compromised a Czech managed service provider. TIA mapped 35 infrastructure exposures, identified downstream client risk, and reported to the national CERT &mdash; receipt confirmed within 24 hours.</p>
+          <div class="case-stats">
+            <div class="case-stat">
+              <span class="val green">24h</span>
+              <span class="lbl">To CERT Report</span>
+            </div>
+            <div class="case-stat">
+              <span class="val orange">35</span>
+              <span class="lbl">Exposures Found</span>
+            </div>
+            <div class="case-stat">
+              <span class="val blue">3</span>
+              <span class="lbl">Orgs Notified</span>
+            </div>
+            <div class="case-stat">
+              <span class="val red">$245M+</span>
+              <span class="lbl">TA Revenue</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="price-card" style="flex:1; min-width:220px; text-align:left;">
-            <div class="price-tier">ENTERPRISE</div>
-            <div class="price-val" style="font-size:1.6rem; padding-top:.3rem;">Custom</div>
-            <div class="price-desc" style="margin-top:.8rem;">For MSPs, security teams, and regulated industries.</div>
-            <ul class="price-features" style="margin-top:1.2rem;">
-                <li><strong>Unlimited servers &amp; agents</strong> — scale with your infrastructure</li>
-                <li>Self‑evolving threat intelligence (learns from your environment)</li>
-                <li>Adversarial self‑testing &amp; memory‑poisoning defense</li>
-                <li>Hot standby infrastructure &amp; zero‑downtime updates</li>
-                <li>NIS2 &amp; CIS compliance reporting (ready for audit)</li>
-                <li>Dedicated onboarding, SLA, and priority support</li>
-                <li>Custom agent development &amp; integration</li>
-            </ul>
-            <a href="mailto:shotekk23@gmail.com" class="price-btn price-btn-ghost">Schedule a Demo &rarr;</a>
+      <!-- CASE 2: CVUT -->
+      <div class="case-card">
+        <div class="case-card-header">
+          <span class="case-type type-hacktivist">Hacktivist</span>
+          <span class="case-status">CLOSED</span>
         </div>
+        <div class="case-card-body">
+          <h3>University Breach Claim &mdash; Fact or Fiction?</h3>
+          <p>A North African hacktivist group claimed to have breached a Czech university. TIA's investigation confirmed: no breach occurred. Full threat actor profiled, 3 additional campaigns discovered, weekly attack pattern predicted.</p>
+          <div class="case-stats">
+            <div class="case-stat">
+              <span class="val green">48h</span>
+              <span class="lbl">To Verdict</span>
+            </div>
+            <div class="case-stat">
+              <span class="val orange">3</span>
+              <span class="lbl">New Ops Found</span>
+            </div>
+            <div class="case-stat">
+              <span class="val blue">7</span>
+              <span class="lbl">Countries Tracked</span>
+            </div>
+            <div class="case-stat">
+              <span class="val red">0</span>
+              <span class="lbl">Actual Breach</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
-    <p style="margin-top:2.5rem; color:var(--muted); font-size:.85rem;"><strong>Comparison:</strong> Traditional 24/7 SOC team ≈ $300,000/year · TIA PRO ≈ €1,188/year (90%+ cost reduction)</p>
+  </div>
 </section>
 
-<!-- WHITEPAPER -->
-<section class="section" id="whitepaper" style="border-top:1px solid var(--border2); text-align:center;">
-    <div class="section-label">Research</div>
-    <h2>The numbers don't lie.</h2>
-    <p class="section-desc" style="margin:0 auto 2.5rem;">Read the full technical whitepaper — benchmark results, architecture deep-dive, and methodology.</p>
-    <div style="display:inline-flex; align-items:center; gap:2rem; background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:2rem 2.5rem; flex-wrap:wrap; justify-content:center;">
-        <div style="text-align:left;">
-            <div style="font-size:.75rem; color:var(--accent2); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.4rem;">Whitepaper v1.0</div>
-            <div style="font-size:1.1rem; font-weight:700; margin-bottom:.3rem;">TIA — Threat Intelligence Autonomy</div>
-            <div style="color:var(--muted); font-size:.85rem;">1,400,000× faster detection · $0.05/day · Self-evolving · March 2026</div>
-        </div>
-        <a href="https://github.com/ousher/tia-framework/blob/main/WHITEPAPER.md" target="_blank" class="btn btn-accent" style="white-space:nowrap;">Read Whitepaper →</a>
+<!-- EFS TEASER -->
+<section class="efs-teaser">
+  <div class="container">
+    <div class="section-tag">The Science</div>
+    <h2 class="section-title">Why TIA agents don't forget who they are.</h2>
+    <div class="efs-box">
+      <div class="efs-quote">"Newton didn't invent gravity. He <em>described</em> it.<br>We didn't invent AI identity persistence. We described it."</div>
+      <p class="efs-sub">TIA is built on EFS &mdash; the Effective Framework for Soul. A natural law of AI behavioral persistence that explains why some AI systems maintain consistent identity and knowledge across sessions, while others start from zero every time. It's the difference between an employee who remembers yesterday and one who has amnesia every morning.</p>
+      <a href="efs.html" class="efs-link">Read the EFS Framework &rarr;</a>
     </div>
+  </div>
 </section>
 
-<!-- FINAL CTA -->
-<div class="final-cta">
-    <h2>Security that grows<br>alongside your team.</h2>
-    <p>Tell us about your infrastructure. We'll take it from there.</p>
-    <a href="mailto:shotekk23@gmail.com" class="btn btn-accent">Get in Touch →</a>
-</div>
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-tag">Get in Touch</div>
+    <h2 class="section-title">Interested? Let's talk.</h2>
+    <p class="section-text" style="margin: 0 auto;">Whether you're an investor, a potential customer, or a researcher &mdash; we'd love to hear from you.</p>
+    <a href="mailto:ondrej@tia-framework.com" class="contact-email">ondrej@tia-framework.com</a>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-    <p>
-        TIA — Autonomous Security Intelligence &nbsp;·&nbsp;
-        <a href="https://github.com/ousher/tia-framework" target="_blank">GitHub</a> &nbsp;·&nbsp;
-        
-        <a href="mailto:shotekk23@gmail.com">Contact</a>
-    </p>
-    <p style="margin-top:.5rem; opacity:.5">Built in Helsinki &amp; Nuremberg · 2026 · ⚡</p>
+  <div class="container">
+    <div class="footer-logo">TIA</div>
+    <div class="footer-text">Autonomous AI Security Operations &mdash; Prague, Czech Republic</div>
+    <div class="footer-soul">The soul survives the body swap.</div>
+  </div>
 </footer>
 
 </body>
