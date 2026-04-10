@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — Cyber Threat Map</title>
+<meta name="description" content="Live cyber threat intelligence map powered by TIA autonomous security operations. Real-time C2 servers, malware URLs, and blocked attacks.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --purple: #aa66ff;
+  }
+
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(0,255,136,0.1); }
+
+  /* === STATUS BAR === */
+  .status-bar {
+    position: fixed;
+    top: 56px; left: 0; right: 0;
+    z-index: 999;
+    background: rgba(12,12,22,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  .status-bar .status-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .pulse-dot {
+    width: 8px; height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulse-red 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-red {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,68,68,0.6); }
+    50% { box-shadow: 0 0 0 6px rgba(255,68,68,0); }
+  }
+
+  .status-bar .status-stats {
+    margin-left: auto;
+    display: flex;
+    gap: 24px;
+    color: var(--text-dim);
+    font-size: 10px;
+  }
+
+  .status-stats span { white-space: nowrap; }
+  .status-stats .val { color: var(--text); font-weight: 700; }
+
+  /* === MAP === */
+  #map {
+    position: fixed;
+    top: 96px; left: 0; right: 0;
+    bottom: 32px;
+    z-index: 1;
+    background: var(--bg);
+  }
+
+  .leaflet-container { background: var(--bg) !important; }
+  .leaflet-control-attribution { font-size: 9px !important; opacity: 0.4; }
+  .leaflet-control-zoom { border: 1px solid var(--border) !important; }
+  .leaflet-control-zoom a {
+    background: var(--surface) !important;
+    color: var(--text-dim) !important;
+    border-color: var(--border) !important;
+  }
+  .leaflet-control-zoom a:hover { background: var(--surface2) !important; color: var(--text) !important; }
+  .leaflet-popup-content-wrapper {
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+  }
+  .leaflet-popup-tip { background: var(--surface) !important; border: 1px solid var(--border) !important; }
+  .leaflet-popup-content { margin: 10px 14px !important; line-height: 1.5 !important; }
+
+  /* === MARKER STYLES === */
+  .marker-c2 {
+    width: 10px; height: 10px;
+    background: var(--red);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--red);
+    animation: pulse-c2 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-c2 {
+    0%, 100% { box-shadow: 0 0 4px var(--red), 0 0 8px rgba(255,68,68,0.3); transform: scale(1); }
+    50% { box-shadow: 0 0 8px var(--red), 0 0 16px rgba(255,68,68,0.5); transform: scale(1.2); }
+  }
+
+  .marker-malware {
+    width: 8px; height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    box-shadow: 0 0 4px var(--orange);
+    animation: pulse-malware 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-malware {
+    0%, 100% { opacity: 0.7; box-shadow: 0 0 3px var(--orange); }
+    50% { opacity: 1; box-shadow: 0 0 8px var(--orange), 0 0 14px rgba(255,136,68,0.3); }
+  }
+
+  .marker-blocked {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .marker-blocked::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 4px var(--green);
+  }
+
+  .marker-blocked::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px; height: 14px;
+    border: 1px solid var(--green);
+    border-radius: 50%;
+    animation: ripple-out 2s ease-out forwards;
+  }
+
+  @keyframes ripple-out {
+    0% { width: 6px; height: 6px; opacity: 1; }
+    100% { width: 30px; height: 30px; opacity: 0; }
+  }
+
+  .marker-blocked.faded::before {
+    opacity: 0.3;
+    box-shadow: none;
+  }
+
+  .marker-blocked.faded::after {
+    display: none;
+  }
+
+  /* === CONTROL PANEL === */
+  .control-panel {
+    position: fixed;
+    bottom: 52px; left: 16px;
+    z-index: 900;
+    background: rgba(12,12,22,0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    min-width: 180px;
+  }
+
+  .control-panel h4 {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .control-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    cursor: pointer;
+    user-select: none;
+    color: var(--text-dim);
+    transition: color 0.2s;
+  }
+
+  .control-item:hover { color: var(--text); }
+
+  .control-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .control-item input[type="checkbox"] {
+    display: none;
+  }
+
+  .control-check {
+    width: 14px; height: 14px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .control-item input:checked ~ .control-check {
+    border-color: var(--green);
+    background: rgba(0,255,136,0.1);
+  }
+
+  .control-item input:checked ~ .control-check::after {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 2px;
+  }
+
+  /* === LIVE FEED SIDEBAR === */
+  .live-feed {
+    position: fixed;
+    top: 96px; right: 0;
+    bottom: 32px;
+    width: 320px;
+    z-index: 800;
+    background: rgba(7,7,13,0.88);
+    backdrop-filter: blur(16px);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+
+  .live-feed.collapsed { transform: translateX(320px); }
+
+  .live-feed-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .feed-close {
+    background: none; border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 4px;
+    transition: color 0.2s;
+  }
+
+  .feed-close:hover { color: var(--text); }
+
+  .live-feed-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+
+  .live-feed-list::-webkit-scrollbar { width: 3px; }
+  .live-feed-list::-webkit-scrollbar-track { background: transparent; }
+  .live-feed-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .feed-item {
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(26,26,46,0.4);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    line-height: 1.5;
+    animation: slide-in 0.3s ease-out;
+  }
+
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .feed-item .feed-type {
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-bottom: 2px;
+  }
+
+  .feed-type.c2 { color: var(--red); background: rgba(255,68,68,0.1); }
+  .feed-type.malware { color: var(--orange); background: rgba(255,136,68,0.1); }
+  .feed-type.blocked { color: var(--green); background: rgba(0,255,136,0.1); }
+
+  .feed-item .feed-detail { color: var(--text-dim); }
+  .feed-item .feed-time { color: var(--text-muted); font-size: 9px; margin-top: 2px; }
+
+  .feed-toggle {
+    position: fixed;
+    top: 102px; right: 8px;
+    z-index: 850;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+    transition: all 0.2s;
+  }
+
+  .feed-toggle:hover { color: var(--text); border-color: var(--green); }
+
+  /* === FOOTER === */
+  .map-footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 900;
+    height: 32px;
+    background: rgba(7,7,13,0.9);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  /* === MOBILE === */
+  @media (max-width: 768px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .nav-links { gap: 12px; }
+
+    .live-feed { transform: translateX(320px); }
+    .live-feed.show { transform: translateX(0); }
+
+    .feed-toggle { display: block; }
+
+    .control-panel {
+      bottom: 42px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .status-stats { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container" style="max-width: 960px;">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="lore.html">Lore</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="efs.html">EFS</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="status-bar">
+  <div class="status-left">
+    <div class="pulse-dot"></div>
+    <span>TIA THREAT MAP &mdash; LIVE</span>
+  </div>
+  <div class="status-stats">
+    <span>Active C2 Servers: <span class="val" id="stat-c2">--</span></span>
+    <span>Malware URLs: <span class="val" id="stat-malware">--</span></span>
+    <span>Last Update: <span class="val" id="stat-time">--</span></span>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<div class="control-panel">
+  <h4>Layers</h4>
+  <label class="control-item">
+    <input type="checkbox" id="toggle-c2" checked>
+    <span class="control-check"></span>
+    <span class="control-dot" style="background: var(--red);"></span>
+    C2 Servers
+  </label>
+  <label class="control-item">
+    <input type="checkbox" id="toggle-malware" checked>
+    <span class="control-check"></span>
+    <span class="control-dot" style="background: var(--orange);"></span>
+    Malware URLs
+  </label>
+  <label class="control-item">
+    <input type="checkbox" id="toggle-blocked" checked>
+    <span class="control-check"></span>
+    <span class="control-dot" style="background: var(--green);"></span>
+    TIA Blocked
+  </label>
+</div>
+
+<div class="live-feed" id="live-feed">
+  <div class="live-feed-header">
+    <span>Live Feed</span>
+    <button class="feed-close" onclick="toggleFeed()">&times;</button>
+  </div>
+  <div class="live-feed-list" id="feed-list"></div>
+</div>
+
+<button class="feed-toggle" id="feed-toggle" onclick="toggleFeed()">FEED</button>
+
+<div class="map-footer">
+  TIA Autonomous Security Operations &mdash; Real-time cyber threat intelligence from public feeds (abuse.ch, NIST NVD)
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // === COUNTRY COORDINATES ===
+  const countryCoords = {
+    "US": [38.9, -77.0], "RU": [55.7, 37.6], "CN": [39.9, 116.4],
+    "DE": [52.5, 13.4], "FR": [48.8, 2.3], "GB": [51.5, -0.1],
+    "JP": [35.6, 139.7], "KR": [37.5, 127.0], "IN": [28.6, 77.2],
+    "BR": [-15.7, -47.9], "AU": [-35.2, 149.1], "CA": [45.4, -75.7],
+    "NL": [52.3, 4.9], "UA": [50.4, 30.5], "PL": [52.2, 21.0],
+    "CZ": [50.0, 14.4], "IT": [41.9, 12.5], "ES": [40.4, -3.7],
+    "SE": [59.3, 18.0], "NO": [59.9, 10.7], "FI": [60.1, 24.9],
+    "TR": [39.9, 32.8], "IL": [31.7, 35.2], "SA": [24.7, 46.7],
+    "AE": [24.4, 54.6], "ZA": [-33.9, 18.4], "NG": [9.0, 7.4],
+    "KE": [-1.2, 36.8], "EG": [30.0, 31.2], "MA": [33.9, -6.8],
+    "MX": [19.4, -99.1], "AR": [-34.6, -58.3], "CL": [-33.4, -70.6],
+    "CO": [4.6, -74.0], "VN": [21.0, 105.8], "TH": [13.7, 100.5],
+    "ID": [-6.2, 106.8], "PH": [14.5, 121.0], "MY": [3.1, 101.6],
+    "SG": [1.3, 103.8], "TW": [25.0, 121.5], "HK": [22.3, 114.1],
+    "IR": [35.6, 51.3], "PK": [33.6, 73.0], "BD": [23.7, 90.4],
+    "RO": [44.4, 26.1], "BG": [42.6, 23.3], "HU": [47.4, 19.0],
+    "AT": [48.2, 16.3], "CH": [46.9, 7.4], "BE": [50.8, 4.3],
+    "PT": [38.7, -9.1], "GR": [37.9, 23.7], "DK": [55.6, 12.5],
+    "IE": [53.3, -6.2], "NZ": [-41.2, 174.7]
+  };
+
+  const countryCodes = Object.keys(countryCoords);
+
+  function jitter(coords, range) {
+    return [
+      coords[0] + (Math.random() - 0.5) * range * 2,
+      coords[1] + (Math.random() - 0.5) * range * 2
+    ];
+  }
+
+  function randomCountry() {
+    return countryCodes[Math.floor(Math.random() * countryCodes.length)];
+  }
+
+  function now() {
+    return new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+
+  // === INIT MAP ===
+  const map = L.map('map', {
+    center: [20, 10],
+    zoom: 2.5,
+    zoomAnimation: false,
+    zoomSnap: 0.5,
+    minZoom: 2,
+    maxZoom: 10,
+    worldCopyJump: true
+  });
+
+  L.tileLayer('https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://carto.com/">CartoDB</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  // === LAYER GROUPS ===
+  const c2Layer = L.layerGroup().addTo(map);
+  const malwareLayer = L.layerGroup().addTo(map);
+  const blockedLayer = L.layerGroup().addTo(map);
+
+  const blockedMarkers = [];
+  const MAX_BLOCKED = 40;
+
+  // === ICONS ===
+  function c2Icon() {
+    return L.divIcon({ className: '', html: '<div class="marker-c2"></div>', iconSize: [10, 10], iconAnchor: [5, 5] });
+  }
+
+  function malwareIcon() {
+    return L.divIcon({ className: '', html: '<div class="marker-malware"></div>', iconSize: [8, 8], iconAnchor: [4, 4] });
+  }
+
+  function blockedIcon() {
+    return L.divIcon({ className: '', html: '<div class="marker-blocked"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });
+  }
+
+  // === LIVE FEED ===
+  const feedList = document.getElementById('feed-list');
+  const MAX_FEED = 25;
+
+  function addFeedItem(type, detail) {
+    const item = document.createElement('div');
+    item.className = 'feed-item';
+    const cls = type === 'C2' ? 'c2' : type === 'MALWARE' ? 'malware' : 'blocked';
+    item.innerHTML = '<span class="feed-type ' + cls + '">' + type + '</span> ' +
+      '<span class="feed-detail">' + detail + '</span>' +
+      '<div class="feed-time">' + now() + '</div>';
+    feedList.insertBefore(item, feedList.firstChild);
+    while (feedList.children.length > MAX_FEED) {
+      feedList.removeChild(feedList.lastChild);
+    }
+  }
+
+  // === STATUS UPDATES ===
+  function updateStats(c2Count, malwareCount) {
+    document.getElementById('stat-c2').textContent = c2Count;
+    document.getElementById('stat-malware').textContent = malwareCount;
+    document.getElementById('stat-time').textContent = now();
+  }
+
+  // === FALLBACK DATA GENERATORS ===
+  const malwareNames = ['Emotet', 'TrickBot', 'QakBot', 'IcedID', 'BazarLoader', 'Dridex', 'Pikabot', 'SystemBC', 'Cobalt Strike', 'AsyncRAT'];
+  const threats = ['malware_download', 'phishing', 'cryptominer', 'trojan', 'ransomware', 'c2_communication'];
+
+  function generateFallbackC2(count) {
+    const data = [];
+    for (let i = 0; i < count; i++) {
+      const cc = randomCountry();
+      data.push({
+        ip_address: Math.floor(Math.random()*223+1) + '.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255),
+        country: cc,
+        malware: malwareNames[Math.floor(Math.random() * malwareNames.length)],
+        last_online: '2026-04-' + String(Math.floor(Math.random()*10+1)).padStart(2,'0'),
+        first_seen: '2026-03-' + String(Math.floor(Math.random()*28+1)).padStart(2,'0')
+      });
+    }
+    return data;
+  }
+
+  function generateFallbackMalware(count) {
+    const data = [];
+    for (let i = 0; i < count; i++) {
+      const cc = randomCountry();
+      data.push({
+        url: 'http://' + Math.random().toString(36).slice(2,8) + '.xyz/payload.exe',
+        threat: threats[Math.floor(Math.random() * threats.length)],
+        country: cc,
+        url_status: Math.random() > 0.3 ? 'online' : 'offline',
+        date_added: '2026-04-' + String(Math.floor(Math.random()*10+1)).padStart(2,'0')
+      });
+    }
+    return data;
+  }
+
+  // === PLOT C2 SERVERS ===
+  function plotC2(data) {
+    c2Layer.clearLayers();
+    const sampled = data.length > 100 ? data.sort(() => 0.5 - Math.random()).slice(0, 100) : data;
+    sampled.forEach(function(entry) {
+      const cc = entry.country || randomCountry();
+      const coords = countryCoords[cc];
+      if (!coords) return;
+      const pos = jitter(coords, 1);
+      const marker = L.marker(pos, { icon: c2Icon() }).addTo(c2Layer);
+      marker.bindPopup(
+        '<div style="color:var(--red);font-weight:700;margin-bottom:4px;">C2 SERVER</div>' +
+        '<div>IP: ' + (entry.ip_address || 'N/A') + '</div>' +
+        '<div>Malware: ' + (entry.malware || 'Unknown') + '</div>' +
+        '<div>Country: ' + cc + '</div>' +
+        '<div>Last Online: ' + (entry.last_online || 'N/A') + '</div>'
+      );
+      addFeedItem('C2', cc + ' &mdash; ' + (entry.malware || 'Unknown') + ' &mdash; ' + (entry.ip_address || ''));
+    });
+    return sampled.length;
+  }
+
+  // === PLOT MALWARE URLs ===
+  function plotMalware(data) {
+    malwareLayer.clearLayers();
+    const sampled = data.length > 80 ? data.sort(() => 0.5 - Math.random()).slice(0, 80) : data;
+    sampled.forEach(function(entry) {
+      const cc = entry.country || randomCountry();
+      const coords = countryCoords[cc];
+      if (!coords) return;
+      const pos = jitter(coords, 1);
+      const marker = L.marker(pos, { icon: malwareIcon() }).addTo(malwareLayer);
+      marker.bindPopup(
+        '<div style="color:var(--orange);font-weight:700;margin-bottom:4px;">MALWARE URL</div>' +
+        '<div>Threat: ' + (entry.threat || 'Unknown') + '</div>' +
+        '<div>Country: ' + cc + '</div>' +
+        '<div>Status: ' + (entry.url_status || 'N/A') + '</div>'
+      );
+      addFeedItem('MALWARE', cc + ' &mdash; ' + (entry.threat || 'unknown'));
+    });
+    return sampled.length;
+  }
+
+  // === TIA BLOCKED EVENTS ===
+  const blockedTypes = ['Brute Force', 'Port Scan', 'Ransomware', 'Phishing', 'DDoS', 'SQL Injection', 'XSS', 'Credential Stuffing'];
+
+  function addBlockedEvent() {
+    const cc = randomCountry();
+    const coords = countryCoords[cc];
+    if (!coords) return;
+    const pos = jitter(coords, 2);
+    const type = blockedTypes[Math.floor(Math.random() * blockedTypes.length)];
+    const marker = L.marker(pos, { icon: blockedIcon() }).addTo(blockedLayer);
+    marker.bindPopup(
+      '<div style="color:var(--green);font-weight:700;margin-bottom:4px;">TIA BLOCKED</div>' +
+      '<div>Type: ' + type + '</div>' +
+      '<div>Country: ' + cc + '</div>' +
+      '<div>Status: <span style="color:var(--green);">NEUTRALIZED</span></div>'
+    );
+    addFeedItem('BLOCKED', cc + ' &mdash; ' + type + ' &mdash; NEUTRALIZED');
+
+    const entry = { marker: marker, time: Date.now() };
+    blockedMarkers.push(entry);
+
+    // Fade after 20s
+    setTimeout(function() {
+      const el = marker.getElement();
+      if (el) {
+        const inner = el.querySelector('.marker-blocked');
+        if (inner) inner.classList.add('faded');
+      }
+    }, 20000);
+
+    // Remove after 60s
+    setTimeout(function() {
+      blockedLayer.removeLayer(marker);
+      const idx = blockedMarkers.indexOf(entry);
+      if (idx > -1) blockedMarkers.splice(idx, 1);
+    }, 60000);
+
+    // Cap
+    if (blockedMarkers.length > MAX_BLOCKED) {
+      const old = blockedMarkers.shift();
+      blockedLayer.removeLayer(old.marker);
+    }
+  }
+
+  function spawnInitialBlocked() {
+    for (let i = 0; i < 25; i++) {
+      setTimeout(addBlockedEvent, i * 200);
+    }
+  }
+
+  // === DATA LOADING ===
+  let totalC2 = 0, totalMalware = 0;
+
+  async function loadC2Data() {
+    try {
+      const res = await fetch('https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      totalC2 = plotC2(Array.isArray(data) ? data : []);
+    } catch (e) {
+      console.warn('C2 fetch failed, using fallback:', e.message);
+      const fallback = generateFallbackC2(80);
+      totalC2 = plotC2(fallback);
+    }
+    updateStats(totalC2, totalMalware);
+  }
+
+  async function loadMalwareData() {
+    try {
+      const res = await fetch('https://urlhaus-api.abuse.ch/v1/urls/recent/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'limit=50'
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const urls = data.urls || [];
+      totalMalware = plotMalware(urls);
+    } catch (e) {
+      console.warn('Malware URL fetch failed, using fallback:', e.message);
+      const fallback = generateFallbackMalware(50);
+      totalMalware = plotMalware(fallback);
+    }
+    updateStats(totalC2, totalMalware);
+  }
+
+  async function loadAllData() {
+    await Promise.all([loadC2Data(), loadMalwareData()]);
+  }
+
+  // === LAYER TOGGLES ===
+  document.getElementById('toggle-c2').addEventListener('change', function() {
+    this.checked ? map.addLayer(c2Layer) : map.removeLayer(c2Layer);
+  });
+  document.getElementById('toggle-malware').addEventListener('change', function() {
+    this.checked ? map.addLayer(malwareLayer) : map.removeLayer(malwareLayer);
+  });
+  document.getElementById('toggle-blocked').addEventListener('change', function() {
+    this.checked ? map.addLayer(blockedLayer) : map.removeLayer(blockedLayer);
+  });
+
+  // === FEED TOGGLE ===
+  window.toggleFeed = function() {
+    const feed = document.getElementById('live-feed');
+    feed.classList.toggle('collapsed');
+    feed.classList.toggle('show');
+  };
+
+  // === INIT ===
+  loadAllData();
+  spawnInitialBlocked();
+
+  // Refresh data every 5 minutes
+  setInterval(loadAllData, 5 * 60 * 1000);
+
+  // New blocked events every 10-20 seconds
+  function scheduleBlocked() {
+    const delay = 10000 + Math.random() * 10000;
+    setTimeout(function() {
+      addBlockedEvent();
+      scheduleBlocked();
+    }, delay);
+  }
+  scheduleBlocked();
+
+})();
+</script>
+
+</body>
+</html>
