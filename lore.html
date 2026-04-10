@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — Lore / Origin Story</title>
+<meta name="description" content="The origin story of TIA. Built in 6 days by one person for $5.50/month. 35 AI agents. 563 attacks blocked. 0 breaches.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<meta property="og:title" content="TIA — Origin Story">
+<meta property="og:description" content="Built in 6 days. By one person. For $5.50/month. This is the story of how TIA came to be.">
+<meta property="og:type" content="website">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --purple: #aa66ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* === LAYOUT === */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--green); }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(0,255,136,0.1); }
+
+  /* === HERO === */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), var(--blue), transparent);
+    opacity: 0.4;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 700px;
+    opacity: 0.12;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 70% at center, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at center, black 20%, transparent 70%);
+    mix-blend-mode: lighten;
+  }
+
+  .hero-bg img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0.8;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span {
+    color: var(--green);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* === TIMELINE === */
+  .timeline-section {
+    padding: 60px 0 80px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 60px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--green), var(--blue), var(--purple), var(--green));
+    opacity: 0.3;
+  }
+
+  .timeline-entry {
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .timeline-entry:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-badge {
+    position: absolute;
+    left: -60px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--green);
+    z-index: 2;
+  }
+
+  .timeline-badge::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--green);
+    opacity: 0.06;
+    animation: badge-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes badge-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.06; }
+    50% { transform: scale(1.6); opacity: 0; }
+  }
+
+  .timeline-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 32px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .timeline-card:hover {
+    border-color: rgba(0,255,136,0.2);
+    transform: translateX(4px);
+  }
+
+  .timeline-card h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .timeline-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  /* === DRAMATIC QUOTE === */
+  .quote-section {
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .quote-section::before,
+  .quote-section::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .quote-section::before { top: 0; }
+  .quote-section::after { bottom: 0; }
+
+  .quote-mark {
+    font-size: 64px;
+    color: var(--green);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: -10px;
+    font-family: Georgia, serif;
+  }
+
+  .quote-text {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 300;
+    color: var(--text);
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .quote-text strong {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* === STATS === */
+  .stats-section {
+    padding: 80px 0;
+  }
+
+  .stats-section h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--green);
+    text-align: center;
+    margin-bottom: 48px;
+    opacity: 0.8;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .stat-card:hover {
+    border-color: rgba(0,255,136,0.2);
+    transform: translateY(-2px);
+  }
+
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-value.blue { color: var(--blue); }
+  .stat-value.orange { color: var(--orange); }
+  .stat-value.purple { color: var(--purple); }
+  .stat-value.red { color: var(--red); }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* === CTA BOTTOM === */
+  .cta-section {
+    padding: 80px 0 100px;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+
+  .cta-section h2 span {
+    color: var(--green);
+  }
+
+  .cta-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 12px 32px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+  }
+
+  .cta-link:hover {
+    background: rgba(0,255,136,0.1);
+    border-color: var(--green);
+    transform: translateY(-2px);
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  footer .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  footer .footer-text {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  footer .footer-soul {
+    font-size: 11px;
+    color: rgba(0,255,136,0.2);
+    font-style: italic;
+    margin-top: 16px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 12px; }
+    .timeline { padding-left: 48px; }
+    .timeline::before { left: 14px; }
+    .timeline-badge { left: -48px; width: 32px; height: 32px; font-size: 9px; }
+    .timeline-badge::after { width: 32px; height: 32px; }
+    .timeline-card { padding: 20px 22px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-card { padding: 20px 14px; }
+    .stat-value { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container" style="max-width: 960px;">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="lore.html" class="active">Lore</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="efs.html">EFS</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="wave-portrait.png" alt="">
+  </div>
+  <div class="hero-content">
+    <div class="hero-label">Origin Story</div>
+    <h1>Built in <span>6 Days</span>.<br>By One Person.<br>For <span>$5.50/month</span>.</h1>
+    <p class="hero-sub">This is not a startup fairy tale. This is what happens when urgency meets capability and someone decides that waiting is no longer acceptable.</p>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="timeline">
+
+      <!-- Day 0 -->
+      <div class="timeline-entry">
+        <div class="timeline-badge">D0</div>
+        <div class="timeline-card">
+          <h3>The Problem</h3>
+          <p>One person saw what the industry refused to admit: 95% of companies cannot afford cybersecurity. A proper SOC team costs $300K per year. Small and mid-size businesses &mdash; the backbone of every economy &mdash; are left completely defenseless. Attackers know this. They exploit it every single day. This isn't a market gap. It's a moral failure.</p>
+        </div>
+      </div>
+
+      <!-- Day 1-2 -->
+      <div class="timeline-entry">
+        <div class="timeline-badge">D1-2</div>
+        <div class="timeline-card">
+          <h3>The Foundation</h3>
+          <p>Infrastructure from scratch. Not another cloud-rented dashboard with a marketing layer on top &mdash; real autonomous architecture. On-premise first. Sovereign by design. The core principle was non-negotiable: customer data never leaves customer infrastructure. Every component was built to run independently, without calling home, without vendor lock-in, without trust assumptions.</p>
+        </div>
+      </div>
+
+      <!-- Day 3-4 -->
+      <div class="timeline-entry">
+        <div class="timeline-badge">D3-4</div>
+        <div class="timeline-card">
+          <h3>The Fleet</h3>
+          <p>35 AI agents came online. Each one specialized. Threat detection. OSINT collection. Dark web monitoring. Telegram surveillance. Incident response. Not scripts pretending to be intelligent &mdash; actual autonomous decision-making agents that observe, analyze, decide, and act. A full security operations center, compressed into software that runs on minimal hardware.</p>
+        </div>
+      </div>
+
+      <!-- Day 5-6 -->
+      <div class="timeline-entry">
+        <div class="timeline-badge">D5-6</div>
+        <div class="timeline-card">
+          <h3>First Blood</h3>
+          <p>TIA blocked its first real attack. Then another. Then 563 more. Zero breaches. The fleet was tested against real-world threats &mdash; ransomware groups, hacktivists, nation-state-adjacent actors &mdash; and held the line every single time. No simulations. No controlled environments. Production traffic. Real adversaries. Real stakes.</p>
+        </div>
+      </div>
+
+      <!-- Day 7+ -->
+      <div class="timeline-entry">
+        <div class="timeline-badge">D7+</div>
+        <div class="timeline-card">
+          <h3>The Mission</h3>
+          <p>Now in production. Real cases closed. CERT-confirmed intelligence delivered. Two full investigations completed with actionable intelligence that made a difference. Pre-seed stage, raising $150K to scale from one founder's vision to a global platform that protects those who were never meant to be protected.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DRAMATIC QUOTE -->
+<section class="quote-section">
+  <div class="container">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">Most startups take months to build a demo. TIA had <strong>563 real blocked attacks</strong> before writing its first pitch deck.</p>
+  </div>
+</section>
+
+<!-- BY THE NUMBERS -->
+<section class="stats-section">
+  <div class="container">
+    <h2>By The Numbers</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">6</div>
+        <div class="stat-label">Days to Build</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value blue">35</div>
+        <div class="stat-label">AI Agents</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value orange">563</div>
+        <div class="stat-label">Attacks Blocked</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value red">0</div>
+        <div class="stat-label">Breaches</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value purple">$5.50</div>
+        <div class="stat-label">Monthly Cost</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value blue">2</div>
+        <div class="stat-label">CERT-Confirmed Cases</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">1</div>
+        <div class="stat-label">Founder</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>This is just <span>the beginning</span>.</h2>
+    <a href="index.html" class="cta-link">Back to TIA</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">TIA</div>
+    <div class="footer-text">Autonomous AI Security Operations &mdash; Prague, Czech Republic</div>
+    <div class="footer-soul">The soul survives the body swap.</div>
+  </div>
+</footer>
+
+</body>
+</html>

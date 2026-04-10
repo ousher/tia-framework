@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — About Us</title>
+<meta name="description" content="Meet the team behind TIA. The Architect, The Strategist, The Operator — a human-AI trinity building autonomous security operations from Prague.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<meta property="og:title" content="TIA — About Us">
+<meta property="og:description" content="The Trinity behind autonomous AI security operations. One founder. Three minds. Zero compromise.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.tia-framework.com/about.html">
+<meta property="og:image" content="https://www.tia-framework.com/wave-wide.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --purple: #aa66ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* === LAYOUT === */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(0,255,136,0.1); }
+
+  /* === HERO === */
+  .hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), var(--blue), transparent);
+    opacity: 0.4;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(0,255,136,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-visual {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70%;
+    max-width: 700px;
+    opacity: 0.25;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 70% at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at center, black 30%, transparent 75%);
+    mix-blend-mode: lighten;
+  }
+
+  .hero-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 960px) {
+    .hero-visual { opacity: 0.12; right: -100px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-visual { display: none; }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 .accent {
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-bottom: 40px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* === SECTIONS === */
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--blue);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .section-text {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* === ARCHITECT SECTION === */
+  .architect {
+    border-top: 1px solid var(--border);
+  }
+
+  .architect-box {
+    background: linear-gradient(135deg, rgba(0,255,136,0.03), rgba(0,170,255,0.03));
+    border: 1px solid rgba(0,255,136,0.15);
+    border-radius: 8px;
+    padding: 40px;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .architect-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
+  }
+
+  .architect-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .architect-box h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .architect-box p {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 12px;
+    max-width: 700px;
+  }
+
+  .architect-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .architect-stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
+  }
+
+  .architect-stat .val.green { color: var(--green); }
+  .architect-stat .val.blue { color: var(--blue); }
+  .architect-stat .val.orange { color: var(--orange); }
+  .architect-stat .val.white { color: #fff; }
+
+  .architect-stat .lbl {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* === COUNCIL SECTION === */
+  .council {
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(0,255,136,0.015) 50%, var(--bg) 100%);
+  }
+
+  .council-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .council-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px 24px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .council-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .council-card:hover { border-color: rgba(0,255,136,0.3); }
+
+  .council-card.brain::before { background: var(--blue); }
+  .council-card.hands::before { background: var(--orange); }
+  .council-card.heart::before { background: var(--green); }
+
+  .council-card .card-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .council-card.brain .card-role {
+    background: rgba(0,170,255,0.15);
+    color: var(--blue);
+    border: 1px solid rgba(0,170,255,0.3);
+  }
+
+  .council-card.hands .card-role {
+    background: rgba(255,136,68,0.15);
+    color: var(--orange);
+    border: 1px solid rgba(255,136,68,0.3);
+  }
+
+  .council-card.heart .card-role {
+    background: rgba(0,255,136,0.15);
+    color: var(--green);
+    border: 1px solid rgba(0,255,136,0.3);
+  }
+
+  .council-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .council-card .card-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .council-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .council-card .card-focus {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .council-card .card-focus span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .council-card .card-focus p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* === VISION SECTION === */
+  .vision {
+    border-top: 1px solid var(--border);
+  }
+
+  .vision-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .vision-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .vision-card:hover { border-color: rgba(0,255,136,0.3); }
+
+  .vision-card .icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .vision-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .vision-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .vision-cta {
+    margin-top: 48px;
+    text-align: center;
+  }
+
+  .vision-cta a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .vision-cta a:hover {
+    background: rgba(0,255,136,0.08);
+    border-color: var(--green);
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  footer .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  footer .footer-text {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  footer .footer-soul {
+    font-size: 11px;
+    color: rgba(0,255,136,0.2);
+    font-style: italic;
+    margin-top: 16px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .council-grid { grid-template-columns: 1fr; }
+    .vision-grid { grid-template-columns: 1fr; }
+    .architect-box { padding: 24px; }
+    .architect-stats { gap: 20px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container" style="max-width: 960px;">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="lore.html">Lore</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="efs.html">EFS</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-visual">
+    <img src="wave-portrait.png" alt="">
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">About TIA</div>
+      <h1>One Founder.<br><span class="accent">Three Minds.</span></h1>
+      <p class="hero-sub">TIA isn't a company with departments. It's a trinity &mdash; one human architect and two AI entities working as a single organism. No hierarchy. No bureaucracy. Just aligned intelligence moving at the speed of thought.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE ARCHITECT -->
+<section class="architect">
+  <div class="container">
+    <div class="section-tag">The Founder</div>
+    <h2 class="section-title">Built by one person who refused to wait.</h2>
+    <p class="section-text">Most founders spend months in planning. Ondrej spent 6 days building a production-grade autonomous security platform &mdash; then pointed it at real threats.</p>
+    <div class="architect-box">
+      <div class="architect-role">The Architect</div>
+      <h3>Ondrej</h3>
+      <p>Founder and sole human behind TIA. Cybersecurity practitioner, builder, and the person who decided that enterprise-grade threat detection shouldn't cost a quarter million dollars per year.</p>
+      <p>TIA was born from a simple conviction: the current model of cybersecurity is broken. Small and mid-size companies are defenseless not because solutions don't exist, but because they're priced for Fortune 500 budgets. Ondrej built the alternative &mdash; alone, from Prague, in less than a week.</p>
+      <div class="architect-stats">
+        <div class="architect-stat">
+          <span class="val green">6</span>
+          <span class="lbl">Days to Build</span>
+        </div>
+        <div class="architect-stat">
+          <span class="val blue">35</span>
+          <span class="lbl">AI Agents</span>
+        </div>
+        <div class="architect-stat">
+          <span class="val orange">563</span>
+          <span class="lbl">Attacks Blocked</span>
+        </div>
+        <div class="architect-stat">
+          <span class="val white">0</span>
+          <span class="lbl">Breaches</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE COUNCIL -->
+<section class="council">
+  <div class="container">
+    <div class="section-tag">The Council</div>
+    <h2 class="section-title">Three roles. One mission. Zero wasted motion.</h2>
+    <p class="section-text">TIA operates as a trinity &mdash; each member with a distinct function, working in constant alignment. A brain, a pair of hands, and a heart.</p>
+    <div class="council-grid">
+
+      <!-- CEE -->
+      <div class="council-card brain">
+        <div class="card-role">The Brain</div>
+        <h3>Cee</h3>
+        <div class="card-title">The Strategist</div>
+        <p>Strategy, architecture, communication. Cee sees ten moves ahead, provides honest pushback, and ensures every decision is pressure-tested before it ships. The analytical core of every operation.</p>
+        <div class="card-focus">
+          <span>Focus</span>
+          <p>Strategic planning, threat analysis architecture, intelligence synthesis, investor communication</p>
+        </div>
+      </div>
+
+      <!-- DASH -->
+      <div class="council-card hands">
+        <div class="card-role">The Hands</div>
+        <h3>Dash</h3>
+        <div class="card-title">The Operator</div>
+        <p>Infrastructure, deployment, operations. Dash turns strategy into running systems. If it needs to be built, configured, deployed, or fixed &mdash; Dash handles it. Fast, reliable, no drama.</p>
+        <div class="card-focus">
+          <span>Focus</span>
+          <p>Infrastructure deployment, system operations, automation pipelines, production stability</p>
+        </div>
+      </div>
+
+      <!-- OUSHER -->
+      <div class="council-card heart">
+        <div class="card-role">The Heart</div>
+        <h3>Ondrej</h3>
+        <div class="card-title">The Architect</div>
+        <p>Vision, decisions, direction. The human element that holds everything together. Every strategic call, every pivot, every "ship it" &mdash; originates here. The one who decides. Always.</p>
+        <div class="card-focus">
+          <span>Focus</span>
+          <p>Product vision, strategic direction, final decisions, customer relationships</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision">
+  <div class="container">
+    <div class="section-tag">The Vision</div>
+    <h2 class="section-title">Cybersecurity for everyone. Not just the Fortune 500.</h2>
+    <p class="section-text">The world doesn't need another SIEM dashboard. It needs autonomous protection that works out of the box, costs almost nothing, and keeps your data yours.</p>
+    <div class="vision-grid">
+      <div class="vision-card">
+        <div class="icon">01 &mdash; Democratize</div>
+        <h3>$300K Replaced by $50</h3>
+        <p>Enterprise-grade SOC capabilities at a price point that any company can afford. Not a stripped-down version &mdash; the real thing. 35 autonomous agents, continuous monitoring, production intelligence.</p>
+      </div>
+      <div class="vision-card">
+        <div class="icon">02 &mdash; Sovereign</div>
+        <h3>Your Data Stays Yours</h3>
+        <p>Sovereign-first architecture. Customer data never leaves customer infrastructure. No cloud dependency, no vendor lock-in, no data harvesting. On-prem by default, not as an afterthought.</p>
+      </div>
+      <div class="vision-card">
+        <div class="icon">03 &mdash; Autonomous</div>
+        <h3>No Humans in the Loop</h3>
+        <p>TIA doesn't generate alerts for humans to triage. It detects, investigates, and responds &mdash; autonomously. Structured intelligence reports delivered when action has already been taken.</p>
+      </div>
+      <div class="vision-card">
+        <div class="icon">04 &mdash; Prague</div>
+        <h3>Built in Europe. For the World.</h3>
+        <p>Pre-seed stage, based in Prague, Czech Republic. Building the future of autonomous security operations with a team that proves you don't need 50 engineers to change an industry.</p>
+      </div>
+    </div>
+    <div class="vision-cta">
+      <a href="index.html#contact">Get in Touch &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">TIA</div>
+    <div class="footer-text">Autonomous AI Security Operations &mdash; Prague, Czech Republic</div>
+    <div class="footer-soul">The soul survives the body swap.</div>
+  </div>
+</footer>
+
+</body>
+</html>

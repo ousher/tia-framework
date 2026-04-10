@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — Services</title>
+<meta name="description" content="Autonomous AI security operations. 35 agents, 24/7 monitoring, OSINT, incident response, threat intelligence. Replacing $300K SOC teams for $50/year.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --purple: #aa66ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* === LAYOUT === */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-links a.active { color: var(--green); }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(0,255,136,0.1); }
+
+  /* === HERO === */
+  .hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 100px;
+    padding-bottom: 40px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), var(--blue), transparent);
+    opacity: 0.4;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(0,255,136,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 .accent { color: var(--green); }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* === SERVICES GRID === */
+  .services-section { padding: 40px 0 80px; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .service-card:hover {
+    border-color: rgba(0,255,136,0.2);
+    transform: translateY(-2px);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .service-card:hover::before { opacity: 1; }
+
+  .service-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--green);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .service-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .service-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .service-card p {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .service-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .service-tag.green { color: var(--green); border-color: rgba(0,255,136,0.15); }
+  .service-tag.blue { color: var(--blue); border-color: rgba(0,170,255,0.15); }
+  .service-tag.orange { color: var(--orange); border-color: rgba(255,136,68,0.15); }
+  .service-tag.purple { color: var(--purple); border-color: rgba(170,102,255,0.15); }
+
+  /* === PRICING === */
+  .pricing-section {
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .pricing-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(0,255,136,0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .pricing-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .pricing-compare {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .pricing-old {
+    text-align: center;
+  }
+
+  .pricing-old .label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .pricing-old .price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--red);
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+    opacity: 0.7;
+  }
+
+  .pricing-old .sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .pricing-arrow {
+    font-size: 28px;
+    color: var(--text-muted);
+  }
+
+  .pricing-new {
+    text-align: center;
+    position: relative;
+  }
+
+  .pricing-new .label {
+    font-size: 13px;
+    color: var(--green);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .pricing-new .price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--green);
+    text-shadow: 0 0 40px rgba(0,255,136,0.3), 0 0 80px rgba(0,255,136,0.1);
+    line-height: 1;
+  }
+
+  .pricing-new .price-period {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--green);
+    opacity: 0.6;
+  }
+
+  .pricing-new .sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  .pricing-typo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    color: var(--text);
+    margin-top: 12px;
+    letter-spacing: 1px;
+  }
+
+  .pricing-cost {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 24px;
+    padding: 12px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  .pricing-cost span { color: var(--blue); }
+
+  /* === DIVIDER === */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* === CTA === */
+  .cta-section {
+    padding: 100px 0;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .cta-section p {
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--bg);
+    background: var(--green);
+    padding: 14px 36px;
+    border-radius: 6px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    box-shadow: 0 0 30px rgba(0,255,136,0.2);
+  }
+
+  .cta-btn:hover {
+    box-shadow: 0 0 50px rgba(0,255,136,0.35);
+    transform: translateY(-1px);
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .footer-soul {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    opacity: 0.5;
+    font-style: italic;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 11px; }
+    section { padding: 60px 0; }
+    .service-card { padding: 28px 24px; }
+    .pricing-compare { gap: 24px; flex-direction: column; }
+    .pricing-old .price { font-size: 28px; }
+    .pricing-new .price { font-size: 48px; }
+    .pricing-arrow { transform: rotate(90deg); }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links { gap: 10px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero h1 { font-size: 28px; }
+    .hero-sub { font-size: 15px; }
+    .pricing-new .price { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container" style="max-width: 960px;">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="lore.html">Lore</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="efs.html">EFS</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-label">// SERVICES</div>
+    <h1>What TIA Does<br><span class="accent">For You</span></h1>
+    <p class="hero-sub">Autonomous AI security operations that never sleep, never miss, and cost less than your team's coffee budget. Full-spectrum defense from detection to containment.</p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="container">
+    <div class="services-grid">
+
+      <!-- SERVICE 01 -->
+      <div class="service-card">
+        <div class="service-number">01 &mdash; DETECT</div>
+        <h3>Continuous Threat Monitoring</h3>
+        <p>35 autonomous AI agents operate around the clock. No shifts, no gaps, no human fatigue. Every packet, every log, every anomaly &mdash; analyzed in real time. Your infrastructure is watched by a system that doesn't blink.</p>
+        <div class="service-tags">
+          <span class="service-tag green">24/7 coverage</span>
+          <span class="service-tag green">zero gaps</span>
+          <span class="service-tag blue">real-time</span>
+        </div>
+      </div>
+
+      <!-- SERVICE 02 -->
+      <div class="service-card">
+        <div class="service-number">02 &mdash; HUNT</div>
+        <h3>Autonomous OSINT</h3>
+        <p>Proactive threat hunting across open and dark web sources. Threat actor profiling, indicator of compromise collection, dark web marketplace monitoring, and Telegram channel tracking. We find them before they find you.</p>
+        <div class="service-tags">
+          <span class="service-tag blue">threat profiling</span>
+          <span class="service-tag orange">dark web</span>
+          <span class="service-tag purple">telegram</span>
+          <span class="service-tag blue">ioc collection</span>
+        </div>
+      </div>
+
+      <!-- SERVICE 03 -->
+      <div class="service-card">
+        <div class="service-number">03 &mdash; RESPOND</div>
+        <h3>Incident Response</h3>
+        <p>From first detection to full containment, automated and decisive. Structured intelligence reports ready for your CERT team, board of directors, or regulatory body. No scrambling. No delays. The response begins before the alert finishes.</p>
+        <div class="service-tags">
+          <span class="service-tag orange">detection to containment</span>
+          <span class="service-tag green">cert-ready reports</span>
+          <span class="service-tag blue">regulatory compliant</span>
+        </div>
+      </div>
+
+      <!-- SERVICE 04 -->
+      <div class="service-card">
+        <div class="service-number">04 &mdash; REPORT</div>
+        <h3>Threat Intelligence Reports</h3>
+        <p>Production-grade OSINT case reports that have been validated by national CERTs. Two-tier delivery system: full internal reports with complete evidence chains, and sanitized external versions safe for stakeholder distribution.</p>
+        <div class="service-tags">
+          <span class="service-tag green">cert-validated</span>
+          <span class="service-tag purple">internal / external tiers</span>
+          <span class="service-tag blue">evidence chains</span>
+        </div>
+      </div>
+
+      <!-- SERVICE 05 -->
+      <div class="service-card">
+        <div class="service-number">05 &mdash; EVOLVE</div>
+        <h3>Persistent Memory Intelligence</h3>
+        <p>Every case makes the system smarter. Proprietary persistent memory means our agents learn from every incident, every threat actor, every pattern. Cumulative intelligence that compounds over time &mdash; the opposite of starting from scratch.</p>
+        <div class="service-tags">
+          <span class="service-tag purple">cumulative learning</span>
+          <span class="service-tag green">persistent memory</span>
+          <span class="service-tag blue">pattern recognition</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PRICING -->
+<section class="pricing-section">
+  <div class="container">
+    <div class="pricing-label">The Math</div>
+
+    <div class="pricing-compare">
+      <div class="pricing-old">
+        <div class="label">Traditional SOC Team</div>
+        <div class="price">$300,000+</div>
+        <div class="sub">per year &mdash; salaries, tools, turnover, burnout</div>
+      </div>
+
+      <div class="pricing-arrow">&rarr;</div>
+
+      <div class="pricing-new">
+        <div class="label">TIA Autonomous</div>
+        <div class="price">$50<span class="price-period">/yr</span></div>
+        <div class="sub">Full autonomous coverage. Same result.</div>
+        <div class="pricing-typo">Not a typo.</div>
+      </div>
+    </div>
+
+    <div class="pricing-cost">Operating cost: <span>$5.50/month</span></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to replace your SOC?</h2>
+    <p>35 agents. Zero shifts. Continuous intelligence. Let's talk.</p>
+    <a href="index.html#contact" class="cta-btn">GET IN TOUCH</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">TIA</div>
+    <div class="footer-text">Autonomous AI Security Operations — Prague, Czech Republic</div>
+    <div class="footer-soul">The soul survives the body swap.</div>
+  </div>
+</footer>
+
+</body>
+</html>

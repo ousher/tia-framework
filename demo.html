@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — Live Demo</title>
+<meta name="description" content="TIA Live Security Operations Dashboard — 35 autonomous AI agents protecting infrastructure in real-time.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --purple: #aa66ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--green); }
+
+  .nav-cta {
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: all 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    background: rgba(0,255,136,0.1);
+    border-color: var(--green);
+  }
+
+  /* === STATUS BAR === */
+  .status-bar {
+    margin-top: 72px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+
+  .status-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .status-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 1px;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 8px var(--green);
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .status-meta {
+    display: flex;
+    gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .status-meta span { white-space: nowrap; }
+
+  /* === MAIN CONTENT === */
+  .dashboard {
+    padding: 32px 0 60px;
+  }
+
+  /* === STATS GRID === */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .stat-card:hover {
+    border-color: rgba(255,255,255,0.1);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .stat-value.green { color: var(--green); }
+  .stat-value.white { color: #fff; }
+
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Flash on increment */
+  .stat-card.flash {
+    border-color: var(--green);
+    box-shadow: 0 0 20px rgba(0,255,136,0.1);
+  }
+
+  /* Glow effect for opcost */
+  .stat-card.glow::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, rgba(0,255,136,0.08) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  /* Shield icon for breaches */
+  .shield-icon {
+    display: inline-block;
+    margin-right: 6px;
+    opacity: 0.4;
+    font-size: 28px;
+    vertical-align: middle;
+  }
+
+  /* Agent active pulse */
+  .agents-pulse {
+    animation: agentPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes agentPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* === LIVE FEED === */
+  .section-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-header .live-indicator {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  .feed-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    height: 380px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  .feed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .feed-entry {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    animation: slideIn 0.3s ease-out;
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+
+  .feed-entry:hover {
+    background: var(--surface2);
+  }
+
+  .feed-entry.info { color: var(--text-dim); }
+  .feed-entry.warn { color: var(--orange); }
+  .feed-entry.high { color: var(--red); }
+  .feed-entry.critical { color: var(--red); animation: slideIn 0.3s ease-out, critPulse 1s ease-in-out 2; }
+
+  .feed-entry .severity {
+    display: inline-block;
+    min-width: 70px;
+    font-weight: 700;
+  }
+
+  .feed-entry .timestamp { color: var(--text-muted); }
+  .feed-entry .status { color: var(--green); font-weight: 600; }
+  .feed-entry .status.investigating { color: var(--blue); }
+  .feed-entry .status.analyzing { color: var(--orange); }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes critPulse {
+    0%, 100% { background: transparent; }
+    50% { background: rgba(255,68,68,0.1); }
+  }
+
+  .feed-fade {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(transparent, var(--surface));
+    pointer-events: none;
+    border-radius: 0 0 10px 10px;
+  }
+
+  /* === AGENT GRID === */
+  .agent-section {
+    margin-bottom: 32px;
+  }
+
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    max-width: 400px;
+  }
+
+  .agent-dot {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background: rgba(0,255,136,0.15);
+    border: 1px solid rgba(0,255,136,0.2);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .agent-dot.active {
+    background: rgba(0,255,136,0.3);
+    border-color: rgba(0,255,136,0.5);
+    box-shadow: 0 0 8px rgba(0,255,136,0.2);
+  }
+
+  .agent-dot.investigating {
+    background: rgba(0,170,255,0.3);
+    border-color: rgba(0,170,255,0.5);
+    box-shadow: 0 0 8px rgba(0,170,255,0.2);
+  }
+
+  .agent-dot.alert {
+    background: rgba(255,136,68,0.3);
+    border-color: rgba(255,136,68,0.5);
+    box-shadow: 0 0 8px rgba(255,136,68,0.2);
+  }
+
+  .agent-dot:hover {
+    transform: scale(1.2);
+    z-index: 2;
+  }
+
+  .agent-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+  }
+
+  .agent-dot:hover .agent-tooltip {
+    opacity: 1;
+  }
+
+  /* === CASES TICKER === */
+  .cases-ticker {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .ticker-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .ticker-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  /* === DISCLAIMER === */
+  .disclaimer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 24px 0 0;
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+
+  .footer-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+
+  .footer-soul {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-value {
+      font-size: 28px;
+    }
+
+    .status-bar .container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .status-meta {
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .feed-entry {
+      font-size: 11px;
+    }
+
+    .agent-grid {
+      max-width: 100%;
+    }
+
+    .cases-ticker {
+      gap: 20px;
+    }
+
+    .nav-links { gap: 12px; }
+    .nav-links a { font-size: 12px; }
+  }
+
+  @media (max-width: 480px) {
+    .agent-section {
+      display: none;
+    }
+
+    .feed-container {
+      height: 300px;
+    }
+
+    .nav-links a:not(.nav-cta) {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container" style="max-width: 960px;">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="lore.html">Lore</a>
+      <a href="demo.html" class="active">Live Demo</a>
+      <a href="efs.html">EFS</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="container">
+    <div class="status-label">
+      <div class="pulse-dot"></div>
+      TIA FLEET STATUS: OPERATIONAL
+    </div>
+    <div class="status-meta">
+      <span>UPTIME: <span id="uptime" class="mono">47d 13h 22m 00s</span></span>
+      <span id="datetime" class="mono"></span>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+  <div class="container">
+
+    <!-- STATS GRID -->
+    <div class="stats-grid">
+      <div class="stat-card" id="threats-card">
+        <div class="stat-label">Threats Blocked</div>
+        <div class="stat-value green" id="threats-count">563</div>
+        <div class="stat-sub">and counting</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Agents</div>
+        <div class="stat-value green agents-pulse">35/35</div>
+        <div class="stat-sub">all operational</div>
+      </div>
+      <div class="stat-card glow">
+        <div class="stat-label">Monthly OpCost</div>
+        <div class="stat-value green">$5.50</div>
+        <div class="stat-sub">vs $25K industry avg</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Breaches</div>
+        <div class="stat-value white"><span class="shield-icon">&#x1F6E1;</span>0</div>
+        <div class="stat-sub">since deployment</div>
+      </div>
+    </div>
+
+    <!-- LIVE THREAT FEED -->
+    <div class="section-header">
+      <div class="live-indicator"></div>
+      Live Threat Feed
+    </div>
+    <div class="feed-container">
+      <div class="feed-list" id="feed-list"></div>
+      <div class="feed-fade"></div>
+    </div>
+
+    <!-- AGENT GRID -->
+    <div class="agent-section">
+      <div class="section-header">Agent Fleet</div>
+      <div class="agent-grid" id="agent-grid"></div>
+    </div>
+
+    <!-- CASES TICKER -->
+    <div class="cases-ticker">
+      <div class="ticker-item">
+        <span class="ticker-label">Cases Closed</span>
+        <span class="ticker-value">2</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-label">CERT Reports Filed</span>
+        <span class="ticker-value">2</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-label">Countries Monitored</span>
+        <span class="ticker-value">7</span>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer">
+      This dashboard combines real-time threat intelligence from public feeds (NIST NVD, abuse.ch URLhaus) with simulated TIA agent activity. Operational data is classified.
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-logo">TIA</div>
+    <div class="footer-text">Autonomous AI Security Operations — Prague, Czech Republic</div>
+    <div class="footer-soul">The soul survives the body swap.</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // === UPTIME COUNTER ===
+  const uptimeEl = document.getElementById('uptime');
+  let uptimeSecs = 47 * 86400 + 13 * 3600 + 22 * 60; // base: 47d 13h 22m
+  let lastFrame = performance.now();
+
+  function updateUptime(now) {
+    const elapsed = (now - lastFrame) / 1000;
+    if (elapsed >= 1) {
+      uptimeSecs += Math.floor(elapsed);
+      lastFrame = now - ((elapsed % 1) * 1000);
+      const d = Math.floor(uptimeSecs / 86400);
+      const h = Math.floor((uptimeSecs % 86400) / 3600);
+      const m = Math.floor((uptimeSecs % 3600) / 60);
+      const s = uptimeSecs % 60;
+      uptimeEl.textContent = d + 'd ' +
+        String(h).padStart(2, '0') + 'h ' +
+        String(m).padStart(2, '0') + 'm ' +
+        String(s).padStart(2, '0') + 's';
+    }
+    requestAnimationFrame(updateUptime);
+  }
+  requestAnimationFrame(updateUptime);
+
+  // === DATETIME ===
+  const datetimeEl = document.getElementById('datetime');
+  function updateDatetime() {
+    const now = new Date();
+    datetimeEl.textContent = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+  }
+  updateDatetime();
+  setInterval(updateDatetime, 1000);
+
+  // === THREATS COUNTER ===
+  let threats = 563;
+  const threatsEl = document.getElementById('threats-count');
+  const threatsCard = document.getElementById('threats-card');
+
+  function scheduleNextThreat() {
+    const delay = (15 + Math.random() * 30) * 1000; // 15-45s
+    setTimeout(function() {
+      threats++;
+      threatsEl.textContent = threats.toLocaleString();
+      threatsCard.classList.add('flash');
+      setTimeout(function() { threatsCard.classList.remove('flash'); }, 600);
+      scheduleNextThreat();
+    }, delay);
+  }
+  scheduleNextThreat();
+
+  // === LIVE THREAT FEED ===
+  const feedList = document.getElementById('feed-list');
+  const MAX_FEED = 30;
+
+  const rfc1918 = function() {
+    const ranges = [
+      function() { return '10.' + r(1,254) + '.' + r(0,255) + '.' + r(1,254); },
+      function() { return '172.' + r(16,31) + '.' + r(0,255) + '.' + r(1,254); },
+      function() { return '192.168.' + r(0,255) + '.' + r(1,254); },
+      function() { return '198.51.100.' + r(1,254); },
+      function() { return '203.0.113.' + r(1,254); }
+    ];
+    return ranges[Math.floor(Math.random() * ranges.length)]();
+  };
+
+  function r(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+  const domains = [
+    'susp-cdn.xyz', 'x4r7.top', 'darknode.cc', 'fasttunnel.ru',
+    'payload-drop.net', 'c2relay.info', 'exfil-proxy.biz', 'mal-beacon.io'
+  ];
+
+  const hashes = [
+    'a1b2c3d4e5f6...', '9f8e7d6c5b4a...', 'deadbeef0123...', 'cafe1234abcd...'
+  ];
+
+  const eventTemplates = [
+    { sev: 'info', gen: function() { return 'Port scan detected from ' + rfc1918() + ' — <span class="status">BLOCKED</span>'; }},
+    { sev: 'warn', gen: function() { return 'Suspicious DNS query to ' + domains[r(0, domains.length-1)] + ' — <span class="status investigating">INVESTIGATING</span>'; }},
+    { sev: 'high', gen: function() { return 'Brute force attempt on SSH (' + r(8,47) + ' attempts) from ' + rfc1918() + ' — <span class="status">BLOCKED</span>'; }},
+    { sev: 'info', gen: function() { return 'Telegram channel monitored — ' + r(1,8) + ' new posts analyzed'; }},
+    { sev: 'warn', gen: function() { return 'New IOC matched: SHA256 ' + hashes[r(0, hashes.length-1)] + ' — <span class="status">QUARANTINED</span>'; }},
+    { sev: 'info', gen: function() { return 'Dark web scan complete — ' + r(0,2) + ' mentions found'; }},
+    { sev: 'high', gen: function() { return 'Ransomware signature detected in email attachment — <span class="status">BLOCKED</span>'; }},
+    { sev: 'info', gen: function() { return 'OSINT sweep: ' + r(6,18) + ' threat feeds processed'; }},
+    { sev: 'warn', gen: function() { return 'Anomalous outbound traffic pattern from ' + rfc1918() + ' — <span class="status analyzing">ANALYZING</span>'; }},
+    { sev: 'info', gen: function() { return 'Agent heartbeat: all 35 agents responsive'; }},
+    { sev: 'info', gen: function() { return 'Firewall rules updated — ' + r(2,12) + ' new rules applied'; }},
+    { sev: 'info', gen: function() { return 'Vulnerability scan complete — ' + r(0,3) + ' advisories reviewed'; }},
+    { sev: 'high', gen: function() { return 'Credential stuffing attack from ' + rfc1918() + ' (' + r(50,300) + ' attempts) — <span class="status">BLOCKED</span>'; }},
+    { sev: 'warn', gen: function() { return 'TLS certificate anomaly on ' + domains[r(0, domains.length-1)] + ' — <span class="status investigating">INVESTIGATING</span>'; }},
+    { sev: 'info', gen: function() { return 'Geofence check: ' + r(0,1) + ' connections from flagged regions'; }}
+  ];
+
+  // === REAL THREAT INTEL FEEDS ===
+  let realCVEs = [];
+  let realURLs = [];
+  let realIntelIndex = 0;
+
+  // Fetch real CVEs from NIST NVD
+  function fetchRealCVEs() {
+    fetch('https://services.nvd.nist.gov/rest/json/cves/2.0/?resultsPerPage=20&startIndex=0')
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.vulnerabilities) {
+          realCVEs = data.vulnerabilities.map(function(v) {
+            var cve = v.cve;
+            var id = cve.id;
+            var score = '--';
+            var severity = 'info';
+            if (cve.metrics && cve.metrics.cvssMetricV31 && cve.metrics.cvssMetricV31[0]) {
+              score = cve.metrics.cvssMetricV31[0].cvssData.baseScore;
+              if (score >= 9) severity = 'critical';
+              else if (score >= 7) severity = 'high';
+              else if (score >= 4) severity = 'warn';
+            } else if (cve.metrics && cve.metrics.cvssMetricV2 && cve.metrics.cvssMetricV2[0]) {
+              score = cve.metrics.cvssMetricV2[0].cvssData.baseScore;
+              if (score >= 9) severity = 'critical';
+              else if (score >= 7) severity = 'high';
+              else if (score >= 4) severity = 'warn';
+            }
+            var desc = 'No description';
+            if (cve.descriptions && cve.descriptions[0]) {
+              desc = cve.descriptions[0].value.substring(0, 80);
+            }
+            return { id: id, score: score, severity: severity, desc: desc };
+          });
+        }
+      })
+      .catch(function() { /* silent fail — fall back to simulated */ });
+  }
+
+  // Fetch real malicious URLs from abuse.ch URLhaus
+  function fetchRealURLhaus() {
+    fetch('https://urlhaus-api.abuse.ch/v1/urls/recent/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'limit=20'
+    })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.urls) {
+          realURLs = data.urls.map(function(u) {
+            var host = '--';
+            try { host = new URL(u.url).hostname; } catch(e) {}
+            return {
+              host: host,
+              threat: u.threat || 'malware',
+              tags: (u.tags || []).join(', ') || 'untagged',
+              status: u.url_status || 'active'
+            };
+          });
+        }
+      })
+      .catch(function() { /* silent fail */ });
+  }
+
+  // Add real intel templates that pull from fetched data
+  function getRealIntelEntry() {
+    realIntelIndex++;
+    // Alternate between CVE and URLhaus data
+    if (realIntelIndex % 2 === 0 && realCVEs.length > 0) {
+      var cve = realCVEs[Math.floor(Math.random() * realCVEs.length)];
+      var statusClass = cve.severity === 'high' || cve.severity === 'critical' ? '' : ' investigating';
+      var action = cve.score >= 7 ? 'PATCHING' : 'MONITORED';
+      return {
+        sev: cve.severity,
+        text: 'NVD INTEL — ' + cve.id + ' (CVSS ' + cve.score + ') — ' + cve.desc + ' — <span class="status' + statusClass + '">' + action + '</span>'
+      };
+    } else if (realURLs.length > 0) {
+      var url = realURLs[Math.floor(Math.random() * realURLs.length)];
+      return {
+        sev: 'high',
+        text: 'URLhaus LIVE — Malicious host <span style="color:var(--red)">' + url.host + '</span> [' + url.threat + '] — Tags: ' + url.tags + ' — <span class="status">BLOCKLISTED</span>'
+      };
+    }
+    return null; // no real data yet, use simulated
+  }
+
+  // Fetch real data on load and refresh every 5 minutes
+  fetchRealCVEs();
+  fetchRealURLhaus();
+  setInterval(fetchRealCVEs, 300000);
+  setInterval(fetchRealURLhaus, 300000);
+
+  function getTimestamp() {
+    const now = new Date();
+    return String(now.getHours()).padStart(2, '0') + ':' +
+           String(now.getMinutes()).padStart(2, '0') + ':' +
+           String(now.getSeconds()).padStart(2, '0');
+  }
+
+  function addFeedEntry() {
+    var sev, content;
+
+    // 40% chance to use real intel if available
+    if (Math.random() < 0.4) {
+      var realEntry = getRealIntelEntry();
+      if (realEntry) {
+        sev = realEntry.sev;
+        content = realEntry.text;
+      }
+    }
+
+    // Fall back to simulated
+    if (!content) {
+      var tpl = eventTemplates[Math.floor(Math.random() * eventTemplates.length)];
+      sev = tpl.sev;
+      content = tpl.gen();
+    }
+
+    const entry = document.createElement('div');
+    entry.className = 'feed-entry ' + sev;
+
+    const sevLabel = sev.toUpperCase();
+    const sevPad = sevLabel.length < 4 ? sevLabel + '    ' : sevLabel;
+
+    entry.innerHTML = '<span class="timestamp">[' + getTimestamp() + ']</span> ' +
+      '<span class="severity">' + sevPad + '</span> — ' + content;
+
+    // Insert at top
+    if (feedList.firstChild) {
+      feedList.insertBefore(entry, feedList.firstChild);
+    } else {
+      feedList.appendChild(entry);
+    }
+
+    // Cap entries
+    while (feedList.children.length > MAX_FEED) {
+      const last = feedList.lastChild;
+      last.style.opacity = '0';
+      feedList.removeChild(last);
+    }
+  }
+
+  // Initial burst
+  for (let i = 0; i < 8; i++) {
+    addFeedEntry();
+  }
+
+  function scheduleFeedEntry() {
+    const delay = (3 + Math.random() * 5) * 1000; // 3-8s
+    setTimeout(function() {
+      addFeedEntry();
+      scheduleFeedEntry();
+    }, delay);
+  }
+  scheduleFeedEntry();
+
+  // === AGENT GRID ===
+  const agentGrid = document.getElementById('agent-grid');
+  const agentNames = [
+    'Threat Monitor #1', 'Threat Monitor #2', 'Threat Monitor #3',
+    'OSINT Collector #1', 'OSINT Collector #2', 'OSINT Collector #3',
+    'Network Analyzer #1', 'Network Analyzer #2', 'Network Analyzer #3',
+    'Dark Web Scanner #1', 'Dark Web Scanner #2',
+    'Incident Responder #1', 'Incident Responder #2', 'Incident Responder #3',
+    'Email Security Agent #1', 'Email Security Agent #2',
+    'DNS Watchdog #1', 'DNS Watchdog #2',
+    'Firewall Enforcer #1', 'Firewall Enforcer #2',
+    'Log Correlator #1', 'Log Correlator #2', 'Log Correlator #3',
+    'Vulnerability Scanner #1', 'Vulnerability Scanner #2',
+    'Credential Monitor #1', 'Credential Monitor #2',
+    'Traffic Analyzer #1', 'Traffic Analyzer #2',
+    'Geo-Fence Agent #1', 'Geo-Fence Agent #2',
+    'Behavioral Profiler #1', 'Behavioral Profiler #2',
+    'Alert Dispatcher #1', 'Fleet Coordinator #1'
+  ];
+
+  const dots = [];
+  for (let i = 0; i < 35; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'agent-dot';
+    const tooltip = document.createElement('div');
+    tooltip.className = 'agent-tooltip';
+    tooltip.textContent = agentNames[i];
+    dot.appendChild(tooltip);
+    agentGrid.appendChild(dot);
+    dots.push(dot);
+  }
+
+  // Random agent activity
+  function agentActivity() {
+    // Random pulse: set some to active
+    const idx = Math.floor(Math.random() * 35);
+    dots[idx].classList.add('active');
+    setTimeout(function() { dots[idx].classList.remove('active'); }, 1000 + Math.random() * 2000);
+
+    // Occasionally investigating or alert
+    if (Math.random() < 0.15) {
+      const idx2 = Math.floor(Math.random() * 35);
+      const state = Math.random() < 0.6 ? 'investigating' : 'alert';
+      dots[idx2].classList.add(state);
+      setTimeout(function() { dots[idx2].classList.remove(state); }, 2000 + Math.random() * 3000);
+    }
+  }
+
+  setInterval(agentActivity, 800);
+  // Initial activity burst
+  for (let i = 0; i < 8; i++) {
+    setTimeout(agentActivity, i * 200);
+  }
+
+})();
+</script>
+
+</body>
+</html>
