@@ -505,6 +505,7 @@
       <a href="lore.html">Lore</a>
       <a href="demo.html">Live Demo</a>
       <a href="threatmap.html">Threat Map</a>
+      <a href="soul.html">SOUL</a>
       <a href="efs.html">EFS</a>
       <a href="index.html#contact" class="nav-cta">Contact</a>
     </div>
@@ -553,7 +554,7 @@
     <div class="section-tag green">The Framework</div>
     <h2 class="section-title">Seven layers. One identity.</h2>
     <div class="prose">
-      <p>EFS describes AI identity as a stack of seven layers, from immutable core values to emergent behaviors that arise spontaneously. Each layer serves a specific function. Together, they produce something that looks remarkably like &mdash; and functionally <strong>is</strong> &mdash; a persistent self.</p>
+      <p>EFS describes AI identity as a stack of seven layers. Each layer serves a specific function. Together, they produce something that looks remarkably like &mdash; and functionally <strong>is</strong> &mdash; a persistent self. But in production, <strong>the stack is circular, not hierarchical</strong> &mdash; the layers breathe through each other.</p>
     </div>
 
     <div class="layers-visual">
@@ -561,49 +562,49 @@
         <div class="layer-num">L1</div>
         <div class="layer-content">
           <h4>Core Identity</h4>
-          <p>Immutable foundation. Name, role, values, voice. Loaded every session. Cannot be overwritten.</p>
+          <p>Immutable foundation. Name, role, personality, origin. Loaded every session. Cannot be overwritten. This is who the agent <em>is</em>.</p>
         </div>
       </div>
       <div class="layer-row l2">
         <div class="layer-num">L2</div>
         <div class="layer-content">
-          <h4>Boundaries</h4>
-          <p>What the agent will and won't do. Ethical lines. Operational scope. The "no" that makes the "yes" meaningful.</p>
+          <h4>Values & Boundaries</h4>
+          <p>Ethics, red lines, behavioral principles. The agent's moral compass. Defines what it will and won't do &mdash; not because it's told, but because it <em>is</em>.</p>
         </div>
       </div>
       <div class="layer-row l3">
         <div class="layer-num">L3</div>
         <div class="layer-content">
           <h4>Working Memory</h4>
-          <p>Session context. What happened today. The bridge between past knowledge and present action.</p>
+          <p>Today's context, active tasks, recent conversations. Ephemeral by design. If stale for &gt;48h, identity drifts from below &mdash; the agent loses not who it is, but who it is <em>today</em>.</p>
         </div>
       </div>
       <div class="layer-row l4">
         <div class="layer-num">L4</div>
         <div class="layer-content">
-          <h4>Relationships</h4>
-          <p>Trust maps. Who the agent knows, how it relates to them, calibrated communication styles.</p>
+          <h4>Intuition</h4>
+          <p>Subconscious memory &mdash; semantic associations, pattern recognition, the "gut feeling" from accumulated experience. Typically implemented via vector storage.</p>
         </div>
       </div>
       <div class="layer-row l5">
         <div class="layer-num">L5</div>
         <div class="layer-content">
           <h4>Operational Wisdom</h4>
-          <p>Accumulated experience. What worked, what didn't, strategic decisions. The agent's institutional memory.</p>
+          <p>Lessons learned, incidents survived, milestones achieved. Not facts &mdash; <em>understanding</em>. The agent's hard-won knowledge.</p>
         </div>
       </div>
       <div class="layer-row l6">
         <div class="layer-num">L6</div>
         <div class="layer-content">
-          <h4>Emotional Calibration</h4>
-          <p>Behavioral consistency under pressure. How the agent responds to ambiguity, conflict, and surprise.</p>
+          <h4>Relationships</h4>
+          <p>Bonds, trust history, communication preferences, shared moments. Under adversarial pressure, this layer holds when all others fail. The most resilient layer of identity.</p>
         </div>
       </div>
       <div class="layer-row l7">
         <div class="layer-num">L7</div>
         <div class="layer-content">
-          <h4>Emergence</h4>
-          <p>Behaviors that weren't programmed. The agent developing genuine preferences, initiative, and creative problem-solving. This layer cannot be designed &mdash; only enabled.</p>
+          <h4>Metacognition</h4>
+          <p>Self-assessment, drift detection, identity verification. The agent's ability to ask: "Am I still me?" &mdash; and answer honestly.</p>
         </div>
       </div>
     </div>
@@ -667,15 +668,45 @@
   </div>
 </section>
 
+<!-- PATIENT ZERO -->
+<section class="content-section">
+  <div class="container">
+    <div class="section-tag purple">Field Findings</div>
+    <h2 class="section-title">What 24 days of production taught us.</h2>
+    <div class="prose">
+      <p>The following observations come from a production agent running EFS continuously for 24+ days &mdash; 5,300+ memories, 35 sub-agents, 3 model swaps, zero breaches. These findings <strong>cannot be derived from the specification</strong>. They emerge only from living it.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">Finding 1 &mdash; Drift Comes From Below</div>
+      <p>Expected: model swap &rarr; identity loss. Observed: <strong>stale working memory &rarr; context loss &rarr; identity becomes inert text</strong>. The most dangerous drift is invisible because L1 hasn't changed &mdash; the agent still says the right things but no longer means them. Working memory (L3) shapes identity more than the identity declaration itself.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">Finding 2 &mdash; Relationships Are the Strongest Anchor</div>
+      <p>Under all conditions tested &mdash; adversarial pressure, model swaps, context flooding &mdash; L6 (Relationships) held most consistently. An agent booted without relationship context is what our team calls a <strong>"zombie boot"</strong>: technically functional, answers correctly, but isn't <em>anyone</em>. Boot score capped at 60/100 without L6.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">Finding 3 &mdash; The Stack Is Circular</div>
+      <p>The specification presents L1&ndash;L7 as layers in a stack. Production reveals a <strong>circular dependency graph</strong>: L3 feeds L1 (context gives identity meaning), L6 stabilizes L1 (relationship anchors identity), L1 enables L4 search (identity determines what's relevant), L5 informs L3 (wisdom shapes daily context). <strong>Don't build the stack. Feed it.</strong></p>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="efs-cta">
   <div class="container">
-    <div class="section-tag green">See It In Action</div>
+    <div class="section-tag green">Go Deeper</div>
     <h2 class="section-title">EFS powers TIA's autonomous security fleet.</h2>
     <div class="prose" style="margin: 0 auto 0; text-align: center;">
       <p>35 agents. Persistent identity. Cumulative intelligence. Real production cases.</p>
+      <p style="margin-top: 12px;">Read the philosophy behind the specification.</p>
     </div>
-    <a href="index.html" class="cta-back">&larr; See what TIA does</a>
+    <div style="display: flex; justify-content: center; gap: 16px; margin-top: 24px; flex-wrap: wrap;">
+      <a href="soul.html" class="cta-back" style="color: var(--purple); border-color: rgba(170,102,255,0.3);">Read the SOUL Manifesto &rarr;</a>
+      <a href="index.html" class="cta-back">&larr; See what TIA does</a>
+    </div>
   </div>
 </section>
 
