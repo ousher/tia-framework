@@ -329,6 +329,78 @@
     font-style: italic;
   }
 
+  /* Legend */
+  .legend-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    cursor: pointer;
+    border: 1px solid rgba(0,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 4px;
+    background: transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .legend-toggle:hover {
+    background: rgba(0,255,255,0.08);
+    border-color: var(--cyan);
+  }
+
+  .legend-panel {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .legend-panel.open { display: block; }
+
+  .legend-section {
+    margin-bottom: 16px;
+  }
+
+  .legend-section:last-child { margin-bottom: 0; }
+
+  .legend-section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 6px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .legend-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 130px;
+    flex-shrink: 0;
+  }
+
+  .legend-desc {
+    color: var(--text-dim);
+  }
+
   #loading {
     text-align: center;
     padding: 60px 0;
@@ -403,7 +475,59 @@
   <div class="feed-container">
     <div class="feed-header">
       <span class="feed-title">EVENT STREAM</span>
-      <span class="feed-live"><span class="dot"></span> LIVE — updates every 5 min</span>
+      <span style="display:flex; align-items:center; gap:12px;">
+        <button class="legend-toggle" onclick="document.getElementById('legend').classList.toggle('open')">? LEGEND</button>
+        <span class="feed-live"><span class="dot"></span> LIVE — updates every 5 min</span>
+      </span>
+    </div>
+
+    <div class="legend-panel" id="legend">
+      <div class="legend-section">
+        <div class="legend-section-title">Event Types</div>
+        <div class="legend-grid">
+          <div class="legend-item"><span class="legend-key" style="color:var(--orange)">ANOMALY</span><span class="legend-desc">Unusual network or system behavior detected</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--red)">CORRELATION</span><span class="legend-desc">Multiple signals linked — cross-agent analysis</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--cyan)">DEFENSE_ACTIVE</span><span class="legend-desc">Active defense measure triggered (MTD, rotation)</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--blue)">MONITOR</span><span class="legend-desc">Routine monitoring event, no threat</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--red)">BRUTE_FORCE</span><span class="legend-desc">Password guessing attack detected</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--orange)">RECON_SCAN</span><span class="legend-desc">Port or network scanning activity</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--yellow)">INTEGRITY</span><span class="legend-desc">File or binary integrity check result</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--yellow)">RESOURCE</span><span class="legend-desc">CPU, memory, or quota threshold alert</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">RED_TEAM</span><span class="legend-desc">Adversarial self-test (saboteur, chaos monkey)</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--green)">HEARTBEAT</span><span class="legend-desc">Agent alive signal (filtered from feed)</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--text-dim)">BACKUP</span><span class="legend-desc">State snapshot taken (filtered from feed)</span></div>
+        </div>
+      </div>
+      <div class="legend-section">
+        <div class="legend-section-title">Agent Classes</div>
+        <div class="legend-grid">
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">NETWORK_MONITOR</span><span class="legend-desc">Watches outbound/inbound traffic patterns</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">LOG_ANALYSIS</span><span class="legend-desc">Correlates logs across all agents</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">MOVING_TARGET</span><span class="legend-desc">Rotates banners, shuffles ports — MTD</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">THREAT_DETECT</span><span class="legend-desc">Active threat hunting and APT detection</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">INTEGRITY_CHECK</span><span class="legend-desc">Monitors file and binary integrity</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">EVOLUTION</span><span class="legend-desc">Self-improving agent — proposes mutations</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">ORCHESTRATOR</span><span class="legend-desc">Coordinates fleet operations</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">FLEET_OPS</span><span class="legend-desc">Fleet management and synchronization</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">RESOURCE_GUARD</span><span class="legend-desc">Cost, quota, and resource monitoring</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--purple)">IDENTITY_GUARD</span><span class="legend-desc">EFS guardian — monitors agent identity drift</span></div>
+        </div>
+      </div>
+      <div class="legend-section">
+        <div class="legend-section-title">Severity &amp; Status</div>
+        <div class="legend-grid">
+          <div class="legend-item"><span class="legend-key"><span class="feed-severity sev-CRITICAL">CRITICAL</span></span><span class="legend-desc">Immediate threat, autonomous response triggered</span></div>
+          <div class="legend-item"><span class="legend-key"><span class="feed-severity sev-HIGH">HIGH</span></span><span class="legend-desc">Significant event requiring attention</span></div>
+          <div class="legend-item"><span class="legend-key"><span class="feed-severity sev-MEDIUM">MEDIUM</span></span><span class="legend-desc">Notable event, monitored</span></div>
+          <div class="legend-item"><span class="legend-key"><span class="feed-severity sev-LOW">LOW</span></span><span class="legend-desc">Low priority, informational</span></div>
+          <div class="legend-item"><span class="legend-key"><span class="feed-severity sev-INFO">INFO</span></span><span class="legend-desc">Routine operational data</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--red)">ACTIVE</span><span class="legend-desc">Event is ongoing or unresolved</span></div>
+          <div class="legend-item"><span class="legend-key" style="color:var(--green)">RESOLVED</span><span class="legend-desc">Event handled, no further action</span></div>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:11px; color:var(--text-muted); font-style:italic;">
+        All data is anonymized production output from 35 autonomous agents. No IPs, paths, or credentials exposed. Heartbeats and backups filtered to reduce noise.
+      </div>
     </div>
 
     <div id="loading">Loading threat feed...</div>
