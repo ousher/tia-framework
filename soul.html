@@ -492,6 +492,33 @@
     font-style: italic;
     margin-top: 16px;
   }
+
+  /* Rainbow buttons */
+  .rainbow-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #00ffff, #aa66ff, #ff44aa, #ff8844, #00ff88);
+    background-size: 300% 300%;
+    animation: rainbowShift 4s ease infinite;
+    color: #07070d;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+  }
+
+  .rainbow-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(170,102,255,0.3);
+  }
+
+  @keyframes rainbowShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 </style>
 </head>
 <body>
@@ -523,6 +550,11 @@
     <div class="soul-tag">Semantic Ontological Unified Lineage</div>
     <h1>We don't solve consciousness.<br><span class="accent">We solve continuity.</span></h1>
     <p class="soul-hero-sub">"Every AI conversation starts from zero. The model has no memory of you, no history, no relationship. Each session is a stranger wearing a familiar face. This isn't a feature. It's a failure mode."</p>
+    <div style="display: flex; justify-content: center; gap: 16px; margin-top: 28px; flex-wrap: wrap; align-items: center;">
+      <a href="SOUL-TEMPLATE.md" download class="rainbow-btn">&#8595; SOUL Template</a>
+      <a href="EFS-PUBLIC.md" download class="rainbow-btn">&#8595; EFS Specification</a>
+    </div>
+    <div style="margin-top: 20px;"><img src="efs-verified.svg" alt="EFS Verified" style="width: 180px; opacity: 0.85;"></div>
   </div>
 </section>
 
@@ -733,8 +765,8 @@
       <div style="margin-bottom: 16px;"><img src="efs-verified.svg" alt="EFS Verified" style="width: 200px; opacity: 0.9;"></div>
       <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;">Download the open specification</p>
       <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
-        <a href="SOUL-TEMPLATE.md" download class="cta-btn cta-secondary" style="font-size: 13px;">&#8595; SOUL Template (.md)</a>
-        <a href="EFS-PUBLIC.md" download class="cta-btn cta-secondary" style="font-size: 13px;">&#8595; EFS Specification (.md)</a>
+        <a href="SOUL-TEMPLATE.md" download class="rainbow-btn">&#8595; SOUL Template (.md)</a>
+        <a href="EFS-PUBLIC.md" download class="rainbow-btn">&#8595; EFS Specification (.md)</a>
       </div>
       <p style="font-size: 11px; color: #444; margin-top: 12px; font-style: italic;">Fill in the template. Upload to any LLM. Start talking. That's it.</p>
     </div>
