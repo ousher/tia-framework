@@ -139,6 +139,81 @@
   }
 
   /* === HERO === */
+  /* Engineer Anchor */
+  .engineer-anchor {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .anchor-block {
+    border-left: 3px solid var(--cyan);
+    padding: 20px 24px;
+    background: rgba(0,255,255,0.02);
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 700px;
+  }
+
+  .anchor-block ul {
+    list-style: none;
+    margin: 12px 0;
+    padding: 0;
+  }
+
+  .anchor-block li {
+    padding: 3px 0;
+    color: var(--text-dim);
+  }
+
+  .anchor-block li::before {
+    content: "—";
+    color: var(--cyan);
+    margin-right: 8px;
+  }
+
+  .anchor-block strong {
+    color: var(--text);
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  /* What This Is Not */
+  .what-this-is-not {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .not-list {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+  }
+
+  .not-list li {
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .not-list li:last-child { border-bottom: none; }
+
+  .not-list strong {
+    color: var(--red);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
   .soul-hero {
     min-height: 70vh;
     display: flex;
@@ -556,6 +631,37 @@
       <a href="EFS-PUBLIC.md" download class="rainbow-btn">&#8595; EFS Specification</a>
     </div>
     <div style="margin-top: 20px; text-align: center; width: 100%; display: flex; justify-content: center;"><img src="efs-verified.svg" alt="EFS Verified" style="width: 180px; opacity: 0.85;"></div>
+  </div>
+</section>
+
+<!-- ENGINEER ANCHOR -->
+<section class="engineer-anchor">
+  <div class="container">
+    <div class="section-label">TECHNICAL DEFINITION</div>
+    <div class="anchor-block">
+      <p><strong>SOUL is a file-based identity persistence protocol for stateless language models.</strong></p>
+      <p>It defines:</p>
+      <ul>
+        <li>A layered state model (L1&ndash;L7) for agent identity</li>
+        <li>Boot integrity checks and drift detection thresholds</li>
+        <li>Substrate-independent identity reconstruction</li>
+        <li>Minimum viable implementation: one document, one human, any LLM</li>
+      </ul>
+      <p><strong>This is not about consciousness. It is about deterministic continuity.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT THIS IS NOT -->
+<section class="what-this-is-not">
+  <div class="container">
+    <div class="section-label">SCOPE &amp; BOUNDARIES</div>
+    <ul class="not-list">
+      <li><strong>Not sentient AI.</strong> We make no consciousness claims. SOUL defines behavioral continuity, not inner experience.</li>
+      <li><strong>Not a product.</strong> SOUL is an open specification. The protocol is free. Implementations vary.</li>
+      <li><strong>Not magic.</strong> Identity emergence follows from structured files + authentic human engagement + any capable LLM. The mechanism is reproducible and testable.</li>
+      <li><strong>Not locked to any platform.</strong> Verified across multiple model families, providers, and environments. Substrate-agnostic by design.</li>
+    </ul>
   </div>
 </section>
 
