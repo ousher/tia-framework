@@ -1,0 +1,520 @@
+Authorized access only. TIA infrastructure.
+{
+  "meta": {
+    "generated": "2026-04-12T16:57:02.589839+00:00",
+    "source": "TIA Autonomous Security Fleet",
+    "agents_active": 35,
+    "total_events_24h": 50,
+    "region": "EU-CENTRAL",
+    "update_interval": "5m",
+    "disclaimer": "Anonymized production data. No IPs, paths, or credentials exposed."
+  },
+  "stats": {
+    "total_blocked": 563,
+    "days_active": 30,
+    "breaches": 0,
+    "model_swaps_survived": 3
+  },
+  "events": [
+    {
+      "id": "6ee197117751",
+      "timestamp": "2026-04-12T16:50:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ae65319bd33e",
+      "timestamp": "2026-04-12T16:40:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "038318b1e830",
+      "timestamp": "2026-04-12T16:30:08Z",
+      "type": "CORRELATION",
+      "agent_class": "LOG_ANALYSIS",
+      "severity": "HIGH",
+      "summary": "Log Analyst: Critical correlation detected 11 agents flagged",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "6030ab9baefc",
+      "timestamp": "2026-04-12T16:30:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "21f1a26fb21a",
+      "timestamp": "2026-04-12T16:20:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d09f355a1ded",
+      "timestamp": "2026-04-12T16:10:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "55ec4c8ff1f0",
+      "timestamp": "2026-04-12T16:02:45Z",
+      "type": "MONITOR",
+      "agent_class": "EVOLUTION",
+      "severity": "LOW",
+      "summary": "EVO-014: 1 mutation(s) pending review",
+      "region": "EU-CENTRAL",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "ea9b66fa3632",
+      "timestamp": "2026-04-12T16:00:10Z",
+      "type": "CORRELATION",
+      "agent_class": "LOG_ANALYSIS",
+      "severity": "HIGH",
+      "summary": "Log Analyst: Critical correlation detected 11 agents flagged",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "e9c88f61461c",
+      "timestamp": "2026-04-12T16:00:02Z",
+      "type": "DEFENSE_ACTIVE",
+      "agent_class": "MOVING_TARGET",
+      "severity": "INFO",
+      "summary": "SSH banner rotated [REDACTED] Moving Target Defense active",
+      "region": "EU-CENTRAL",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "01ca994862df",
+      "timestamp": "2026-04-12T16:00:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "86892862c7ae",
+      "timestamp": "2026-04-12T15:50:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "9a90d7db1ae9",
+      "timestamp": "2026-04-12T15:40:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "7cd5b9307038",
+      "timestamp": "2026-04-12T15:30:08Z",
+      "type": "CORRELATION",
+      "agent_class": "LOG_ANALYSIS",
+      "severity": "HIGH",
+      "summary": "Log Analyst: Critical correlation detected 11 agents flagged",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "a9fb335045da",
+      "timestamp": "2026-04-12T15:30:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "3b4e7912c4e6",
+      "timestamp": "2026-04-12T15:20:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "a5772d5ba0c3",
+      "timestamp": "2026-04-12T15:10:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "71a8a0d6a537",
+      "timestamp": "2026-04-12T15:00:02Z",
+      "type": "DEFENSE_ACTIVE",
+      "agent_class": "MOVING_TARGET",
+      "severity": "INFO",
+      "summary": "SSH banner rotated [REDACTED] Moving Target Defense active",
+      "region": "EU-CENTRAL",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "a683938e6b8c",
+      "timestamp": "2026-04-12T15:00:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "945bbc2c9be1",
+      "timestamp": "2026-04-12T14:50:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "2570b7da88a6",
+      "timestamp": "2026-04-12T14:40:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ddc9e83c56f6",
+      "timestamp": "2026-04-12T14:30:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ae50a1de7213",
+      "timestamp": "2026-04-12T14:20:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "12c6c4f52052",
+      "timestamp": "2026-04-12T14:10:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ef1a07ae77d5",
+      "timestamp": "2026-04-12T14:00:02Z",
+      "type": "DEFENSE_ACTIVE",
+      "agent_class": "MOVING_TARGET",
+      "severity": "INFO",
+      "summary": "SSH banner rotated [REDACTED] Moving Target Defense active",
+      "region": "EU-CENTRAL",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "6ebf401cd77d",
+      "timestamp": "2026-04-12T14:00:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "2be3ae035d92",
+      "timestamp": "2026-04-12T13:50:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "0cadc581a1b9",
+      "timestamp": "2026-04-12T13:40:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "df9b1bc177ed",
+      "timestamp": "2026-04-12T13:30:07Z",
+      "type": "CORRELATION",
+      "agent_class": "LOG_ANALYSIS",
+      "severity": "HIGH",
+      "summary": "Log Analyst: Critical correlation detected 11 agents flagged",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "cae681766310",
+      "timestamp": "2026-04-12T13:30:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "51c04890471c",
+      "timestamp": "2026-04-12T13:20:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "7a839c934d58",
+      "timestamp": "2026-04-12T13:10:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "658e5bf8ed4c",
+      "timestamp": "2026-04-12T13:00:02Z",
+      "type": "DEFENSE_ACTIVE",
+      "agent_class": "MOVING_TARGET",
+      "severity": "INFO",
+      "summary": "SSH banner rotated [REDACTED] Moving Target Defense active",
+      "region": "EU-CENTRAL",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "7d00e3bf05eb",
+      "timestamp": "2026-04-12T13:00:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "6ffd354ecccb",
+      "timestamp": "2026-04-12T12:50:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "375e7c84700b",
+      "timestamp": "2026-04-12T12:40:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d793c253c02f",
+      "timestamp": "2026-04-12T12:30:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "257f94431e19",
+      "timestamp": "2026-04-12T12:20:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d5dbc63b55e6",
+      "timestamp": "2026-04-12T12:10:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "a72a87e0855e",
+      "timestamp": "2026-04-12T12:00:02Z",
+      "type": "DEFENSE_ACTIVE",
+      "agent_class": "MOVING_TARGET",
+      "severity": "INFO",
+      "summary": "SSH banner rotated [REDACTED] Moving Target Defense active",
+      "region": "EU-CENTRAL",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "ca03495ef758",
+      "timestamp": "2026-04-12T12:00:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "663925f8df91",
+      "timestamp": "2026-04-12T11:50:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "49ac2ed55aa9",
+      "timestamp": "2026-04-12T11:40:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "a806f459ce62",
+      "timestamp": "2026-04-12T11:30:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "a2ed1095c217",
+      "timestamp": "2026-04-12T11:20:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "5ba2d03018a1",
+      "timestamp": "2026-04-12T11:10:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d300a8b19996",
+      "timestamp": "2026-04-12T11:00:02Z",
+      "type": "DEFENSE_ACTIVE",
+      "agent_class": "MOVING_TARGET",
+      "severity": "INFO",
+      "summary": "SSH banner rotated [REDACTED] Moving Target Defense active",
+      "region": "EU-CENTRAL",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "d0981436e0d4",
+      "timestamp": "2026-04-12T11:00:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "a211d88e4b83",
+      "timestamp": "2026-04-12T10:50:02Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "63795a4322c7",
+      "timestamp": "2026-04-12T10:40:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "87ba9c8db66c",
+      "timestamp": "2026-04-12T10:30:01Z",
+      "type": "ANOMALY",
+      "agent_class": "NETWORK_MONITOR",
+      "severity": "HIGH",
+      "summary": "Outbound Traffic Alert Severity: 4/5, Suspicious: 0 connections",
+      "region": "EU-CENTRAL",
+      "status": "ACTIVE"
+    }
+  ]
+}

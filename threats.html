@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — Live Threat Feed</title>
+<meta name="description" content="Real-time anonymized threat detections from TIA's autonomous security fleet. Watch what's actually happening at the AI layer.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --yellow: #ffcc00;
+    --purple: #aa66ff;
+    --cyan: #00ffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--cyan); }
+
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .hamburger span {
+    width: 24px; height: 2px;
+    background: var(--text);
+    transition: 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: rgba(7,7,13,0.95);
+      flex-direction: column;
+      padding: 20px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+  }
+
+  /* Hero */
+  .hero {
+    padding: 140px 0 60px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    color: var(--cyan);
+    margin-bottom: 16px;
+  }
+
+  .hero p {
+    color: var(--text-dim);
+    font-size: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  .stat-value.red { color: var(--red); }
+  .stat-value.cyan { color: var(--cyan); }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Feed */
+  .feed-container {
+    margin: 20px 0 80px;
+  }
+
+  .feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .feed-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .feed-live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--green);
+  }
+
+  .feed-live .dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(0,255,136,0); }
+  }
+
+  .feed-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .feed-table thead th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 64px;
+    background: var(--bg);
+  }
+
+  .feed-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .feed-table tbody tr:hover {
+    background: var(--surface);
+  }
+
+  .feed-table tbody tr.new-event {
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; background: rgba(0,255,255,0.05); }
+    to { opacity: 1; background: transparent; }
+  }
+
+  .feed-table td {
+    padding: 10px 16px;
+    vertical-align: middle;
+  }
+
+  .feed-time {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .feed-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  .feed-severity {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    font-weight: 700;
+  }
+
+  .sev-CRITICAL { background: rgba(255,68,68,0.15); color: var(--red); }
+  .sev-HIGH { background: rgba(255,136,68,0.15); color: var(--orange); }
+  .sev-MEDIUM { background: rgba(255,204,0,0.15); color: var(--yellow); }
+  .sev-LOW { background: rgba(0,170,255,0.15); color: var(--blue); }
+  .sev-INFO { background: rgba(136,136,136,0.1); color: var(--text-muted); }
+
+  .feed-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .status-ACTIVE { color: var(--red); }
+  .status-RESOLVED { color: var(--green); }
+  .status-MONITORING { color: var(--yellow); }
+
+  .feed-summary {
+    color: var(--text-dim);
+    font-size: 13px;
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .feed-agent {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--purple);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .footer a {
+    color: var(--cyan);
+    text-decoration: none;
+  }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 20px 0 0;
+    font-style: italic;
+  }
+
+  #loading {
+    text-align: center;
+    padding: 60px 0;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  #error {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    color: var(--red);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  @media (max-width: 768px) {
+    .stats-bar { gap: 20px; }
+    .stat-value { font-size: 24px; }
+    .feed-table { font-size: 12px; }
+    .feed-table td, .feed-table th { padding: 8px 10px; }
+    .feed-summary { max-width: 200px; }
+    .hide-mobile { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="demo.html">Demo</a>
+      <a href="threats.html" class="active">Threats</a>
+      <a href="efs.html">EFS</a>
+      <a href="soul.html">SOUL</a>
+      <a href="lore.html">Lore</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <section class="hero">
+    <h1>LIVE THREAT FEED</h1>
+    <p>Real-time anonymized detections from TIA's autonomous security fleet. Production data. Not simulated.</p>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-value cyan" id="agents-count">—</div>
+      <div class="stat-label">Agents Active</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="blocked-count">—</div>
+      <div class="stat-label">Attacks Blocked</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value red" id="breaches-count">—</div>
+      <div class="stat-label">Breaches</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value cyan" id="days-count">—</div>
+      <div class="stat-label">Days Active</div>
+    </div>
+  </div>
+
+  <div class="feed-container">
+    <div class="feed-header">
+      <span class="feed-title">EVENT STREAM</span>
+      <span class="feed-live"><span class="dot"></span> LIVE — updates every 5 min</span>
+    </div>
+
+    <div id="loading">Loading threat feed...</div>
+    <div id="error">Failed to load threat feed. Retrying...</div>
+
+    <table class="feed-table" id="feed-table" style="display:none">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Agent</th>
+          <th>Severity</th>
+          <th class="hide-mobile">Summary</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="feed-body"></tbody>
+    </table>
+  </div>
+
+  <p class="disclaimer" id="disclaimer"></p>
+</div>
+
+<div class="footer">
+  <p>TIA — Autonomous AI Security Operations &middot; <a href="efs.html">EFS Framework</a> &middot; <a href="soul.html">SOUL Protocol</a></p>
+  <p style="margin-top:8px; font-size:11px">AI identity is not a feature. It's physics.</p>
+</div>
+
+<script>
+const FEED_URL = 'threats.json';
+const REFRESH_MS = 300000; // 5 minutes
+let lastEventIds = new Set();
+
+function formatTime(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+function renderFeed(data) {
+  // Stats
+  document.getElementById('agents-count').textContent = data.stats.total_blocked ? data.meta.agents_active : '—';
+  document.getElementById('blocked-count').textContent = data.stats.total_blocked || '—';
+  document.getElementById('breaches-count').textContent = data.stats.breaches;
+  document.getElementById('days-count').textContent = data.stats.days_active || '—';
+
+  // Disclaimer
+  document.getElementById('disclaimer').textContent = data.meta.disclaimer || '';
+
+  // Events
+  const tbody = document.getElementById('feed-body');
+  const newIds = new Set();
+
+  tbody.innerHTML = '';
+  for (const e of data.events) {
+    newIds.add(e.id);
+    const isNew = !lastEventIds.has(e.id) && lastEventIds.size > 0;
+
+    const tr = document.createElement('tr');
+    if (isNew) tr.classList.add('new-event');
+
+    tr.innerHTML = `
+      <td class="feed-time">${formatTime(e.timestamp)}</td>
+      <td class="feed-type">${e.type}</td>
+      <td class="feed-agent">${e.agent_class}</td>
+      <td><span class="feed-severity sev-${e.severity}">${e.severity}</span></td>
+      <td class="feed-summary hide-mobile" title="${e.summary}">${e.summary}</td>
+      <td class="feed-status status-${e.status}">${e.status}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  lastEventIds = newIds;
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('error').style.display = 'none';
+  document.getElementById('feed-table').style.display = 'table';
+}
+
+async function loadFeed() {
+  try {
+    const res = await fetch(FEED_URL + '?t=' + Date.now());
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    renderFeed(data);
+  } catch (err) {
+    console.error('Feed error:', err);
+    if (document.getElementById('feed-table').style.display === 'none') {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+    }
+  }
+}
+
+loadFeed();
+setInterval(loadFeed, REFRESH_MS);
+</script>
+</body>
+</html>
