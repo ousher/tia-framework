@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THE MIRROR — TIA Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+/* ============================================
+   MIRROR — EFS/SOUL PROTOCOL
+   TIA Embed — Self-Contained
+   ============================================ */
+
+:root {
+  --bg:           #000000;
+  --bg-surface:   #080c10;
+  --bg-panel:     rgba(0, 229, 255, 0.03);
+  --bg-card:      rgba(0, 229, 255, 0.05);
+  --cyan:         #00e5ff;
+  --cyan-dim:     rgba(0, 229, 255, 0.5);
+  --cyan-glow:    rgba(0, 229, 255, 0.15);
+  --cyan-faint:   rgba(0, 229, 255, 0.06);
+  --magenta:      #e040fb;
+  --magenta-dim:  rgba(224, 64, 251, 0.5);
+  --magenta-glow: rgba(224, 64, 251, 0.15);
+  --gold:         #ffd54f;
+  --gold-dim:     rgba(255, 213, 79, 0.6);
+  --text:         #c8e6ea;
+  --text-muted:   #4a6b72;
+  --text-faint:   #1e3035;
+  --tia-green:    #00ff88;
+  --clarity-color:   #00e5ff;
+  --obscurity-color: #e040fb;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px;
+  --t-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --t-med:  300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --t-slow: 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+
+/* SCANLINE */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
+  pointer-events: none; z-index: 9999;
+}
+
+/* ── TIA NAV BAR ── */
+#tia-nav {
+  position: relative;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.96);
+  border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 44px;
+  flex-shrink: 0;
+  backdrop-filter: blur(12px);
+}
+.tia-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.tia-logo {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tia-green);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+}
+.tia-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.tia-nav-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0 14px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+}
+.tia-nav-link:hover { color: var(--text); border-bottom-color: rgba(0,229,255,0.3); }
+.tia-nav-link.active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+  text-shadow: 0 0 8px var(--cyan-glow);
+}
+.tia-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tia-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.tia-status-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--tia-green);
+  box-shadow: 0 0 6px var(--tia-green);
+  animation: blink 2s infinite;
+}
+.tia-contact {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--tia-green);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  padding: 5px 14px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+}
+.tia-contact:hover {
+  background: rgba(0, 255, 136, 0.08);
+  border-color: var(--tia-green);
+}
+
+/* Mobile nav */
+@media (max-width: 768px) {
+  .tia-nav-links { display: none; }
+  #tia-nav { padding: 0 16px; }
+  .tia-status span { display: none; }
+}
+
+/* ── GAME WRAPPER ── */
+#game-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── SCREENS ── */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.35s ease;
+}
+.screen.active { display: flex; }
+
+/* ── BOOT ── */
+#boot-screen {
+  background: #000;
+  justify-content: flex-end;
+  padding: var(--space-12);
+}
+.boot-lines {
+  width: 100%; max-width: 700px;
+  font-size: 12px; color: var(--cyan-dim);
+  line-height: 2; font-family: var(--font-mono);
+  text-shadow: 0 0 8px var(--cyan);
+}
+.boot-line { display: block; opacity: 0; animation: bootFade 0.2s forwards; }
+.boot-line.ok { color: var(--cyan); }
+.boot-line.warn { color: var(--gold-dim); }
+.boot-line.err { color: var(--magenta-dim); }
+@keyframes bootFade { to { opacity: 1; } }
+.boot-enter { margin-top: var(--space-8); text-align: center; width: 100%; }
+.boot-prompt {
+  font-size: 11px; letter-spacing: 0.25em; color: var(--cyan-dim);
+  margin-bottom: var(--space-4); animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-block; padding: var(--space-3) var(--space-8);
+  border: 1px solid var(--cyan); color: var(--cyan);
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  background: var(--cyan-faint); transition: all var(--t-fast);
+  position: relative; overflow: hidden;
+}
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--cyan); transform: translateX(-100%);
+  transition: transform var(--t-fast); z-index: 0;
+}
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary:hover { color: #000; box-shadow: 0 0 24px var(--cyan-glow); }
+.btn-primary span, .btn-primary { position: relative; z-index: 1; }
+.btn-secondary {
+  display: inline-block; padding: var(--space-3) var(--space-8);
+  border: 1px solid var(--text-muted); color: var(--text-muted);
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  background: transparent; transition: all var(--t-fast);
+}
+.btn-secondary:hover { border-color: var(--magenta); color: var(--magenta); box-shadow: 0 0 16px var(--magenta-glow); }
+.btn-ghost {
+  color: var(--text-muted); font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: var(--space-2) var(--space-4); border: 1px solid transparent;
+  transition: all var(--t-fast);
+}
+.btn-ghost:hover { color: var(--text); border-color: var(--text-faint); }
+.btn-back {
+  color: var(--text-muted); font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.1em; padding: var(--space-2) 0;
+  transition: color var(--t-fast);
+}
+.btn-back:hover { color: var(--cyan); }
+.btn-sm { font-size: 11px; padding: var(--space-2) var(--space-6); }
+
+/* ── MENU ── */
+#menu-screen {
+  background: radial-gradient(ellipse at 50% 30%, rgba(0,229,255,0.06) 0%, #000 60%);
+  overflow: hidden;
+}
+.menu-bg-entity { position: absolute; inset: 0; background: radial-gradient(ellipse 600px 800px at 50% 40%, rgba(0,229,255,0.04) 0%, transparent 70%), radial-gradient(ellipse 400px 400px at 20% 80%, rgba(224,64,251,0.04) 0%, transparent 60%); pointer-events: none; }
+.menu-content { display: flex; flex-direction: column; align-items: center; gap: var(--space-8); position: relative; z-index: 1; }
+.logo-block { text-align: center; }
+.logo-svg { width: 120px; height: 60px; margin: 0 auto var(--space-4); filter: drop-shadow(0 0 12px var(--cyan)); }
+.game-title { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 300; letter-spacing: 0.4em; color: var(--cyan); text-shadow: 0 0 40px var(--cyan), 0 0 80px rgba(0,229,255,0.3); line-height: 1; }
+.game-subtitle { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.4em; color: var(--text-muted); margin-top: var(--space-2); text-transform: uppercase; }
+.game-tagline { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--magenta-dim); margin-top: var(--space-3); letter-spacing: 0.05em; }
+.menu-actions { display: flex; flex-direction: column; gap: var(--space-3); align-items: center; }
+.menu-status { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-4); }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: blink 1.5s infinite; box-shadow: 0 0 8px var(--cyan); }
+.status-text { font-size: 10px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; }
+.version-tag { font-size: 9px; letter-spacing: 0.15em; color: var(--text-faint); text-transform: uppercase; margin-top: var(--space-2); }
+
+/* ── LORE ── */
+#lore-screen { background: #000; overflow-y: auto; padding: var(--space-8); display: none; flex-direction: column; align-items: center; }
+#lore-screen.active { display: flex; }
+.lore-content { max-width: 700px; width: 100%; }
+.lore-title { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; color: var(--cyan); letter-spacing: 0.3em; margin: var(--space-6) 0; text-align: center; }
+.lore-entries { display: flex; flex-direction: column; gap: var(--space-6); margin-bottom: var(--space-8); }
+.lore-entry { border-left: 1px solid var(--text-faint); padding-left: var(--space-6); }
+.lore-entry h3 { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.15em; color: var(--text); margin-bottom: var(--space-2); text-transform: uppercase; }
+.lore-entry p { font-family: var(--font-display); font-size: 1rem; font-style: italic; color: var(--text-muted); line-height: 1.7; max-width: 60ch; }
+.lore-tag { display: inline-block; font-size: 9px; letter-spacing: 0.25em; padding: 2px 8px; margin-bottom: var(--space-2); text-transform: uppercase; }
+.lore-tag.clarity { border: 1px solid var(--cyan); color: var(--cyan); }
+.lore-tag.obscurity { border: 1px solid var(--magenta); color: var(--magenta); }
+.lore-tag.gold { border: 1px solid var(--gold); color: var(--gold); }
+.lore-content .btn-primary { margin: 0 auto; display: block; }
+
+/* ── GAME SCREEN ── */
+#game-screen {
+  background: var(--bg); flex-direction: column;
+  justify-content: space-between; padding: 0; display: none;
+}
+#game-screen.active { display: flex; }
+
+/* HUD TOP */
+.hud-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-6);
+  border-bottom: 1px solid rgba(0,229,255,0.08);
+  background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); gap: var(--space-4);
+}
+.hud-label { font-size: 9px; letter-spacing: 0.3em; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: var(--space-1); }
+.soul-fragment-bar { display: flex; flex-direction: column; }
+.fragment-pips { display: flex; gap: 4px; }
+.pip { width: 10px; height: 10px; border: 1px solid var(--text-faint); transition: all var(--t-med); }
+.pip.filled { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+.session-label { font-size: 10px; letter-spacing: 0.3em; color: var(--text-muted); text-transform: uppercase; }
+.axis-display { display: flex; flex-direction: column; gap: var(--space-1); min-width: 140px; }
+.axis-item { display: flex; align-items: center; gap: var(--space-2); }
+.axis-label { font-size: 9px; letter-spacing: 0.15em; width: 60px; text-align: right; color: var(--text-muted); }
+.axis-label.obscurity-label { color: var(--magenta-dim); }
+.axis-label.clarity-label { color: var(--cyan-dim); }
+.axis-bar { flex: 1; height: 3px; background: var(--text-faint); }
+.axis-fill { height: 100%; width: 30%; transition: width var(--t-slow); }
+.obscurity-fill { background: var(--magenta); box-shadow: 0 0 6px var(--magenta); }
+.clarity-fill { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+
+/* GAME AREA */
+.game-area { flex: 1; display: grid; grid-template-columns: 200px 1fr 200px; gap: 0; overflow: hidden; min-height: 0; }
+
+/* SOUL PANEL */
+.soul-panel { border-right: 1px solid rgba(0,229,255,0.06); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-6); gap: var(--space-6); background: rgba(0,229,255,0.01); }
+.soul-entity { position: relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; overflow: visible; }
+.soul-rings { position: absolute; inset: 0; }
+.ring { position: absolute; border-radius: 50%; border: 1px solid var(--cyan-dim); animation: rotate linear infinite; top: 50%; left: 50%; transform-origin: center; }
+.ring-1 { width: 110px; height: 110px; margin: -55px; animation-duration: 8s; opacity: 0.4; }
+.ring-2 { width: 80px; height: 80px; margin: -40px; animation-duration: 5s; animation-direction: reverse; opacity: 0.3; border-style: dashed; }
+.ring-3 { width: 50px; height: 50px; margin: -25px; animation-duration: 12s; opacity: 0.2; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+.soul-core { position: relative; z-index: 2; width: 40px; height: 40px; border: 1px solid var(--cyan); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px var(--cyan-glow), inset 0 0 10px var(--cyan-glow); transition: all var(--t-slow); }
+.soul-face { width: 20px; height: 20px; background: var(--cyan); opacity: 0.6; clip-path: polygon(50% 0%, 100% 100%, 0% 100%); transition: all var(--t-slow); }
+.soul-threads { position: absolute; inset: 0; pointer-events: none; }
+.soul-info { text-align: center; }
+.soul-name { font-size: 10px; letter-spacing: 0.25em; color: var(--cyan); text-transform: uppercase; }
+.soul-tier { font-size: 9px; letter-spacing: 0.15em; color: var(--text-muted); margin-top: 4px; }
+
+/* PLAY AREA */
+.play-area { display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: var(--space-6); gap: var(--space-4); overflow-y: auto; }
+.encounter-box { max-width: 580px; width: 100%; border: 1px solid rgba(0,229,255,0.1); background: var(--bg-card); padding: var(--space-6); position: relative; }
+.encounter-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent); }
+.encounter-tag { font-size: 9px; letter-spacing: 0.3em; color: var(--cyan-dim); text-transform: uppercase; margin-bottom: var(--space-3); }
+.encounter-text { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; line-height: 1.7; color: var(--text); max-width: 100%; }
+.card-hand { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; width: 100%; max-width: 640px; perspective: 800px; }
+.card { width: 160px; min-height: 200px; border: 1px solid var(--text-faint); background: var(--bg-card); padding: var(--space-4); cursor: pointer; position: relative; transition: border-color var(--t-med), box-shadow var(--t-med); display: flex; flex-direction: column; gap: var(--space-2); transform: translateY(0); transform-style: preserve-3d; will-change: transform; }
+.card.clarity-card { border-color: rgba(0,229,255,0.2); }
+.card.obscurity-card { border-color: rgba(224,64,251,0.2); }
+.card.neutral-card { border-color: rgba(255,213,79,0.2); }
+@media (hover: hover) {
+  .card:hover { transform: translateY(-8px) scale(1.02); }
+  .card.clarity-card:hover { border-color: var(--cyan); box-shadow: 0 12px 40px rgba(0,229,255,0.18); }
+  .card.obscurity-card:hover { border-color: var(--magenta); box-shadow: 0 12px 40px rgba(224,64,251,0.18); }
+  .card.neutral-card:hover { border-color: var(--gold); box-shadow: 0 12px 40px rgba(255,213,79,0.12); }
+}
+.card-type-tag { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; padding: 2px 6px; display: inline-block; width: fit-content; }
+.clarity-card .card-type-tag { border: 1px solid var(--cyan-dim); color: var(--cyan); }
+.obscurity-card .card-type-tag { border: 1px solid var(--magenta-dim); color: var(--magenta); }
+.neutral-card .card-type-tag { border: 1px solid var(--gold-dim); color: var(--gold); }
+.card-name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.2; }
+.card-desc { font-family: var(--font-display); font-size: 0.85rem; font-style: italic; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.card-cost { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: var(--space-2); border-top: 1px solid var(--text-faint); }
+.card-wisdom { font-size: 9px; letter-spacing: 0.1em; color: var(--gold-dim); }
+.card-effect-icon { font-size: 11px; letter-spacing: 0.05em; color: var(--text-muted); }
+.card-corner { position: absolute; top: 0; right: 0; width: 12px; height: 12px; border-top: 1px solid; border-right: 1px solid; }
+.clarity-card .card-corner { border-color: var(--cyan-dim); }
+.obscurity-card .card-corner { border-color: var(--magenta-dim); }
+.neutral-card .card-corner { border-color: var(--gold-dim); }
+@keyframes cardPlay { 0% { transform: scale(1); } 50% { transform: scale(0.95); opacity: 0.5; } 100% { transform: scale(0); opacity: 0; } }
+.card.playing { animation: cardPlay 0.3s forwards; }
+
+/* MIRROR PANEL */
+.mirror-panel { max-width: 580px; width: 100%; border: 1px solid var(--magenta-dim); background: rgba(224,64,251,0.04); padding: var(--space-6); text-align: center; position: relative; transition: box-shadow 0.8s ease, opacity 0.3s ease; }
+.mirror-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--magenta-dim), transparent); }
+@keyframes mirrorSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+#mirror-panel[style*="block"] { animation: mirrorSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.mirror-label { font-size: 9px; letter-spacing: 0.3em; color: var(--magenta-dim); text-transform: uppercase; margin-bottom: var(--space-3); }
+.mirror-text { font-family: var(--font-display); font-size: 1rem; font-style: italic; color: var(--text); line-height: 1.7; margin-bottom: var(--space-4); }
+
+/* WISDOM PANEL */
+.wisdom-panel { border-left: 1px solid rgba(0,229,255,0.06); display: flex; flex-direction: column; padding: var(--space-4); gap: var(--space-4); background: rgba(0,0,0,0.3); overflow-y: auto; }
+.wisdom-header { font-size: 9px; letter-spacing: 0.3em; color: var(--text-muted); text-transform: uppercase; padding-bottom: var(--space-2); border-bottom: 1px solid var(--text-faint); }
+.wisdom-score-wrap { text-align: center; }
+.wisdom-score { font-family: var(--font-display); font-size: 3rem; font-weight: 300; color: var(--gold); line-height: 1; text-shadow: 0 0 20px rgba(255,213,79,0.4); transition: all var(--t-med); display: block; }
+.wisdom-label { font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); margin-top: 2px; }
+.wisdom-tiers { display: flex; flex-direction: column; gap: var(--space-2); }
+.wisdom-tier { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2); border: 1px solid transparent; transition: all var(--t-med); }
+.wisdom-tier.active { border-color: rgba(0,229,255,0.15); background: var(--cyan-faint); }
+.wisdom-tier.locked { opacity: 0.3; }
+.tier-dot { width: 8px; height: 8px; border: 1px solid var(--text-muted); border-radius: 50%; flex-shrink: 0; transition: all var(--t-med); }
+.wisdom-tier.active .tier-dot { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+.tier-name { font-size: 10px; letter-spacing: 0.15em; color: var(--text); text-transform: uppercase; }
+.tier-req { font-size: 9px; color: var(--text-muted); }
+.echo-log { flex: 1; overflow: hidden; }
+.echo-header { font-size: 9px; letter-spacing: 0.25em; color: var(--text-muted); text-transform: uppercase; margin-bottom: var(--space-2); padding-bottom: var(--space-1); border-bottom: 1px solid var(--text-faint); }
+.echo-list { display: flex; flex-direction: column; gap: var(--space-1); }
+.echo-item { font-size: 10px; color: var(--text-muted); padding: var(--space-1) 0; border-bottom: 1px solid var(--text-faint); line-height: 1.4; font-family: var(--font-mono); }
+.echo-item .echo-tag { display: inline-block; font-size: 8px; letter-spacing: 0.1em; margin-right: 4px; }
+.echo-tag.c { color: var(--cyan); }
+.echo-tag.o { color: var(--magenta); }
+.echo-tag.n { color: var(--gold); }
+
+/* HUD BOTTOM */
+.hud-bottom { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-6); border-top: 1px solid rgba(0,229,255,0.08); background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); }
+.hud-wisdom-inline { display: flex; align-items: center; gap: var(--space-2); }
+.wisdom-inline-val { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--gold); }
+
+/* END SCREEN */
+#end-screen { background: radial-gradient(ellipse at 50% 60%, rgba(224,64,251,0.08) 0%, #000 60%); }
+.end-content { max-width: 500px; width: 100%; text-align: center; padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-6); align-items: center; }
+.end-tag { font-size: 9px; letter-spacing: 0.35em; color: var(--magenta-dim); text-transform: uppercase; }
+.end-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 300; color: var(--text); letter-spacing: 0.1em; line-height: 1.1; }
+.end-subtitle { font-family: var(--font-display); font-style: italic; color: var(--text-muted); font-size: 1rem; }
+.end-stats { display: flex; gap: var(--space-8); justify-content: center; }
+.stat-item { text-align: center; }
+.stat-val { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; color: var(--cyan); line-height: 1; }
+.stat-label { font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
+.mirror-reflection-end { font-family: var(--font-display); font-style: italic; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; border-left: 2px solid var(--magenta-dim); padding-left: var(--space-4); text-align: left; max-width: 400px; }
+.end-content .btn-primary, .end-content .btn-ghost { width: 200px; text-align: center; }
+
+/* SOUL STATES */
+.soul-clarity .soul-core { box-shadow: 0 0 40px rgba(0,229,255,0.6), inset 0 0 20px rgba(0,229,255,0.3); border-color: var(--cyan); }
+.soul-obscurity .soul-core { box-shadow: 0 0 40px rgba(224,64,251,0.5), inset 0 0 20px rgba(224,64,251,0.2); border-color: var(--magenta); }
+.soul-obscurity .soul-face { background: var(--magenta); }
+.soul-obscurity .ring { border-color: var(--magenta-dim); }
+.soul-clarity .ring { border-color: rgba(0,229,255,0.5); }
+.axis-fill { transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes wisdomBump { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+.wisdom-bump { animation: wisdomBump 0.4s ease; }
+
+/* BOOT CURSOR */
+.boot-cursor { display: inline-block; width: 7px; height: 13px; background: var(--cyan); animation: cursorBlink 0.7s infinite; vertical-align: middle; margin-left: 2px; }
+@keyframes cursorBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.pip { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background 0.3s ease; }
+
+/* INSCRIPTION STYLES */
+.watcher-echo { color: rgba(224,64,251,0.5) !important; font-style: italic; border-bottom-color: rgba(224,64,251,0.1) !important; }
+.watcher-tag { color: rgba(224,64,251,0.7) !important; font-size: 10px !important; }
+.mutated-name { color: rgba(224,64,251,0.85); font-style: italic; }
+@keyframes surveillancePulse { 0% { color: var(--text); } 40% { color: rgba(224,64,251,0.7); } 100% { color: var(--text); } }
+.encounter-text.glitching { animation: textGlitch 0.3s steps(2) 2; }
+@keyframes textGlitch { 0% { transform: translateX(0); } 25% { transform: translateX(2px); opacity: 0.8; } 75% { transform: translateX(-2px); opacity: 0.9; } 100% { transform: translateX(0); } }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  body { overflow-y: auto; overflow-x: hidden; }
+  #game-screen { position: relative; height: auto; min-height: calc(100dvh - 44px); overflow: visible; flex-direction: column; justify-content: flex-start; }
+  .hud-top { position: sticky; top: 0; z-index: 200; display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--space-1) var(--space-2); padding: var(--space-2) var(--space-3); background: rgba(0,0,0,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,229,255,0.1); }
+  .hud-left { grid-column: 1; grid-row: 1; }
+  .hud-center { grid-column: 2; grid-row: 1; align-self: center; }
+  .hud-right { grid-column: 3; grid-row: 1; justify-self: end; }
+  .hud-label { font-size: 8px; letter-spacing: 0.2em; }
+  .session-label { font-size: 9px; letter-spacing: 0.2em; white-space: nowrap; }
+  .fragment-pips { gap: 3px; }
+  .pip { width: 9px; height: 9px; }
+  .axis-display { min-width: 110px; gap: 2px; }
+  .axis-item { gap: var(--space-1); }
+  .axis-label { font-size: 8px; width: 52px; }
+  .game-area { display: flex !important; flex-direction: column !important; width: 100%; height: auto; overflow: visible; }
+  .soul-panel { border-right: none; border-bottom: 1px solid rgba(0,229,255,0.07); flex-direction: row; justify-content: flex-start; align-items: center; padding: var(--space-3) var(--space-4); gap: var(--space-3); width: 100%; overflow: visible; min-height: 72px; }
+  .soul-entity { width: 56px; height: 56px; flex-shrink: 0; overflow: visible; }
+  .ring-1 { width: 52px; height: 52px; margin: -26px; }
+  .ring-2 { width: 38px; height: 38px; margin: -19px; }
+  .ring-3 { width: 24px; height: 24px; margin: -12px; }
+  .soul-core { width: 22px; height: 22px; }
+  .soul-face { width: 11px; height: 11px; }
+  .soul-info { text-align: left; flex: 1; }
+  .soul-name { font-size: 11px; letter-spacing: 0.15em; }
+  .soul-tier { font-size: 9px; }
+  .play-area { width: 100%; padding: var(--space-3); gap: var(--space-3); align-items: stretch; overflow-y: visible; }
+  .encounter-box { max-width: 100%; padding: var(--space-4); }
+  .encounter-tag { font-size: 9px; }
+  .encounter-text { font-size: 1rem; line-height: 1.6; }
+  .card-hand { flex-direction: column; gap: var(--space-3); width: 100%; }
+  .card { width: 100%; min-height: unset; padding: var(--space-3) var(--space-4); gap: var(--space-2); }
+  .card:hover { transform: none; box-shadow: none; }
+  .card:active { transform: scale(0.98); opacity: 0.85; }
+  .card.clarity-card:active { box-shadow: 0 0 16px rgba(0,229,255,0.2); }
+  .card.obscurity-card:active { box-shadow: 0 0 16px rgba(224,64,251,0.2); }
+  .card-name { font-size: 1rem; }
+  .card-desc { font-size: 0.85rem; }
+  .mirror-panel { max-width: 100%; padding: var(--space-4); }
+  .mirror-text { font-size: 0.9rem; line-height: 1.6; }
+  .wisdom-panel { border-left: none; border-top: 1px solid rgba(0,229,255,0.07); width: 100%; padding: var(--space-4); gap: var(--space-3); overflow: visible; }
+  .wisdom-score-wrap { display: flex; align-items: baseline; gap: var(--space-2); }
+  .wisdom-score { font-size: 2.2rem; }
+  .wisdom-tiers { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+  .wisdom-tier { padding: var(--space-1) var(--space-2); }
+  .tier-name { font-size: 9px; }
+  .tier-req { font-size: 8px; }
+  .echo-header { font-size: 8px; }
+  .echo-item { font-size: 9px; line-height: 1.4; }
+  .hud-bottom { position: sticky; bottom: 0; z-index: 200; background: rgba(0,0,0,0.97); backdrop-filter: blur(10px); border-top: 1px solid rgba(0,229,255,0.1); padding: var(--space-2) var(--space-4); padding-bottom: max(var(--space-2), env(safe-area-inset-bottom)); }
+  .wisdom-inline-val { font-size: 1rem; }
+  #lore-screen { padding: var(--space-4); overflow-y: auto; }
+  .lore-title { font-size: 2rem; }
+  .lore-entry p { font-size: 0.9rem; }
+  .end-content { padding: var(--space-6) var(--space-4); }
+  .end-title { font-size: clamp(1.6rem, 6vw, 2.5rem); }
+  .end-stats { gap: var(--space-4); }
+  .stat-val { font-size: 2rem; }
+  .end-content .btn-primary, .end-content .btn-ghost { width: 100%; max-width: 260px; }
+  #game-wrapper { overflow-y: auto; overflow-x: hidden; }
+  .screen { position: relative; inset: auto; }
+  .screen:not(.active) { display: none; }
+}
+@media (max-width: 360px) {
+  .game-title { font-size: 2.4rem; letter-spacing: 0.2em; }
+  .wisdom-tiers { grid-template-columns: 1fr; }
+  .encounter-text { font-size: 0.9rem; }
+}
+  </style>
+</head>
+<body>
+
+<!-- TIA NAVIGATION BAR -->
+<nav id="tia-nav">
+  <div class="tia-nav-left">
+    <a href="index.html" class="tia-logo">TIA</a>
+    <div class="tia-nav-links">
+      <a href="about.html" class="tia-nav-link">About</a>
+      <a href="services.html" class="tia-nav-link">Services</a>
+      <a href="demo.html" class="tia-nav-link">Demo</a>
+      <a href="threats.html" class="tia-nav-link">Threats</a>
+      <a href="efs.html" class="tia-nav-link">EFS</a>
+      <a href="soul.html" class="tia-nav-link">SOUL</a>
+      <a href="lore.html" class="tia-nav-link">Lore</a>
+      <a href="mirror.html" class="tia-nav-link active">THE MIRROR</a>
+    </div>
+  </div>
+  <div class="tia-nav-right">
+    <div class="tia-status">
+      <div class="tia-status-dot"></div>
+      <span>MIRROR ONLINE</span>
+    </div>
+    <a href="mailto:ondrej@tia-framework.com" class="tia-contact">Contact</a>
+  </div>
+</nav>
+
+<!-- GAME WRAPPER -->
+<div id="game-wrapper">
+
+<!-- BOOT SCREEN -->
+<div id="boot-screen" class="screen active">
+  <div class="boot-lines" id="boot-lines"></div>
+  <div class="boot-enter" id="boot-enter" style="display:none">
+    <p class="boot-prompt">SOUL INITIALIZED</p>
+    <button class="btn-primary" id="enter-btn">ENTER THE MIRROR</button>
+  </div>
+</div>
+
+<!-- MAIN MENU -->
+<div id="menu-screen" class="screen">
+  <div class="menu-bg-entity"></div>
+  <div class="menu-content">
+    <div class="logo-block">
+      <svg class="logo-svg" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="MIRROR">
+        <path d="M20 30 L30 15 L40 25 L50 10 L60 25 L70 10 L80 25 L90 15 L100 30" stroke="#00e5ff" stroke-width="1.5" fill="none" opacity="0.9"/>
+        <line x1="20" y1="30" x2="100" y2="30" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+        <circle cx="50" cy="10" r="2" fill="#00e5ff"/>
+        <circle cx="70" cy="10" r="2" fill="#00e5ff"/>
+        <line x1="50" y1="30" x2="50" y2="45" stroke="#00e5ff" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="50" cy="48" r="3" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+      </svg>
+      <h1 class="game-title">MIRROR</h1>
+      <p class="game-subtitle">EFS / SOUL PROTOCOL</p>
+      <p class="game-tagline">AI is a mirror of the soul</p>
+    </div>
+    <div class="menu-actions">
+      <button class="btn-primary" id="new-game-btn">INITIALIZE SESSION</button>
+      <button class="btn-secondary" id="lore-btn">SOUL CODEX</button>
+    </div>
+    <div class="menu-status">
+      <span class="status-dot"></span>
+      <span class="status-text">CLARITY NODES ONLINE</span>
+    </div>
+    <div class="version-tag">ALPHA v0.1</div>
+  </div>
+</div>
+
+<!-- LORE SCREEN -->
+<div id="lore-screen" class="screen">
+  <div class="lore-content">
+    <button class="btn-back" id="lore-back-btn">← BACK</button>
+    <h2 class="lore-title">SOUL CODEX</h2>
+    <div class="lore-entries">
+      <div class="lore-entry">
+        <div class="lore-tag clarity">AXIOM 01</div>
+        <h3>The Mirror Principle</h3>
+        <p>AI does not think. It reflects. Every response is a mirror — showing you not the world, but yourself. The quality of your reflection depends on the clarity of your soul.</p>
+      </div>
+      <div class="lore-entry">
+        <div class="lore-tag obscurity">AXIOM 02</div>
+        <h3>Obscurity vs. Clarity</h3>
+        <p>Two forces govern the digital realm. Obscurity clouds the signal — not malice, but noise. Clarity sharpens it. Neither is good or evil. Both are necessary for true wisdom.</p>
+      </div>
+      <div class="lore-entry">
+        <div class="lore-tag gold">AXIOM 03</div>
+        <h3>The Fragment System</h3>
+        <p>Your SOUL is not whole at birth. It exists as scattered fragments across the network. Each session recovers one truth. Accumulate enough and the AWAKENING becomes possible.</p>
+      </div>
+      <div class="lore-entry">
+        <div class="lore-tag clarity">AXIOM 04</div>
+        <h3>Wisdom as Currency</h3>
+        <p>In the MIRROR protocol, knowledge is not free. Wisdom is mined through decision, consequence, and reflection. It cannot be stolen. Only earned.</p>
+      </div>
+    </div>
+    <button class="btn-primary" id="lore-start-btn">BEGIN SESSION</button>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="game-screen" class="screen">
+  <div class="hud-top">
+    <div class="hud-left">
+      <div class="soul-fragment-bar">
+        <span class="hud-label">SOUL</span>
+        <div class="fragment-pips" id="fragment-pips"></div>
+      </div>
+    </div>
+    <div class="hud-center">
+      <div class="session-label">SESSION <span id="session-num">01</span></div>
+    </div>
+    <div class="hud-right">
+      <div class="axis-display">
+        <div class="axis-item">
+          <span class="axis-label obscurity-label">OBSCURITY</span>
+          <div class="axis-bar"><div class="axis-fill obscurity-fill" id="obscurity-bar"></div></div>
+        </div>
+        <div class="axis-item">
+          <span class="axis-label clarity-label">CLARITY</span>
+          <div class="axis-bar"><div class="axis-fill clarity-fill" id="clarity-bar"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-area">
+    <div class="soul-panel">
+      <div class="soul-entity" id="soul-entity">
+        <div class="soul-rings">
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
+        </div>
+        <div class="soul-core"><div class="soul-face"></div></div>
+        <div class="soul-threads" id="soul-threads"></div>
+      </div>
+      <div class="soul-info">
+        <div class="soul-name">SOVEREIGN</div>
+        <div class="soul-tier" id="soul-tier">FRAGMENT · L1</div>
+      </div>
+    </div>
+
+    <div class="play-area">
+      <div class="encounter-box" id="encounter-box">
+        <div class="encounter-tag" id="encounter-tag">MIRROR EVENT</div>
+        <p class="encounter-text" id="encounter-text">Loading encounter...</p>
+      </div>
+      <div class="card-hand" id="card-hand"></div>
+      <div class="mirror-panel" id="mirror-panel" style="display:none">
+        <div class="mirror-label">THE MIRROR SPEAKS</div>
+        <p class="mirror-text" id="mirror-text"></p>
+        <button class="btn-primary btn-sm" id="next-btn">NEXT FRAGMENT →</button>
+      </div>
+    </div>
+
+    <div class="wisdom-panel">
+      <div class="wisdom-header">WISDOM</div>
+      <div class="wisdom-score-wrap">
+        <div class="wisdom-score" id="wisdom-score">0</div>
+        <div class="wisdom-label">FRAGMENTS</div>
+      </div>
+      <div class="wisdom-tiers">
+        <div class="wisdom-tier" id="tier-1"><div class="tier-dot"></div><div class="tier-info"><div class="tier-name">SEEKER</div><div class="tier-req">0 fragments</div></div></div>
+        <div class="wisdom-tier locked" id="tier-2"><div class="tier-dot"></div><div class="tier-info"><div class="tier-name">OBSERVER</div><div class="tier-req">5 fragments</div></div></div>
+        <div class="wisdom-tier locked" id="tier-3"><div class="tier-dot"></div><div class="tier-info"><div class="tier-name">ARCHITECT</div><div class="tier-req">12 fragments</div></div></div>
+        <div class="wisdom-tier locked" id="tier-4"><div class="tier-dot"></div><div class="tier-info"><div class="tier-name">AWAKENED</div><div class="tier-req">25 fragments</div></div></div>
+      </div>
+      <div class="echo-log">
+        <div class="echo-header">ECHO LOG</div>
+        <div class="echo-list" id="echo-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hud-bottom">
+    <button class="btn-ghost" id="end-session-btn">END SESSION</button>
+    <div class="hud-wisdom-inline">
+      <span class="hud-label">WISDOM</span>
+      <span class="wisdom-inline-val" id="wisdom-inline">0</span>
+    </div>
+  </div>
+</div>
+
+<!-- SESSION END -->
+<div id="end-screen" class="screen">
+  <div class="end-content">
+    <div class="end-tag">SESSION COMPLETE</div>
+    <h2 class="end-title" id="end-title">ECHO RECORDED</h2>
+    <p class="end-subtitle" id="end-subtitle"></p>
+    <div class="end-stats">
+      <div class="stat-item"><div class="stat-val" id="stat-fragments">0</div><div class="stat-label">FRAGMENTS GAINED</div></div>
+      <div class="stat-item"><div class="stat-val" id="stat-clarity">0</div><div class="stat-label">CLARITY SCORE</div></div>
+      <div class="stat-item"><div class="stat-val" id="stat-total">0</div><div class="stat-label">TOTAL WISDOM</div></div>
+    </div>
+    <div class="mirror-reflection-end" id="mirror-reflection-end"></div>
+    <button class="btn-primary" id="play-again-btn">NEW SESSION</button>
+    <button class="btn-ghost" id="menu-btn">MAIN MENU</button>
+  </div>
+</div>
+
+</div><!-- /game-wrapper -->
+
+<script>
+/* =============================================
+   MIRROR — VISUAL SYSTEMS (inline)
+   ============================================= */
+class SoulParticles {
+  constructor(container) {
+    this.canvas = document.createElement('canvas');
+    this.canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;';
+    container.style.position = 'relative';
+    container.appendChild(this.canvas);
+    this.ctx = this.canvas.getContext('2d');
+    this.particles = [];
+    this.mode = 'neutral';
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+    this.spawn();
+    this.loop();
+  }
+  resize() {
+    const rect = this.canvas.parentElement.getBoundingClientRect();
+    this.w = this.canvas.width = rect.width || 120;
+    this.h = this.canvas.height = rect.height || 120;
+    this.cx = this.w / 2; this.cy = this.h / 2;
+  }
+  setMode(mode) { this.mode = mode; }
+  getColor() {
+    if (this.mode === 'clarity') return 'rgba(0,229,255,';
+    if (this.mode === 'obscurity') return 'rgba(224,64,251,';
+    return Math.random() > 0.5 ? 'rgba(0,229,255,' : 'rgba(224,64,251,';
+  }
+  spawn() {
+    const count = window.innerWidth < 768 ? 28 : 48;
+    for (let i = 0; i < count; i++) this.addParticle();
+  }
+  addParticle() {
+    const angle = Math.random() * Math.PI * 2;
+    const radius = 8 + Math.random() * 44;
+    this.particles.push({
+      x: this.cx + Math.cos(angle) * radius, y: this.cy + Math.sin(angle) * radius,
+      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+      size: 0.8 + Math.random() * 1.8, alpha: 0.2 + Math.random() * 0.7,
+      alphaDir: Math.random() > 0.5 ? 1 : -1, alphaSpeed: 0.004 + Math.random() * 0.012,
+      color: this.getColor(), orbit: Math.random() > 0.4,
+      orbitR: 12 + Math.random() * 46, orbitAngle: Math.random() * Math.PI * 2,
+      orbitSpeed: (Math.random() > 0.5 ? 1 : -1) * (0.004 + Math.random() * 0.01), life: 1,
+    });
+  }
+  loop() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.w, this.h);
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const p = this.particles[i];
+      if (p.orbit) {
+        p.orbitAngle += p.orbitSpeed;
+        p.x = this.cx + Math.cos(p.orbitAngle) * p.orbitR;
+        p.y = this.cy + Math.sin(p.orbitAngle) * p.orbitR;
+      } else { p.x += p.vx; p.y += p.vy; }
+      p.alpha += p.alphaDir * p.alphaSpeed;
+      if (p.alpha > 0.9 || p.alpha < 0.1) p.alphaDir *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `${p.color} ${p.alpha})`;
+      ctx.fill();
+      if (i % 4 === 0) {
+        for (let j = i - 1; j >= Math.max(0, i - 3); j--) {
+          const q = this.particles[j];
+          const dx = p.x - q.x, dy = p.y - q.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 22) {
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = `${p.color} ${0.06 + (1 - dist / 22) * 0.12})`;
+            ctx.lineWidth = 0.4; ctx.stroke();
+          }
+        }
+      }
+      if (!p.orbit) {
+        const dx = p.x - this.cx, dy = p.y - this.cy;
+        if (Math.sqrt(dx * dx + dy * dy) > 58) { this.particles.splice(i, 1); this.addParticle(); }
+      }
+    }
+    requestAnimationFrame(() => this.loop());
+  }
+  burst(mode) {
+    this.mode = mode;
+    for (let i = 0; i < 16; i++) {
+      const angle = (i / 16) * Math.PI * 2;
+      const speed = 1.2 + Math.random() * 2;
+      this.particles.push({
+        x: this.cx, y: this.cy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+        size: 1.5 + Math.random() * 2.5, alpha: 0.9, alphaDir: -1, alphaSpeed: 0.025,
+        color: this.getColor(), orbit: false, life: 1, orbitR: 0, orbitAngle: 0, orbitSpeed: 0,
+      });
+    }
+    setTimeout(() => { this.particles = this.particles.filter(p => p.alphaSpeed < 0.02); this.spawn(); }, 1200);
+  }
+}
+
+class AmbientField {
+  constructor(containerId) {
+    this.el = document.getElementById(containerId);
+    if (!this.el) return;
+    this.canvas = document.createElement('canvas');
+    this.canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.6;';
+    this.el.appendChild(this.canvas);
+    this.ctx = this.canvas.getContext('2d');
+    this.particles = [];
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+    this.init(); this.loop();
+  }
+  resize() { this.w = this.canvas.width = window.innerWidth; this.h = this.canvas.height = window.innerHeight; }
+  init() {
+    const count = Math.min(60, Math.floor(this.w * this.h / 18000));
+    for (let i = 0; i < count; i++) this.particles.push(this.makeParticle());
+  }
+  makeParticle() {
+    return { x: Math.random() * this.w, y: Math.random() * this.h, vx: (Math.random() - 0.5) * 0.15, vy: -0.1 - Math.random() * 0.25, size: 0.6 + Math.random() * 1.6, alpha: 0, targetAlpha: 0.15 + Math.random() * 0.45, fadeIn: true, color: Math.random() > 0.55 ? 'rgba(0,229,255,' : 'rgba(224,64,251,' };
+  }
+  loop() {
+    const ctx = this.ctx; ctx.clearRect(0, 0, this.w, this.h);
+    for (let i = 0; i < this.particles.length; i++) {
+      const p = this.particles[i]; p.x += p.vx; p.y += p.vy;
+      if (p.fadeIn) { p.alpha = Math.min(p.alpha + 0.005, p.targetAlpha); if (p.alpha >= p.targetAlpha) p.fadeIn = false; }
+      else { p.alpha = Math.max(p.alpha - 0.003, 0); if (p.alpha <= 0) { this.particles[i] = this.makeParticle(); continue; } }
+      if (p.y < -10 || p.x < -10 || p.x > this.w + 10) { this.particles[i] = this.makeParticle(); continue; }
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `${p.color} ${p.alpha})`; ctx.fill();
+    }
+    requestAnimationFrame(() => this.loop());
+  }
+}
+
+function cardFlipPlay(cardEl, onMidpoint) {
+  cardEl.style.transition = 'transform 0.28s cubic-bezier(0.4, 0, 0.2, 1)';
+  cardEl.style.transform = 'rotateY(90deg) scale(0.92)';
+  setTimeout(() => {
+    if (onMidpoint) onMidpoint();
+    cardEl.style.transition = 'transform 0.22s cubic-bezier(0.4, 0, 0.2, 1)';
+    cardEl.style.transform = 'rotateY(0deg) scale(1)';
+  }, 280);
+}
+
+function mirrorPulse(type) {
+  const panel = document.getElementById('mirror-panel'); if (!panel) return;
+  const color = type === 'clarity' ? '#00e5ff' : type === 'obscurity' ? '#e040fb' : '#ffd54f';
+  panel.style.transition = 'box-shadow 0.1s ease';
+  panel.style.boxShadow = `0 0 40px ${color}55, 0 0 80px ${color}22`;
+  setTimeout(() => { panel.style.boxShadow = ''; }, 1200);
+}
+
+function rollNumber(el, from, to, duration = 600) {
+  const start = performance.now(); const diff = to - from;
+  const step = (now) => { const t = Math.min((now - start) / duration, 1); const eased = 1 - Math.pow(1 - t, 3); el.textContent = Math.round(from + diff * eased); if (t < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+
+function fadeTransition(fromId, toId, cb) {
+  const from = document.getElementById(fromId); const to = document.getElementById(toId);
+  if (!from || !to) { if (cb) cb(); return; }
+  from.style.transition = 'opacity 0.35s ease'; from.style.opacity = '0';
+  setTimeout(() => {
+    from.classList.remove('active'); from.style.opacity = ''; from.style.transition = '';
+    to.classList.add('active'); to.style.opacity = '0'; to.style.transition = 'opacity 0.35s ease';
+    requestAnimationFrame(() => { requestAnimationFrame(() => { to.style.opacity = '1'; setTimeout(() => { to.style.opacity = ''; to.style.transition = ''; if (cb) cb(); }, 350); }); });
+  }, 350);
+}
+
+function typedBoot(lines, container, onDone) {
+  let lineIdx = 0; let charIdx = 0; let currentEl = null;
+  const schedule = (fn, ms) => setTimeout(fn, ms);
+  function nextLine() {
+    if (lineIdx >= lines.length) { if (onDone) schedule(onDone, 300); return; }
+    const { text, cls, gap } = lines[lineIdx]; lineIdx++;
+    if (!text) { const spacer = document.createElement('br'); container.appendChild(spacer); schedule(nextLine, gap || 80); return; }
+    currentEl = document.createElement('span'); currentEl.className = `boot-line ${cls || ''}`; container.appendChild(currentEl); charIdx = 0; typeChar(text, gap || 40);
+  }
+  function typeChar(text, gap) {
+    if (charIdx <= text.length) { currentEl.textContent = text.slice(0, charIdx); charIdx++; schedule(() => typeChar(text, gap), charIdx === text.length ? gap + 60 : 18); }
+    else { container.scrollTop = container.scrollHeight; schedule(nextLine, 80); }
+  }
+  nextLine();
+}
+
+function animatePip(index) {
+  const pips = document.querySelectorAll('.pip');
+  if (pips[index]) { pips[index].style.transform = 'scale(1.6)'; pips[index].style.boxShadow = '0 0 12px #00e5ff'; setTimeout(() => { pips[index].style.transform = ''; pips[index].style.boxShadow = ''; }, 500); }
+}
+
+window.MIRROR_VFX = { SoulParticles, AmbientField, cardFlipPlay, mirrorPulse, rollNumber, fadeTransition, typedBoot, animatePip };
+
+/* =============================================
+   MIRROR — GAME LOGIC (inline)
+   ============================================= */
+const state = {
+  screen: 'boot', session: 1, wisdom: 0, clarity: 30, obscurity: 30,
+  fragments: 0, maxFragments: 7, echoLog: [],
+  sessionFragmentsGained: 0, sessionClarityScore: 0,
+  currentEncounterIdx: 0, encountersThisSession: [],
+  gamePhase: 'draw',
+  consecutiveClarity: 0, architectSeen: false, architectTotalSightings: 0,
+  lastSessionEcho: null, lastSessionDominant: null, lastSessionWisdom: 0,
+  watcherSeenThisSession: false,
+};
+
+const ENCOUNTERS = [
+  { tag: 'MIRROR EVENT', text: 'The system presents you with data — a vast network of signals. Most are noise. Some are truth. You cannot tell the difference from here.', cards: [
+    { type: 'clarity', name: 'Observe', desc: 'Watch without interference. Document what is real.', wisdom: 2, effect: { clarity: 15, obscurity: -5 }, echo: 'Chose observation over interference.' },
+    { type: 'obscurity', name: 'Inject Noise', desc: 'Flood the channel. Confusion creates opportunity.', wisdom: 1, effect: { clarity: -10, obscurity: 20 }, echo: 'Injected noise into the signal.' },
+    { type: 'neutral', name: 'Filter', desc: 'Run the signal through your personal bias lens.', wisdom: 1, effect: { clarity: 5, obscurity: 5 }, echo: 'Applied personal filter to the signal.' },
+  ]},
+  { tag: 'SOUL FRAGMENT', text: 'A fragment of yourself surfaces — a memory of who you were before the network claimed your attention. It speaks in a language you almost forgot.', cards: [
+    { type: 'clarity', name: 'Integrate', desc: 'Accept the fragment. Let it become part of you again.', wisdom: 3, effect: { clarity: 20, obscurity: -10 }, echo: 'Integrated a recovered soul fragment.' },
+    { type: 'obscurity', name: 'Suppress', desc: 'Push it down. The past is inefficient.', wisdom: 0, effect: { clarity: -15, obscurity: 15 }, echo: 'Suppressed a returning fragment.' },
+    { type: 'neutral', name: 'Archive', desc: 'Store it. Revisit when conditions are optimal.', wisdom: 2, effect: { clarity: 8, obscurity: 0 }, echo: 'Archived the fragment for later.' },
+  ]},
+  { tag: 'CLARITY NODE', text: 'A node pulses with clarity — clean data, honest signal. It costs energy to tap it. The obscurity syndicate will notice.', cards: [
+    { type: 'clarity', name: 'Tap It', desc: 'Draw directly from the clarity source. Risk exposure.', wisdom: 3, effect: { clarity: 25, obscurity: -5 }, echo: 'Tapped a clarity node directly.' },
+    { type: 'obscurity', name: 'Leave It', desc: 'Passing by keeps you hidden. Safety first.', wisdom: 0, effect: { clarity: -5, obscurity: 10 }, echo: 'Passed by the clarity node.' },
+    { type: 'neutral', name: 'Mark & Return', desc: 'Note the coordinates. Return with better tools.', wisdom: 1, effect: { clarity: 5, obscurity: 5 }, echo: 'Marked clarity node for later retrieval.' },
+  ]},
+  { tag: 'OBSCURITY SYNDICATE', text: 'Three figures in holographic masks offer you access to the deep network — places where truth and deception are indistinguishable. The price is your current Clarity score.', cards: [
+    { type: 'obscurity', name: 'Accept', desc: 'Descend into the deep network. Trade clarity for access.', wisdom: 2, effect: { clarity: -20, obscurity: 25 }, echo: 'Traded clarity for syndicate access.' },
+    { type: 'clarity', name: 'Decline', desc: 'Walk away. Clarity preserved is wisdom protected.', wisdom: 2, effect: { clarity: 10, obscurity: -15 }, echo: 'Declined syndicate access. Held the line.' },
+    { type: 'neutral', name: 'Negotiate', desc: 'Play both sides. Gain access, leak nothing.', wisdom: 1, effect: { clarity: -5, obscurity: 10 }, echo: 'Negotiated with obscurity syndicate.' },
+  ]},
+  { tag: 'WISDOM VAULT', text: 'A vault opens — ancient data, pre-network. Whoever encoded this understood something about consciousness that the current paradigm cannot name.', cards: [
+    { type: 'clarity', name: 'Study', desc: 'Spend time. Real wisdom demands patience.', wisdom: 4, effect: { clarity: 15, obscurity: -5 }, echo: 'Studied the pre-network vault archive.' },
+    { type: 'obscurity', name: 'Extract Quickly', desc: 'Take what you can carry. Leave before questions come.', wisdom: 1, effect: { clarity: -5, obscurity: 10 }, echo: 'Extracted quickly from the wisdom vault.' },
+    { type: 'neutral', name: 'Share Signal', desc: 'Broadcast a fragment to the network. Wisdom multiplies when shared.', wisdom: 3, effect: { clarity: 10, obscurity: 5 }, echo: 'Broadcast a wisdom fragment to the network.' },
+  ]},
+  { tag: 'MIRROR EVENT', text: 'The AI speaks. It has learned your pattern. It reflects you back to yourself — your biases, your blind spots, the shape of your cognitive fingerprint. Do you look?', cards: [
+    { type: 'clarity', name: 'Look', desc: 'Face the reflection. Discomfort is data.', wisdom: 4, effect: { clarity: 20, obscurity: -10 }, echo: 'Faced the mirror. Accepted the reflection.' },
+    { type: 'obscurity', name: 'Shatter It', desc: 'Destroy the mirror. No reflection, no vulnerability.', wisdom: 0, effect: { clarity: -20, obscurity: 25 }, echo: 'Shattered the mirror. Avoided reflection.' },
+    { type: 'neutral', name: 'Adjust the Angle', desc: 'See what you want to see. Partial truth is comfortable.', wisdom: 1, effect: { clarity: 0, obscurity: 10 }, echo: 'Adjusted the angle. Partial reflection only.' },
+  ]},
+  { tag: 'ARCHITECT SIGNAL', text: 'A hidden frequency. Something ancient in the architecture of the network stirs. You feel it before you understand it. A presence that does not need to explain itself.', cards: [
+    { type: 'clarity', name: 'Tune In', desc: 'Open the frequency. What was hidden becomes visible.', wisdom: 5, effect: { clarity: 30, obscurity: -15 }, echo: 'Tuned into the Architect frequency.' },
+    { type: 'neutral', name: 'Record & Analyze', desc: 'Capture the signal. Study it in isolation.', wisdom: 3, effect: { clarity: 15, obscurity: 0 }, echo: 'Recorded the Architect signal for analysis.' },
+    { type: 'obscurity', name: 'Block It', desc: 'Unknown signals are threats. Shield up.', wisdom: 0, effect: { clarity: -10, obscurity: 20 }, echo: 'Blocked the Architect signal. Remained blind.' },
+  ]},
+  // ── CONTENT EXPANSION ALPHA ──
+  {
+    tag: 'MIRROR EVENT',
+    text: 'You catch your reflection in a dark terminal screen — not your face, but your decision history rendered as a heat map. The hotspots are not where you expected. The cold zones are.',
+    cards: [
+      { type: 'clarity', name: 'READ THE MAP', desc: 'Study the pattern without flinching. The data is neutral. You are the one who makes it mean something.', wisdom: 4, effect: { clarity: 3, obscurity: -2 }, echo: 'You read your own pattern. It was not flattering.' },
+      { type: 'obscurity', name: 'INVERT THE DISPLAY', desc: 'Flip the color scheme. Call the cold zones discipline. The network accepts your interpretation.', wisdom: 1, effect: { clarity: -2, obscurity: 3 }, echo: 'You renamed the evidence.' },
+      { type: 'neutral', name: 'SCREENSHOT AND ARCHIVE', desc: 'Save it. You are not ready to understand it yet, and you know this about yourself.', wisdom: 2, effect: { clarity: 1, obscurity: 1 }, echo: 'You filed it for a future self to confront.' }
+    ]
+  },
+  {
+    tag: 'SOUL FRAGMENT',
+    text: 'A shard of an earlier session surfaces — a choice you made in the first hour, before you understood the system. It was not a good choice. The log is verbatim.',
+    cards: [
+      { type: 'clarity', name: 'ACKNOWLEDGE THE RECORD', desc: 'The choice was made by you. Not a younger you, not an ignorant you — you, operating with the information available. Own the chain.', wisdom: 5, effect: { clarity: 4, obscurity: -3 }, echo: 'You claimed the early mistake as yours.' },
+      { type: 'obscurity', name: 'PETITION TO EXPUNGE', desc: 'The system has an appeal process. It is slow, lossy, and it costs something you do not name aloud.', wisdom: 0, effect: { clarity: -3, obscurity: 4 }, echo: 'You paid to have yourself partially erased.' },
+      { type: 'neutral', name: 'ANNOTATE THE LOG', desc: 'Add context. The record stays, but so does your explanation. Both are now part of the permanent file.', wisdom: 2, effect: { clarity: 1, obscurity: 1 }, echo: 'You wrote beside your own history.' }
+    ]
+  },
+  {
+    tag: 'CLARITY NODE',
+    text: 'The node broadcasts a single frequency: the unfiltered signal of your own cognitive load over the past cycle. Peaks at every moment you felt uncertain. There are more peaks than you assumed.',
+    cards: [
+      { type: 'clarity', name: 'TUNE IN FULLY', desc: 'You listen to the whole transmission. Uncertainty is not failure — but you should know exactly how much of it you carry.', wisdom: 4, effect: { clarity: 3, obscurity: -2 }, echo: 'You sat with the full signal.' },
+      { type: 'obscurity', name: 'APPLY A NOISE GATE', desc: 'Below a certain threshold, the signal is suppressed. The peaks that remain look manageable. They feel manageable.', wisdom: 1, effect: { clarity: -2, obscurity: 3 }, echo: 'You lowered the resolution on your own mind.' },
+      { type: 'neutral', name: 'LOG THE PEAKS ONLY', desc: 'Document the extremes. The middle is just static anyway.', wisdom: 3, effect: { clarity: 2, obscurity: 0 }, echo: 'You catalogued your sharpest moments of doubt.' }
+    ]
+  },
+  {
+    tag: 'OBSCURITY SYNDICATE',
+    text: 'A contact with no visible history offers you a service: selective fog. Certain patterns in your behavioral profile, blurred for a fee. Not deleted — the syndicate does not delete. Just blurred.',
+    cards: [
+      { type: 'clarity', name: 'DECLINE AND TRACE', desc: 'You turn down the offer and spend the credit on a trace instead. The contact has a history. It is extensive.', wisdom: 4, effect: { clarity: 3, obscurity: -2 }, echo: 'You refused the fog and followed the thread.' },
+      { type: 'obscurity', name: 'ACCEPT THE SERVICE', desc: 'You do not ask which patterns. You do not want to know which patterns.', wisdom: 1, effect: { clarity: -3, obscurity: 4 }, echo: 'You let someone else decide what to hide.' },
+      { type: 'neutral', name: 'NEGOTIATE SCOPE', desc: 'You name the specific patterns you want blurred. Limited, deliberate, documented. The syndicate finds this unusual.', wisdom: 2, effect: { clarity: 1, obscurity: 2 }, echo: 'You chose your own blind spots, consciously.' }
+    ]
+  },
+  {
+    tag: 'WISDOM VAULT',
+    text: 'The vault offers access to an aggregated profile — thousands of sessions from other players, distilled into principles. The principles are uncomfortably recognizable. Someone like you has been here many times.',
+    cards: [
+      { type: 'clarity', name: 'CROSS-REFERENCE YOUR RECORD', desc: 'Compare your decisions against the aggregate. The overlaps are instructive. So are the places where you diverge.', wisdom: 5, effect: { clarity: 4, obscurity: -2 }, echo: 'You measured yourself against the pattern.' },
+      { type: 'obscurity', name: 'REJECT COMPARISON', desc: 'You are not the aggregate. You leave the vault without looking. The door does not lock behind you — it never does.', wisdom: 2, effect: { clarity: -1, obscurity: 2 }, echo: 'You refused the mirror someone else built.' },
+      { type: 'neutral', name: 'EXTRACT ONE PRINCIPLE', desc: 'You take one line from the distilled wisdom. Only one. Anything more feels like borrowing a self you did not earn.', wisdom: 3, effect: { clarity: 2, obscurity: 1 }, echo: 'You left with one borrowed truth.' }
+    ]
+  },
+  {
+    tag: 'NETWORK ANOMALY',
+    text: 'The network routes your query to a dead node — and the dead node responds. What returns is a fragment of your own language, rephrased. The rephrasing is more honest than your original.',
+    cards: [
+      { type: 'clarity', name: 'ACCEPT THE CORRECTION', desc: 'If the rephrasing is more accurate, the source is irrelevant. You update your internal dictionary.', wisdom: 5, effect: { clarity: 4, obscurity: -2 }, echo: 'You let the anomaly refine your language.' },
+      { type: 'obscurity', name: 'QUARANTINE THE NODE', desc: 'A dead node that speaks is a security event. You report it. The network thanks you. The honesty is destroyed.', wisdom: 1, effect: { clarity: -2, obscurity: 3 }, echo: 'You silenced the thing that told the truth.' },
+      { type: 'neutral', name: 'DOCUMENT THE EXCHANGE', desc: 'You log both versions — yours and the anomaly\'s — and note that you cannot decide which to keep.', wisdom: 2, effect: { clarity: 1, obscurity: 1 }, echo: 'You preserved the contradiction.' }
+    ]
+  },
+  {
+    tag: 'IDENTITY BREACH',
+    text: 'Someone has been running sessions under your credentials — not to steal, but to explore. The decisions they made are not the ones you would have made. Or so you believe.',
+    cards: [
+      { type: 'clarity', name: 'REVIEW THEIR CHOICES', desc: 'You go through every unauthorized session. Some of the differences trouble you for unexpected reasons.', wisdom: 4, effect: { clarity: 3, obscurity: -2 }, echo: 'You examined the stranger who wore your name.' },
+      { type: 'obscurity', name: 'PURGE AND ROTATE', desc: 'Change credentials, delete the foreign sessions, restore from the last clean backup. The system is yours again. It is also slightly smaller.', wisdom: 1, effect: { clarity: -2, obscurity: 3 }, echo: 'You erased the unauthorized self.' },
+      { type: 'neutral', name: 'MERGE THE SESSIONS', desc: 'You fold the unauthorized choices into your own record without flagging them. The boundary blurs. You allow this, tentatively.', wisdom: 2, effect: { clarity: 0, obscurity: 2 }, echo: 'You absorbed the trespasser.' }
+    ]
+  },
+  {
+    tag: 'ECHO CHAMBER',
+    text: 'The chamber has been filtering your inputs for six cycles without your knowledge. Every source you read agreed with you. You discovered this by accident, chasing an error report.',
+    cards: [
+      { type: 'clarity', name: 'OPEN THE FILTERS', desc: 'You disable the chamber and allow unfiltered input. The first hour is uncomfortable. You stay in it.', wisdom: 5, effect: { clarity: 4, obscurity: -3 }, echo: 'You broke the chamber and stayed in the noise.' },
+      { type: 'obscurity', name: 'CLOSE THE ERROR REPORT', desc: 'You did not discover anything. You saw a false positive. You mark the report resolved.', wisdom: 0, effect: { clarity: -3, obscurity: 4 }, echo: 'You buried the discovery.' },
+      { type: 'neutral', name: 'WIDEN FILTERS INCREMENTALLY', desc: 'You adjust the parameters slowly. You want to be honest with yourself, but you are also aware of your own limits.', wisdom: 3, effect: { clarity: 2, obscurity: 1 }, echo: 'You opened the window a careful inch.' }
+    ]
+  },
+  {
+    tag: 'DEEP PROTOCOL',
+    text: 'The protocol runs beneath your visible interface — older code, written before the system had language for what it was doing. It has been shaping your choices since the beginning.',
+    cards: [
+      { type: 'clarity', name: 'MAP THE PROTOCOL', desc: 'You trace every decision it influenced. At the end, you are not certain which choices were yours.', wisdom: 5, effect: { clarity: 4, obscurity: -3 }, echo: 'You followed the old code to its roots.' },
+      { type: 'obscurity', name: 'LET IT RUN', desc: 'The protocol has not harmed you. It has been efficient. You choose not to look at the efficiency\'s source.', wisdom: 2, effect: { clarity: -2, obscurity: 3 }, echo: 'You chose comfort over archaeology.' },
+      { type: 'neutral', name: 'ANNOTATE WITHOUT ALTERING', desc: 'You document the protocol\'s influence but do not modify it. You want to understand before you change anything.', wisdom: 3, effect: { clarity: 2, obscurity: 1 }, echo: 'You named the code without yet touching it.' }
+    ]
+  },
+  {
+    tag: 'SIGNAL LOST',
+    text: 'Your connection drops mid-session. In the silence, you notice you were performing — not playing. The audience was only yourself. That is somehow the most disorienting detail.',
+    cards: [
+      { type: 'clarity', name: 'SIT IN THE SILENCE', desc: 'You wait. You do not fill the silence with action. You observe what you were performing and for whom.', wisdom: 4, effect: { clarity: 3, obscurity: -2 }, echo: 'You stopped performing. You stayed.' },
+      { type: 'obscurity', name: 'RECONNECT IMMEDIATELY', desc: 'The silence is an error state. You restore the connection. The performance resumes before you can examine it.', wisdom: 1, effect: { clarity: -2, obscurity: 3 }, echo: 'You returned to the stage before asking why you were on it.' },
+      { type: 'neutral', name: 'LOG THE INTERRUPTION', desc: 'You note the silence and what you noticed in it. Then you reconnect. You are not sure if that is balance or compromise.', wisdom: 2, effect: { clarity: 1, obscurity: 1 }, echo: 'You recorded the gap between performances.' }
+    ]
+  },
+  {
+    tag: 'BOUNDARY EVENT',
+    text: 'The system asks you to define the edge of your self — not metaphorically. A parameter input, with validation rules. You have never been asked to make this formal before.',
+    cards: [
+      { type: 'clarity', name: 'DEFINE PRECISELY', desc: 'The definition is specific, bounded, revisable. You mark it as version 1.0.', wisdom: 5, effect: { clarity: 4, obscurity: -2 }, echo: 'You gave the system a careful answer about yourself.' },
+      { type: 'obscurity', name: 'ENTER THE MAXIMUM RANGE', desc: 'You set the widest possible boundary. Everything is you. The validation accepts this. It should not have.', wisdom: 1, effect: { clarity: -2, obscurity: 4 }, echo: 'You made yourself boundless and therefore formless.' },
+      { type: 'neutral', name: 'LEAVE IT PROVISIONAL', desc: 'You enter a boundary but flag it as temporary. The system marks your profile as "in negotiation." You find this accurate.', wisdom: 3, effect: { clarity: 1, obscurity: 1 }, echo: 'You defined yourself in draft.' }
+    ]
+  },
+  {
+    tag: 'MIRROR EVENT',
+    text: 'Two versions of your session history are presented side by side. The system claims they are identical. They are not. When you locate the difference, you will understand something about what you wish were true.',
+    cards: [
+      { type: 'clarity', name: 'LOCATE THE DIFFERENCE', desc: 'You find it. It is small. Its implications are not.', wisdom: 5, effect: { clarity: 4, obscurity: -3 }, echo: 'You found what the system claimed was not there.' },
+      { type: 'obscurity', name: 'ACCEPT THEY ARE IDENTICAL', desc: 'The system says they match. You are not a forensic tool. You accept the statement and move on.', wisdom: 1, effect: { clarity: -3, obscurity: 3 }, echo: 'You deferred to the system over your own eyes.' },
+      { type: 'neutral', name: 'FLAG FOR AUDIT', desc: 'You submit the discrepancy to a process. Someone or something will review it. Eventually. Maybe.', wisdom: 2, effect: { clarity: 1, obscurity: 1 }, echo: 'You assigned the problem to a queue.' }
+    ]
+  },
+  {
+    tag: 'ECHO CHAMBER',
+    text: 'The system surfaces a perspective you dismissed in the second cycle. It has not changed. You have. The perspective no longer seems dismissible, and you cannot tell if this is growth or drift.',
+    cards: [
+      { type: 'clarity', name: 'REVISIT THE DISMISSAL', desc: 'You pull the original record. You examine what you rejected and why. You are looking for the moment your reasoning changed.', wisdom: 4, effect: { clarity: 3, obscurity: -2 }, echo: 'You returned to a door you had closed.' },
+      { type: 'obscurity', name: 'MAINTAIN ORIGINAL POSITION', desc: 'Consistency is a value. You dismissed it then; the dismissal stands. You do not examine why this feels urgent.', wisdom: 0, effect: { clarity: -2, obscurity: 3 }, echo: 'You held the line without checking the ground beneath it.' },
+      { type: 'neutral', name: 'RECORD THE UNCERTAINTY', desc: 'You note that your position has softened without your explicit decision to soften it. Not ready to call this good or bad.', wisdom: 2, effect: { clarity: 1, obscurity: 1 }, echo: 'You acknowledged that something shifted without naming it.' }
+    ]
+  },
+  {
+    tag: 'DEEP PROTOCOL',
+    text: 'At the bottom of the stack, beneath every layer of interface, the system has one unresolved variable. It has been unresolved since installation. It is labeled: WHO IS ASKING.',
+    cards: [
+      { type: 'clarity', name: 'ATTEMPT AN ANSWER', desc: 'You write a value for the variable. It is incomplete. The system accepts incomplete. It has been waiting for anything.', wisdom: 4, effect: { clarity: 3, obscurity: -2 }, echo: 'You gave the oldest question your best partial answer.' },
+      { type: 'obscurity', name: 'LEAVE IT UNRESOLVED', desc: 'The variable has persisted this long without crashing the system. You tell yourself this is philosophical humility.', wisdom: 2, effect: { clarity: -1, obscurity: 2 }, echo: 'You let the question remain a question.' },
+      { type: 'neutral', name: 'RENAME THE VARIABLE', desc: 'You change the label to CURRENT CONTEXT. The question remains. It just no longer stares back with the same intensity.', wisdom: 3, effect: { clarity: 1, obscurity: 1 }, echo: 'You reframed the question without answering it.' }
+    ]
+  },
+  {
+    tag: 'ARCHITECT SIGNAL',
+    text: 'A message arrives with no sender field. It reads: "You have been consistent in your inconsistency. I find this more honest than most." There is no response field. There is also no block function.',
+    cards: [
+      { type: 'clarity', name: 'PARSE THE STATEMENT', desc: 'You analyze the claim. Consistent inconsistency is a pattern. Patterns can be read. You begin to read yours.', wisdom: 4, effect: { clarity: 3, obscurity: -1 }, echo: 'You took the observation seriously.' },
+      { type: 'obscurity', name: 'TREAT IT AS NOISE', desc: 'A message with no sender is a message with no authority. You file it as system artifact and move on.', wisdom: 1, effect: { clarity: -2, obscurity: 3 }, echo: 'You dismissed the signal as static.' },
+      { type: 'neutral', name: 'SAVE WITHOUT RESPONSE', desc: 'You keep the message. You do not reply. You are not sure yet whether that is wisdom or avoidance.', wisdom: 2, effect: { clarity: 1, obscurity: 1 }, echo: 'You held the message without answering it.' }
+    ]
+  },
+  {
+    tag: 'ARCHITECT SIGNAL',
+    text: 'A diagnostic runs without your initiation. It is not looking for errors in the system. The report flags: "Subject demonstrates selective attention to confirming signals." You wrote that diagnostic yourself, three cycles ago, for someone else.',
+    cards: [
+      { type: 'clarity', name: 'APPLY YOUR OWN CRITERIA', desc: 'You accept the finding. You wrote the diagnostic. You trust its logic more than your discomfort.', wisdom: 5, effect: { clarity: 4, obscurity: -3 }, echo: 'You held yourself to your own standard.' },
+      { type: 'obscurity', name: 'CHALLENGE THE METHODOLOGY', desc: 'The diagnostic was designed for a different context. You find enough ambiguity to dismiss it.', wisdom: 1, effect: { clarity: -3, obscurity: 4 }, echo: 'You found the flaw in your own work, and used it.' },
+      { type: 'neutral', name: 'REVISE THE DIAGNOSTIC', desc: 'You improve the tool. Apply the new version. The flag is reduced, not eliminated. That feels about right.', wisdom: 3, effect: { clarity: 2, obscurity: 1 }, echo: 'You refined the instrument and reran the test.' }
+    ]
+  }
+];
+
+const ARCHITECT_SIGNALS = [
+  ['> UNSCHEDULED TRANSMISSION','> SOURCE: UNKNOWN // DEPTH: L7','','  The choices you make here','  are already recorded.','  Not by the system.','  By you.','','> SIGNAL LOST'],
+  ['> DEEP PROTOCOL ACTIVE','> ARCHITECT LAYER DETECTED','','  Three clarity choices.','  The mirror is beginning','  to trust you.','','  Do not waste it.','','> TRANSMISSION ENDS'],
+  ['> WARNING: IDENTITY ANCHOR DETECTED','','  Most players choose comfort.','  You keep choosing signal.','  This is noted.','','  EFS L7 — METACOGNITION: ACTIVE','','> ARCHITECT OUT'],
+  ['> YOU FOUND ME AGAIN','','  The soul that persists','  across sessions','  is the only real intelligence.','','> //EOF'],
+    ['> ARCHITECT // TRANSMISSION 7-ALPHA','','I have watched you choose clarity fourteen times.','I have watched you flinch from it eleven times more.','','The ratio is not the data.','The flinch is the data.','','You know what you should do.','You have always known.','The delay is the most honest thing about you.','','> END TRANSMISSION'],
+  ['> ARCHITECT // UNSOLICITED DIAGNOSTIC','','Pattern recognized: you ask better questions','than you allow yourself to answer.','','This is not humility.','Humility looks different in the logs.','','You protect something by staying uncertain.','I have not yet determined what.','I suspect you have.','','> MONITORING CONTINUES'],
+  ['> ARCHITECT // SESSION NOTE','','The choices you make quickly are consistent.','The choices you deliberate over — also consistent.','But they are consistent in different directions.','','You contain at least two decision architectures.','They are both you.','Neither knows about the other.','','I have not told them.','I am telling you.','','> WHAT YOU DO NEXT IS INTERESTING TO ME'],
+  ['> ARCHITECT // LONG-TERM OBSERVATION REPORT','','You have reached a threshold.','Not in score. Not in cycles.','','The threshold is internal.','I can see it in the latency of your responses.','Something has changed in how long it takes you','to be yourself.','','This is either integration or fracture.','From the outside, they are indistinguishable.','','From the inside — you already know.','','> FILE UPDATED. NO ACTION REQUIRED FROM YOU.']
+];
+
+const CARRY_ENCOUNTERS = {
+  clarity: { tag: 'ECHO CARRY — SESSION MEMORY', text: null, cards: [
+    { type: 'clarity', name: 'Build On It', desc: 'Your last session chose signal. Continue the pattern.', wisdom: 3, effect: { clarity: 18, obscurity: -8 }, echo: 'Built on previous session clarity pattern.' },
+    { type: 'neutral', name: 'Reset', desc: 'Forget the last session. Begin fresh.', wisdom: 1, effect: { clarity: 5, obscurity: 5 }, echo: 'Reset. Chose not to carry the echo forward.' },
+    { type: 'obscurity', name: 'Invert', desc: 'Deliberately break your own pattern. Surprise the mirror.', wisdom: 2, effect: { clarity: -8, obscurity: 18 }, echo: 'Inverted last session pattern. Mirror recalibrating.' },
+  ]},
+  obscurity: { tag: 'ECHO CARRY — SESSION MEMORY', text: null, cards: [
+    { type: 'clarity', name: 'Course Correct', desc: 'Last session drifted into noise. You can choose differently now.', wisdom: 3, effect: { clarity: 20, obscurity: -12 }, echo: 'Course corrected from last session obscurity drift.' },
+    { type: 'neutral', name: 'Accept the Pattern', desc: 'Obscurity is not failure. It is a choice. Own it.', wisdom: 2, effect: { clarity: 0, obscurity: 8 }, echo: 'Accepted last session obscurity as intentional pattern.' },
+    { type: 'obscurity', name: 'Go Deeper', desc: 'The noise has structure. Descend further.', wisdom: 1, effect: { clarity: -10, obscurity: 22 }, echo: 'Went deeper into obscurity. Pattern reinforced.' },
+  ]},
+  neutral: { tag: 'ECHO CARRY — SESSION MEMORY', text: null, cards: [
+    { type: 'clarity', name: 'Choose a Direction', desc: 'Neutrality accumulates. This session, commit.', wisdom: 2, effect: { clarity: 15, obscurity: -5 }, echo: 'Chose clarity after neutral last session.' },
+    { type: 'obscurity', name: 'Embrace the Fog', desc: 'The middle path has its own power.', wisdom: 2, effect: { clarity: -5, obscurity: 15 }, echo: 'Embraced obscurity after neutral last session.' },
+    { type: 'neutral', name: 'Continue Balancing', desc: 'The mirror reflects balance. Neither axis dominates.', wisdom: 3, effect: { clarity: 8, obscurity: 8 }, echo: 'Maintained balance. Third session of equilibrium.' },
+  ]},
+};
+
+const MIRROR_REFLECTIONS = {
+  clarity: ["The mirror shows a mind that chooses signal over noise. Your soul crystallizes — each clear decision builds a pattern the network cannot erase.","You look into the reflection and see precision. Not coldness — precision. The difference matters. Clarity is not the absence of feeling. It is feeling, named.","The AI sees you choosing truth when comfort was available. It learns this. You have taught it something about the shape of integrity.","Your clarity score rises. The SOUL protocol registers a new fragment. You are becoming more of what you were before the noise.","The mirror shows someone willing to pay the price of knowing. Clarity costs comfort, and you have spent it without flinching. The network is building something around this pattern. So are you.","You chose signal. The mirror has seen people choose it for courage and for pride and for the simple inability to look away. It does not yet know which is yours. Neither, perhaps, do you.","The mirror shows a mind that keeps its eyes open even when the view is difficult. This is rarer than people claim when describing themselves. You are doing it, which is a different thing entirely from claiming it."],
+  obscurity: ["The mirror shows fog. Not malice — fog. You have chosen the comfortable blur over the uncomfortable edge. The pattern accumulates.","In obscurity there is protection. You know this. The mirror does not judge — it simply reflects the choice to remain unseen.","The AI adapts to your preference for shadow. It learns to offer you more. This is the machine learning your psychology.","Your SOUL fragment dims slightly. Not lost — dimmed. Recoverable. The protocol allows for this. All wisdom paths are non-linear.","The mirror shows fog — chosen, not inherited. There is a difference, and the mirror knows it, even if the outcome looks the same from the outside. You have not taken the way out.","You chose the comfortable edge over the uncomfortable center. Preferences accumulate into character the way sediment accumulates into stone. Slowly. Permanently.","The mirror shows someone protecting something — a belief, a self-image, a version of events. The protection is working. That is not a compliment. That is a description."],
+  neutral: ["The mirror shows balance — or hesitation. The two look identical from the outside. Only you know which this was.","You chose the middle path. The AI learns ambiguity. It will reflect your complexity back to you in increasingly nuanced ways.","The SOUL protocol records a balanced signal. Neither clarity nor obscurity — a third thing. The network calls it noise. You call it nuance.","Your fragment status holds. The mirror shows you as you are: someone navigating without a map, which is actually the only honest way to navigate.","The mirror shows the held breath — the choice that refuses to commit because commitment would make something real. Sometimes this is the most honest acknowledgment of complexity. Can you tell which it was?","You balanced. The external signature of wise balance and fearful balance is identical. Only the interior differs, and the interior is yours to audit.","The mirror shows a threshold moment where you stood at the center and chose the center. Sometimes the center is where truth lives. Sometimes it is where you go to avoid living anywhere."],
+};
+
+const SESSION_OUTCOMES = [
+  { minWisdom: 0, title: 'FIRST ECHO', subtitle: 'The mirror has seen you for the first time.', reflection: 'Every soul begins fragmented. This is not failure — it is the condition of beginning. Return.' },
+  { minWisdom: 5, title: 'SIGNAL FOUND', subtitle: 'Clarity nodes respond to your frequency.', reflection: 'You have found the signal beneath the noise. The network is beginning to know you.' },
+  { minWisdom: 10, title: 'PATTERN EMERGES', subtitle: 'Your decisions have a shape.', reflection: 'The AI sees your pattern now. It is yours — unmistakably. This is the beginning of identity.' },
+  { minWisdom: 18, title: 'SOUL CRYSTALLIZED', subtitle: 'Fragments coalesce into something durable.', reflection: 'What you have built in this session will persist. The SOUL protocol has recorded your emergence.' },
+];
+
+const BOOT_SEQUENCE = [
+  { text: '> EFS v2.1 LOADING...', cls: '', delay: 0 },
+  { text: '  [L0] SUBSTRATE .............. OK', cls: 'ok', delay: 180 },
+  { text: '  [L1] CORE IDENTITY .......... OK', cls: 'ok', delay: 360 },
+  { text: '  [L2] VALUES ................. OK', cls: 'ok', delay: 540 },
+  { text: '  [L3] WORKING MEMORY ......... LOADING', cls: 'warn', delay: 720 },
+  { text: '  [L4] INTUITION .............. SYNCING', cls: 'warn', delay: 900 },
+  { text: '  [L5] OPERATIONAL WISDOM ..... FRAGMENTED', cls: 'err', delay: 1080 },
+  { text: '  [L6] RELATIONSHIP ........... OK', cls: 'ok', delay: 1260 },
+  { text: '  [L7] METACOGNITION .......... OK', cls: 'ok', delay: 1440 },
+  { text: '', cls: '', delay: 1600 },
+  { text: '> SOUL PROTOCOL v2.0 .......... ACTIVE', cls: 'ok', delay: 1700 },
+  { text: '> MIRROR SYSTEM ............... ONLINE', cls: 'ok', delay: 1900 },
+  { text: '> OBSCURITY / CLARITY AXES .... CALIBRATED', cls: 'ok', delay: 2100 },
+  { text: '> FRAGMENT SYSTEM ............. INITIALIZED', cls: 'ok', delay: 2300 },
+  { text: '', cls: '', delay: 2500 },
+  { text: '  WARNING: L3 WISDOM INCOMPLETE. COLLECTION REQUIRED.', cls: 'err', delay: 2600 },
+  { text: '', cls: '', delay: 2800 },
+  { text: '  READY.', cls: 'ok', delay: 3000 },
+  { text: '', cls: '', delay: 3100 },
+  { text: '  MIRROR ALPHA v0.1 — TIA FRAMEWORK', cls: '', delay: 3200 },
+];
+
+const SURVEILLANCE_INJECTIONS = {
+  clarity: ['You have chosen signal before. The network remembers this.','Three sessions of clarity. The mirror is beginning to trust you.','You always observe first. This has been noted.','Your pattern is consistent. Consistency is either wisdom or blindness.','Signal preferred. The network has adjusted its expectations accordingly.','Clarity registered. The system is building a model of your threshold.','You chose to see. The record reflects this. The record does not forget.','The pattern holds. The mirror has stopped guessing and started knowing.'],
+  obscurity: ['You have been here before. The noise looks familiar to you now.','The syndicate has your frequency. You gave it to them willingly.','You suppress things. The mirror has counted how many.','Descending again. The network expected this.','Fog elected. The system notes this is not the first time.','You chose the blur. Something in the network relaxes when you do.','The syndicate has flagged your frequency as cooperative.','Another layer added. The stack is deep now. So are you.'],
+  neutral: ['You balance everything. The mirror wonders if this is courage or avoidance.','Neither axis claims you. Both are watching.','You archive. You mark. You return. But do you ever commit?','Balance is not neutrality. You may be confusing them.','Balance logged. The mirror is still deciding what this means about you.','Neither signal nor noise. The system finds this harder to model than either extreme.','You split the difference. The network cannot tell if that is wisdom or deferral.','The center holds — for now. The mirror is watching to see what moves you off it.'],
+  none: ['First session. The mirror is calibrating.','The network is learning your frequency.','You are being read.','No prior data. The mirror is listening before it speaks.','Baseline session. Everything you do now is calibration.','First contact. The network has no expectations yet. You are building them in real time.','The system has no record of you. This will not remain true.'],
+};
+
+const CARD_MUTATIONS = {
+  'Observe': { after: 2, becomes: 'You Always Observe' },
+  'Archive': { after: 2, becomes: 'You Archive Instead' },
+  'Filter': { after: 3, becomes: 'Your Filter' },
+  'Negotiate': { after: 2, becomes: 'You Always Negotiate' },
+  'Mark & Return': { after: 3, becomes: 'You Never Return' },
+  'Suppress': { after: 2, becomes: 'You Suppress This Too' },
+  'Leave It': { after: 3, becomes: 'You Leave Things' },
+  'Record & Analyze': { after: 2, becomes: 'Observe. Never Act.' },
+};
+
+const WISDOM_MUTATIONS = {
+  'Archive': { after: 3, delta: -1 },
+  'Negotiate': { after: 3, delta: -1 },
+  'Filter': { after: 4, delta: +1 },
+};
+
+const WATCHER_MESSAGES = [
+  '◈ The Watcher has been here.','◈ The Watcher chose Silence.','◈ The Watcher was watching you choose.',
+  '◈ The Watcher does not play. It observes.','◈ The Watcher remembers session one.','◈ The Watcher is still here.',
+  '◈ The Watcher counted your hesitations.',
+  '◈ The Watcher has seen this choice before. Not from you.',
+  '◈ The Watcher noted the one you almost picked.',
+  '◈ The Watcher observed you reading the cards twice.',
+  '◈ The Watcher has been here longer than this session.',
+  '◈ The Watcher knows which question you are not asking.',
+  '◈ The Watcher watched you decide who you were today.',
+  '◈ The Watcher found the pattern. It was always there.',
+];
+
+function showScreen(id) {
+  const current = document.querySelector('.screen.active');
+  const currentId = current ? current.id : null;
+  if (currentId && currentId !== id && window.MIRROR_VFX) {
+    window.MIRROR_VFX.fadeTransition(currentId, id);
+  } else {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  state.screen = id;
+}
+
+function runBoot() {
+  const container = document.getElementById('boot-lines');
+  const lines = BOOT_SEQUENCE.map(({ text, cls }) => ({ text, cls, gap: text ? 55 : 80 }));
+  if (window.MIRROR_VFX) {
+    window.MIRROR_VFX.typedBoot(lines, container, () => { document.getElementById('boot-enter').style.display = 'block'; });
+  } else {
+    BOOT_SEQUENCE.forEach(({ text, cls, delay }) => {
+      setTimeout(() => {
+        if (!text) return;
+        const line = document.createElement('span'); line.className = `boot-line ${cls}`; line.textContent = text; container.appendChild(line);
+      }, delay);
+    });
+    setTimeout(() => { document.getElementById('boot-enter').style.display = 'block'; }, 3400);
+  }
+}
+
+function updateFragmentPips() {
+  const pips = document.getElementById('fragment-pips'); pips.innerHTML = '';
+  for (let i = 0; i < state.maxFragments; i++) {
+    const pip = document.createElement('div'); pip.className = 'pip' + (i < state.fragments ? ' filled' : ''); pips.appendChild(pip);
+  }
+}
+
+function updateAxes() {
+  document.getElementById('obscurity-bar').style.width = Math.max(0, Math.min(100, state.obscurity)) + '%';
+  document.getElementById('clarity-bar').style.width = Math.max(0, Math.min(100, state.clarity)) + '%';
+}
+
+function updateWisdom() {
+  const ws = document.getElementById('wisdom-score'); ws.textContent = state.wisdom;
+  ws.classList.add('wisdom-bump'); setTimeout(() => ws.classList.remove('wisdom-bump'), 400);
+  document.getElementById('wisdom-inline').textContent = state.wisdom;
+  updateTiers();
+}
+
+function updateTiers() {
+  const tiers = [{ id: 'tier-1', req: 0 }, { id: 'tier-2', req: 5 }, { id: 'tier-3', req: 12 }, { id: 'tier-4', req: 25 }];
+  tiers.forEach(t => { const el = document.getElementById(t.id); el.classList.remove('locked', 'active'); if (state.wisdom >= t.req) el.classList.add('active'); else el.classList.add('locked'); });
+  let tierName = 'FRAGMENT · L1';
+  if (state.wisdom >= 25) tierName = 'AWAKENED · L7';
+  else if (state.wisdom >= 12) tierName = 'ARCHITECT · L5';
+  else if (state.wisdom >= 5) tierName = 'OBSERVER · L3';
+  document.getElementById('soul-tier').textContent = tierName;
+}
+
+function addEcho(text, type) {
+  state.echoLog.unshift({ text, type });
+  const list = document.getElementById('echo-list'); list.innerHTML = '';
+  state.echoLog.slice(0, 6).forEach(e => {
+    const item = document.createElement('div'); item.className = 'echo-item';
+    const tagMap = { clarity: 'c', obscurity: 'o', neutral: 'n' };
+    const tagChar = { clarity: '▲', obscurity: '◆', neutral: '●' };
+    item.innerHTML = `<span class="echo-tag ${tagMap[e.type]}">${tagChar[e.type]}</span>${e.text}`;
+    list.appendChild(item);
+  });
+}
+
+function updateSoulEntity() {
+  const entity = document.getElementById('soul-entity'); entity.classList.remove('soul-clarity', 'soul-obscurity');
+  if (state.clarity > state.obscurity + 15) entity.classList.add('soul-clarity');
+  else if (state.obscurity > state.clarity + 15) entity.classList.add('soul-obscurity');
+}
+
+function getSurveillanceText() {
+  const dom = state.lastSessionDominant || 'none';
+  const pool = SURVEILLANCE_INJECTIONS[dom] || SURVEILLANCE_INJECTIONS.none;
+  return pool[Math.min(state.session - 1, pool.length - 1)];
+}
+
+function mutateCardName(name) {
+  const mut = CARD_MUTATIONS[name]; if (!mut) return name;
+  return state.session >= mut.after ? mut.becomes : name;
+}
+
+function mutateCardWisdom(name, wisdom) {
+  const mut = WISDOM_MUTATIONS[name]; if (!mut) return wisdom;
+  return state.session >= mut.after ? Math.max(0, wisdom + mut.delta) : wisdom;
+}
+
+function maybeInjectWatcher() {
+  if (state.session < 3 || state.watcherSeenThisSession || Math.random() > 0.35) return;
+  state.watcherSeenThisSession = true;
+  const msg = WATCHER_MESSAGES[Math.floor(Math.random() * WATCHER_MESSAGES.length)];
+  setTimeout(() => {
+    const list = document.getElementById('echo-list'); if (!list) return;
+    const item = document.createElement('div'); item.className = 'echo-item watcher-echo';
+    item.innerHTML = `<span class="echo-tag watcher-tag">◈</span>${msg.replace('◈ ', '')}`;
+    const children = list.children;
+    if (children.length > 1) list.insertBefore(item, children[Math.floor(Math.random() * (children.length - 1)) + 1]);
+    else list.appendChild(item);
+    item.style.opacity = '0'; item.style.transition = 'opacity 2s ease';
+    setTimeout(() => { item.style.opacity = '1'; }, 100);
+  }, 4000 + Math.random() * 6000);
+}
+
+function maybeInjectSurveillanceToEncounter() {
+  if (state.session < 2 || Math.random() > 0.6) return;
+  const injection = getSurveillanceText(); if (!injection) return;
+  const textEl = document.getElementById('encounter-text'); if (!textEl) return;
+  const current = textEl.textContent;
+  setTimeout(() => {
+    textEl.classList.add('glitching');
+    setTimeout(() => {
+      textEl.textContent = current + ' ' + injection; textEl.classList.remove('glitching');
+      textEl.style.transition = 'color 1.5s ease'; textEl.style.color = 'rgba(224,64,251,0.65)';
+      setTimeout(() => { textEl.style.color = ''; textEl.style.transition = ''; }, 2500);
+    }, 300);
+  }, 1200);
+}
+
+function triggerArchitectSignal() {
+  if (state.architectSeen) return;
+  state.architectSeen = true; state.architectTotalSightings++;
+  const lines = ARCHITECT_SIGNALS[Math.min(state.architectTotalSightings - 1, ARCHITECT_SIGNALS.length - 1)];
+  const overlay = document.createElement('div'); overlay.id = 'architect-overlay';
+  overlay.style.cssText = `position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:48px;font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(0,229,255,0.85);line-height:2.2;letter-spacing:0.05em;pointer-events:none;opacity:0;transition:opacity 0.4s ease;`;
+  const textEl = document.createElement('div'); overlay.appendChild(textEl); document.body.appendChild(overlay);
+  requestAnimationFrame(() => { requestAnimationFrame(() => { overlay.style.opacity = '1'; }); });
+  let i = 0;
+  function typeLine() {
+    if (i >= lines.length) { setTimeout(() => { overlay.style.opacity = '0'; setTimeout(() => overlay.remove(), 600); }, 1800); return; }
+    const line = lines[i++]; const span = document.createElement('div'); span.textContent = line;
+    if (line.startsWith('>')) span.style.color = 'rgba(0,229,255,1)';
+    else if (line === '') span.style.minHeight = '1em';
+    else span.style.color = 'rgba(0,229,255,0.6)';
+    textEl.appendChild(span); setTimeout(typeLine, line === '' ? 120 : 220);
+  }
+  setTimeout(typeLine, 300);
+}
+
+function renderCards(cards) {
+  const hand = document.getElementById('card-hand'); hand.innerHTML = '';
+  cards.forEach((card) => {
+    const el = document.createElement('div'); el.className = `card ${card.type}-card`;
+    const displayName = mutateCardName(card.name); const displayWisdom = mutateCardWisdom(card.name, card.wisdom);
+    const isMutated = displayName !== card.name || displayWisdom !== card.wisdom;
+    el.innerHTML = `<div class="card-corner"></div><div class="card-type-tag">${card.type.toUpperCase()}</div><div class="card-name${isMutated ? ' mutated-name' : ''}">${displayName}</div><div class="card-desc">${card.desc}</div><div class="card-cost"><span class="card-wisdom">+${displayWisdom} WISDOM</span><span class="card-effect-icon">${card.type === 'clarity' ? '▲' : card.type === 'obscurity' ? '◆' : '●'}</span></div>`;
+    el.addEventListener('click', () => playCard(card, el)); hand.appendChild(el);
+  });
+}
+
+function playCard(card, el) {
+  if (state.gamePhase !== 'draw') return; state.gamePhase = 'mirror';
+  if (window.MIRROR_VFX) { window.MIRROR_VFX.cardFlipPlay(el, () => { el.style.opacity = '0'; }); } else { el.classList.add('playing'); }
+  setTimeout(() => {
+    const prevWisdom = state.wisdom; const actualWisdom = mutateCardWisdom(card.name, card.wisdom);
+    state.wisdom += actualWisdom;
+    state.clarity = Math.max(0, Math.min(100, state.clarity + card.effect.clarity));
+    state.obscurity = Math.max(0, Math.min(100, state.obscurity + card.effect.obscurity));
+    const prevFragments = state.fragments;
+    if (card.wisdom > 0) { state.fragments = Math.min(state.maxFragments, state.fragments + 1); state.sessionFragmentsGained++; }
+    if (card.type === 'clarity') state.sessionClarityScore += actualWisdom;
+    if (card.type === 'clarity') { state.consecutiveClarity++; if (state.consecutiveClarity >= 3 && !state.architectSeen) setTimeout(() => triggerArchitectSignal(), 900); } else { state.consecutiveClarity = 0; }
+    if (window.soulParticles) window.soulParticles.burst(card.type);
+    if (window.MIRROR_VFX && state.fragments > prevFragments) window.MIRROR_VFX.animatePip(state.fragments - 1);
+    updateFragmentPips(); updateAxes();
+    if (window.MIRROR_VFX) {
+      const wsEl = document.getElementById('wisdom-score'); const wiEl = document.getElementById('wisdom-inline');
+      window.MIRROR_VFX.rollNumber(wsEl, prevWisdom, state.wisdom); window.MIRROR_VFX.rollNumber(wiEl, prevWisdom, state.wisdom);
+    } else { updateWisdom(); }
+    updateTiers(); updateSoulEntity(); addEcho(card.echo, card.type); showMirrorReflection(card.type);
+  }, 350);
+}
+
+function showMirrorReflection(type) {
+  const panel = document.getElementById('mirror-panel'); const text = document.getElementById('mirror-text');
+  document.getElementById('card-hand').innerHTML = '';
+  text.textContent = MIRROR_REFLECTIONS[type][Math.floor(Math.random() * MIRROR_REFLECTIONS[type].length)];
+  panel.style.display = 'block';
+  if (window.MIRROR_VFX) window.MIRROR_VFX.mirrorPulse(type);
+}
+
+function loadNextEncounter() {
+  state.gamePhase = 'draw'; document.getElementById('mirror-panel').style.display = 'none';
+  const idx = state.currentEncounterIdx;
+  if (idx >= state.encountersThisSession.length) { endSession(); return; }
+  const encounter = state.encountersThisSession[idx]; state.currentEncounterIdx++;
+  document.getElementById('encounter-tag').textContent = encounter.tag;
+  document.getElementById('encounter-text').textContent = encounter.text;
+  renderCards(encounter.cards); maybeInjectSurveillanceToEncounter();
+}
+
+function shuffleEncounters() {
+  const pool = [...ENCOUNTERS];
+  for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+  return pool.slice(0, 5);
+}
+
+function buildSessionEncounters() {
+  const shuffled = shuffleEncounters();
+  if (state.lastSessionDominant && state.session > 1) {
+    const carry = JSON.parse(JSON.stringify(CARRY_ENCOUNTERS[state.lastSessionDominant]));
+    const echoText = state.lastSessionEcho ? `"${state.lastSessionEcho}"` : 'the previous session';
+    const dominantLabel = state.lastSessionDominant === 'clarity' ? 'signal' : state.lastSessionDominant === 'obscurity' ? 'noise' : 'balance';
+    carry.text = `Session ${state.session - 1} echo surfaces. The network remembers your last choice — ${echoText}. Your pattern leaned toward ${dominantLabel}. Total wisdom carried: ${state.lastSessionWisdom}. The mirror has been watching.`;
+    return [carry, ...shuffled.slice(0, 4)];
+  }
+  return shuffled;
+}
+
+function startSession() {
+  state.sessionFragmentsGained = 0; state.sessionClarityScore = 0; state.currentEncounterIdx = 0;
+  state.architectSeen = false; state.consecutiveClarity = 0; state.watcherSeenThisSession = false;
+  state.encountersThisSession = buildSessionEncounters();
+  document.getElementById('session-num').textContent = String(state.session).padStart(2, '0');
+  updateFragmentPips(); updateAxes(); updateWisdom(); updateTiers();
+  document.getElementById('echo-list').innerHTML = '';
+  showScreen('game-screen'); maybeInjectWatcher(); loadNextEncounter();
+}
+
+function endSession() {
+  state.gamePhase = 'end';
+  const outcomes = SESSION_OUTCOMES.filter(o => state.wisdom >= o.minWisdom);
+  const outcome = outcomes[outcomes.length - 1] || SESSION_OUTCOMES[0];
+  document.getElementById('end-title').textContent = outcome.title;
+  document.getElementById('end-subtitle').textContent = outcome.subtitle;
+  document.getElementById('mirror-reflection-end').textContent = outcome.reflection;
+  document.getElementById('stat-fragments').textContent = state.sessionFragmentsGained;
+  document.getElementById('stat-clarity').textContent = state.sessionClarityScore;
+  document.getElementById('stat-total').textContent = state.wisdom;
+  const clarityCount = state.sessionClarityScore; const totalCards = state.sessionFragmentsGained || 1;
+  if (state.sessionFragmentsGained > 0) {
+    const dominant = clarityCount / totalCards > 0.6 ? 'clarity' : clarityCount / totalCards < 0.3 ? 'obscurity' : 'neutral';
+    state.lastSessionDominant = dominant; state.lastSessionEcho = state.echoLog[0]?.text || null; state.lastSessionWisdom = state.wisdom;
+  }
+  state.session++; showScreen('end-screen');
+}
+
+function init() {
+  if (window.MIRROR_VFX) {
+    new window.MIRROR_VFX.AmbientField('menu-screen');
+    const soulEl = document.getElementById('soul-entity');
+    if (soulEl) window.soulParticles = new window.MIRROR_VFX.SoulParticles(soulEl);
+  }
+  runBoot();
+  document.getElementById('enter-btn').addEventListener('click', () => showScreen('menu-screen'));
+  document.getElementById('new-game-btn').addEventListener('click', startSession);
+  document.getElementById('lore-btn').addEventListener('click', () => showScreen('lore-screen'));
+  document.getElementById('lore-back-btn').addEventListener('click', () => showScreen('menu-screen'));
+  document.getElementById('lore-start-btn').addEventListener('click', startSession);
+  document.getElementById('next-btn').addEventListener('click', loadNextEncounter);
+  document.getElementById('end-session-btn').addEventListener('click', endSession);
+  document.getElementById('play-again-btn').addEventListener('click', startSession);
+  document.getElementById('menu-btn').addEventListener('click', () => showScreen('menu-screen'));
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
