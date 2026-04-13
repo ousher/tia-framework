@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — AI Agent Compliance</title>
+<meta name="description" content="How TIA approaches compliance for autonomous AI security agents. Decision audit trail, sovereign deployment, agent explainability.">
+<meta property="og:title" content="TIA — AI Agent Compliance">
+<meta property="og:description" content="Autonomous AI agents need autonomous compliance. Decision graphs, audit trails, confidence scoring — built in, not bolted on.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.tia-framework.com/compliance.html">
+<meta property="og:image" content="https://www.tia-framework.com/tia-social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TIA — AI Agent Compliance">
+<meta name="twitter:description" content="Autonomous AI agents need autonomous compliance. Decision graphs, audit trails, confidence scoring.">
+<meta name="twitter:image" content="https://www.tia-framework.com/tia-social.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --yellow: #ffcc00;
+    --purple: #aa66ff;
+    --cyan: #00ffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--cyan); }
+
+  .nav-cta {
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 16px;
+    font-size: 12px !important;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { background: rgba(0,255,136,0.08); border-color: var(--green); }
+
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .hamburger span {
+    width: 24px; height: 2px;
+    background: var(--text);
+    transition: 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: rgba(7,7,13,0.95);
+      flex-direction: column;
+      padding: 20px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+  }
+
+  .hero {
+    text-align: center;
+    padding: 140px 0 60px;
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--cyan), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  section { padding: 60px 0; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .principle-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .principle-card:hover { border-color: rgba(0,255,255,0.3); }
+
+  .principle-card .card-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .principle-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .principle-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .principle-card .card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-top: 16px;
+    display: block;
+  }
+
+  .architecture-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 40px;
+    margin: 32px 0;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+  }
+
+  .architecture-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--green), transparent);
+  }
+
+  .architecture-block h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 24px;
+    color: var(--cyan);
+  }
+
+  .arch-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    gap: 16px;
+  }
+
+  .arch-row:last-child { border-bottom: none; }
+
+  .arch-label {
+    width: 200px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+
+  .arch-value {
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .arch-status {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .status-live { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.3); }
+  .status-building { background: rgba(0,170,255,0.1); color: var(--blue); border: 1px solid rgba(0,170,255,0.3); }
+  .status-planned { background: rgba(136,136,136,0.1); color: var(--text-dim); border: 1px solid rgba(136,136,136,0.3); }
+
+  .regulation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .reg-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+  }
+
+  .reg-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .reg-card .reg-scope {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .reg-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .reg-card li {
+    font-size: 14px;
+    color: var(--text-dim);
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .reg-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--cyan);
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+
+  .cta-section p {
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: transparent;
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .cta-btn:hover { background: rgba(0,255,136,0.08); box-shadow: 0 0 24px rgba(0,255,136,0.15); }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  footer a { color: var(--green); text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .arch-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .arch-label { width: auto; }
+    .arch-status { margin-left: 0; margin-top: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="hamburger" onclick="this.classList.toggle('active');this.parentElement.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="lore.html">Lore</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="threatmap.html">Threat Map</a>
+      <a href="soul.html">SOUL</a>
+      <a href="efs.html">EFS</a>
+      <a href="mirror.html">THE MIRROR</a>
+      <a href="compliance.html" class="active">Compliance</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <section class="hero">
+    <p class="hero-tag">AI Agent Compliance</p>
+    <h1>Autonomous Agents Need Autonomous Compliance</h1>
+    <p>When AI agents make security decisions at machine speed, compliance can't wait for a human to fill in a spreadsheet. TIA builds audit, explainability, and governance into the agent architecture — not as an afterthought.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Core Principles</div>
+    <h2>How TIA approaches compliance</h2>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <div class="card-icon">&#9783;</div>
+        <h3>Every Decision Has a Trail</h3>
+        <p>Every agent action is logged with context: what triggered it, what data it used, what confidence level it had, and what happened next. Decisions form chains, not isolated events.</p>
+        <span class="card-tag">Decision Graph</span>
+      </div>
+
+      <div class="principle-card">
+        <div class="card-icon">&#9878;</div>
+        <h3>Confidence Is Explicit</h3>
+        <p>Agents don't just act — they declare how certain they are. Every edge in the decision graph carries a confidence score (0.0 to 1.0). Regulators see not just what happened, but how sure the agent was.</p>
+        <span class="card-tag">Confidence Tiers</span>
+      </div>
+
+      <div class="principle-card">
+        <div class="card-icon">&#9881;</div>
+        <h3>Sovereign by Default</h3>
+        <p>Customer data never leaves customer infrastructure. TIA agents run on-premise. No cloud dependency. No vendor lock-in. Your data, your servers, your jurisdiction.</p>
+        <span class="card-tag">Data Sovereignty</span>
+      </div>
+
+      <div class="principle-card">
+        <div class="card-icon">&#8634;</div>
+        <h3>Identity Persists, Decisions Don't Disappear</h3>
+        <p>TIA agents maintain persistent identity across model swaps and restarts. Their decision history survives infrastructure changes. You can audit an agent's full lifecycle — not just its last session.</p>
+        <span class="card-tag">Persistent Memory</span>
+      </div>
+
+      <div class="principle-card">
+        <div class="card-icon">&#9741;</div>
+        <h3>Staleness Detection</h3>
+        <p>Decisions made on outdated context are flagged automatically. If an agent acts on stale threat intelligence or expired facts, the audit trail shows it. No silent failures.</p>
+        <span class="card-tag">Context Integrity</span>
+      </div>
+
+      <div class="principle-card">
+        <div class="card-icon">&#9700;</div>
+        <h3>Execution Flows, Not Isolated Events</h3>
+        <p>Agent actions are grouped into execution flows — detection, analysis, response, validation. Regulators see the reasoning chain, not a flat log of disconnected events.</p>
+        <span class="card-tag">Flow Tracking</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Architecture</div>
+    <h2>Compliance infrastructure</h2>
+
+    <div class="architecture-block">
+      <h3>Decision Graph</h3>
+      <div class="arch-row">
+        <span class="arch-label">NODES</span>
+        <span class="arch-value">Agents, decisions, facts, incidents, actions, regulations</span>
+        <span class="arch-status status-live">LIVE</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">EDGES</span>
+        <span class="arch-value">triggered_by, based_on, resulted_in, escalated_to — with confidence scores</span>
+        <span class="arch-status status-live">LIVE</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">EXECUTION FLOWS</span>
+        <span class="arch-value">Ordered reasoning chains with outcome tracking and duration</span>
+        <span class="arch-status status-live">LIVE</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">TEMPORAL VALIDITY</span>
+        <span class="arch-value">Facts and edges carry valid_from / valid_to windows — prevents stale-state decisions</span>
+        <span class="arch-status status-live">LIVE</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">COMPLIANCE EXPORT</span>
+        <span class="arch-value">Audit-ready reports from decision graph data</span>
+        <span class="arch-status status-building">BUILDING</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">CUSTOMER DASHBOARD</span>
+        <span class="arch-value">Read-only compliance view for CISOs and regulators</span>
+        <span class="arch-status status-planned">PLANNED</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Regulatory Landscape</div>
+    <h2>Preparing for what's coming</h2>
+
+    <div class="regulation-grid">
+      <div class="reg-card">
+        <h3>EU AI Act</h3>
+        <div class="reg-scope">HIGH-RISK AI SYSTEMS — 2026</div>
+        <ul>
+          <li>Risk management system (Article 9)</li>
+          <li>Technical documentation (Article 11)</li>
+          <li>Record-keeping and logging (Article 12)</li>
+          <li>Human oversight provisions (Article 14)</li>
+          <li>Accuracy, robustness, cybersecurity (Article 15)</li>
+          <li>Incident reporting (Article 62)</li>
+        </ul>
+      </div>
+
+      <div class="reg-card">
+        <h3>NIS2 Directive</h3>
+        <div class="reg-scope">CRITICAL INFRASTRUCTURE — ACTIVE</div>
+        <ul>
+          <li>Incident response and reporting</li>
+          <li>Supply chain security</li>
+          <li>Vulnerability disclosure</li>
+          <li>Risk management measures</li>
+          <li>Business continuity planning</li>
+        </ul>
+      </div>
+
+      <div class="reg-card">
+        <h3>SOC 2 / ISO 27001</h3>
+        <div class="reg-scope">INDUSTRY STANDARD — ONGOING</div>
+        <ul>
+          <li>Security monitoring and alerting</li>
+          <li>Access control and authentication</li>
+          <li>Change management audit trail</li>
+          <li>Incident management procedures</li>
+          <li>Continuous risk assessment</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Production Evidence</div>
+    <h2>Not theory — production</h2>
+
+    <div class="architecture-block">
+      <div class="arch-row">
+        <span class="arch-label">AGENTS IN PRODUCTION</span>
+        <span class="arch-value">35 autonomous agents, 24+ days continuous operation</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">THREATS BLOCKED</span>
+        <span class="arch-value">563 attacks blocked, 0 breaches</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">CERT REPORTS</span>
+        <span class="arch-value">2 cases confirmed by national CERT (NUKIB)</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">OPERATING COST</span>
+        <span class="arch-value">$405/month total — $11.57 per agent — 61x cheaper than human SOC</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">MODEL SWAPS</span>
+        <span class="arch-value">3 model swaps survived — agent identity and decision history persisted</span>
+      </div>
+      <div class="arch-row">
+        <span class="arch-label">DETECTION TIME</span>
+        <span class="arch-value">21-second average detection — autonomous response, no human in the loop</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Let's talk compliance for autonomous agents</h2>
+    <p>Building compliance infrastructure for AI security operations is a new problem. We'd rather solve it with partners than alone.</p>
+    <a href="mailto:ondrej@tia-framework.com" class="cta-btn">Get in touch</a>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <p>TIA s.r.o. — Prague, Czech Republic — <a href="efs.html">EFS Framework</a> &middot; <a href="soul.html">SOUL Protocol</a> &middot; <a href="compliance.html">Compliance</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
