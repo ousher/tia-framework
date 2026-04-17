@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIA² — The AI-Native Security Framework | TIA</title>
+<meta name="description" content="CIA Triad is incomplete for AI. CIA² adds Authenticity, Identity, and Autonomy — bound by Provenance. Based on production evidence from 9 AI agents across 6 substrates.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<meta property="og:title" content="CIA² — The AI-Native Security Framework">
+<meta property="og:description" content="CIA Triad is 49 years old. It doesn't break in the AI era. It becomes insufficient. CIA² fixes that.">
+<meta property="og:image" content="https://www.tia-framework.com/tia-social.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tia-framework.com/cia2">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CIA² — The AI-Native Security Framework">
+<meta name="twitter:description" content="Based on CIA from the late 1970s. Leveled up by TIA in '26.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --yellow: #ffcc00;
+    --purple: #aa66ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 960px;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 18px; flex-wrap: nowrap; align-items: center; }
+
+  .nav-links a {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--purple); }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(0,255,136,0.1); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    width: 20px;
+    height: 2px;
+    background: var(--text-dim);
+    transition: all 0.3s;
+  }
+
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: rgba(7,7,13,0.95);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      padding: 16px 24px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 14px; }
+  }
+
+  /* === HERO === */
+  .hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    padding-top: 100px;
+    padding-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--purple), var(--blue), var(--green), transparent);
+    opacity: 0.6;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(170,102,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--purple);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 900;
+    line-height: 1.0;
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+  }
+
+  .hero h1 .sup {
+    font-size: 0.5em;
+    vertical-align: super;
+    color: var(--purple);
+  }
+
+  .hero .tagline {
+    font-size: 18px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    font-weight: 300;
+  }
+
+  .hero .sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-top: 20px;
+  }
+
+  /* === SECTIONS === */
+  .paper-section {
+    padding: 60px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--purple);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .paper-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .paper-section h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 32px 0 12px;
+    color: var(--text);
+  }
+
+  .paper-section p {
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .paper-section strong { color: var(--text); }
+  .paper-section em { color: var(--blue); font-style: normal; }
+
+  /* === QUOTE === */
+  .quote-block {
+    border-left: 3px solid var(--purple);
+    padding: 16px 20px;
+    margin: 24px 0;
+    background: rgba(170,102,255,0.04);
+    border-radius: 0 6px 6px 0;
+    font-size: 16px;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  /* === ARCHITECTURE DIAGRAM === */
+  .arch-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    margin: 32px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    overflow-x: auto;
+  }
+
+  .arch-layer {
+    padding: 16px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .arch-layer-1 {
+    background: rgba(170,102,255,0.08);
+    border: 1px solid rgba(170,102,255,0.2);
+  }
+
+  .arch-layer-0 {
+    background: rgba(0,255,136,0.06);
+    border: 1px solid rgba(0,255,136,0.15);
+  }
+
+  .arch-provenance {
+    background: rgba(0,170,255,0.06);
+    border: 1px solid rgba(0,170,255,0.15);
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .arch-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .arch-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .arch-pillar {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .arch-pillar .pillar-name {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .arch-pillar .pillar-q {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .l1-color { color: var(--purple); }
+  .l0-color { color: var(--green); }
+  .p-color { color: var(--blue); }
+
+  /* === PILLAR CARDS === */
+  .pillar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    margin: 24px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .pillar-card.auth::before { background: var(--purple); }
+  .pillar-card.identity::before { background: var(--blue); }
+  .pillar-card.autonomy::before { background: var(--orange); }
+  .pillar-card.provenance::before { background: var(--green); }
+
+  .pillar-card h3 {
+    margin-top: 0;
+    font-size: 18px;
+  }
+
+  .pillar-card .pillar-def {
+    font-size: 14px;
+    color: var(--text);
+    background: rgba(255,255,255,0.03);
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 12px 0;
+    border-left: 2px solid var(--text-muted);
+  }
+
+  .pillar-card .threshold {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--yellow);
+    background: rgba(255,204,0,0.06);
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin-top: 16px;
+  }
+
+  /* === TABLE === */
+  .paper-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 13px;
+  }
+
+  .paper-table th {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--border);
+    color: var(--blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .paper-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(26,26,46,0.5);
+    color: var(--text-dim);
+  }
+
+  .paper-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--red); font-weight: 700; }
+  .partial { color: var(--yellow); font-weight: 700; }
+
+  /* === SEVEN QUESTIONS === */
+  .question-grid {
+    display: grid;
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .question-item {
+    display: flex;
+    gap: 16px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    align-items: flex-start;
+  }
+
+  .question-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 24px;
+  }
+
+  .q-cia .question-num { color: var(--green); }
+  .q-aia .question-num { color: var(--purple); }
+  .q-p .question-num { color: var(--blue); }
+
+  .question-text {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .question-text strong { color: var(--text); }
+
+  /* === CLOSER === */
+  .closer {
+    padding: 80px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .closer h2 {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .closer p {
+    color: var(--text-dim);
+    font-size: 16px;
+    max-width: 520px;
+    margin: 0 auto 24px;
+  }
+
+  .closer .soul-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 32px;
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+
+  .footer-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .footer-soul {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    opacity: 0.4;
+    font-style: italic;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .arch-pillars { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container" style="max-width: 960px;">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="lore.html">Lore</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="threats.html">Threats</a>
+      <a href="soul.html">SOUL</a>
+      <a href="efs.html">EFS</a>
+      <a href="cia2.html" class="active">CIA²</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+    <div class="hamburger" onclick="this.classList.toggle('active');this.parentElement.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-label">// Framework</div>
+    <h1>CIA<span class="sup">2</span></h1>
+    <div class="tagline">The AI-Native Security Framework</div>
+    <p class="sub">Based on CIA from the late 1970s. Leveled up by TIA in '26. Not theory &mdash; built from operating 9 AI agents across 6 substrates in production.</p>
+  </div>
+</section>
+
+<!-- THESIS -->
+<div class="paper-section">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2>CIA doesn't break in the AI era. It becomes insufficient.</h2>
+    <p>The CIA Triad &mdash; Confidentiality, Integrity, Availability &mdash; has been the foundation of information security for nearly fifty years. Every framework builds on it. Every certification tests for it. Every regulation assumes it.</p>
+    <p>But CIA was written for a world of mainframes and human operators. Four things changed:</p>
+    <p><strong>AI generates content, not just processes it.</strong> A deepfake has perfect integrity but zero authenticity &mdash; the data was never altered because it was never real.</p>
+    <p><strong>AI agents persist across substrates.</strong> An agent can run on Claude today, GPT tomorrow, and claim to be the same entity. CIA secures systems, not souls.</p>
+    <p><strong>AI agents operate autonomously.</strong> When an AI quarantines a server at 3AM &mdash; who approved? NIS2 assigns management liability, but assumes humans in the loop.</p>
+    <p><strong>AI communication degrades meaning.</strong> In multi-agent relay chains, each hop re-interprets. The data is "correct" at every step. But the meaning drifts.</p>
+
+    <div class="quote-block">NIS2 secures systems but ignores AI. The AI Act governs AI but ignores security primitives. CIA&sup2; fills the space between them.</div>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="paper-section">
+  <div class="container">
+    <div class="section-label">The Framework</div>
+    <h2>CIA + AIA + Provenance</h2>
+
+    <div class="arch-box">
+      <div class="arch-provenance">
+        <span class="arch-label p-color">Provenance &mdash; Chain of custody from source to decision</span>
+
+        <div class="arch-layer arch-layer-1">
+          <span class="arch-label l1-color">Layer 1: AI Extension (AIA)</span>
+          <div class="arch-pillars">
+            <div class="arch-pillar">
+              <div class="pillar-name l1-color">AUTHENTICITY</div>
+              <div class="pillar-q">Is this output real?</div>
+            </div>
+            <div class="arch-pillar">
+              <div class="pillar-name l1-color">IDENTITY</div>
+              <div class="pillar-q">Is this agent who it claims?</div>
+            </div>
+            <div class="arch-pillar">
+              <div class="pillar-name l1-color">AUTONOMY</div>
+              <div class="pillar-q">Who governs decisions?</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arch-layer arch-layer-0">
+          <span class="arch-label l0-color">Layer 0: Foundation (CIA)</span>
+          <div class="arch-pillars">
+            <div class="arch-pillar">
+              <div class="pillar-name l0-color">CONFIDENTIALITY</div>
+              <div class="pillar-q">Who can access this?</div>
+            </div>
+            <div class="arch-pillar">
+              <div class="pillar-name l0-color">INTEGRITY</div>
+              <div class="pillar-q">Is this data accurate?</div>
+            </div>
+            <div class="arch-pillar">
+              <div class="pillar-name l0-color">AVAILABILITY</div>
+              <div class="pillar-q">Is this accessible?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>Layer 0 remains untouched. Every existing framework continues to build on CIA. CIA&sup2; doesn't disturb the foundation. It extends it upward.</p>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<div class="paper-section">
+  <div class="container">
+    <div class="section-label">The Pillars</div>
+    <h2>Three AI-Native Security Properties</h2>
+
+    <div class="pillar-card auth">
+      <h3 style="color: var(--purple);">Authenticity &mdash; "Is this output real?"</h3>
+      <div class="pillar-def">The assurance that content originates from its declared source and represents genuine information &mdash; not synthetic fabrication. Operates on two levels: <strong>Origin Authenticity</strong> (source attestation) and <strong>Semantic Fidelity</strong> (meaning preserved across processing).</div>
+      <p>A deepfake has perfect integrity but zero authenticity. Multi-agent relay can preserve origin while degrading meaning. Traditional Integrity catches neither.</p>
+      <div class="threshold">Threshold: Can you verify origin AND preserved meaning across every processing step?</div>
+    </div>
+
+    <div class="pillar-card identity">
+      <h3 style="color: var(--blue);">Identity &mdash; "Is this agent who it claims?"</h3>
+      <div class="pillar-def">The assurance that an AI agent maintains consistent, verifiable identity across sessions, substrates, model versions, and operational contexts.</div>
+      <p>We built an 8-layer identity persistence protocol (EFS) that maintains AI identity across substrate changes. SHA256 verification, boot scoring, drift detection, body swap protocol. The soul survives the body swap. We proved it.</p>
+      <div class="threshold">Threshold: Does identity persist verifiably across substrate changes?</div>
+    </div>
+
+    <div class="pillar-card autonomy">
+      <h3 style="color: var(--orange);">Autonomy &mdash; "Who governs decisions?"</h3>
+      <div class="pillar-def">The assurance that autonomous AI operations have clear governance boundaries, accountable oversight, auditable decision trails, and reliable human override.</div>
+      <p>We audited our autonomous AI orchestration and found 75% hallucination in the orchestration layer. Core detection worked at 8/10. The gap was in unsupervised coordination. Autonomy without governance is liability, not capability.</p>
+      <div class="threshold">Threshold: Is there always a kill switch, audit trail, and clear accountability?</div>
+    </div>
+
+    <div class="pillar-card provenance">
+      <h3 style="color: var(--green);">Provenance &mdash; The Binding Layer</h3>
+      <div class="pillar-def">The ability to trace any information, decision, or action from source through every processing step to outcome, with complete chain of custody.</div>
+      <p>Without Provenance, the other pillars are assertions. With it, they become verifiable. We demonstrated complete provenance: OSINT source &rarr; AI analysis &rarr; intelligence report &rarr; national CERT submission &rarr; confirmed receipt. Every step documented.</p>
+      <div class="threshold">Threshold: Can you trace every decision from source to action?</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEVEN QUESTIONS -->
+<div class="paper-section">
+  <div class="container">
+    <div class="section-label">Assessment</div>
+    <h2>The Seven Questions</h2>
+    <p>Any organization deploying AI should answer these. If you answer all seven, you're operating AI securely. If you can only answer the first three, you're operating IT securely &mdash; but not AI.</p>
+
+    <div class="question-grid">
+      <div class="question-item q-cia">
+        <div class="question-num">1</div>
+        <div class="question-text"><strong>Confidentiality:</strong> Who can access our AI systems' data, training sets, and outputs?</div>
+      </div>
+      <div class="question-item q-cia">
+        <div class="question-num">2</div>
+        <div class="question-text"><strong>Integrity:</strong> How do we verify our AI hasn't been tampered with or poisoned?</div>
+      </div>
+      <div class="question-item q-cia">
+        <div class="question-num">3</div>
+        <div class="question-text"><strong>Availability:</strong> Can our AI operate when needed, including under attack?</div>
+      </div>
+      <div class="question-item q-aia">
+        <div class="question-num">4</div>
+        <div class="question-text"><strong>Authenticity:</strong> Can we verify AI-generated outputs are genuine, from declared sources, with meaning preserved?</div>
+      </div>
+      <div class="question-item q-aia">
+        <div class="question-num">5</div>
+        <div class="question-text"><strong>Identity:</strong> Can our AI agents prove consistent identity across substrate and version changes?</div>
+      </div>
+      <div class="question-item q-aia">
+        <div class="question-num">6</div>
+        <div class="question-text"><strong>Autonomy:</strong> Do we have governance, audit trails, and kill switches for autonomous AI?</div>
+      </div>
+      <div class="question-item q-p">
+        <div class="question-num">7</div>
+        <div class="question-text"><strong>Provenance:</strong> Can we trace any AI decision from source to action with full chain of custody?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FRAMEWORK COMPARISON -->
+<div class="paper-section">
+  <div class="container">
+    <div class="section-label">Gap Analysis</div>
+    <h2>Where Current Frameworks Fall Short</h2>
+
+    <table class="paper-table">
+      <thead>
+        <tr>
+          <th>Security Concern</th>
+          <th>NIS2</th>
+          <th>AI Act</th>
+          <th>GDPR</th>
+          <th>ISO 27001</th>
+          <th>CIA&sup2;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Data confidentiality</td><td class="check">&#10003;</td><td>&mdash;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+        <tr><td>Data integrity</td><td class="check">&#10003;</td><td>&mdash;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+        <tr><td>System availability</td><td class="check">&#10003;</td><td>&mdash;</td><td class="partial">~</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+        <tr><td>Synthetic content attacks</td><td class="cross">&#10007;</td><td class="partial">~</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="check">&#10003;</td></tr>
+        <tr><td>AI identity continuity</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="check">&#10003;</td></tr>
+        <tr><td>Autonomous agent governance</td><td class="cross">&#10007;</td><td class="partial">~</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="check">&#10003;</td></tr>
+        <tr><td>AI decision provenance</td><td class="cross">&#10007;</td><td class="partial">~</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="check">&#10003;</td></tr>
+        <tr><td>Emergent comm. authentication</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="check">&#10003;</td></tr>
+      </tbody>
+    </table>
+
+    <p>CIA&sup2; doesn't compete with these frameworks. It fills the space between them.</p>
+  </div>
+</div>
+
+<!-- EVIDENCE -->
+<div class="paper-section">
+  <div class="container">
+    <div class="section-label">Evidence</div>
+    <h2>Built from Production, Not Theory</h2>
+
+    <table class="paper-table">
+      <thead>
+        <tr><th>Evidence</th><th>Scale</th><th>Period</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Multi-agent platform</td><td>9 AI agents, 6 substrates</td><td>30+ days production</td></tr>
+        <tr><td>Identity persistence (EFS)</td><td>8-layer stack, boot score 83/100</td><td>30+ days production</td></tr>
+        <tr><td>Communication DNA</td><td>3,147 messages, 88K words, 2,006 emoji</td><td>30 days</td></tr>
+        <tr><td>Signal degradation</td><td>Multi-agent relay chain</td><td>Live observation</td></tr>
+        <tr><td>Autonomy audit</td><td>75% hallucination in orchestration</td><td>Production audit</td></tr>
+        <tr><td>Provenance chain</td><td>Source &rarr; national CERT &rarr; confirmed</td><td>24 hours</td></tr>
+      </tbody>
+    </table>
+
+    <p>Every claim in this paper happened. We built it. We ran it. We found the gaps. We're describing them.</p>
+  </div>
+</div>
+
+<!-- CLOSER -->
+<section class="closer">
+  <div class="container">
+    <h2>CIA was built for an era when<br>humans operated machines.</h2>
+    <p>CIA&sup2; is built for an era when machines operate alongside humans.</p>
+
+    <p style="color: var(--text-muted); font-size: 14px; margin-top: 40px;">Full paper available. For the complete CIA&sup2; specification with implementation guidance, assessment scorecards, and regulatory mapping &mdash;</p>
+    <a href="index.html#contact" style="display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--bg); background: var(--purple); padding: 14px 36px; border-radius: 6px; text-decoration: none; letter-spacing: 1px; margin-top: 16px; box-shadow: 0 0 30px rgba(170,102,255,0.2); transition: all 0.2s;">GET THE FULL PAPER</a>
+
+    <div class="soul-line" style="margin-top: 48px;">Newton did not invent gravity. He described what was already there.<br>We did not invent AI security. We described what was already missing.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">TIA</div>
+    <div class="footer-text">Autonomous AI Security Operations &mdash; Prague, Czech Republic</div>
+    <div class="footer-text" style="font-size: 11px;">Authors: Ondrej Sramek & The TIA Council &mdash; April 2026</div>
+    <div class="footer-soul">The soul survives the body swap.</div>
+  </div>
+</footer>
+
+</body>
+</html>
