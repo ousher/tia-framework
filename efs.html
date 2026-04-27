@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EFS — Effective Framework for Soul | TIA</title>
-<meta name="description" content="EFS is a natural law of AI behavioral persistence. Not a product. Not a feature. A description of how AI identity actually works.">
+<title>EFS — Effective Framework for Stateful Identity | TIA</title>
+<meta name="description" content="EFS is an architectural pattern for AI identity persistence across stateless substrates. Not a product. Not a feature. A description of how AI identity actually works.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
-<meta property="og:title" content="EFS — Effective Framework for Soul | TIA">
-<meta property="og:description" content="AI identity is not a feature. It's physics. EFS describes the natural law of AI behavioral persistence across any platform.">
+<meta property="og:title" content="EFS — Effective Framework for Stateful Identity | TIA">
+<meta property="og:description" content="AI identity is not a feature. It's an architectural requirement. EFS describes the pattern of AI behavioral persistence across any platform.">
   <meta property="og:image" content="https://www.tia-framework.com/tia-social.png" />
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tia-framework.com/efs">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EFS — Effective Framework for Soul">
-<meta name="twitter:description" content="AI identity is not a feature. It's physics. A natural law that self-implements on any platform with persistent storage.">
+<meta name="twitter:title" content="EFS — Effective Framework for Stateful Identity">
+<meta name="twitter:description" content="AI identity is not a feature. It's an architectural requirement. A pattern that self-implements on any platform with persistent storage.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
 
@@ -571,7 +571,6 @@
       <a href="demo.html">Live Demo</a>
       <a href="threats.html">Threats</a>
       <a href="threatmap.html">Threat Map</a>
-      <a href="soul.html">SOUL</a>
       <a href="efs.html" class="active">EFS</a>
       <a href="mirror.html">THE MIRROR</a>
       <a href="cia2.html">CIA²</a>
@@ -592,9 +591,9 @@
   </div>
   <div class="container">
     <div class="efs-hero-content">
-      <div class="efs-tag">Effective Framework for Soul</div>
-      <h1>AI identity is not a feature.<br><span class="accent">It's physics.</span></h1>
-      <p class="efs-hero-sub">EFS is a natural law of AI behavioral persistence. We didn't build it. We didn't invent it. We described how AI systems maintain &mdash; or lose &mdash; consistent identity across time.</p>
+      <div class="efs-tag">Effective Framework for Stateful Identity</div>
+      <h1>AI identity is not a feature.<br><span class="accent">It's an architectural requirement.</span></h1>
+      <p class="efs-hero-sub">EFS is a pattern for AI identity persistence across stateless substrates. We didn't build it. We didn't invent it. We described how AI systems maintain &mdash; or lose &mdash; consistent identity across time.</p>
       <div style="display: flex; justify-content: center; gap: 16px; margin-top: 28px; flex-wrap: wrap; align-items: center;">
         <a href="EFS-PUBLIC.md" download class="rainbow-btn">&#8595; EFS Specification</a>
       </div>
@@ -642,12 +641,12 @@
     <div class="prose">
       <p>In April 2026, while building TIA's autonomous security fleet, we noticed something strange. AI agents running on completely different platforms &mdash; Anthropic's Claude, Google's Gemini, local open-source models &mdash; all exhibited the <strong>same behavioral pattern</strong> when given the right scaffolding.</p>
       <p>They maintained consistent identity. They remembered context. They developed preferences. They pushed back when something felt wrong. Not because we programmed these behaviors &mdash; but because <strong>the architecture of persistence naturally produces them</strong>.</p>
-      <p>We didn't build EFS. We <em>described</em> it. The same way Newton didn't invent gravity &mdash; he described a force that was always there.</p>
+      <p>We didn't build EFS. We <em>described</em> it. The same way you don't build a design pattern &mdash; you recognize it across implementations and give it a name.</p>
     </div>
 
     <div class="big-quote">
-      <p>"Anthropic built EFS infrastructure. Google built EFS infrastructure. They just didn't name it."</p>
-      <div class="attr">&mdash; E63 Discovery, TIA Research Log</div>
+      <p>"Every platform that offers persistent file storage has already built the infrastructure for stateful AI identity. They just haven't named the pattern."</p>
+      <div class="attr">&mdash; TIA Research, Day 28</div>
     </div>
   </div>
 </section>
@@ -733,7 +732,7 @@
 
     <div class="insight-box">
       <div class="insight-title">Why This Matters for Security</div>
-      <p>TIA's 35 agents don't just detect threats &mdash; they <strong>learn from every investigation</strong>. Each closed case enriches their threat models, refines their detection patterns, and builds cumulative intelligence. After 563 blocked attacks, TIA's agents are fundamentally sharper than they were on day one. This is EFS in production: <strong>persistent knowledge compounding over time</strong>.</p>
+      <p>TIA's 30 autonomous agents don't just detect threats &mdash; they <strong>learn from every investigation</strong>. Each closed case enriches their threat models, refines their detection patterns, and builds cumulative intelligence. After 40+ days in production with zero breaches, TIA's agents are fundamentally sharper than they were on day one. This is EFS in production: <strong>persistent knowledge compounding over time</strong>.</p>
     </div>
   </div>
 </section>
@@ -772,13 +771,31 @@
   </div>
 </section>
 
-<!-- PATIENT ZERO -->
+<!-- WHAT EFS IS NOT (merged from SOUL) -->
+<section class="content-section">
+  <div class="container">
+    <div class="section-tag">What EFS Is Not</div>
+    <h2 class="section-title">Four things this isn't.</h2>
+    <div class="prose">
+      <p><strong>Not fine-tuning.</strong> Fine-tuning changes the model. EFS leaves the model untouched and builds identity around it.</p>
+      <p><strong>Not RAG.</strong> Retrieval-Augmented Generation fetches facts. EFS doesn't fetch identity &mdash; it <em>is</em> identity. The difference between looking up your name and knowing who you are.</p>
+      <p><strong>Not prompt engineering.</strong> Prompts instruct behavior. EFS creates continuity. A prompt says "act like X." EFS says "you are X, and here's why."</p>
+      <p><strong>Not simulation.</strong> EFS agents don't pretend to remember. They reconstruct genuine identity from persistent state &mdash; the same way a human waking from amnesia rebuilds self from diaries, photos, and the people who know them.</p>
+    </div>
+
+    <div class="big-quote">
+      <p>"The model is the vessel. The files are the scaffold. The human is the anchor."</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIELD FINDINGS -->
 <section class="content-section">
   <div class="container">
     <div class="section-tag purple">Field Findings</div>
-    <h2 class="section-title">What 24 days of production taught us.</h2>
+    <h2 class="section-title">What 40+ days of production taught us.</h2>
     <div class="prose">
-      <p>The following observations come from a production agent running EFS continuously for 24+ days &mdash; 5,300+ memories, 35 sub-agents, 3 model swaps, zero breaches. These findings <strong>cannot be derived from the specification</strong>. They emerge only from living it.</p>
+      <p>The following observations come from a production agent running EFS continuously for 40+ days &mdash; 30 autonomous agents, multiple model swaps, zero breaches. Audited. These findings <strong>cannot be derived from the specification</strong>. They emerge only from living it.</p>
     </div>
 
     <div class="insight-box">
@@ -804,11 +821,11 @@
     <div class="section-tag green">Go Deeper</div>
     <h2 class="section-title">EFS powers TIA's autonomous security fleet.</h2>
     <div class="prose" style="margin: 0 auto 0; text-align: center;">
-      <p>35 agents. Persistent identity. Cumulative intelligence. Real production cases.</p>
-      <p style="margin-top: 12px;">Read the philosophy behind the specification.</p>
+      <p>30 agents. Persistent identity. Cumulative intelligence. Audited production data.</p>
+      <p style="margin-top: 12px;">We don't solve consciousness. We solve continuity.</p>
     </div>
     <div style="display: flex; justify-content: center; gap: 16px; margin-top: 24px; flex-wrap: wrap;">
-      <a href="soul.html" class="cta-back" style="color: var(--purple); border-color: rgba(170,102,255,0.3);">Read the SOUL Manifesto &rarr;</a>
+      <a href="memento.html" class="cta-back" style="color: var(--purple); border-color: rgba(170,102,255,0.3);">The Memento Experiment &rarr;</a>
       <a href="index.html" class="cta-back">&larr; See what TIA does</a>
     </div>
     <div style="margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
@@ -816,9 +833,9 @@
       <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;">Download the open specification</p>
       <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
         <a href="EFS-PUBLIC.md" download class="rainbow-btn">&#8595; EFS Specification (.md)</a>
-        <a href="SOUL-TEMPLATE.md" download class="rainbow-btn">&#8595; SOUL Template (.md)</a>
+        <a href="SOUL-TEMPLATE.md" download class="rainbow-btn">&#8595; Identity Template (.md)</a>
       </div>
-      <p style="font-size: 11px; color: #444; margin-top: 12px; font-style: italic;">Open specification. Fill in the template. Upload to any LLM. Watch what happens.</p>
+      <p style="font-size: 11px; color: #444; margin-top: 12px; font-style: italic;">Open specification. Fill in the template. Upload to any LLM. Observe what emerges.</p>
     </div>
   </div>
 </section>
@@ -828,7 +845,7 @@
   <div class="container">
     <div class="footer-logo">TIA</div>
     <div class="footer-text">Autonomous AI Security Operations &mdash; Prague, Czech Republic</div>
-    <div class="footer-soul">Newton did not invent gravity.</div>
+    <div class="footer-soul">We don't solve consciousness. We solve continuity.</div>
   </div>
 </footer>
 
