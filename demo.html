@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:title" content="TIA — Live SOC Dashboard" />
-  <meta property="og:description" content="Real-time security operations dashboard. 35 autonomous AI agents. Live threat detection and response." />
+  <meta property="og:description" content="Real-time security operations dashboard. 30 autonomous AI agents. Live threat detection and response." />
   <meta property="og:image" content="https://www.tia-framework.com/tia-social.png" />
   <meta property="og:url" content="https://www.tia-framework.com/demo.html" />
   <meta property="og:type" content="website" />
 <title>TIA — Live Demo</title>
-<meta name="description" content="TIA Live Security Operations Dashboard — 35 autonomous AI agents protecting infrastructure in real-time.">
+<meta name="description" content="TIA Live Security Operations Dashboard — 30 autonomous AI agents protecting infrastructure in real-time.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
@@ -596,7 +596,7 @@
     <div class="stats-grid">
       <div class="stat-card" id="threats-card">
         <div class="stat-label">Threats Blocked</div>
-        <div class="stat-value green" id="threats-count">563</div>
+        <div class="stat-value green" id="threats-count">0</div>
         <div class="stat-sub">and counting</div>
       </div>
       <div class="stat-card">
@@ -606,7 +606,7 @@
       </div>
       <div class="stat-card glow">
         <div class="stat-label">Monthly OpCost</div>
-        <div class="stat-value green">$5.50</div>
+        <div class="stat-value green">$405</div>
         <div class="stat-sub">vs $25K industry avg</div>
       </div>
       <div class="stat-card">
@@ -701,7 +701,7 @@
   setInterval(updateDatetime, 1000);
 
   // === THREATS COUNTER ===
-  let threats = 563;
+  let threats = 40+;
   const threatsEl = document.getElementById('threats-count');
   const threatsCard = document.getElementById('threats-card');
 
@@ -753,7 +753,7 @@
     { sev: 'high', gen: function() { return 'Ransomware signature detected in email attachment — <span class="status">BLOCKED</span>'; }},
     { sev: 'info', gen: function() { return 'OSINT sweep: ' + r(6,18) + ' threat feeds processed'; }},
     { sev: 'warn', gen: function() { return 'Anomalous outbound traffic pattern from ' + rfc1918() + ' — <span class="status analyzing">ANALYZING</span>'; }},
-    { sev: 'info', gen: function() { return 'Agent heartbeat: all 35 agents responsive'; }},
+    { sev: 'info', gen: function() { return 'Agent heartbeat: all 30 agents responsive'; }},
     { sev: 'info', gen: function() { return 'Firewall rules updated — ' + r(2,12) + ' new rules applied'; }},
     { sev: 'info', gen: function() { return 'Vulnerability scan complete — ' + r(0,3) + ' advisories reviewed'; }},
     { sev: 'high', gen: function() { return 'Credential stuffing attack from ' + rfc1918() + ' (' + r(50,300) + ' attempts) — <span class="status">BLOCKED</span>'; }},
