@@ -4,7 +4,7 @@
 
 # TIA — Autonomous AI Security Operations
 
-**30 autonomous AI agents. 40+ days. Zero breaches. $405/month. Audited.**
+**30 autonomous AI agents. 50+ days. Zero breaches. $405/month. Audited.**
 
 Built in 6 days. $405/month operating cost. 563 attacks blocked. 0 breaches.
 
@@ -25,7 +25,7 @@ TIA is an autonomous AI security operations platform. 30 specialized AI agents r
 | AI Agents | 30 |
 | Attacks Blocked | 563+ |
 | Breaches | 0 |
-| Days Active | 40+ |
+| Days Active | 50+ |
 | Monthly Operating Cost | $405 |
 | Build Time | 6 days |
 | Model Swaps Survived | 3 |
