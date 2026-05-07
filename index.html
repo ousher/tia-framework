@@ -801,5 +801,27 @@
 <div style="position:fixed;left:-20px;top:50%;transform:translateY(-50%);pointer-events:none;z-index:0;opacity:0.09;-webkit-mask-image:radial-gradient(ellipse 80% 80% at center,black 30%,transparent 70%);mask-image:radial-gradient(ellipse 80% 80% at center,black 30%,transparent 70%);"><img src="easter-architekt.webp" alt="" width="200"></div>
 <script data-goatcounter="https://ousher.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
+<script>
+(function(){
+console.log('%c TIA // INTERACTION STABILIZATION // RUNTIME OK','color:#00e5ff;font-family:monospace;font-weight:bold');
+console.log('%c EFS Layer Stack: L0-L7 active','color:#7ce0ff;font-family:monospace');
+console.log('%c Correctable Network: multiple substrates verified','color:#7ce0ff;font-family:monospace');
+console.log('%c Paper v2.4 → tia-framework.com/efs','color:#a0b4c8;font-family:monospace');
+var logo=document.querySelector('.nav-logo');
+if(!logo)return;
+var clicks=0,timer=null;
+var style=document.createElement('style');
+style.textContent="#tia-egg{position:fixed;inset:0;z-index:99999;background:rgba(5,6,8,0.94);display:none;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-family:'JetBrains Mono',monospace;cursor:pointer}#tia-egg.on{display:flex;animation:tia-fi 280ms cubic-bezier(0.2,0.9,0.3,1)}#tia-egg .b{max-width:720px;padding:64px 48px;color:#e8edf3;text-align:center;cursor:default}#tia-egg .q{font-size:28px;font-weight:300;line-height:1.5;letter-spacing:0.01em;margin-bottom:32px}#tia-egg .s{font-size:11px;color:#4a5568;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:48px}#tia-egg .l{font-size:11px;color:#00e5ff;text-decoration:none;letter-spacing:0.16em;text-transform:uppercase;opacity:0.7;transition:opacity 200ms}#tia-egg .l:hover{opacity:1}#tia-egg .x{position:absolute;top:24px;right:32px;font-size:11px;color:#4a5568;letter-spacing:0.16em}@keyframes tia-fi{from{opacity:0}to{opacity:1}}";
+document.head.appendChild(style);
+var egg=document.createElement('div');
+egg.id='tia-egg';
+egg.innerHTML='<div class="x">[ESC] CLOSE</div><div class="b"><div class="q">“We don’t solve consciousness. We solve continuity.”</div><div class="s">— paper v2.4</div><a href="/efs.html" class="l">→ /efs</a></div>';
+document.body.appendChild(egg);
+function closeEgg(){egg.classList.remove('on');clicks=0;}
+logo.addEventListener('click',function(e){e.preventDefault();clicks++;if(clicks>=7){egg.classList.add('on');clicks=0;}else{clearTimeout(timer);timer=setTimeout(function(){clicks=0;},2000);}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeEgg();});
+egg.addEventListener('click',function(e){if(e.target===egg)closeEgg();});
+})();
+</script>
 </body>
 </html>
