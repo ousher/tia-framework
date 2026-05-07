@@ -1,6 +1,6 @@
 # TIA WHITEPAPER 1.0
 ## Threat Intelligence Autonomy — A Self-Testing, Self-Healing Security Operations Framework
-### Version 1.0 | March 2026
+### Version 1.0 | May 2026
 
 ---
 
@@ -12,7 +12,7 @@ TIA is stateful. It remembers.
 
 TIA is an autonomous SOC that deploys specialized AI agents on minimal infrastructure. In live testing, TIA detected an insider threat in **12 seconds** — a **1,400,000× improvement** over the industry average of 194 days.
 
-**Total infrastructure cost: under €15/month.**
+**Total operating cost: under $405/month.**
 
 ---
 
@@ -118,7 +118,7 @@ TIA runs controlled attack simulations against its own detection layer to verify
 
 | Solution | Avg Detection Time | Monthly Cost | Self-Learning |
 |----------|-------------------|-------------|---------------|
-| **TIA** | **12.7 seconds** | **< €15** | **Yes** |
+| **TIA** | **12.7 seconds** | **$405** | **Yes** |
 | Enterprise SIEM | 194 days | $2,000+ | No |
 | SOC Team (3 analysts) | Hours–Days | $25,000+ | Human only |
 | Managed Detection (MDR) | Hours | $5,000+ | Partial |
@@ -144,7 +144,7 @@ TIA runs controlled attack simulations against its own detection layer to verify
 - Automated resilience testing
 - Hot standby replica
 - Priority support & onboarding
-- **Contact for pricing → [shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
+- **Contact for pricing → [ondrej@tia-framework.com](mailto:ondrej@tia-framework.com)**
 
 ---
 
@@ -171,7 +171,7 @@ TIA runs controlled attack simulations against its own detection layer to verify
 docker pull ghcr.io/ousher/tia-lite:v0.1-alpha
 docker run -d --name tia ghcr.io/ousher/tia-lite:v0.1-alpha
 
-# Enterprise → shotekk23@gmail.com
+# Enterprise → ondrej@tia-framework.com
 ```
 
 ---

@@ -28,7 +28,7 @@ This software, including but not limited to all source code, scripts, configurat
 For commercial use, enterprise licensing, or partnership inquiries:
 
 **Contact:** Ondrej Sramek  
-**Email:** shotekk23@gmail.com  
+**Email:** ondrej@tia-framework.com  
 **Subject line:** TIA Commercial License Inquiry
 
 Commercial licenses are available for:

@@ -59,7 +59,7 @@ No data leaves your perimeter. On-premise deployment, local AI inference, zero t
 
 Every deployment is different — infrastructure size, threat surface, support requirements. We'd rather understand your environment and propose something that fits than publish a price list that doesn't.
 
-→ [shotekk23@gmail.com](mailto:shotekk23@gmail.com)
+→ [ondrej@tia-framework.com](mailto:ondrej@tia-framework.com)
 
 ---
 
@@ -72,7 +72,7 @@ TIA ENT is in active development. We're onboarding select organizations now.
 - Security operations context (internal SOC, MSSP, or similar)
 - Willingness to share feedback during development
 
-→ **[shotekk23@gmail.com](mailto:shotekk23@gmail.com)**
+→ **[ondrej@tia-framework.com](mailto:ondrej@tia-framework.com)**
 
 ---
 

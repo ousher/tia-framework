@@ -4,9 +4,9 @@
 
 # TIA — Autonomous AI Security Operations
 
-**35 AI agents replacing $300K/year SOC teams for $50/year.**
+**30 autonomous AI agents. 40+ days. Zero breaches. $405/month. Audited.**
 
-Built in 6 days. $5.50/month operating cost. 563 attacks blocked. 0 breaches.
+Built in 6 days. $405/month operating cost. 563 attacks blocked. 0 breaches.
 
 [Live Site](https://www.tia-framework.com) · [Live Threat Feed](https://www.tia-framework.com/threats) · [Live Demo](https://www.tia-framework.com/demo.html) · [EFS Framework](https://www.tia-framework.com/efs.html) · [SOUL Protocol](https://www.tia-framework.com/soul.html)
 
@@ -16,17 +16,17 @@ Built in 6 days. $5.50/month operating cost. 563 attacks blocked. 0 breaches.
 
 ## What is TIA?
 
-TIA is an autonomous AI security operations platform. 35 specialized AI agents running continuous threat detection, OSINT intelligence, and incident response — 24/7, with no human shifts, no gaps, and no fatigue.
+TIA is an autonomous AI security operations platform. 30 specialized AI agents running continuous threat detection, OSINT intelligence, and incident response — 24/7, with no human shifts, no gaps, and no fatigue.
 
 ### The Numbers
 
 | Metric | Value |
 |--------|-------|
-| AI Agents | 35 |
+| AI Agents | 30 |
 | Attacks Blocked | 563+ |
 | Breaches | 0 |
-| Days Active | 30+ |
-| Monthly Operating Cost | $5.50 |
+| Days Active | 40+ |
+| Monthly Operating Cost | $405 |
 | Build Time | 6 days |
 | Model Swaps Survived | 3 |
 | CERT Reports Filed | 2 |
@@ -67,7 +67,7 @@ This repository serves the public-facing TIA website via GitHub Pages.
 
 Our fleet processes real-time data from multiple sources:
 
-- **35 autonomous agents** — continuous monitoring, detection, response
+- **30 autonomous agents** — continuous monitoring, detection, response
 - **NIST NVD** — CVE vulnerability data
 - **abuse.ch URLhaus** — Malicious URLs
 - **abuse.ch Feodo Tracker** — C2 server infrastructure
