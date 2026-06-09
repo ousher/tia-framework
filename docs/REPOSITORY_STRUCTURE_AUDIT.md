@@ -59,7 +59,7 @@ To preview the site locally:
 
 1. Clone the repository:
    ```bash
-git clone https://github.com/ousher/tia-framework.git
+   git clone https://github.com/ousher/tia-framework.git
    cd tia-framework
    ```
 2. Start a local server (requires Python 3):
