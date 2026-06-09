@@ -35,11 +35,13 @@ The repository serves as the public-facing website and documentation for the TIA
 Restructure the repository to follow standard conventions:
 ```text
 ├── .github/
-│   └── workflows/       # (For future CI/CD, e.g., link checking)
+│   ├── workflows/       # (For future CI/CD, e.g., link checking)
+│   ├── CODE_OF_CONDUCT.md
+│   └── CONTRIBUTING.md
 ├── assets/              # Move all .webp, .png, .svg, .pdf files here
 │   ├── images/
 │   └── docs/
-├── docs/                # Move WHITEPAPER.md, EFS-PUBLIC.md, SOUL-TEMPLATE.md, TIA-ENT-OVERVIEW.md here
+├── docs/                # Move WHITEPAPER.md, EFS-PUBLIC.md, SOUL-TEMPLATE.md, TIA-ENT-OVERVIEW.md, REPOSITORY_STRUCTURE_AUDIT.md here
 ├── CNAME
 ├── index.html           # Keep root HTML files (or move to src/ if using a build tool)
 ├── LICENSE.md
@@ -57,7 +59,7 @@ To preview the site locally:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-org/tia-framework.git
+git clone https://github.com/ousher/tia-framework.git
    cd tia-framework
    ```
 2. Start a local server (requires Python 3):
