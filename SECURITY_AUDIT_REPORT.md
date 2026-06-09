@@ -25,8 +25,8 @@ The repository is primarily a static website/documentation site, though some pag
 - **Status:** 🚨 Critical Risk (External API Injection)
 - **Details:** 
   - Several HTML files use `innerHTML` to inject content dynamically. While some pages (`threats.html`, `mirror.html`, `index.html`) use safe, local, or hardcoded data, others fetch live external data:
-    - `demo.html` fetches live data from NVD and URLhaus APIs, injecting `url.tags` and `url.threat` into `innerHTML` (e.g., line 843).
-    - `threatmap.html` fetches live data from abuse.ch (Feodo Tracker), injecting `entry.malware` and `entry.ip_address` into Leaflet popups and feed items via `innerHTML` (e.g., lines 608, 669, 675).
+    - `demo.html` fetches live data from NVD and URLhaus APIs, injecting `cve.desc`, `url.tags`, and `url.threat` into `innerHTML` at line 887.
+    - `threatmap.html` fetches live data from abuse.ch (Feodo Tracker), injecting `entry.malware` and `entry.ip_address` into feed items via direct `innerHTML` (e.g., lines 608, 669, 675), and into Leaflet popups via `bindPopup()`, which renders HTML internally and requires a different sanitization approach.
   - **Risk Assessment:** This is a present and critical XSS risk. If either external API (abuse.ch, URLhaus, NVD) is ever compromised, experiences a Man-in-the-Middle (MITM) attack, or returns malicious payloads, XSS will execute in every visitor's browser. There is currently no Content Security Policy (CSP) or HTML sanitization in place to mitigate this.
   - **Recommendation:** Immediately replace all `innerHTML` assignments with safe DOM manipulation (e.g., `textContent`) or use a robust HTML sanitization library (like DOMPurify) when rendering external API data. Additionally, implement a strict Content Security Policy (CSP).
 
@@ -36,7 +36,7 @@ The repository is primarily a static website/documentation site, though some pag
   - **Unsandboxed External Loads:** `threatmap.html` loads multiple external resources without Subresource Integrity (SRI) or sandboxing:
     - Leaflet CSS: `<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />` (line 14)
     - Leaflet JS: `<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>` (line 525)
-    - GoatCounter Analytics: `<script async src="//gc.zgo.at/count.js"></script>` (line 765)
+    - GoatCounter Analytics: `<script async src="//gc.zgo.at/count.js"></script>` (line 765). The protocol-relative URL is an HTTP downgrade vector, compounding the SRI risk.
   - **Risk Assessment:** Loading scripts and stylesheets from third-party CDNs introduces a severe supply chain risk. If the CDN is compromised or the specific version is hijacked, malicious code can be injected into the application.
   - **Recommendation:** Add a Subresource Integrity (SRI) `integrity` attribute and `crossorigin="anonymous"` to all external `<script>` and `<link>` tags to ensure fetched resources have not been tampered with. Alternatively, self-host these third-party libraries.
 
