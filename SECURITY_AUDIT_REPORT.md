@@ -5,7 +5,7 @@
 **Scope:** General security audit of the repository (secrets, dependencies, input validation, anti-patterns).
 
 ## Executive Summary
-The repository is a static website/documentation site. Overall security posture is good. No exposed secrets, credentials, or insecure backend dependencies were found. Minor frontend security considerations (lack of SRI, use of `innerHTML`) are noted but pose low risk in the current static context.
+The repository is primarily a static website/documentation site, though some pages (`demo.html`, `threatmap.html`) actively fetch live external API data and inject it into the DOM. Overall security posture is good. No exposed secrets, credentials, or insecure backend dependencies were found. However, genuine frontend security risks exist regarding unsanitized `innerHTML` injection from external APIs and missing Subresource Integrity (SRI) on third-party resources.
 
 ## Detailed Findings
 
@@ -22,23 +22,23 @@ The repository is a static website/documentation site. Overall security posture 
 - **Details:** The repository consists entirely of static assets (HTML, CSS, JS, Markdown, images). There are no backend dependency files (e.g., `package.json`, `requirements.txt`, `go.mod`, `pom.xml`, `Cargo.toml`) to audit for vulnerabilities.
 
 ### 3. Input Validation and Sanitization
-- **Status:** ⚠️ Low Risk (Context-Dependent)
+- **Status:** 🚨 Critical Risk (External API Injection)
 - **Details:** 
-  - Several HTML files use `innerHTML` to inject content dynamically:
-    - `threats.html:588, 596`
-    - `threatmap.html:608`
-    - `mirror.html:1231, 1261, 1266, 1300, 1345, 1350, 1380, 1420`
-    - `index.html:818`
-    - `demo.html:887`
-  - **Risk Assessment:** Because this is a static site and the injected content appears to be hardcoded or derived from the pre-validated, anonymized `threats.json`, the immediate Cross-Site Scripting (XSS) risk is low. 
-  - **Recommendation:** If the site evolves to accept or display user-generated content or untrusted external API responses, all `innerHTML` assignments must be replaced with safe DOM manipulation (e.g., `textContent`) or proper HTML sanitization libraries.
+  - Several HTML files use `innerHTML` to inject content dynamically. While some pages (`threats.html`, `mirror.html`, `index.html`) use safe, local, or hardcoded data, others fetch live external data:
+    - `demo.html` fetches live data from NVD and URLhaus APIs, injecting `url.tags` and `url.threat` into `innerHTML` (e.g., line 843).
+    - `threatmap.html` fetches live data from abuse.ch (Feodo Tracker), injecting `entry.malware` and `entry.ip_address` into Leaflet popups and feed items via `innerHTML` (e.g., lines 608, 669, 675).
+  - **Risk Assessment:** This is a present and critical XSS risk. If either external API (abuse.ch, URLhaus, NVD) is ever compromised, experiences a Man-in-the-Middle (MITM) attack, or returns malicious payloads, XSS will execute in every visitor's browser. There is currently no Content Security Policy (CSP) or HTML sanitization in place to mitigate this.
+  - **Recommendation:** Immediately replace all `innerHTML` assignments with safe DOM manipulation (e.g., `textContent`) or use a robust HTML sanitization library (like DOMPurify) when rendering external API data. Additionally, implement a strict Content Security Policy (CSP).
 
 ### 4. Other Security Anti-Patterns
-- **Status:** ⚠️ Minor Observation
+- **Status:** 🚨 Critical Observation (Supply Chain Risk)
 - **Details:**
-  - **External Script Loading:** `threatmap.html:525` loads an external JavaScript library: `<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>`.
-  - **Risk Assessment:** Loading scripts from third-party CDNs introduces a supply chain risk if the CDN is compromised or the specific version is hijacked.
-  - **Recommendation:** Add a Subresource Integrity (SRI) `integrity` attribute and `crossorigin="anonymous"` to the script tag to ensure the fetched resource has not been tampered with. Example: `<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-..." crossorigin="anonymous"></script>`.
+  - **Unsandboxed External Loads:** `threatmap.html` loads multiple external resources without Subresource Integrity (SRI) or sandboxing:
+    - Leaflet CSS: `<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />` (line 14)
+    - Leaflet JS: `<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>` (line 525)
+    - GoatCounter Analytics: `<script async src="//gc.zgo.at/count.js"></script>` (line 765)
+  - **Risk Assessment:** Loading scripts and stylesheets from third-party CDNs introduces a severe supply chain risk. If the CDN is compromised or the specific version is hijacked, malicious code can be injected into the application.
+  - **Recommendation:** Add a Subresource Integrity (SRI) `integrity` attribute and `crossorigin="anonymous"` to all external `<script>` and `<link>` tags to ensure fetched resources have not been tampered with. Alternatively, self-host these third-party libraries.
 
 ## Conclusion
 The repository is secure for its current purpose as a static informational website. The existing `SECURITY.md` provides a clear responsible disclosure process. Implementing the SRI recommendation would further harden the frontend against supply chain attacks.
