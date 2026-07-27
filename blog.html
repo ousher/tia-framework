@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — TIA</title>
+<meta name="description" content="Security research, measurements and negative results from TIA. Attack-first. Falsify. Measure.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<meta property="og:title" content="Blog — TIA">
+<meta property="og:description" content="Security research, measurements and negative results. Attack-first. Falsify. Measure.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.tia-framework.com/blog.html">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #07070d; --surface: #0c0c16; --surface2: #10101e; --border: #1a1a2e;
+    --text: #e0e0e0; --text-dim: #888; --text-muted: #555;
+    --green: #00ff88; --blue: #00aaff; --red: #ff4444; --orange: #ff8844;
+  }
+  body { background: var(--bg); color: var(--text); font-family: Inter, -apple-system, sans-serif;
+         line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(7,7,13,.92);
+        backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  nav .container { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .nav-logo { font: 700 20px JetBrains Mono, monospace; color: var(--green); text-decoration: none; letter-spacing: .04em; }
+  .nav-links { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; transition: color .15s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .nav-links a.active { color: var(--green); }
+
+  header.hero { padding: 78px 0 40px; border-bottom: 1px solid var(--border); }
+  .kicker { font: 700 12px JetBrains Mono, monospace; letter-spacing: .28em; text-transform: uppercase;
+            color: var(--green); margin-bottom: 18px; }
+  h1 { font-size: clamp(34px, 5vw, 54px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+  .lede { color: var(--text-dim); font-size: 19px; margin-top: 18px; max-width: 62ch; }
+
+  .posts { padding: 46px 0 90px; display: flex; flex-direction: column; gap: 18px; }
+  .post { display: block; text-decoration: none; color: inherit; background: var(--surface);
+          border: 1px solid var(--border); border-left: 3px solid var(--green);
+          border-radius: 4px; padding: 26px 28px; transition: border-color .15s, background .15s; }
+  .post:hover { background: var(--surface2); border-color: #2a2a44; border-left-color: var(--green); }
+  .post-meta { font: 400 12px JetBrains Mono, monospace; color: var(--text-muted); letter-spacing: .06em;
+               display: flex; gap: 14px; flex-wrap: wrap; }
+  .post-meta .tag { color: var(--orange); }
+  .post h2 { font-size: 25px; font-weight: 700; margin: 10px 0 8px; letter-spacing: -.01em; line-height: 1.25; }
+  .post p { color: var(--text-dim); font-size: 16px; max-width: 74ch; }
+  .post .more { color: var(--green); font-size: 14px; margin-top: 14px; display: inline-block;
+                font-family: JetBrains Mono, monospace; }
+
+  .note { border: 1px dashed var(--border); border-radius: 4px; padding: 20px 24px;
+          color: var(--text-muted); font-size: 14px; margin-top: 34px; }
+  .note b { color: var(--text-dim); }
+
+  footer { border-top: 1px solid var(--border); padding: 34px 0 60px; color: var(--text-muted); font-size: 13px; }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--green); }
+  @media (max-width: 780px) { .nav-links { gap: 12px; } .nav-links a { font-size: 13px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="/" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="threats.html">Threats</a>
+      <a href="efs.html">EFS</a>
+      <a href="mirror.html">THE MIRROR</a>
+      <a href="compliance.html">Compliance</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="kicker">Attack-first · Falsify · Measure</div>
+    <h1>Notes from the lab</h1>
+    <p class="lede">
+      Measurements, reproductions and negative results from building and breaking AI agent
+      infrastructure. Written so the numbers can be checked, and so the failures are on the
+      record next to the wins.
+    </p>
+  </div>
+</header>
+
+<main class="container posts">
+
+  <a class="post" href="blog/sti-tool-call-channel.html">
+    <div class="post-meta">
+      <span>2026-07-27</span>
+      <span class="tag">AGENT SECURITY</span>
+      <span>reproduction + mitigation</span>
+    </div>
+    <h2>The defence covers the door. The attack came through the window.</h2>
+    <p>
+      Special Token Injection was presented at DEF CON 33. We reproduced it on a different
+      model family overnight — and found that the mitigation lever discussed alongside it
+      defends the role boundary and never touches the tool-call channel. Our sandbox held.
+      Our audit did not.
+    </p>
+    <span class="more">Read →</span>
+  </a>
+
+  <div class="note">
+    <b>Why this page exists.</b> Posts on social platforms are gone in two days and cannot be
+    cited. Everything published here is meant to be checkable: token IDs you can verify in
+    three lines, thresholds fixed before the data, and results that went against us reported
+    the same way as the ones that did not.
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    TIA · <a href="/">tia-framework.com</a> · <a href="https://www.linkedin.com/in/osramek/">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>

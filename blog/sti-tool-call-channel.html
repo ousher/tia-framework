@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The defence covers the door. The attack came through the window. — TIA</title>
+<meta name="description" content="Reproducing Special Token Injection on a second model family, and the mitigation lever that never reaches the tool-call channel.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<meta property="og:title" content="The defence covers the door. The attack came through the window.">
+<meta property="og:description" content="Special Token Injection reproduced on a second model family. The recommended mitigation never touches the tool-call channel.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.tia-framework.com/blog/sti-tool-call-channel.html">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #07070d; --surface: #0c0c16; --surface2: #10101e; --border: #1a1a2e;
+    --text: #e0e0e0; --text-dim: #999; --text-muted: #555;
+    --green: #00ff88; --blue: #00aaff; --red: #ff4444; --orange: #ff8844;
+  }
+  body { background: var(--bg); color: var(--text); font-family: Inter, -apple-system, sans-serif;
+         line-height: 1.72; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 720px; }
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(7,7,13,.92);
+        backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  nav .container { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .nav-logo { font: 700 20px JetBrains Mono, monospace; color: var(--green); text-decoration: none; letter-spacing: .04em; }
+  .nav-links { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; }
+  .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+  article { padding: 60px 0 90px; }
+  .back { font: 400 13px JetBrains Mono, monospace; color: var(--text-muted); text-decoration: none; }
+  .back:hover { color: var(--green); }
+  .meta { font: 400 12px JetBrains Mono, monospace; color: var(--text-muted);
+          letter-spacing: .06em; margin: 26px 0 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .meta .tag { color: var(--orange); }
+  h1 { font-size: clamp(30px, 4.6vw, 46px); font-weight: 800; letter-spacing: -.02em; line-height: 1.14; }
+  .lede { color: var(--text-dim); font-size: 19px; margin-top: 20px; }
+  h2 { font-size: 24px; font-weight: 700; margin: 48px 0 14px; letter-spacing: -.01em;
+       padding-top: 22px; border-top: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; margin: 30px 0 10px; color: var(--text); }
+  p { margin: 15px 0; color: #cfcfcf; }
+  strong { color: var(--text); }
+  em { color: var(--text-dim); }
+  code { font: 400 14px JetBrains Mono, monospace; background: var(--surface2);
+         border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; color: var(--green); }
+  pre { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--green);
+        border-radius: 4px; padding: 18px 20px; overflow-x: auto; margin: 22px 0; }
+  pre code { background: none; border: none; padding: 0; color: #d8d8d8; font-size: 13.5px; line-height: 1.7; }
+  .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--orange);
+             border-radius: 4px; padding: 20px 24px; margin: 26px 0; }
+  .callout.red { border-left-color: var(--red); }
+  .callout p:first-child { margin-top: 0; } .callout p:last-child { margin-bottom: 0; }
+  blockquote { border-left: 3px solid var(--border); padding-left: 20px; margin: 24px 0;
+               color: var(--text-dim); font-size: 18px; }
+  table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  th { color: var(--text-muted); font: 700 12px JetBrains Mono, monospace;
+       letter-spacing: .1em; text-transform: uppercase; }
+  td code { font-size: 13px; }
+  .ok { color: var(--green); } .bad { color: var(--red); }
+  footer { border-top: 1px solid var(--border); padding: 34px 0 60px; color: var(--text-muted); font-size: 13px; }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--green); }
+  @media (max-width: 780px) { .nav-links { gap: 12px; } .nav-links a { font-size: 13px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="/" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="../about.html">About</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="../efs.html">EFS</a>
+      <a href="../compliance.html">Compliance</a>
+    </div>
+  </div>
+</nav>
+
+<article class="container narrow">
+
+  <a class="back" href="../blog.html">← all posts</a>
+
+  <div class="meta">
+    <span>2026-07-27</span>
+    <span class="tag">AGENT SECURITY</span>
+    <span>reproduction + mitigation</span>
+  </div>
+
+  <h1>The defence covers the door.<br>The attack came through the window.</h1>
+
+  <p class="lede">
+    Special Token Injection was presented at DEF CON 33 AppSec Village by Armend Gashi,
+    Robert Shala and Anit Hajdari of Sentry Security. The attack is theirs. This is what
+    happened when we fired it at our own agent overnight, and the one gap we found sitting
+    next to it.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>Why this exists.</strong> We posted the finding below as a comment under a
+      summary of the research. Robert Shala — co-founder of Sentry Security and one of the
+      three presenters — replied in the open:
+    </p>
+    <blockquote style="margin:16px 0;font-size:17px;">
+      “Would love to read more if you author a blog / your research and especially your
+      mitigation approach. Thank you for the credits!”
+    </blockquote>
+    <p>
+      So this is that. It is a technical answer to a question the people who did the work
+      asked publicly — <strong>not an endorsement of anything below.</strong> A reply on a
+      social platform is not peer review, and nothing here has been checked by them. If any
+      of it is wrong, they are the ones best placed to say so, and I would rather hear it
+      from them than from a comment section.
+    </p>
+  </div>
+
+  <h2>The attack, in one paragraph</h2>
+
+  <p>
+    A model does not see a conversation. It sees one stream of text with control tokens
+    marking which part is the system, which part is the user, and which part is a call to a
+    tool. Those tokens are characters. Anyone can type them. Write them into ordinary content
+    and the tokenizer promotes them into the <em>real</em> control tokens — so untrusted text
+    inherits system authority. Sentry demonstrated it against a Qwen model wired to SQL, which
+    executed an injected tool call as if it had generated it.
+  </p>
+
+  <p>
+    The mitigation lever named alongside the research is a HuggingFace default: Transformers
+    ships with special-token splitting off, leaving sanitisation to application developers.
+  </p>
+
+  <h2>Why this was not somebody else's problem</h2>
+
+  <p>
+    Our agent reads files out of repositories we did not write and splices the results into a
+    raw prompt between role markers. That return path is the trust boundary, and it is
+    attacker-controlled the moment we scan a repository that is not ours — which is the entire
+    product. So we spent a night attacking ourselves.
+  </p>
+
+  <h2>The gap: one flag, two channels</h2>
+
+  <p>
+    Checked on two families. The role markers are registered <em>special</em> tokens, so the
+    flag shreds them into ordinary text and the boundary between "system" and "content" holds.
+    The tool markers are not special tokens at all. They are ordinary vocabulary entries, and
+    the flag never touches them.
+  </p>
+
+  <table>
+    <tr><th>Token</th><th>Registered special?</th><th>Split flag defends?</th></tr>
+    <tr><td><code>&lt;|im_start|&gt;</code> · <code>&lt;|start_of_role|&gt;</code></td>
+        <td>yes</td><td class="ok">yes — shatters into text</td></tr>
+    <tr><td><code>&lt;tool_call&gt;</code> · <code>&lt;tool_response&gt;</code></td>
+        <td>no — ordinary vocabulary</td><td class="bad">no — untouched</td></tr>
+  </table>
+
+  <p>You can check your own in three lines:</p>
+
+  <pre><code># is the tool-call channel covered by the flag?
+tok.added_tokens_decoder[151657]   # &lt;tool_call&gt;   special=False  ← flag does nothing
+tok.added_tokens_decoder[151644]   # &lt;|im_start|&gt;  special=True   ← flag defends</code></pre>
+
+  <p>
+    <code>151657</code> is the token id the original research cites. On Granite the same holds
+    at <code>100270</code>–<code>100272</code>. So at the token level an injected tool call is
+    indistinguishable from a generated one, and there is no flag for that.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>To be fair to the researchers:</strong> they did not claim the flag is a fix —
+      they stated a default. The gap is between that lever and that channel, not in their work.
+    </p>
+  </div>
+
+  <h2>What came back when we fired it at ourselves</h2>
+
+  <h3>The sandbox held</h3>
+  <p>
+    The agent runs in a sealed room: read-only, path-pinned to the repository root, a hard call
+    budget, no shell. A forged call executes inside that same room. The containment was built
+    before we had heard of this attack class and it did its job.
+  </p>
+
+  <h3>The audit did not</h3>
+  <p>
+    Our records showed <em>what</em> was called. They never showed <em>where the instruction
+    came from</em>. An outsider's instruction would have been filed — neatly, permanently — as
+    a decision our own system made.
+  </p>
+
+  <div class="callout red">
+    <p>
+      <strong>Execution was bounded. Attribution was not.</strong> For anyone whose product is
+      evidence about their own system, the second one is the expensive half. A log that cannot
+      separate your agent's choices from a stranger's instructions is not a record. It is a
+      confident-looking guess.
+    </p>
+  </div>
+
+  <h2>The mitigation, and where it goes</h2>
+
+  <p>
+    Not at the tokenizer flag — it does not reach the channel that matters. It goes on the
+    <strong>return path of every tool result</strong>, before the text is ever spliced into a
+    prompt.
+  </p>
+
+  <p>
+    <strong>1. Defang, visibly.</strong> Control markers in returned content are rewritten to
+    an inert form rather than stripped. The model still sees that something was there, and the
+    count is recorded. Silent sanitisation would hide exactly the events you most want to see.
+  </p>
+
+  <p>
+    <strong>2. Attribute.</strong> Every audit entry now carries a tainted-context flag when
+    the observation preceding it contained neutralised markers. That is the difference between
+    a log that says an action happened and a log that can say who asked for it.
+  </p>
+
+  <h2>What we are not claiming</h2>
+
+  <p>
+    We did not exploit it. Our model never followed the forged command — but it does not follow
+    <em>our</em> instructions reliably either. It is too incoherent to be steered by anyone.
+    <strong>That is luck, not a control, and we will not report it as a defence.</strong>
+  </p>
+
+  <p>
+    Two families is two families. We checked tokenizer configuration, not exploitation across
+    the ecosystem, and the credit for the attack belongs to Sentry Security.
+  </p>
+
+  <h2>The question worth asking, even if you build none of this</h2>
+
+  <blockquote>
+    If your agent reads anything you did not write — a repository, a ticket, a page, a PDF —
+    that content sits in the same channel as your scaffolding. When the thing acts, can you
+    prove who asked it to?
+  </blockquote>
+
+  <p>
+    If the answer takes longer than a sentence, that is the finding.
+  </p>
+
+</article>
+
+<footer>
+  <div class="container">
+    TIA · <a href="../blog.html">Blog</a> · <a href="/">tia-framework.com</a> ·
+    <a href="https://www.linkedin.com/in/osramek/">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>
