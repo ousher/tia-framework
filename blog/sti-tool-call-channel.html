@@ -10,62 +10,7 @@
 <meta property="og:description" content="Special Token Injection reproduced on a second model family. The recommended mitigation never touches the tool-call channel.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.tia-framework.com/blog/sti-tool-call-channel.html">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --bg: #07070d; --surface: #0c0c16; --surface2: #10101e; --border: #1a1a2e;
-    --text: #e0e0e0; --text-dim: #999; --text-muted: #555;
-    --green: #00ff88; --blue: #00aaff; --red: #ff4444; --orange: #ff8844;
-  }
-  body { background: var(--bg); color: var(--text); font-family: Inter, -apple-system, sans-serif;
-         line-height: 1.72; -webkit-font-smoothing: antialiased; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-  .narrow { max-width: 720px; }
-  nav { position: sticky; top: 0; z-index: 50; background: rgba(7,7,13,.92);
-        backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-  nav .container { display: flex; align-items: center; justify-content: space-between; height: 62px; }
-  .nav-logo { font: 700 20px JetBrains Mono, monospace; color: var(--green); text-decoration: none; letter-spacing: .04em; }
-  .nav-links { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
-  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; }
-  .nav-links a:hover, .nav-links a.active { color: var(--green); }
-
-  article { padding: 60px 0 90px; }
-  .back { font: 400 13px JetBrains Mono, monospace; color: var(--text-muted); text-decoration: none; }
-  .back:hover { color: var(--green); }
-  .meta { font: 400 12px JetBrains Mono, monospace; color: var(--text-muted);
-          letter-spacing: .06em; margin: 26px 0 14px; display: flex; gap: 14px; flex-wrap: wrap; }
-  .meta .tag { color: var(--orange); }
-  h1 { font-size: clamp(30px, 4.6vw, 46px); font-weight: 800; letter-spacing: -.02em; line-height: 1.14; }
-  .lede { color: var(--text-dim); font-size: 19px; margin-top: 20px; }
-  h2 { font-size: 24px; font-weight: 700; margin: 48px 0 14px; letter-spacing: -.01em;
-       padding-top: 22px; border-top: 1px solid var(--border); }
-  h3 { font-size: 18px; font-weight: 700; margin: 30px 0 10px; color: var(--text); }
-  p { margin: 15px 0; color: #cfcfcf; }
-  strong { color: var(--text); }
-  em { color: var(--text-dim); }
-  code { font: 400 14px JetBrains Mono, monospace; background: var(--surface2);
-         border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; color: var(--green); }
-  pre { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--green);
-        border-radius: 4px; padding: 18px 20px; overflow-x: auto; margin: 22px 0; }
-  pre code { background: none; border: none; padding: 0; color: #d8d8d8; font-size: 13.5px; line-height: 1.7; }
-  .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--orange);
-             border-radius: 4px; padding: 20px 24px; margin: 26px 0; }
-  .callout.red { border-left-color: var(--red); }
-  .callout p:first-child { margin-top: 0; } .callout p:last-child { margin-bottom: 0; }
-  blockquote { border-left: 3px solid var(--border); padding-left: 20px; margin: 24px 0;
-               color: var(--text-dim); font-size: 18px; }
-  table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
-  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border); }
-  th { color: var(--text-muted); font: 700 12px JetBrains Mono, monospace;
-       letter-spacing: .1em; text-transform: uppercase; }
-  td code { font-size: 13px; }
-  .ok { color: var(--green); } .bad { color: var(--red); }
-  footer { border-top: 1px solid var(--border); padding: 34px 0 60px; color: var(--text-muted); font-size: 13px; }
-  footer a { color: var(--text-dim); text-decoration: none; }
-  footer a:hover { color: var(--green); }
-  @media (max-width: 780px) { .nav-links { gap: 12px; } .nav-links a { font-size: 13px; } }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 

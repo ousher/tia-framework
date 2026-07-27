@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We asked a security model to find a real bug. It matched the filename. — TIA</title>
+<meta name="description" content="An operating envelope for an open-weight vulnerability localiser, measured against ground truth we did not write.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<meta property="og:title" content="We asked a security model to find a real bug. It matched the filename.">
+<meta property="og:description" content="An operating envelope for an open-weight vulnerability localiser, measured against ground truth we did not write.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.tia-framework.com/blog/antares-operating-envelope.html">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a href="/" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="../about.html">About</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="../efs.html">EFS</a>
+      <a href="../compliance.html">Compliance</a>
+    </div>
+  </div>
+</nav>
+<article class="container narrow">
+  <a class="back" href="../blog.html">← all posts</a>
+  <div class="meta">
+    <span>2026-07-26</span>
+    <span class="tag">MEASUREMENT</span>
+    <span>operating envelope</span>
+  </div>
+
+  <h1>We asked a security model to find a real bug.<br>It matched the filename.</h1>
+
+  <p class="lede">
+    A vendor released small, open-weight models that point at the files likely to contain a
+    vulnerability — running on your own machine, so source never leaves the building. Good
+    idea. We did not want an opinion about it. We wanted an operating envelope: where can
+    this be trusted, and where can it not.
+  </p>
+
+  <h2>The one case that explains the rest</h2>
+
+  <p>We asked it to find a path-traversal flaw. It pointed at the file called
+  <code>pathconverter.py</code>. The bug was in <code>b64.py</code>.</p>
+
+  <p><strong>Asked to find a <em>path</em> flaw, it reached for the file with “path” in its
+  name.</strong> It matched the filename, not the code.</p>
+
+  <h2>How the test was built</h2>
+
+  <p>
+    Ground truth we had not written: published security advisories with their real fix
+    commits. Check the repository out at the commit <em>before</em> the fix, and the files
+    that fix touched become the answer key.
+  </p>
+  <p>
+    The prompt carried the vulnerability class and nothing else. Advisory summaries name the
+    affected module, and passing those in measures reading comprehension rather than
+    localisation.
+  </p>
+
+  <h2>What came back</h2>
+
+  <pre><code>8   real vulnerabilities, 8 different projects
+5   produced a verdict at all
+1   put the correct file first
+0   ever said "there is nothing here"</code></pre>
+
+  <div class="callout red">
+    <p>
+      That last line matters more than any percentage. <strong>If a tool cannot report
+      “clean”, an inconclusive run and a clean run look identical</strong> — and you cannot
+      tell its one hit from its four confident misses without already knowing the answer.
+      On clean repositories, with a bigger budget, even when explicitly reminded the option
+      existed, it never used it. Under pressure to find something absent, it invented a
+      plausible filename and asked for it twenty-two times.
+    </p>
+  </div>
+
+  <h2>Before we blamed the model</h2>
+
+  <p>
+    Three times, “the model is weak” turned out to be our own harness. The worst: a parser
+    bug meant <strong>zero tool calls ever reached the sandbox</strong>, while the transcript
+    showed nineteen. It looked exactly like a small model stuck in a loop. It was a regular
+    expression.
+  </p>
+
+  <blockquote>Stop at the transcript, and we publish “this model is useless.”<br>Read the counters, not the transcript.</blockquote>
+
+  <h2>What we are not claiming</h2>
+
+  <p>
+    <strong>We exposed nothing.</strong> The vendor published a comparable score themselves —
+    we reproduced their honesty rather than catching them out.
+  </p>
+  <p>
+    Limits belong beside the numbers, not in a footnote: eight cases is not a rate, our
+    corpus favours small localised fixes, our harness is stricter than the vendor's own
+    tooling, and we tested the smallest model in the family.
+  </p>
+
+  <h2>Why we bothered</h2>
+
+  <p>
+    The market for securing AI agents filled up fast — vendors, scanners, academic work, an
+    OWASP class for poisoned agent memory. Plenty of tools that inspect what an agent
+    consumes.
+  </p>
+  <p>
+    Almost nobody publishes the boring, decisive artifact: <strong>the operating
+    envelope.</strong> Where the thing can be trusted, where it cannot, and how you would
+    know. That is the difference between deploying a model and governing one.
+  </p>
+
+  <blockquote>Better to find out in a lab on a Sunday than in front of a customer on a Tuesday.</blockquote>
+
+  <p><strong>Attack-first. Falsify. Measure. Then decide.</strong></p>
+</article>
+<footer>
+  <div class="container">
+    TIA · <a href="../blog.html">Blog</a> · <a href="/">tia-framework.com</a> ·
+    <a href="https://www.linkedin.com/in/osramek/">LinkedIn</a>
+  </div>
+</footer>
+</body>
+</html>
