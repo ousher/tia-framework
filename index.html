@@ -640,6 +640,9 @@
     .ledger-item { grid-template-columns: 1fr; gap: 8px; }
   }
 
+
+  .ip-list .oct { color: var(--text-muted); }
+  .ip-n { float: right; font-family:'Inter',sans-serif; font-size:11px; color: var(--orange); }
 </style>
 </head>
 <body>
@@ -780,17 +783,17 @@
       <div class="ip-col">
         <div class="ip-head">Repeat offenders — failed-auth volume</div>
         <ul class="ip-list">
-          <li>2.57.121.25</li><li>2.57.121.112</li><li>193.46.255.86</li>
-          <li>195.178.110.137</li><li>186.96.145.241</li><li>185.242.3.195</li>
-          <li>176.53.159.198</li><li>176.53.159.197</li><li>198.98.53.110</li>
-          <li>69.5.20.232</li>
+          <li>2.57.121.<span class="oct">xxx</span><span class="ip-n">2 hosts</span></li><li>193.46.255.<span class="oct">xxx</span></li>
+          <li>195.178.110.<span class="oct">xxx</span></li><li>186.96.145.<span class="oct">xxx</span></li><li>185.242.3.<span class="oct">xxx</span></li>
+          <li>176.53.159.<span class="oct">xxx</span><span class="ip-n">2 hosts</span></li><li>198.98.53.<span class="oct">xxx</span></li>
+          <li>69.5.20.<span class="oct">xxx</span></li>
         </ul>
       </div>
       <div class="ip-col">
         <div class="ip-head">Recurring, caught by rate-limiting</div>
         <ul class="ip-list">
-          <li>141.95.54.130</li><li>161.35.34.21</li><li>189.194.140.170</li>
-          <li>182.253.221.210</li><li>118.99.115.14</li><li>103.210.22.17</li>
+          <li>141.95.54.<span class="oct">xxx</span></li><li>161.35.34.<span class="oct">xxx</span></li><li>189.194.140.<span class="oct">xxx</span></li>
+          <li>182.253.221.<span class="oct">xxx</span></li><li>118.99.115.<span class="oct">xxx</span></li><li>103.210.22.<span class="oct">xxx</span></li>
           <li class="ip-note">plus repeated spray from three /24 ranges,
               multiple addresses each</li>
         </ul>
@@ -799,6 +802,8 @@
 
     <div class="livefire-note">
       <p>
+        <strong>Why the last octet is masked.</strong> A share of any scanning set is compromised third-party hardware whose owners have no idea it is being used. The /24 is where the signal lives — the reuse, the spray pattern — and naming individual hosts on a commercial page adds nothing but exposure for someone already having a bad week. Anyone working a real incident can ask us for the full set.</p>
+      <p style="margin-top:12px">
         <strong>What we are not showing you.</strong> Which of these we blocked, at what layer, or
         what the rest of the ruleset looks like. That is configuration, and publishing your own
         defensive posture is a favour to the next person scanning you. The observation is a public
