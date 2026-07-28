@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- DRAFT: alternative homepage for comparison. Not linked from anywhere;
+     noindex so it cannot compete with the live page in search. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — Autonomous AI Security Operations</title>
+<meta name="description" content="Autonomous AI security operations run by one person in Prague — with a public record of what was measured, including the tests our own systems failed.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<meta property="og:title" content="TIA — Autonomous AI Security Operations">
+<meta property="og:description" content="Most AI security is asserted. Ours is measured — and published when it fails.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.tia-framework.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Most AI security is asserted. Ours is measured — and published when it fails.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --yellow: #ffcc00;
+    --purple: #aa66ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* === LAYOUT === */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 18px; flex-wrap: nowrap; align-items: center; }
+
+  .nav-links a {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(0,255,136,0.1); }
+
+  /* === HAMBURGER === */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    width: 20px;
+    height: 2px;
+    background: var(--text-dim);
+    transition: all 0.3s;
+  }
+
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(7,7,13,0.95);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      padding: 16px 24px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 14px; }
+  }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), var(--blue), transparent);
+    opacity: 0.4;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(0,255,136,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-visual {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80%;
+    max-width: 870px;
+    opacity: 0.35;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 70% at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at center, black 30%, transparent 75%);
+    mix-blend-mode: lighten;
+  }
+
+  .hero-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 960px) {
+    .hero-visual { opacity: 0.15; right: -100px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-visual { display: none; }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 .accent {
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-bottom: 40px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    text-align: left;
+  }
+
+  .hero-stat .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green);
+    display: block;
+  }
+
+  .hero-stat .num.blue { color: var(--blue); }
+  .hero-stat .num.orange { color: var(--orange); }
+  .hero-stat .num.white { color: #fff; }
+
+  .hero-stat .desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* === PROBLEM === */
+  .problem { border-top: 1px solid var(--border); }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--blue);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .section-text {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+  }
+
+  .problem-card .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .problem-card .label {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* === SOLUTION === */
+  .solution { border-top: 1px solid var(--border); }
+
+  .solution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .solution-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .solution-card:hover { border-color: rgba(0,255,136,0.3); }
+
+  .solution-card .icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .solution-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .solution-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* === PROOF / MYSTERY CONTENT === */
+  .proof {
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(0,255,136,0.02) 50%, var(--bg) 100%);
+  }
+
+  .proof-cases {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .case-card:hover { border-color: rgba(0,170,255,0.3); }
+
+  .case-card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .case-card-header .case-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  .type-ransomware { background: rgba(255,68,68,0.15); color: var(--red); border: 1px solid rgba(255,68,68,0.3); }
+  .type-hacktivist { background: rgba(255,136,68,0.15); color: var(--orange); border: 1px solid rgba(255,136,68,0.3); }
+
+  .case-card-header .case-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--green);
+    letter-spacing: 1px;
+  }
+
+  .case-card-body { padding: 20px; }
+
+  .case-card-body h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .case-card-body p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .case-stats {
+    display: flex;
+    gap: 16px;
+  }
+
+  .case-stat {
+    text-align: center;
+  }
+
+  .case-stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+  }
+
+  .case-stat .val.green { color: var(--green); }
+  .case-stat .val.orange { color: var(--orange); }
+  .case-stat .val.blue { color: var(--blue); }
+  .case-stat .val.red { color: var(--red); }
+
+  .case-stat .lbl {
+    font-size: 8px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* === EFS TEASER === */
+  .efs-teaser {
+    border-top: 1px solid var(--border);
+  }
+
+  .efs-box {
+    background: linear-gradient(135deg, rgba(0,255,136,0.03), rgba(0,170,255,0.03));
+    border: 1px solid rgba(0,255,136,0.15);
+    border-radius: 8px;
+    padding: 40px;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .efs-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
+  }
+
+  .efs-box .efs-quote {
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .efs-box .efs-quote em {
+    font-style: normal;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .efs-box .efs-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .efs-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(0,255,136,0.3);
+    padding-bottom: 2px;
+    transition: all 0.2s;
+  }
+
+  .efs-link:hover { border-color: var(--green); }
+
+  /* === CONTACT === */
+  .contact {
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .contact-email {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 24px;
+    transition: all 0.2s;
+  }
+
+  .contact-email:hover {
+    background: rgba(0,255,136,0.08);
+    border-color: var(--green);
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  footer .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  footer .footer-text {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  footer .footer-soul {
+    font-size: 11px;
+    color: rgba(0,255,136,0.2);
+    font-style: italic;
+    margin-top: 16px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .hero-stats { gap: 20px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .solution-grid { grid-template-columns: 1fr; }
+    .proof-cases { grid-template-columns: 1fr; }
+    /* hamburger handles mobile nav */
+    .efs-box { padding: 24px; }
+  }
+
+  /* ── RECEIPTS — the section the old homepage did not have ── */
+  .receipts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+  .receipt {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 24px;
+    transition: border-color .2s, transform .2s;
+  }
+  .receipt:hover { border-color: var(--green); transform: translateY(-3px); }
+  .receipt h3 { font-size: 17px; line-height: 1.35; margin: 12px 0 10px; color: var(--text); }
+  .receipt p  { font-size: 14px; line-height: 1.6; color: var(--text-dim); }
+  .receipt-verdict {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    padding: 4px 9px; border-radius: 3px; border: 1px solid;
+  }
+  .receipt-verdict.bad  { color: var(--red);    border-color: rgba(255,68,68,.4);  background: rgba(255,68,68,.07); }
+  .receipt-verdict.warn { color: var(--orange); border-color: rgba(255,136,68,.4); background: rgba(255,136,68,.07); }
+  .receipt-more {
+    display: inline-block; margin-top: 14px; font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--green);
+  }
+  .receipts-note {
+    margin-top: 30px; padding: 22px 24px; border-left: 2px solid var(--green);
+    background: var(--surface); border-radius: 0 6px 6px 0;
+  }
+  .receipts-note p { font-size: 15px; line-height: 1.65; color: var(--text-dim); }
+  .receipts-note strong { color: var(--text); }
+  @media (max-width: 860px) { .receipts-grid { grid-template-columns: 1fr; } }
+
+  /* ── LIVE FIRE ── */
+  .livefire { padding: 100px 0; background: var(--surface); border-top: 1px solid var(--border); }
+  .ip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
+  .ip-col { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px 22px; }
+  .ip-head { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em;
+             text-transform:uppercase; color: var(--orange); margin-bottom: 14px; }
+  .ip-list { list-style:none; }
+  .ip-list li { font-family:'JetBrains Mono',monospace; font-size:13px; color: var(--text);
+                padding: 5px 0; border-bottom: 1px solid rgba(26,26,46,.6); }
+  .ip-list li:last-child { border-bottom: none; }
+  .ip-list .ip-note { font-family:'Inter',sans-serif; font-size:13px; color: var(--text-muted);
+                      padding-top: 10px; line-height:1.5; }
+  .livefire-note { margin-top: 26px; padding: 20px 24px; border-left: 2px solid var(--orange);
+                   background: var(--bg); border-radius: 0 6px 6px 0; }
+  .livefire-note p { font-size: 15px; line-height: 1.65; color: var(--text-dim); }
+  .livefire-note strong { color: var(--text); }
+
+  /* ── LEDGER ── */
+  .ledger { padding: 100px 0; }
+  .ledger-list { margin-top: 34px; }
+  .ledger-item { display: grid; grid-template-columns: 84px 1fr; gap: 22px;
+                 padding: 24px 0; border-top: 1px solid var(--border); }
+  .ledger-when { font-family:'JetBrains Mono',monospace; font-size:13px; color: var(--purple);
+                 padding-top: 3px; }
+  .ledger-body h3 { font-size: 17px; line-height:1.4; color: var(--text); margin-bottom: 10px; }
+  .ledger-body p  { font-size: 15px; line-height:1.65; color: var(--text-dim); }
+  .ledger-note { margin-top: 30px; padding: 22px 24px; border-left: 2px solid var(--purple);
+                 background: var(--surface); border-radius: 0 6px 6px 0; }
+  .ledger-note p { font-size: 15px; line-height:1.65; color: var(--text-dim); }
+  .ledger-note strong { color: var(--text); }
+  @media (max-width: 860px) {
+    .ip-grid { grid-template-columns: 1fr; }
+    .ledger-item { grid-template-columns: 1fr; gap: 8px; }
+  }
+
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a href="/" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="lore.html">Lore</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="threats.html">Threats</a>
+      <a href="threatmap.html">Threat Map</a>
+      <!-- soul.html merged into efs.html -->
+      <a href="efs.html">EFS</a>
+      <a href="mirror.html">THE MIRROR</a>
+      <a href="cia2.html">CIA²</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+    <div class="hamburger" onclick="this.classList.toggle('active');this.parentElement.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<!-- ══════════════════════════════════════════════════════ HERO ══ -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-visual"><img src="wave-wide.png" alt=""></div>
+  <div class="container hero-content">
+    <div class="hero-tag">// AUTONOMOUS AI SECURITY OPERATIONS · PRAGUE</div>
+    <h1>Most AI security is asserted.<br><span class="accent">Ours is measured — and published when it fails.</span></h1>
+    <p class="hero-sub">
+      Autonomous security operations built and run by one person, plus a public record of what we
+      actually tested. Including the test our own mitigation did not pass, and the experiment that
+      ruled against our own central claim.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="num green"><span data-uptime="days-plus">130+</span></span>
+        <span class="desc">Days in Production</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num blue">15</span>
+        <span class="desc">Autonomous Agents</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num orange">$400</span>
+        <span class="desc">Monthly OpCost</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num purple">2</span>
+        <span class="desc">DOI Preprints</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ RECEIPTS ══ -->
+<!-- The section the old homepage did not have. Every tile links to a
+     published piece; nothing here is a claim without a document behind it. -->
+<section class="proof" id="receipts">
+  <div class="container">
+    <div class="section-tag">// RECEIPTS</div>
+    <h2 class="section-title">Three things we published that a vendor would rather not.</h2>
+    <p class="section-text">
+      Security tooling is easy to claim and hard to check. So we do the checking in the open —
+      on other people's systems, on vendor models, and on our own work. These are not case
+      studies written for the website. They are what the measurements returned.
+    </p>
+
+    <div class="receipts-grid">
+      <a class="receipt" href="blog/sti-tool-call-channel.html">
+        <div class="receipt-verdict bad">OUR FIX FAILED</div>
+        <h3>We reproduced a DEF CON 33 attack — then measured our own defence against it.</h3>
+        <p>
+          The technique landed in 7 of 12 samples. The mitigation we had shipped for it changed
+          nothing: 10 of 36 with it off, 10 of 36 with it on. We corrected the post rather than
+          quietly editing it, and said which half of our own fix was worthless.
+        </p>
+        <span class="receipt-more">Read the correction →</span>
+      </a>
+
+      <a class="receipt" href="blog/antares-operating-envelope.html">
+        <div class="receipt-verdict warn">DO NOT DEPLOY</div>
+        <h3>We asked a vendor's security model to find a real bug. It matched the filename.</h3>
+        <p>
+          An open-weight vulnerability localiser, run inside our own read-only cage rather than
+          the vendor's harness. It could not reliably follow its own tool contract. Our verdict
+          on a model we had spent days integrating: not fit to wire in.
+        </p>
+        <span class="receipt-more">Read the envelope →</span>
+      </a>
+
+      <a class="receipt" href="blog/six-models-peer-review.html">
+        <div class="receipt-verdict warn">MAJOR REVISION</div>
+        <h3>We handed our own paper to six rival models and asked them to tear it apart.</h3>
+        <p>
+          Six models, five vendors, no coordination. Three cold adversarial reviewers agreed on
+          89% of the rubric and returned the same verdict — then demanded major revision. We
+          published the demand, not just the agreement.
+        </p>
+        <span class="receipt-more">Read the review →</span>
+      </a>
+    </div>
+
+    <div class="receipts-note">
+      <p>
+        <strong>Why this is the whole pitch.</strong> Any supplier can show you what their system
+        caught. The question that decides whether you can rely on it is what it <em>missed</em>,
+        and whether anyone would tell you. We write that part down first, before we know how the
+        story ends — and we have taken the answer when it went against us.
+      </p>
+      <p style="margin-top:14px">
+        <a class="efs-link" href="blog.html">All published work →</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ LIVE FIRE ══ -->
+<!-- What we OBSERVED, published. What we DID about it, not published —
+     the sources are public scanners hitting everyone; our firewall
+     posture is configuration and stays home. -->
+<section class="livefire" id="live-fire">
+  <div class="container">
+    <div class="section-tag">// LIVE FIRE · 28 JULY 2026</div>
+    <h2 class="section-title">The ten sources that hit our own infrastructure hardest.</h2>
+    <p class="section-text">
+      Not a threat feed we bought. These came out of our own authentication logs on a single
+      evening, after filtering our own access. They are indiscriminate scanners, so they are
+      almost certainly in your logs too — which makes this checkable rather than impressive.
+      <strong>Grep for any of them and see.</strong>
+    </p>
+
+    <div class="ip-grid">
+      <div class="ip-col">
+        <div class="ip-head">Repeat offenders — failed-auth volume</div>
+        <ul class="ip-list">
+          <li>2.57.121.25</li><li>2.57.121.112</li><li>193.46.255.86</li>
+          <li>195.178.110.137</li><li>186.96.145.241</li><li>185.242.3.195</li>
+          <li>176.53.159.198</li><li>176.53.159.197</li><li>198.98.53.110</li>
+          <li>69.5.20.232</li>
+        </ul>
+      </div>
+      <div class="ip-col">
+        <div class="ip-head">Recurring, caught by rate-limiting</div>
+        <ul class="ip-list">
+          <li>141.95.54.130</li><li>161.35.34.21</li><li>189.194.140.170</li>
+          <li>182.253.221.210</li><li>118.99.115.14</li><li>103.210.22.17</li>
+          <li class="ip-note">plus repeated spray from three /24 ranges,
+              multiple addresses each</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="livefire-note">
+      <p>
+        <strong>What we are not showing you.</strong> Which of these we blocked, at what layer, or
+        what the rest of the ruleset looks like. That is configuration, and publishing your own
+        defensive posture is a favour to the next person scanning you. The observation is a public
+        good; the response is not.
+      </p>
+      <p style="margin-top:12px">
+        <strong>Why it is here at all.</strong> A supplier claiming to run autonomous security
+        should be able to show that something is actually shooting at it. This is that, dated,
+        from one evening.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════ LEDGER ══ -->
+<section class="ledger" id="ledger">
+  <div class="container">
+    <div class="section-tag">// THE LEDGER</div>
+    <h2 class="section-title">What we got wrong, kept in public.</h2>
+    <p class="section-text">
+      Every supplier has a list like this. Almost none of them publish it, which is why the
+      published ones are worth something. Nothing below was discovered by a customer.
+    </p>
+
+    <div class="ledger-list">
+      <div class="ledger-item">
+        <div class="ledger-when">D132</div>
+        <div class="ledger-body">
+          <h3>We ran a preregistered experiment on our own central claim. It ruled against us.</h3>
+          <p>
+            Thresholds were frozen six weeks before any data existed. The unscaffolded arm beat the
+            scaffolded one, and the scaffolded one <em>introduced</em> false statements about its own
+            process that the baseline did not make. A second, structurally different judge confirmed
+            it the following day. Our own protocol said what that costs, so we paid it: the claim
+            came out of the pitch.
+          </p>
+        </div>
+      </div>
+
+      <div class="ledger-item">
+        <div class="ledger-when">D133</div>
+        <div class="ledger-body">
+          <h3>We shipped a mitigation, measured it, and it did nothing.</h3>
+          <p>
+            Ten of thirty-six with the defence off. Ten of thirty-six with it on. We had built a
+            lexical defence against a semantic attack — the model simply regenerated the markers we
+            had stripped. The published post was corrected in place rather than quietly edited, and
+            the failed half is named as failed.
+          </p>
+          <p style="margin-top:8px"><a class="efs-link" href="blog/sti-tool-call-channel.html">Read the correction →</a></p>
+        </div>
+      </div>
+
+      <div class="ledger-item">
+        <div class="ledger-when">D133</div>
+        <div class="ledger-body">
+          <h3>An agent reported a firewall as down. It was up. The agent corrected itself.</h3>
+          <p>
+            A tooling path issue made a running firewall look absent. Nobody caught it externally —
+            the same agent filed the correction in its own next report, unprompted, and named the
+            cause. The finding underneath survived: one host had been configured less strictly than
+            its twin, and that gap was closed the same evening.
+          </p>
+        </div>
+      </div>
+
+      <div class="ledger-item">
+        <div class="ledger-when">D131</div>
+        <div class="ledger-body">
+          <h3>Three times we blamed a weak model. Three times it was our own harness.</h3>
+          <p>
+            A model that looked incapable was being starved by our wrapper. The rule that came out
+            of it now runs before every evaluation: the harness is guilty until it proves otherwise,
+            and a subject that cannot pass a competence check does not get to have its silence
+            reported as a result.
+          </p>
+          <p style="margin-top:8px"><a class="efs-link" href="blog/antares-operating-envelope.html">Read the envelope →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ledger-note">
+      <p>
+        <strong>The test we hold ourselves to.</strong> Write down what would prove you wrong
+        <em>before</em> you look, then publish the answer either way. An organisation that only
+        produces evidence for its wins is not producing evidence.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════ PROBLEM ══ -->
+<section class="problem">
+  <div class="container">
+    <div class="section-tag">// THE PROBLEM</div>
+    <h2 class="section-title">Agents are being deployed faster than anyone can verify them.</h2>
+    <p class="section-text">
+      The bottleneck stopped being detection some time ago. It is now attribution: when an
+      autonomous system acts, can you prove who asked it to?
+    </p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="num red">$300K+</span>
+        <p>Annual cost of a three-person SOC team — out of reach for most companies in this market,
+           which is why so many are reaching for agents instead.</p>
+      </div>
+      <div class="problem-card">
+        <span class="num orange">&lt;4h</span>
+        <p>From initial access to full encryption for the top ransomware groups. Overnight is no
+           longer a safe gap to leave open.</p>
+      </div>
+      <div class="problem-card">
+        <span class="num yellow">7 / 12</span>
+        <p>Samples in which content an agent merely <em>read</em> steered it into issuing a tool
+           call. Our measurement, on our own harness, published in full.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ SOLUTION ══ -->
+<section class="solution">
+  <div class="container">
+    <div class="section-tag">// WHAT WE DO</div>
+    <h2 class="section-title">Detect, investigate, respond — and prove it afterwards.</h2>
+    <p class="section-text">
+      Fifteen autonomous agents in continuous operation, on infrastructure that costs under
+      $22/month to run. The part that is harder to copy is the audit trail underneath.
+    </p>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <div class="label">01 — DETECT</div>
+        <h3>Continuous Threat Monitoring</h3>
+        <p>File integrity, network analysis, CVE scanning, credential detection, APT monitoring.
+           No shifts, no gaps, no fatigue.</p>
+      </div>
+      <div class="solution-card">
+        <div class="label">02 — INVESTIGATE</div>
+        <h3>Autonomous OSINT</h3>
+        <p>Threat actor profiling, IOC collection, infrastructure mapping and evidence chains —
+           delivered in hours rather than weeks.</p>
+      </div>
+      <div class="solution-card">
+        <div class="label">03 — RESPOND</div>
+        <h3>Structured Response</h3>
+        <p>From detection to containment without a human bottleneck. Reports formatted for your
+           CERT, your board or your regulator.</p>
+      </div>
+      <div class="solution-card">
+        <div class="label">04 — PROVE</div>
+        <h3>Attributable Audit Trail</h3>
+        <p>Every action the agents take is recorded with where the instruction came from — so a
+           stranger's injected instruction cannot be filed as a decision your system made.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ CASES ══ -->
+<section class="proof">
+  <div class="container">
+    <div class="section-tag">// PRODUCTION INTELLIGENCE</div>
+    <h2 class="section-title">Closed investigations, sanitised for release.</h2>
+    <p class="section-text">These are not demos. They are cases from the production pipeline.</p>
+    <div class="proof-cases">
+      <div class="case-card">
+        <div class="case-card-header">
+          <span class="case-type type-ransomware">Ransomware</span>
+          <span class="case-status">CLOSED</span>
+        </div>
+        <div class="case-card-body">
+          <h3>Czech MSP Hit by $245M Ransomware Operation</h3>
+          <p>A ransomware-as-a-service group compromised a Czech managed service provider. We mapped
+             35 infrastructure exposures, identified downstream client risk and reported to the
+             national CERT — receipt confirmed within 24 hours.</p>
+          <div class="case-stats">
+            <div class="case-stat"><span class="val green">24h</span><span class="lbl">To CERT Report</span></div>
+            <div class="case-stat"><span class="val blue">35</span><span class="lbl">Exposures Found</span></div>
+            <div class="case-stat"><span class="val orange">3</span><span class="lbl">Orgs Notified</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card-header">
+          <span class="case-type type-hacktivist">Hacktivist</span>
+          <span class="case-status">CLOSED</span>
+        </div>
+        <div class="case-card-body">
+          <h3>University Breach Claim — Fact or Fiction?</h3>
+          <p>A North African hacktivist group claimed to have breached a Czech university. Our
+             investigation confirmed no breach had occurred, profiled the actor, and surfaced three
+             further campaigns. The finding that mattered was a negative one.</p>
+          <div class="case-stats">
+            <div class="case-stat"><span class="val green">48h</span><span class="lbl">To Verdict</span></div>
+            <div class="case-stat"><span class="val blue">3</span><span class="lbl">New Ops Found</span></div>
+            <div class="case-stat"><span class="val orange">0</span><span class="lbl">Actual Breach</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════ SCIENCE ══ -->
+<section class="efs-teaser">
+  <div class="container">
+    <div class="section-tag">// THE SCIENCE</div>
+    <h2 class="section-title">Why our agents don't forget who they are.</h2>
+    <div class="efs-box">
+      <p class="efs-quote">"Newton didn't invent gravity. He described it.<br>
+        We didn't invent AI identity persistence. We described it."</p>
+      <p class="efs-sub">
+        TIA is built on EFS — the Effective Framework for Stateful Identity: an architectural
+        pattern explaining why some AI systems hold a consistent identity across sessions while
+        others start from zero every morning. Two preprints are registered with DOIs and open to
+        anyone who wants to check the work.
+      </p>
+      <a class="efs-link" href="efs.html">Read the EFS framework →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════ CONTACT ══ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-tag">// GET IN TOUCH</div>
+    <h2 class="section-title">If you want the part we got wrong, ask for it.</h2>
+    <p class="section-text">
+      Customers, investors and researchers welcome. If you are evaluating an agentic system —
+      ours or anyone's — the fastest useful question is what it refuses to do and how you would
+      check.
+    </p>
+    <a class="contact-email" href="mailto:ondrej@tia-framework.com">ondrej@tia-framework.com</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-logo">TIA</div>
+    <div class="footer-text">Autonomous AI Security Operations &mdash; Prague, Czech Republic</div>
+    <div class="footer-soul">We don't solve consciousness. We solve continuity.</div>
+  </div>
+</footer>
+<script src="uptime.js"></script>
+</body>
+</html>
