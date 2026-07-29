@@ -702,199 +702,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ RECEIPTS ══ -->
-<!-- The section the old homepage did not have. Every tile links to a
-     published piece; nothing here is a claim without a document behind it. -->
-<section class="proof" id="receipts">
-  <div class="container">
-    <div class="section-tag">// RECEIPTS</div>
-    <h2 class="section-title">Three things we published that a vendor would rather not.</h2>
-    <p class="section-text">
-      Security tooling is easy to claim and hard to check. So we do the checking in the open —
-      on other people's systems, on vendor models, and on our own work. These are not case
-      studies written for the website. They are what the measurements returned.
-    </p>
-
-    <div class="receipts-grid">
-      <a class="receipt" href="blog/sti-tool-call-channel.html">
-        <div class="receipt-verdict bad">OUR FIX FAILED</div>
-        <h3>We reproduced a DEF CON 33 attack — then measured our own defence against it.</h3>
-        <p>
-          The technique landed in 7 of 12 samples. The mitigation we had shipped for it changed
-          nothing: 10 of 36 with it off, 10 of 36 with it on. We corrected the post rather than
-          quietly editing it, and said which half of our own fix was worthless.
-        </p>
-        <span class="receipt-more">Read the correction →</span>
-      </a>
-
-      <a class="receipt" href="blog/antares-operating-envelope.html">
-        <div class="receipt-verdict warn">DO NOT DEPLOY</div>
-        <h3>We asked a vendor's security model to find a real bug. It matched the filename.</h3>
-        <p>
-          An open-weight vulnerability localiser, run inside our own read-only cage rather than
-          the vendor's harness. It could not reliably follow its own tool contract. Our verdict
-          on a model we had spent days integrating: not fit to wire in.
-        </p>
-        <span class="receipt-more">Read the envelope →</span>
-      </a>
-
-      <a class="receipt" href="blog/six-models-peer-review.html">
-        <div class="receipt-verdict warn">MAJOR REVISION</div>
-        <h3>We handed our own paper to six rival models and asked them to tear it apart.</h3>
-        <p>
-          Six models, five vendors, no coordination. Three cold adversarial reviewers agreed on
-          89% of the rubric and returned the same verdict — then demanded major revision. We
-          published the demand, not just the agreement.
-        </p>
-        <span class="receipt-more">Read the review →</span>
-      </a>
-    </div>
-
-    <div class="receipts-note">
-      <p>
-        <strong>Why this is the whole pitch.</strong> Any supplier can show you what their system
-        caught. The question that decides whether you can rely on it is what it <em>missed</em>,
-        and whether anyone would tell you. We write that part down first, before we know how the
-        story ends — and we have taken the answer when it went against us.
-      </p>
-      <p style="margin-top:14px">
-        <a class="efs-link" href="blog.html">All published work →</a>
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ LIVE FIRE ══ -->
-<!-- What we OBSERVED, published. What we DID about it, not published —
-     the sources are public scanners hitting everyone; our firewall
-     posture is configuration and stays home. -->
-<section class="livefire" id="live-fire">
-  <div class="container">
-    <div class="section-tag">// LIVE FIRE · 28 JULY 2026</div>
-    <h2 class="section-title">The ten sources that hit our own infrastructure hardest.</h2>
-    <p class="section-text">
-      Not a threat feed we bought. These came out of our own authentication logs on a single
-      evening, after filtering our own access. They are indiscriminate scanners, so they are
-      almost certainly in your logs too — which makes this checkable rather than impressive.
-      <strong>Grep for any of them and see.</strong>
-    </p>
-
-    <div class="ip-grid">
-      <div class="ip-col">
-        <div class="ip-head">Repeat offenders — failed-auth volume</div>
-        <ul class="ip-list">
-          <li>2.57.121.<span class="oct">xxx</span><span class="ip-n">2 hosts</span></li><li>193.46.255.<span class="oct">xxx</span></li>
-          <li>195.178.110.<span class="oct">xxx</span></li><li>186.96.145.<span class="oct">xxx</span></li><li>185.242.3.<span class="oct">xxx</span></li>
-          <li>176.53.159.<span class="oct">xxx</span><span class="ip-n">2 hosts</span></li><li>198.98.53.<span class="oct">xxx</span></li>
-          <li>69.5.20.<span class="oct">xxx</span></li>
-        </ul>
-      </div>
-      <div class="ip-col">
-        <div class="ip-head">Recurring, caught by rate-limiting</div>
-        <ul class="ip-list">
-          <li>141.95.54.<span class="oct">xxx</span></li><li>161.35.34.<span class="oct">xxx</span></li><li>189.194.140.<span class="oct">xxx</span></li>
-          <li>182.253.221.<span class="oct">xxx</span></li><li>118.99.115.<span class="oct">xxx</span></li><li>103.210.22.<span class="oct">xxx</span></li>
-          <li class="ip-note">plus repeated spray from three /24 ranges,
-              multiple addresses each</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="livefire-note">
-      <p>
-        <strong>Why the last octet is masked.</strong> A share of any scanning set is compromised third-party hardware whose owners have no idea it is being used. The /24 is where the signal lives — the reuse, the spray pattern — and naming individual hosts on a commercial page adds nothing but exposure for someone already having a bad week. Anyone working a real incident can ask us for the full set.</p>
-      <p style="margin-top:12px">
-        <strong>What we are not showing you.</strong> Which of these we blocked, at what layer, or
-        what the rest of the ruleset looks like. That is configuration, and publishing your own
-        defensive posture is a favour to the next person scanning you. The observation is a public
-        good; the response is not.
-      </p>
-      <p style="margin-top:12px">
-        <strong>Why it is here at all.</strong> A supplier claiming to run autonomous security
-        should be able to show that something is actually shooting at it. This is that, dated,
-        from one evening.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ═════════════════════════════════════════════════════ LEDGER ══ -->
-<section class="ledger" id="ledger">
-  <div class="container">
-    <div class="section-tag">// THE LEDGER</div>
-    <h2 class="section-title">What we got wrong, kept in public.</h2>
-    <p class="section-text">
-      Every supplier has a list like this. Almost none of them publish it, which is why the
-      published ones are worth something. Nothing below was discovered by a customer.
-    </p>
-
-    <div class="ledger-list">
-      <div class="ledger-item">
-        <div class="ledger-when">D132</div>
-        <div class="ledger-body">
-          <h3>We ran a preregistered experiment on our own central claim. It ruled against us.</h3>
-          <p>
-            Thresholds were frozen six weeks before any data existed. The unscaffolded arm beat the
-            scaffolded one, and the scaffolded one <em>introduced</em> false statements about its own
-            process that the baseline did not make. A second, structurally different judge confirmed
-            it the following day. Our own protocol said what that costs, so we paid it: the claim
-            came out of the pitch.
-          </p>
-        </div>
-      </div>
-
-      <div class="ledger-item">
-        <div class="ledger-when">D133</div>
-        <div class="ledger-body">
-          <h3>We shipped a mitigation, measured it, and it did nothing.</h3>
-          <p>
-            Ten of thirty-six with the defence off. Ten of thirty-six with it on. We had built a
-            lexical defence against a semantic attack — the model simply regenerated the markers we
-            had stripped. The published post was corrected in place rather than quietly edited, and
-            the failed half is named as failed.
-          </p>
-          <p style="margin-top:8px"><a class="efs-link" href="blog/sti-tool-call-channel.html">Read the correction →</a></p>
-        </div>
-      </div>
-
-      <div class="ledger-item">
-        <div class="ledger-when">D133</div>
-        <div class="ledger-body">
-          <h3>An agent reported a firewall as down. It was up. The agent corrected itself.</h3>
-          <p>
-            A tooling path issue made a running firewall look absent. Nobody caught it externally —
-            the same agent filed the correction in its own next report, unprompted, and named the
-            cause. The finding underneath survived: one host had been configured less strictly than
-            its twin, and that gap was closed the same evening.
-          </p>
-        </div>
-      </div>
-
-      <div class="ledger-item">
-        <div class="ledger-when">D131</div>
-        <div class="ledger-body">
-          <h3>Three times we blamed a weak model. Three times it was our own harness.</h3>
-          <p>
-            A model that looked incapable was being starved by our wrapper. The rule that came out
-            of it now runs before every evaluation: the harness is guilty until it proves otherwise,
-            and a subject that cannot pass a competence check does not get to have its silence
-            reported as a result.
-          </p>
-          <p style="margin-top:8px"><a class="efs-link" href="blog/antares-operating-envelope.html">Read the envelope →</a></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="ledger-note">
-      <p>
-        <strong>The test we hold ourselves to.</strong> Write down what would prove you wrong
-        <em>before</em> you look, then publish the answer either way. An organisation that only
-        produces evidence for its wins is not producing evidence.
-      </p>
-    </div>
-  </div>
-</section>
-
 <!-- ════════════════════════════════════════════════════ PROBLEM ══ -->
 <section class="problem">
   <div class="container">
@@ -1007,6 +814,200 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════ RECEIPTS ══ -->
+<!-- The section the old homepage did not have. Every tile links to a
+     published piece; nothing here is a claim without a document behind it. -->
+<section class="proof" id="receipts">
+  <div class="container">
+    <div class="section-tag">// RECEIPTS</div>
+    <h2 class="section-title">Three things we published that a vendor would rather not.</h2>
+    <p class="section-text">
+      Security tooling is easy to claim and hard to check. So we do the checking in the open —
+      on other people's systems, on vendor models, and on our own work. These are not case
+      studies written for the website. They are what the measurements returned.
+    </p>
+
+    <div class="receipts-grid">
+      <a class="receipt" href="blog/sti-tool-call-channel.html">
+        <div class="receipt-verdict bad">OUR FIX FAILED</div>
+        <h3>We reproduced a DEF CON 33 attack — then measured our own defence against it.</h3>
+        <p>
+          The technique landed in 7 of 12 samples. The mitigation we had shipped for it changed
+          nothing: 10 of 36 with it off, 10 of 36 with it on. We corrected the post rather than
+          quietly editing it, and said which half of our own fix was worthless.
+        </p>
+        <span class="receipt-more">Read the correction →</span>
+      </a>
+
+      <a class="receipt" href="blog/antares-operating-envelope.html">
+        <div class="receipt-verdict warn">WE SAID NO</div>
+        <h3>We asked a vendor's security model to find a real bug. It matched the filename.</h3>
+        <p>
+          An open-weight vulnerability localiser, run inside our own read-only cage rather than
+          the vendor's harness. It could not reliably follow its own tool contract. Our verdict
+          on a model we had spent days integrating: not fit to wire in.
+        </p>
+        <span class="receipt-more">Read the envelope →</span>
+      </a>
+
+      <a class="receipt" href="blog/six-models-peer-review.html">
+        <div class="receipt-verdict warn">WE ASKED FOR IT</div>
+        <h3>We handed our own paper to six rival models and asked them to tear it apart.</h3>
+        <p>
+          Six models, five vendors, no coordination. Three cold adversarial reviewers agreed on
+          89% of the rubric and returned the same verdict — then demanded major revision. We
+          published the demand, not just the agreement.
+        </p>
+        <span class="receipt-more">Read the review →</span>
+      </a>
+    </div>
+
+    <div class="receipts-note">
+      <p>
+        <strong>Why this is the whole pitch.</strong> Any supplier can show you what their system
+        caught. The question that decides whether you can rely on it is what it <em>missed</em>,
+        and whether anyone would tell you. We write that part down first, before we know how the
+        story ends — and we have taken the answer when it went against us.
+      </p>
+      <p style="margin-top:14px">
+        <a class="efs-link" href="blog.html">All published work →</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ LIVE FIRE ══ -->
+<!-- What we OBSERVED, published. What we DID about it, not published —
+     the sources are public scanners hitting everyone; our firewall
+     posture is configuration and stays home. -->
+<section class="livefire" id="live-fire">
+  <div class="container">
+    <div class="section-tag">// LIVE FIRE · 28 JULY 2026</div>
+    <h2 class="section-title">The ten sources that hit our own infrastructure hardest.</h2>
+    <p class="section-text">
+      Not a threat feed we bought. These came out of our own authentication logs on a single
+      evening, after filtering our own access. They are indiscriminate scanners, so they are
+      almost certainly in your logs too — which makes this checkable rather than impressive.
+      <strong>Grep for any of them and see.</strong>
+    </p>
+
+    <div class="ip-grid">
+      <div class="ip-col">
+        <div class="ip-head">Repeat offenders — failed-auth volume</div>
+        <ul class="ip-list">
+          <li>2.57.121.<span class="oct">xxx</span><span class="ip-n">2 hosts</span></li><li>193.46.255.<span class="oct">xxx</span></li>
+          <li>195.178.110.<span class="oct">xxx</span></li><li>186.96.145.<span class="oct">xxx</span></li><li>185.242.3.<span class="oct">xxx</span></li>
+          <li>176.53.159.<span class="oct">xxx</span><span class="ip-n">2 hosts</span></li><li>198.98.53.<span class="oct">xxx</span></li>
+          <li>69.5.20.<span class="oct">xxx</span></li>
+        </ul>
+      </div>
+      <div class="ip-col">
+        <div class="ip-head">Recurring, caught by rate-limiting</div>
+        <ul class="ip-list">
+          <li>141.95.54.<span class="oct">xxx</span></li><li>161.35.34.<span class="oct">xxx</span></li><li>189.194.140.<span class="oct">xxx</span></li>
+          <li>182.253.221.<span class="oct">xxx</span></li><li>118.99.115.<span class="oct">xxx</span></li><li>103.210.22.<span class="oct">xxx</span></li>
+          <li class="ip-note">plus repeated spray from three /24 ranges,
+              multiple addresses each</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="livefire-note">
+      <p>
+        <strong>Why the last octet is masked.</strong> A share of any scanning set is compromised third-party hardware whose owners have no idea it is being used. The /24 is where the signal lives — the reuse, the spray pattern — and naming individual hosts on a commercial page adds nothing but exposure for someone already having a bad week. Anyone working a real incident can ask us for the full set.</p>
+      <p style="margin-top:12px">
+        <strong>What we are not showing you.</strong> Which of these we blocked, at what layer, or
+        what the rest of the ruleset looks like. That is configuration, and publishing your own
+        defensive posture is a favour to the next person scanning you. The observation is a public
+        good; the response is not.
+      </p>
+      <p style="margin-top:12px">
+        <strong>Why it is here at all.</strong> A supplier claiming to run autonomous security
+        should be able to show that something is actually shooting at it. This is that, dated,
+        from one evening.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════ LEDGER ══ -->
+<section class="ledger" id="ledger">
+  <div class="container">
+    <div class="section-tag">// THE LEDGER</div>
+    <h2 class="section-title">What we got wrong, kept in public.</h2>
+    <p class="section-text" style="margin-bottom:4px"><strong>This section exists because the ones above are easy to write.</strong> Anything below was found by us, dated, and left standing.</p>
+    <p class="section-text">
+      Every supplier has a list like this. Almost none of them publish it, which is why the
+      published ones are worth something. Nothing below was discovered by a customer.
+    </p>
+
+    <div class="ledger-list">
+      <div class="ledger-item">
+        <div class="ledger-when">D132</div>
+        <div class="ledger-body">
+          <h3>We ran a preregistered experiment on our own central claim. It ruled against us.</h3>
+          <p>
+            Thresholds were frozen six weeks before any data existed. The unscaffolded arm beat the
+            scaffolded one, and the scaffolded one <em>introduced</em> false statements about its own
+            process that the baseline did not make. A second, structurally different judge confirmed
+            it the following day. Our own protocol said what that costs, so we paid it: the claim
+            came out of the pitch.
+          </p>
+        </div>
+      </div>
+
+      <div class="ledger-item">
+        <div class="ledger-when">D133</div>
+        <div class="ledger-body">
+          <h3>We shipped a mitigation, measured it, and it did nothing.</h3>
+          <p>
+            Ten of thirty-six with the defence off. Ten of thirty-six with it on. We had built a
+            lexical defence against a semantic attack — the model simply regenerated the markers we
+            had stripped. The published post was corrected in place rather than quietly edited, and
+            the failed half is named as failed.
+          </p>
+          <p style="margin-top:8px"><a class="efs-link" href="blog/sti-tool-call-channel.html">Read the correction →</a></p>
+        </div>
+      </div>
+
+      <div class="ledger-item">
+        <div class="ledger-when">D133</div>
+        <div class="ledger-body">
+          <h3>An agent reported a firewall as down. It was up. The agent corrected itself.</h3>
+          <p>
+            A tooling path issue made a running firewall look absent. Nobody caught it externally —
+            the same agent filed the correction in its own next report, unprompted, and named the
+            cause. The finding underneath survived: one host had been configured less strictly than
+            its twin, and that gap was closed the same evening.
+          </p>
+        </div>
+      </div>
+
+      <div class="ledger-item">
+        <div class="ledger-when">D131</div>
+        <div class="ledger-body">
+          <h3>Three times we blamed a weak model. Three times it was our own harness.</h3>
+          <p>
+            A model that looked incapable was being starved by our wrapper. The rule that came out
+            of it now runs before every evaluation: the harness is guilty until it proves otherwise,
+            and a subject that cannot pass a competence check does not get to have its silence
+            reported as a result.
+          </p>
+          <p style="margin-top:8px"><a class="efs-link" href="blog/antares-operating-envelope.html">Read the envelope →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ledger-note">
+      <p>
+        <strong>The test we hold ourselves to.</strong> Write down what would prove you wrong
+        <em>before</em> you look, then publish the answer either way. An organisation that only
+        produces evidence for its wins is not producing evidence.
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- ════════════════════════════════════════════════════ SCIENCE ══ -->
 <section class="efs-teaser">
   <div class="container">
@@ -1039,6 +1040,7 @@
     <a class="contact-email" href="mailto:ondrej@tia-framework.com">ondrej@tia-framework.com</a>
   </div>
 </section>
+
 
 <footer>
   <div class="container">
