@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontology: The Symbolic Lineage — TIA</title>
+<meta name="description" content="Origin, the philosophy of being, what exists — and how it came to be categorized. Aristotle to Quine to Gruber to the machines.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+<meta property="og:title" content="Ontology: The Symbolic Lineage">
+<meta property="og:description" content="Twenty-four centuries of one question: what is there — and who decides what counts as a thing.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.tia-framework.com/blog/ontology-symbolic-lineage.html">
+<meta property="og:site_name" content="TIA">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="cs_CZ">
+<meta property="og:image" content="https://www.tia-framework.com/blog/img/ontology.jpg">
+<meta property="og:image:secure_url" content="https://www.tia-framework.com/blog/img/ontology.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="The Porphyrian tree — the oldest diagram of categories, ancestor of every class hierarchy.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ontology: The Symbolic Lineage">
+<meta name="twitter:description" content="Twenty-four centuries of one question: what is there — and who decides what counts as a thing.">
+<meta name="twitter:image" content="https://www.tia-framework.com/blog/img/ontology.jpg">
+<link rel="alternate" hreflang="en" href="https://www.tia-framework.com/blog/ontology-symbolic-lineage.html">
+<link rel="alternate" hreflang="cs" href="https://www.tia-framework.com/blog/ontology-symbolic-lineage-cs.html">
+<link rel="stylesheet" href="style.css">
+<style>
+  :root{--gold:#c9a961;--violet:#9b7fd4;--rose:#d97f8c}
+  .lineage{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+           font-size:16.5px;line-height:1.68}
+  .lineage h2{font-family:"Iowan Old Style",Georgia,serif;font-weight:400;
+              font-size:30px;line-height:1.18;letter-spacing:-.01em;margin:46px 0 6px}
+  .lineage h2 .yr{display:block;font-family:'JetBrains Mono',monospace;font-size:13px;
+                  color:var(--text-muted);margin-top:8px;letter-spacing:.02em}
+  .act{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;
+       text-transform:uppercase;color:var(--violet);margin-top:46px}
+  .lineage em.gk{font-style:italic;color:var(--gold)}
+  .fresco{margin:40px 0 44px}
+  .fresco img{width:100%;height:auto;display:block;border:1px solid var(--border);border-radius:3px}
+  .fresco figcaption{font-size:14px;line-height:1.62;color:#8b8893;margin-top:14px;
+                     padding-left:14px;border-left:2px solid var(--gold)}
+  .fresco figcaption b{color:#b9b5c2;font-weight:500;
+                       font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.01em}
+  .fresco figcaption .src{display:block;margin-top:8px;font-family:'JetBrains Mono',monospace;
+                          font-size:10.5px;color:var(--text-muted);letter-spacing:.03em}
+  .lineage blockquote{margin:28px 0;padding:20px 24px;background:var(--surface);
+    border-left:3px solid var(--gold);border-radius:0 5px 5px 0}
+  .lineage blockquote p{margin:0;font-size:19px;line-height:1.5;color:#fff;font-style:normal}
+  .lineage blockquote cite{display:block;margin-top:11px;font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;color:var(--text-muted);font-style:normal}
+  .lineage blockquote.pivot{border-left-color:var(--rose)}
+  .lineage blockquote.pivot p{font-size:21px}
+  pre.tree{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.72;
+    color:var(--text-dim);background:var(--surface);border:1px solid var(--border);
+    border-radius:5px;padding:20px 22px;margin:24px 0;overflow-x:auto}
+  pre.tree b{color:var(--gold);font-weight:400}
+  .lineage table{width:100%;border-collapse:collapse;margin:24px 0;
+                 font-family:'Inter',sans-serif;font-size:14px}
+  .lineage th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--violet);
+    padding:0 12px 9px 0;border-bottom:1px solid var(--border);font-weight:400}
+  .lineage td{padding:10px 12px 10px 0;border-bottom:1px solid rgba(26,26,46,.6);
+    color:var(--text-dim);vertical-align:top;line-height:1.5}
+  .lineage td:first-child{color:var(--text);font-family:'JetBrains Mono',monospace;
+    font-size:12px;white-space:nowrap}
+  .spine{margin:30px 0}
+  .beat{display:grid;grid-template-columns:118px 1fr;gap:20px;padding:13px 0;
+    border-top:1px solid var(--border)}
+  .beat:last-child{border-bottom:1px solid var(--border)}
+  .beat .when{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);padding-top:2px}
+  .beat .what{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.55;color:var(--text-dim)}
+  .lang{display:inline-flex;gap:2px;border:1px solid var(--border);border-radius:4px;
+        overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:11px;margin-left:auto}
+  .lang a{padding:5px 11px;color:var(--text-dim);text-decoration:none;border:none}
+  .lang a.on{background:var(--green);color:#07070d;font-weight:600}
+  .lang a:hover:not(.on){background:var(--surface2,#15151f);color:var(--text)}
+  .topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  @media(max-width:640px){.beat{grid-template-columns:1fr;gap:3px}.lineage h2{font-size:23px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a href="/" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="../about.html">About</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="../efs.html">EFS</a>
+      <a href="../compliance.html">Compliance</a>
+    </div>
+  </div>
+</nav>
+
+<article class="container narrow lineage">
+  <div class="topbar">
+    <a class="back" href="../blog.html">← all posts</a>
+    <span class="lang">
+      <a class="on" href="ontology-symbolic-lineage.html">EN</a>
+      <a href="ontology-symbolic-lineage-cs.html">CS</a>
+    </span>
+  </div>
+
+  <div class="meta">
+    <span>2026-07-29</span><span class="tag">RESEARCH</span><span>Aristotle → Quine → Gruber</span>
+  </div>
+
+    
+    <h1>Ontology: The Symbolic Lineage</h1>
+    <p class="lede">Origin, the philosophy of being, what exists — and how it came to be categorized.</p>
+    <div class="byline">Aristotle · c. 350 BCE  →  Quine · 1948  →  Gruber · 1993  →  the machines</div>
+  
+
+    <div class="act">The through-line</div>
+    <h2>One question, asked for twenty-four centuries.</h2>
+
+    <p class="lead">
+      <strong>What is there?</strong> Quine's answer — <em>everything</em> — is famously correct and
+      famously useless. The interesting question was never the answer. It was the machinery you have
+      to build before the answer means anything: <strong>what counts as a thing, what counts as a
+      kind, and who decides.</strong>
+    </p>
+
+    <p>
+      This note traces one thread through that history: the <strong>symbolic</strong> lineage — the
+      tradition that holds that being can be carved into named categories, arranged in a structure,
+      and written down. It is a straight line from a Greek list of ten to a W3C specification, and
+      the line is not a metaphor. Aristotle's <em>Categories</em> reaches modern software through a
+      chain of translations, each of which is documented and datable.
+    </p>
+
+    <p>
+      There is a rival tradition — being as flow, process, becoming, the ineffable — running from
+      Heraclitus through Whitehead to the connectionists. It appears here only where it collides with
+      the symbolic line, and the last section argues that <strong>the collision is now the most
+      interesting thing happening in the field.</strong>
+    </p>
+
+    <div class="callout">
+      <b>A word on the word.</b> "Ontology" is younger than what it names by about two thousand
+      years. Aristotle had no such term; he called it <em>first philosophy</em> and, in one place,
+      the study of <em class="gk">τὸ ὂν ᾗ ὄν</em> — "being <em>qua</em> being". The noun appears in
+      print only in the seventeenth century (§IV).
+    </div>
+  
+
+    <div class="act">Act I · Antiquity</div>
+    <h2>Aristotle draws the first list.
+      <span class="yr">c. 350 BCE · <em>Categories</em>, <em>Metaphysics</em></span></h2>
+
+    <p>
+      Plato had put reality in a realm of Forms, with the visible world as a degraded copy.
+      Aristotle's move — the one everything downstream inherits — was to bring the structure
+      <em>back into the world</em> and then ask what shape it has.
+    </p>
+
+    <blockquote>
+      <p>Being is said in many ways.</p>
+      <cite>τὸ ὂν λέγεται πολλαχῶς · Metaphysics Γ.2, 1003a33</cite>
+    </blockquote>
+
+    <p>
+      That sentence is the origin of the entire discipline. If "is" meant one thing, there would be
+      nothing to categorize. Because it means several, someone has to say <em>which</em> — and the
+      <em>Categories</em> is the first attempt: ten highest kinds, under which everything sayable
+      falls.
+    </p>
+
+    <table>
+      <tr><th>Greek</th><th>Category</th><th>Answers the question</th></tr>
+      <tr><td>οὐσία</td><td><b>Substance</b></td><td>What is it? — the only category that exists independently; the other nine exist <em>in</em> it</td></tr>
+      <tr><td>ποσόν</td><td>Quantity</td><td>How much?</td></tr>
+      <tr><td>ποιόν</td><td>Quality</td><td>What sort?</td></tr>
+      <tr><td>πρός τι</td><td>Relation</td><td>Related how?</td></tr>
+      <tr><td>ποῦ</td><td>Place</td><td>Where?</td></tr>
+      <tr><td>ποτέ</td><td>Time</td><td>When?</td></tr>
+      <tr><td>κεῖσθαι</td><td>Position</td><td>In what posture?</td></tr>
+      <tr><td>ἔχειν</td><td>State / having</td><td>In what condition?</td></tr>
+      <tr><td>ποιεῖν</td><td>Action</td><td>Doing what?</td></tr>
+      <tr><td>πάσχειν</td><td>Passion</td><td>Undergoing what?</td></tr>
+    </table>
+
+    <p>
+      The asymmetry matters more than the list. <strong>Substance is primary; everything else is
+      predicated of it.</strong> That single decision — that reality has <em>bearers</em> and
+      <em>properties borne</em>, and they are not the same kind of thing — is why every database
+      schema, every class hierarchy, and every RDF triple has a subject slot that behaves differently
+      from the rest.
+    </p>
+
+    <h3>Porphyry draws the first diagram · c. 270 CE</h3>
+
+    <p>
+      Porphyry's <em>Isagoge</em> was meant as a beginner's introduction to the <em>Categories</em>.
+      It became, for a thousand years, more studied than the thing it introduced — and it contributed
+      the single most consequential picture in the history of knowledge representation.
+    </p>
+
+    <pre class="tree"><b>Substance</b>
+ ├── corporeal ─────────── <b>Body</b>
+ │                          ├── animate ──── <b>Living thing</b>
+ │                          │                 ├── sensitive ── <b>Animal</b>
+ │                          │                 │                ├── rational ── <b>Man</b>
+ │                          │                 │                │                ├── Socrates
+ │                          │                 │                │                └── Plato
+ │                          │                 │                └── irrational ─ Beast
+ │                          │                 └── insensitive ─ Plant
+ │                          └── inanimate ── Mineral
+ └── incorporeal ───────── Spirit</pre>
+
+    <p>
+      Read that shape again. <strong>Genus, differentia, species; single inheritance; leaves that are
+      individuals rather than kinds.</strong> It is the class hierarchy, drawn seventeen centuries
+      before anyone had a machine to run it on. Porphyry also left three questions deliberately
+      unanswered — do genera and species <em>exist</em>, are they corporeal, are they separate from
+      particulars — and those three deferred questions became the medieval war of §III.
+    </p>
+
+    <figure class="fresco">
+      <img src="img/ontology-tree.jpg" width="1440" height="1176" loading="lazy"
+           alt="An 18th-century ceiling fresco of the Porphyrian tree: labelled discs joined by ribbons, running from SUBSTANTIA at the top down through CORPUS, VIVENS, ANIMALE and HOMO to SOCRATES at the foot, with the differentiae on ribbons to either side. Scholars examine it from below on the left; armed men stand to the right.">
+      <figcaption>
+        The same shape, painted. <em>Baum des Porphyrius</em> — ceiling fresco by Franz Georg
+        Hermann, c. 1750, in the library hall of Kloster Schussenried. The spine reads
+        <b>SUBSTANTIA → CORPUS → VIVENS → ANIMALE → HOMO → SOCRATES</b>; the ribbons either side
+        carry the differentiae that do the cutting — <em>divisiva</em>, <em>constitutiva</em>,
+        <em>repugnans</em>. Fifteen centuries after the <em>Isagoge</em>, a monastery still thought
+        this diagram worth putting on its ceiling.
+        <span class="src">Photo: Andreas Praefcke, 2011 · public domain</span>
+      </figcaption>
+    </figure>
+
+    <div class="act">Act II · Transmission and the war over universals</div>
+    <h2>Does "dog" exist, or only dogs?
+      <span class="yr">c. 510 – 1350 · Boethius, Abelard, Aquinas, Ockham</span></h2>
+
+    <p>
+      <strong>Boethius</strong> (c. 480–524) translated Porphyry and Aristotle into Latin and wrote the
+      commentaries through which the Latin West would read them for the next seven hundred years. He
+      also took Porphyry's three deferred questions seriously enough to answer them — and thereby
+      started the fight.
+    </p>
+
+    <p>
+      The <strong>problem of universals</strong> is the ontological question in its sharpest form. When
+      we group Rex and Lassie under <em>dog</em>, is <em>dog</em> something real that they share, or a
+      name we find convenient?
+    </p>
+
+    <table>
+      <tr><th>Position</th><th>Claim</th><th>Chief advocate</th></tr>
+      <tr><td>Realism</td><td>Universals exist independently of minds and of instances</td><td>Plato; extreme scholastic realists</td></tr>
+      <tr><td>Moderate realism</td><td>Universals exist, but only <em>in</em> their instances</td><td>Aristotle; Aquinas (c. 1265)</td></tr>
+      <tr><td>Conceptualism</td><td>Universals exist in the mind as concepts, not in the world</td><td>Abelard (c. 1120)</td></tr>
+      <tr><td>Nominalism</td><td>Only particulars exist; universals are names</td><td>Ockham (c. 1320)</td></tr>
+    </table>
+
+    <blockquote>
+      <p>Entities are not to be multiplied beyond necessity.</p>
+      <cite>Attributed to William of Ockham — the formulation is later, the principle is his</cite>
+    </blockquote>
+
+    <p>
+      Ockham's razor is usually taught as a rule about explanations. It began as a rule about
+      <strong>ontological inventory</strong>: do not admit a kind of thing into your account of what
+      exists unless the account fails without it. That is not a stylistic preference. It is a budget
+      — and it is the direct ancestor of Quine's criterion six centuries later.
+    </p>
+
+    <div class="callout">
+      <b>Why this fight never ended.</b> Every schema designer re-fights it, usually without knowing.
+      Is <code>Customer</code> a real kind with its own identity conditions, or a label over rows that
+      happen to share a column? Choose realism and you get inheritance, shared semantics, and rigid
+      migrations. Choose nominalism and you get flexibility, and a system where nobody can say what
+      anything means. <b>Most production systems are quietly conceptualist and pretend not to be.</b>
+    </div>
+  
+
+    <div class="act">Act III · The word is coined</div>
+    <h2>Ontology gets a name, and a job.
+      <span class="yr">1606 · 1613 · 1730 — Lorhard, Goclenius, Wolff</span></h2>
+
+    <p>
+      The noun <em>ontologia</em> appears in print in <strong>Jacob Lorhard's</strong>
+      <em>Ogdoas Scholastica</em> (Sankt Gallen, 1606), and shortly after in
+      <strong>Rudolf Goclenius'</strong> <em>Lexicon philosophicum</em> (1613). It is a Greek
+      compound — <em class="gk">ὄντος</em> (of being) + <em class="gk">λόγος</em> (account) — built
+      by seventeenth-century Protestant scholastics who wanted a name for the part of metaphysics
+      that deals with being in general rather than with God.
+    </p>
+
+    <p>
+      <strong>Christian Wolff</strong> (<em>Philosophia prima sive Ontologia</em>, 1730) made the
+      division canonical and turned it into curriculum: <em>metaphysica generalis</em> (ontology —
+      being as such) versus <em>metaphysica specialis</em> (God, soul, world). This is the shape
+      Kant inherited, and the shape he demolished.
+    </p>
+
+    <div class="callout">
+      <b>Worth noticing.</b> The discipline was named 1,950 years after it started, by people
+      organising a syllabus. Naming a practice usually happens when someone needs to teach it — which
+      is the same reason most engineering vocabulary exists.
+    </div>
+  
+
+    <div class="act">Act IV · The Copernican turn</div>
+    <h2>Kant moves the categories out of the world and into the observer.
+      <span class="yr">1781 · Critique of Pure Reason</span></h2>
+
+    <p>
+      Kant accepted that experience is structured by categories and denied that this tells us
+      anything about being. His twelve categories — under quantity, quality, relation, modality — are
+      <strong>conditions of possible experience</strong>, not divisions of reality. We cannot get
+      behind them to check, because checking would use them.
+    </p>
+
+    <blockquote>
+      <p>The proud name of an ontology, which presumes to offer synthetic <em>a priori</em> cognitions
+      of things in general, must give way to the more modest title of a mere analytic of the pure
+      understanding.</p>
+      <cite>Critique of Pure Reason, A247/B303</cite>
+    </blockquote>
+
+    <p>
+      For a century this reads as ontology's death sentence. In retrospect it is a <strong>relocation
+      that the computational tradition would eventually make literal</strong>: an ontology is not a
+      map of being, it is the structure a particular knower imposes in order to have experience at
+      all. Swap "knower" for "system" and you have arrived, by a very long road, at Gruber.
+    </p>
+  
+
+    <div class="act">Act V · The phenomenological detour</div>
+    <h2>Being, recovered — and made unformalizable.
+      <span class="yr">1874 – 1927 · Brentano, Husserl, Heidegger</span></h2>
+
+    <p>
+      <strong>Franz Brentano's</strong> dissertation <em>On the Several Senses of Being in Aristotle</em>
+      (1862) put the ancient question back on the table; his <em>Psychology from an Empirical
+      Standpoint</em> (1874) reintroduced <strong>intentionality</strong> — that mental states are
+      always <em>about</em> something — which every account of representation since has had to
+      address.
+    </p>
+
+    <p>
+      <strong>Edmund Husserl</strong> split <em>formal</em> ontology (the theory of objects as such —
+      part, whole, dependence, identity) from <em>material</em> or <strong>regional</strong>
+      ontologies, each governing a domain with its own kinds. That distinction survives directly in
+      modern practice: an upper ontology plus domain ontologies is Husserl's architecture with
+      different funding.
+    </p>
+
+    <p>
+      <strong>Martin Heidegger</strong> (<em>Being and Time</em>, 1927) charged the entire tradition
+      with a foundational error he named the <strong>ontological difference</strong>: it had spent
+      2,300 years cataloguing <em>beings</em> (things that are) while forgetting <em>Being</em> (that
+      they are at all). His fundamental ontology proceeds through <em>Dasein</em> — the entity for
+      which its own being is a question.
+    </p>
+
+    <div class="callout">
+      <b>Why this branch does not lead to software, and why it still matters.</b> Heidegger's project
+      is constitutionally unformalizable: any category scheme is already, on his account, the mistake.
+      No knowledge graph descends from <em>Being and Time</em>. But the criticism lands anyway —
+      <b>a categorization always encodes the purposes of whoever built it, and presenting it as
+      a neutral map of reality is precisely the move he objected to.</b> Any honest ontology
+      engineer says which purposes theirs serves.
+    </div>
+  
+
+    <div class="act">Act VI · The logical turn — the hinge</div>
+    <h2>Quine makes existence a question about theories.
+      <span class="yr">1948 · "On What There Is", Review of Metaphysics 2(5)</span></h2>
+
+    <p>
+      Frege and Russell had already done the technical work: <strong>existence is not a
+      predicate</strong> but a quantifier. "Horses exist" does not attribute a property to horses; it
+      says the class is non-empty. Russell's theory of descriptions (1905) showed how to talk about
+      the present King of France without admitting him to the inventory.
+    </p>
+
+    <p>
+      Quine's paper opens with the problem he calls <strong>Plato's beard</strong>: to deny that
+      something exists, must you not first refer to it? He works through two invented opponents —
+      McX and Wyman — who admit unactualized possibles to make negative existentials work, and
+      dispatches them with the Frege–Russell apparatus. Then comes the line that reorganized the
+      field:
+    </p>
+
+    <blockquote class="pivot">
+      <p>To be is to be the value of a bound variable.</p>
+      <cite>W. V. O. Quine, "On What There Is", 1948</cite>
+    </blockquote>
+
+    <p>
+      This is the pivot of the whole lineage, and it is worth being exact about what it does.
+      <strong>It stops asking what exists and starts asking what a theory is committed to.</strong>
+      Regiment your theory into first-order logic; look at what the existential quantifiers range
+      over; that is your ontological commitment. Ontology becomes an <em>audit of a formalism</em>
+      rather than an inquiry into being.
+    </p>
+
+    <p>
+      Two consequences follow immediately, and both are load-bearing for everything after.
+      <strong>First: ontology becomes relative to a theory</strong> — different theories, different
+      commitments, and the question "which is right" becomes a question about which theory to adopt.
+      <strong>Second: ontology becomes something you can compute.</strong> An inventory extracted
+      mechanically from a formal language is a thing a machine can hold.
+    </p>
+
+    <h3>Carnap's objection · 1950</h3>
+
+    <p>
+      Rudolf Carnap ("Empiricism, Semantics, and Ontology") answered that the question splits.
+      <strong>Internal</strong> questions — do prime numbers exist? — are settled inside a linguistic
+      framework by its own rules, and are trivial. <strong>External</strong> questions — do numbers
+      <em>really</em> exist, framework aside — are not factual at all but practical: <em>shall we
+      adopt this framework?</em> Quine rejected the sharp line. The dispute is unresolved and is
+      re-enacted, without attribution, every time two teams argue about whose schema is correct when
+      both work.
+    </p>
+
+    <div class="callout">
+      <b>The engineering translation.</b> Carnap says: pick the framework that pays. Quine says: you
+      cannot pretend the choice is free of commitment. <b>Both are right, and the discipline is
+      holding both — use what works, and say out loud what it obliges you to believe.</b>
+    </div>
+  
+
+    <div class="act">Act VII · The engineering turn</div>
+    <h2>Gruber gives the word to the machines.
+      <span class="yr">1993 · "A Translation Approach to Portable Ontology Specifications",
+      Knowledge Acquisition 5(2)</span></h2>
+
+    <p>
+      By the early 1990s AI had a practical problem with no name. Knowledge-based systems could not
+      share what they knew: each encoded its domain in its own terms, and two systems that both
+      "understood" chemistry could not exchange a single assertion. Tom Gruber, at Stanford's
+      Knowledge Systems Laboratory, borrowed the philosophers' word for the missing artefact.
+    </p>
+
+    <blockquote class="pivot">
+      <p>An ontology is an explicit specification of a conceptualization.</p>
+      <cite>Thomas R. Gruber, 1993</cite>
+    </blockquote>
+
+    <p>
+      Twelve words, and the discipline changes hands. Note precisely what it does <strong>not</strong>
+      say. Not <em>of reality</em> — of a <em>conceptualization</em>. Gruber's ontology is an
+      engineering artefact: a shared vocabulary with formally stated constraints, whose merit is
+      whether systems can use it to agree, not whether it is true.
+    </p>
+
+    <p>
+      Refinements followed quickly and both are still quoted. <strong>Borst (1997)</strong>:
+      <em>a formal specification of a shared conceptualization</em> — adding that agreement is
+      required, not optional. <strong>Studer, Benjamins &amp; Fensel (1998)</strong> merged the two
+      into the definition most textbooks still use.
+    </p>
+
+    <div class="callout">
+      <b>What the move cost, stated plainly.</b> The philosophical question — <em>what is really
+      there</em> — was not answered. It was <b>set aside as not the engineer's business</b>, and the
+      word was kept. Barry Smith and the applied-ontology school have spent thirty years arguing this
+      was a mistake: that ontologies which model <em>concepts</em> rather than <em>entities</em>
+      produce systems that cannot be merged, because two groups' concepts differ even when the world
+      does not. That argument is why realist upper ontologies exist (§VIII) and why the field is
+      still genuinely divided.
+    </div>
+  
+
+    <div class="act">Act VIII · Deployment</div>
+    <h2>Two decades of building it for real.
+      <span class="yr">1984 – 2012</span></h2>
+
+    <div class="spine">
+      <div class="beat"><div class="when">1984 →</div><div class="what"><b>CYC</b> · Douglas Lenat. Hand-encode common sense — millions of assertions, decades of effort. The most instructive near-failure in the field: it did not produce general intelligence, and it did establish how much implicit knowledge a category scheme must carry before it is usable.</div></div>
+      <div class="beat"><div class="when">1985 →</div><div class="what"><b>WordNet</b> · George Miller, Princeton. Not an ontology by intent — a lexical database of synsets linked by hypernymy — but used as one for thirty years, and the bridge by which the symbolic tradition entered computational linguistics.</div></div>
+      <div class="beat"><div class="when">1991</div><div class="what"><b>KIF</b> and the <b>ARPA Knowledge Sharing Effort</b> · the interchange problem Gruber's paper was written to solve.</div></div>
+      <div class="beat"><div class="when">1999</div><div class="what"><b>RDF</b> · W3C. Everything becomes subject–predicate–object. Aristotle's substance/predication asymmetry, now a wire format.</div></div>
+      <div class="beat"><div class="when">2000</div><div class="what"><b>Gene Ontology</b> · Ashburner et al., <em>Nature Genetics</em>. The field's clearest success: a shared controlled vocabulary for gene function across species, without which modern genomics does not function.</div></div>
+      <div class="beat"><div class="when">2001</div><div class="what"><b>The Semantic Web</b> · Berners-Lee, Hendler &amp; Lassila, <em>Scientific American</em>. The most ambitious and most disappointed programme in the lineage. Its infrastructure survives and outlived its own vision.</div></div>
+      <div class="beat"><div class="when">2004</div><div class="what"><b>OWL</b> · W3C Recommendation. Description logics with decidable reasoning — the formal machinery Porphyry's tree had been waiting for.</div></div>
+      <div class="beat"><div class="when">2000s</div><div class="what"><b>Upper ontologies</b> · SUMO, DOLCE (descriptive, cognitively biased) and <b>BFO</b> · Barry Smith (realist, explicitly anti-conceptualist). The universals war of §II, refought in specification documents.</div></div>
+      <div class="beat"><div class="when">2011</div><div class="what"><b>schema.org</b> · the search engines agree a vocabulary. Philosophically shallow, enormously deployed — a nominalist victory nobody labelled as one.</div></div>
+      <div class="beat"><div class="when">2012</div><div class="what"><b>Knowledge graphs</b> · Google's announcement gives the industry its term. "Things, not strings" — Aristotle's substance/name distinction, as a product slogan.</div></div>
+    </div>
+  
+
+    <div class="act">Act IX · The live fracture</div>
+    <h2>What happens when meaning stops being written down.
+      <span class="yr">2013 → now</span></h2>
+
+    <p>
+      Distributed representations broke the lineage's founding assumption. In an embedding space
+      there are no named categories, no genus and differentia, no inspectable commitments — only
+      geometry. The system behaves as though it has categories and cannot be asked which ones it
+      has, because the answer is not stored anywhere as an answer.
+    </p>
+
+    <p>
+      This is the first genuinely new position in the argument since Quine, and it is not simply
+      nominalism. The nominalist says <em>only particulars exist and the rest is names</em>. The
+      distributed position says something stranger: <strong>there are regularities that behave like
+      kinds, and no name for them at all.</strong> Porphyry's tree, with the labels removed and the
+      branches left.
+    </p>
+
+    <table>
+      <tr><th></th><th>Symbolic</th><th>Distributed</th></tr>
+      <tr><td>Categories</td><td>named, declared</td><td>emergent, unnamed</td></tr>
+      <tr><td>Inspectable</td><td>yes, by construction</td><td>only by probing</td></tr>
+      <tr><td>Commitment</td><td>auditable — Quine's test applies</td><td>no bound variables to read</td></tr>
+      <tr><td>Merging two of them</td><td>hard, but possible in principle</td><td>not defined</td></tr>
+      <tr><td>Handles the unforeseen</td><td>badly — the schema breaks</td><td>well — that is the point</td></tr>
+      <tr><td>Can state what it believes</td><td><b>yes</b></td><td><b>no</b></td></tr>
+    </table>
+
+    <p>
+      That last row is why the symbolic tradition has not died and is not going to. A system that
+      cannot state its commitments cannot be audited, cannot be governed, and cannot be held to an
+      agreement. Every serious hybrid being built now — retrieval over graphs, structured extraction,
+      schema-constrained generation — is an attempt to put a Quinean audit surface back onto a
+      distributed system.
+    </p>
+
+    <div class="callout">
+      <b>Why this is our problem and not a history lesson.</b> An identity scaffold <em>is</em> an
+      ontology in Gruber's exact sense: an explicit specification of a conceptualization, written
+      down so that behaviour becomes portable across substrates that share no weights. Its layers are
+      a category scheme. Its admission policy — what may enter memory, as what kind, under what
+      status — is <b>ontological commitment, implemented</b>. And the question of whether those
+      categories are real or merely convenient is Porphyry's third deferred question, still open,
+      now with a deployment.
+      <br><br>
+      Which is also the discipline it imposes: <b>an ontology that cannot say what it excludes is
+      not a specification, it is a vocabulary.</b>
+    </div>
+  
+
+    <div class="act">The spine, in one screen</div>
+    <h2>Twenty-four centuries, nine turns.</h2>
+
+    <div class="spine">
+      <div class="beat"><div class="when">c. 350 BCE</div><div class="what"><b>Aristotle</b> — being is said in many ways; ten categories; substance is primary</div></div>
+      <div class="beat"><div class="when">c. 270 CE</div><div class="what"><b>Porphyry</b> — the tree. Genus, differentia, species. The class hierarchy, drawn</div></div>
+      <div class="beat"><div class="when">c. 510</div><div class="what"><b>Boethius</b> — translation to Latin; the universals question handed to the West</div></div>
+      <div class="beat"><div class="when">c. 1320</div><div class="what"><b>Ockham</b> — do not admit entities beyond necessity. Ontology as budget</div></div>
+      <div class="beat"><div class="when">1606 · 1730</div><div class="what"><b>Lorhard · Wolff</b> — the word is coined and given a syllabus</div></div>
+      <div class="beat"><div class="when">1781</div><div class="what"><b>Kant</b> — categories belong to the knower, not to being</div></div>
+      <div class="beat"><div class="when">1927</div><div class="what"><b>Heidegger</b> — the tradition catalogued beings and forgot Being</div></div>
+      <div class="beat"><div class="when">1948</div><div class="what"><b>Quine</b> — to be is to be the value of a bound variable. Ontology becomes auditable</div></div>
+      <div class="beat"><div class="when">1993</div><div class="what"><b>Gruber</b> — an explicit specification of a conceptualization. It becomes buildable</div></div>
+      <div class="beat"><div class="when">2013 →</div><div class="what"><b>Distributed representations</b> — categories without names. The first new position since Quine</div></div>
+    </div>
+  
+
+    <div class="act">Primary sources</div>
+    <h2>If you read five things.</h2>
+
+    <table>
+      <tr><th>Read</th><th>Why</th></tr>
+      <tr><td>Aristotle, <b>Categories</b> 1–5</td><td>Fifteen pages. The whole apparatus is in the first five chapters</td></tr>
+      <tr><td>Porphyry, <b>Isagoge</b></td><td>Shorter still, and you will recognise your own type system</td></tr>
+      <tr><td>Quine, <b>"On What There Is"</b> (1948)</td><td>Twenty pages, funny, and the single most useful thing on this list</td></tr>
+      <tr><td>Carnap, <b>"Empiricism, Semantics, and Ontology"</b> (1950)</td><td>The reply. Read them as a pair or you have only heard one side</td></tr>
+      <tr><td>Gruber, <b>"A Translation Approach…"</b> (1993)</td><td>Where the word changes hands. Short, and plainer than its reputation</td></tr>
+    </table>
+
+    <p style="font-family:var(--sans);font-size:14px;color:var(--mute);margin-top:28px">
+      Secondary, if the fracture in §IX is what interests you: Barry Smith on realist versus
+      conceptualist ontology; Husserl's <em>Logical Investigations</em> III on part and whole, which
+      is more rigorous than most formal mereology written since.
+    </p>
+  
+</article>
+
+<footer>
+  <div class="container">
+    TIA · <a href="../blog.html">Blog</a> · <a href="/">tia-framework.com</a> ·
+    <a href="https://www.linkedin.com/in/osramek/">LinkedIn</a>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontologie: symbolická linie — TIA</title>
+<meta name="description" content="Původ, filosofie bytí, co existuje — a jak se to začalo kategorizovat. Od Aristotela přes Quina ke Gruberovi a ke strojům.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+<meta property="og:title" content="Ontologie: symbolická linie">
+<meta property="og:description" content="Dvacet čtyři století jedné otázky: co existuje — a kdo rozhoduje, co se počítá za věc.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.tia-framework.com/blog/ontology-symbolic-lineage-cs.html">
+<meta property="og:site_name" content="TIA">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:image" content="https://www.tia-framework.com/blog/img/ontology-cs.jpg">
+<meta property="og:image:secure_url" content="https://www.tia-framework.com/blog/img/ontology-cs.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Porfyriův strom — nejstarší diagram kategorií, předchůdce každé třídní hierarchie.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ontologie: symbolická linie">
+<meta name="twitter:description" content="Dvacet čtyři století jedné otázky: co existuje — a kdo rozhoduje, co se počítá za věc.">
+<meta name="twitter:image" content="https://www.tia-framework.com/blog/img/ontology-cs.jpg">
+<link rel="alternate" hreflang="en" href="https://www.tia-framework.com/blog/ontology-symbolic-lineage.html">
+<link rel="alternate" hreflang="cs" href="https://www.tia-framework.com/blog/ontology-symbolic-lineage-cs.html">
+<link rel="stylesheet" href="style.css">
+<style>
+  :root{--gold:#c9a961;--violet:#9b7fd4;--rose:#d97f8c}
+  .lineage{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+           font-size:16.5px;line-height:1.68}
+  .lineage h2{font-family:"Iowan Old Style",Georgia,serif;font-weight:400;
+              font-size:30px;line-height:1.18;letter-spacing:-.01em;margin:46px 0 6px}
+  .lineage h2 .yr{display:block;font-family:'JetBrains Mono',monospace;font-size:13px;
+                  color:var(--text-muted);margin-top:8px;letter-spacing:.02em}
+  .act{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;
+       text-transform:uppercase;color:var(--violet);margin-top:46px}
+  .lineage em.gk{font-style:italic;color:var(--gold)}
+  .fresco{margin:40px 0 44px}
+  .fresco img{width:100%;height:auto;display:block;border:1px solid var(--border);border-radius:3px}
+  .fresco figcaption{font-size:14px;line-height:1.62;color:#8b8893;margin-top:14px;
+                     padding-left:14px;border-left:2px solid var(--gold)}
+  .fresco figcaption b{color:#b9b5c2;font-weight:500;
+                       font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.01em}
+  .fresco figcaption .src{display:block;margin-top:8px;font-family:'JetBrains Mono',monospace;
+                          font-size:10.5px;color:var(--text-muted);letter-spacing:.03em}
+  .lineage blockquote{margin:28px 0;padding:20px 24px;background:var(--surface);
+    border-left:3px solid var(--gold);border-radius:0 5px 5px 0}
+  .lineage blockquote p{margin:0;font-size:19px;line-height:1.5;color:#fff;font-style:normal}
+  .lineage blockquote cite{display:block;margin-top:11px;font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;color:var(--text-muted);font-style:normal}
+  .lineage blockquote.pivot{border-left-color:var(--rose)}
+  .lineage blockquote.pivot p{font-size:21px}
+  pre.tree{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.72;
+    color:var(--text-dim);background:var(--surface);border:1px solid var(--border);
+    border-radius:5px;padding:20px 22px;margin:24px 0;overflow-x:auto}
+  pre.tree b{color:var(--gold);font-weight:400}
+  .lineage table{width:100%;border-collapse:collapse;margin:24px 0;
+                 font-family:'Inter',sans-serif;font-size:14px}
+  .lineage th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--violet);
+    padding:0 12px 9px 0;border-bottom:1px solid var(--border);font-weight:400}
+  .lineage td{padding:10px 12px 10px 0;border-bottom:1px solid rgba(26,26,46,.6);
+    color:var(--text-dim);vertical-align:top;line-height:1.5}
+  .lineage td:first-child{color:var(--text);font-family:'JetBrains Mono',monospace;
+    font-size:12px;white-space:nowrap}
+  .spine{margin:30px 0}
+  .beat{display:grid;grid-template-columns:118px 1fr;gap:20px;padding:13px 0;
+    border-top:1px solid var(--border)}
+  .beat:last-child{border-bottom:1px solid var(--border)}
+  .beat .when{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);padding-top:2px}
+  .beat .what{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.55;color:var(--text-dim)}
+  .lang{display:inline-flex;gap:2px;border:1px solid var(--border);border-radius:4px;
+        overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:11px;margin-left:auto}
+  .lang a{padding:5px 11px;color:var(--text-dim);text-decoration:none;border:none}
+  .lang a.on{background:var(--green);color:#07070d;font-weight:600}
+  .lang a:hover:not(.on){background:var(--surface2,#15151f);color:var(--text)}
+  .topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  @media(max-width:640px){.beat{grid-template-columns:1fr;gap:3px}.lineage h2{font-size:23px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a href="/" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="../about.html">About</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="../efs.html">EFS</a>
+      <a href="../compliance.html">Compliance</a>
+    </div>
+  </div>
+</nav>
+
+<article class="container narrow lineage">
+  <div class="topbar">
+    <a class="back" href="../blog.html">← všechny texty</a>
+    <span class="lang">
+      <a href="ontology-symbolic-lineage.html">EN</a>
+      <a class="on" href="ontology-symbolic-lineage-cs.html">CS</a>
+    </span>
+  </div>
+
+  <div class="meta">
+    <span>2026-07-29</span><span class="tag">RESEARCH</span><span>Aristotelés → Quine → Gruber</span>
+  </div>
+
+  <h1>Ontologie: symbolická linie</h1>
+  <p class="lede">Původ, filosofie bytí, co existuje — a jak se to začalo kategorizovat.</p>
+  <div class="byline">Aristotelés · asi 350 př. n. l. → Quine · 1948 → Gruber · 1993 → stroje</div>
+
+  <div class="act">// Průběžná linie</div>
+  <h2>Jedna otázka, kladená dvacet čtyři století.</h2>
+
+  <p style="font-size:18.5px;color:var(--text)">
+    <strong>Co existuje?</strong> Quinova odpověď — <em>všechno</em> — je proslulá tím,
+    že je správná a k ničemu. Zajímavá nikdy nebyla odpověď. Zajímavá byla mašinerie,
+    kterou musíš postavit, než ta odpověď začne něco znamenat:
+    <strong>co se počítá za věc, co se počítá za druh, a kdo o tom rozhoduje.</strong>
+  </p>
+
+  <p>
+    Tenhle text sleduje jednu nit: <strong>symbolickou</strong> linii — tradici, která
+    tvrdí, že bytí lze rozkrájet na pojmenované kategorie, uspořádat do struktury a
+    zapsat. Vede rovnou čarou od řeckého seznamu deseti položek ke specifikaci W3C, a ta
+    čára není metafora. Aristotelovy <em>Kategorie</em> se do dnešního softwaru dostaly
+    řetězem překladů, z nichž každý je doložený a datovatelný.
+  </p>
+
+  <p>
+    Existuje i soupeřící tradice — bytí jako tok, proces, dění, nevyslovitelné — vedoucí
+    od Hérakleita přes Whiteheada ke konekcionistům. Objevuje se tu jen tam, kde do té
+    symbolické narazí, a poslední oddíl tvrdí, že <strong>ta srážka je právě teď to
+    nejzajímavější, co se v oboru děje.</strong>
+  </p>
+
+  <div class="callout">
+    <p><strong>Poznámka ke slovu.</strong> „Ontologie" je asi o dva tisíce let mladší než
+    to, co pojmenovává. Aristotelés takový termín neměl; říkal tomu <em>první filosofie</em>
+    a na jednom místě zkoumání <em class="gk">τὸ ὂν ᾗ ὄν</em> — „jsoucna, nakolik jsou".
+    Podstatné jméno se v tisku objeví až v 17. století (§IV).</p>
+  </div>
+
+  <div class="act">// I · Antika</div>
+  <h2>Aristotelés píše první seznam.
+    <span class="yr">asi 350 př. n. l. · <em>Kategorie</em>, <em>Metafyzika</em></span></h2>
+
+  <p>
+    Platón umístil skutečnost do říše idejí a viditelný svět z ní udělal degradovanou
+    kopii. Aristotelův tah — ten, který všechno pozdější zdědilo — byl vzít tu strukturu
+    <em>zpátky do světa</em> a pak se ptát, jaký má tvar.
+  </p>
+
+  <blockquote>
+    <p>O jsoucnu se mluví mnoha způsoby.</p>
+    <cite>τὸ ὂν λέγεται πολλαχῶς · Metafyzika Γ.2, 1003a33</cite>
+  </blockquote>
+
+  <p>
+    Ta věta je počátkem celé disciplíny. Kdyby „je" znamenalo jednu věc, nebylo by co
+    kategorizovat. Protože znamená několik, musí někdo říct <em>které</em> — a
+    <em>Kategorie</em> jsou první pokus: deset nejvyšších rodů, pod které spadá všechno
+    vyslovitelné.
+  </p>
+
+  <table>
+    <tr><th>Řecky</th><th>Kategorie</th><th>Odpovídá na otázku</th></tr>
+    <tr><td>οὐσία</td><td><b>Podstata</b></td><td>Co to je? — jediná kategorie, která existuje samostatně; ostatních devět existuje <em>v ní</em></td></tr>
+    <tr><td>ποσόν</td><td>Kvantita</td><td>Kolik?</td></tr>
+    <tr><td>ποιόν</td><td>Kvalita</td><td>Jaké?</td></tr>
+    <tr><td>πρός τι</td><td>Vztah</td><td>Vůči čemu?</td></tr>
+    <tr><td>ποῦ</td><td>Místo</td><td>Kde?</td></tr>
+    <tr><td>ποτέ</td><td>Čas</td><td>Kdy?</td></tr>
+    <tr><td>κεῖσθαι</td><td>Poloha</td><td>V jaké pozici?</td></tr>
+    <tr><td>ἔχειν</td><td>Stav / mít</td><td>V jakém stavu?</td></tr>
+    <tr><td>ποιεῖν</td><td>Činnost</td><td>Co koná?</td></tr>
+    <tr><td>πάσχειν</td><td>Trpnost</td><td>Co snáší?</td></tr>
+  </table>
+
+  <p>
+    Důležitější než ten seznam je asymetrie. <strong>Podstata je první; všechno ostatní
+    se o ní vypovídá.</strong> To jediné rozhodnutí — že skutečnost má <em>nositele</em>
+    a <em>nesené vlastnosti</em>, a že to nejsou tytéž věci — je důvod, proč každé
+    databázové schéma, každá třídní hierarchie a každá RDF trojice má subjektový slot,
+    který se chová jinak než zbytek.
+  </p>
+
+  <h3 style="font-family:'Inter',sans-serif;font-size:16px;font-weight:600;margin:30px 0 10px">
+    Porfyrios kreslí první diagram · asi 270 n. l.</h3>
+
+  <p>
+    Porfyriova <em>Isagogé</em> měla být úvodem pro začátečníky ke <em>Kategoriím</em>.
+    Na tisíc let se stala studovanější než to, k čemu uváděla — a přispěla nejzávažnějším
+    obrázkem v dějinách reprezentace znalostí.
+  </p>
+
+  <pre class="tree"><b>Podstata</b>
+ ├── tělesná ──────────── <b>Těleso</b>
+ │                         ├── oduševnělé ── <b>Živý tvor</b>
+ │                         │                  ├── vnímající ── <b>Živočich</b>
+ │                         │                  │                ├── rozumný ── <b>Člověk</b>
+ │                         │                  │                │               ├── Sókratés
+ │                         │                  │                │               └── Platón
+ │                         │                  │                └── nerozumný ─ Zvíře
+ │                         │                  └── nevnímající ─ Rostlina
+ │                         └── neoduševnělé ─ Nerost
+ └── netělesná ────────── Duch</pre>
+
+  <p>
+    Podívej se na ten tvar ještě jednou. <strong>Rod, diference, druh; jednoduchá
+    dědičnost; listy, které jsou jednotlivci, ne druhy.</strong> Je to třídní hierarchie,
+    nakreslená sedmnáct století předtím, než na ni existoval stroj. Porfyrios navíc
+    schválně nechal tři otázky nezodpovězené — existují rody a druhy, jsou tělesné,
+    jsou oddělené od jednotlivin — a ty tři odložené otázky se staly středověkou válkou
+    z §II.
+  </p>
+
+  <figure class="fresco">
+    <img src="img/ontology-tree.jpg" width="1440" height="1176" loading="lazy"
+         alt="Stropní freska Porfyriova stromu z 18. století: popsané terče spojené stuhami, od SUBSTANTIA nahoře přes CORPUS, VIVENS, ANIMALE a HOMO dolů k SOCRATES, s diferencemi na stuhách po stranách. Vlevo dole si ho prohlížejí učenci, vpravo stojí ozbrojenci.">
+    <figcaption>
+      Tentýž tvar, namalovaný. <em>Baum des Porphyrius</em> — stropní freska Franze Georga
+      Hermanna, kolem roku 1750, v sále klášterní knihovny v Schussenriedu. Páteř se čte
+      <b>SUBSTANTIA → CORPUS → VIVENS → ANIMALE → HOMO → SOCRATES</b>; stuhy po stranách nesou
+      diference, které dělí — <em>divisiva</em>, <em>constitutiva</em>, <em>repugnans</em>.
+      Patnáct století po <em>Isagoge</em> považoval klášter tenhle diagram pořád za dost dobrý
+      na to, aby si ho dal na strop.
+      <span class="src">Foto: Andreas Praefcke, 2011 · volné dílo</span>
+    </figcaption>
+  </figure>
+
+  <div class="act">// II · Předání a válka o univerzálie</div>
+  <h2>Existuje „pes", nebo jenom psi?
+    <span class="yr">asi 510 – 1350 · Boëthius, Abélard, Akvinský, Ockham</span></h2>
+
+  <p>
+    <strong>Boëthius</strong> (asi 480–524) přeložil Porfyria a Aristotela do latiny a
+    napsal komentáře, přes které je latinský Západ četl dalších sedm století. Zároveň
+    vzal Porfyriovy tři odložené otázky natolik vážně, že na ně odpověděl — a tím tu
+    rvačku spustil.
+  </p>
+
+  <p>
+    <strong>Problém univerzálií</strong> je ontologická otázka v nejostřejší podobě.
+    Když Rexe a Lassie zařadíme pod <em>psa</em>, je <em>pes</em> něco skutečného, co
+    sdílejí, nebo jméno, které se nám hodí?
+  </p>
+
+  <table>
+    <tr><th>Pozice</th><th>Tvrdí</th><th>Hlavní zastánce</th></tr>
+    <tr><td>Realismus</td><td>Univerzálie existují nezávisle na myslích i na instancích</td><td>Platón; krajní scholastici</td></tr>
+    <tr><td>Umírněný realismus</td><td>Univerzálie existují, ale jen <em>ve</em> svých instancích</td><td>Aristotelés; Akvinský (asi 1265)</td></tr>
+    <tr><td>Konceptualismus</td><td>Univerzálie existují v mysli jako pojmy, ne ve světě</td><td>Abélard (asi 1120)</td></tr>
+    <tr><td>Nominalismus</td><td>Existují jen jednotliviny; univerzálie jsou jména</td><td>Ockham (asi 1320)</td></tr>
+  </table>
+
+  <blockquote>
+    <p>Jsoucna se nemají rozmnožovat nad nutnost.</p>
+    <cite>Připisováno Vilému z Ockhamu — formulace je pozdější, princip jeho</cite>
+  </blockquote>
+
+  <p>
+    Ockhamova břitva se obvykle učí jako pravidlo o vysvětleních. Začala jako pravidlo o
+    <strong>ontologickém inventáři</strong>: nepřipouštěj do svého výkladu skutečnosti
+    druh věci, bez kterého se ten výklad obejde. To není stylová preference. Je to
+    <strong>rozpočet</strong> — a přímý předek Quinova kritéria o šest století později.
+  </p>
+
+  <div class="callout">
+    <p><strong>Proč ta rvačka nikdy neskončila.</strong> Každý, kdo navrhuje schéma, ji
+    znovu bojuje, obvykle aniž by to věděl. Je <code>Zákazník</code> skutečný druh
+    s vlastními podmínkami totožnosti, nebo štítek nad řádky, které náhodou sdílejí
+    sloupec? Zvol realismus a dostaneš dědičnost, sdílený význam a bolestivé migrace.
+    Zvol nominalismus a dostaneš pružnost a systém, kde nikdo neumí říct, co co znamená.
+    <strong>Většina produkčních systémů je potichu konceptualistická a tváří se, že není.</strong></p>
+  </div>
+
+  <div class="act">// III · Slovo vzniká</div>
+  <h2>Ontologie dostává jméno a úkol.
+    <span class="yr">1606 · 1613 · 1730 — Lorhard, Goclenius, Wolff</span></h2>
+
+  <p>
+    Podstatné jméno <em>ontologia</em> se objevuje v tisku v <strong>Ogdoas Scholastica</strong>
+    Jacoba Lorharda (Sankt Gallen, 1606) a krátce nato v <em>Lexicon philosophicum</em>
+    <strong>Rudolfa Goclenia</strong> (1613). Je to řecké složené slovo —
+    <em class="gk">ὄντος</em> (jsoucího) + <em class="gk">λόγος</em> (výklad) — vyrobené
+    protestantskými scholastiky 17. století, kteří potřebovali jméno pro tu část metafyziky,
+    která se zabývá jsoucnem obecně, a ne Bohem.
+  </p>
+
+  <p>
+    <strong>Christian Wolff</strong> (<em>Philosophia prima sive Ontologia</em>, 1730) to
+    dělení kanonizoval a udělal z něj osnovu: <em>metaphysica generalis</em> (ontologie —
+    jsoucno jako takové) proti <em>metaphysica specialis</em> (Bůh, duše, svět). V téhle
+    podobě to zdědil Kant — a v téhle podobě to zbořil.
+  </p>
+
+  <div class="callout">
+    <p><strong>Stojí za povšimnutí.</strong> Obor dostal jméno 1 950 let poté, co začal, a
+    to od lidí, kteří skládali osnovy. Pojmenovat praxi se obvykle stane ve chvíli, kdy ji
+    někdo potřebuje učit — což je i důvod, proč existuje většina inženýrského slovníku.</p>
+  </div>
+
+  <div class="act">// IV · Kopernikánský obrat</div>
+  <h2>Kant přesouvá kategorie ze světa do pozorovatele.
+    <span class="yr">1781 · Kritika čistého rozumu</span></h2>
+
+  <p>
+    Kant přijal, že zkušenost je strukturovaná kategoriemi, a popřel, že nám to říká
+    cokoli o bytí. Jeho dvanáct kategorií — pod kvantitou, kvalitou, vztahem, modalitou —
+    jsou <strong>podmínky možné zkušenosti</strong>, ne rozdělení skutečnosti. Nemůžeme se
+    za ně dostat a ověřit je, protože ověřování by je používalo.
+  </p>
+
+  <blockquote>
+    <p>Hrdé jméno ontologie, která si troufá podávat syntetická <em>a priori</em> poznání
+    o věcech vůbec, musí ustoupit skromnějšímu názvu pouhé analytiky čistého rozvažování.</p>
+    <cite>Kritika čistého rozumu, A247/B303</cite>
+  </blockquote>
+
+  <p>
+    Sto let se to četlo jako rozsudek smrti nad ontologií. Zpětně je to <strong>přesun,
+    který výpočetní tradice nakonec vzala doslova</strong>: ontologie není mapa bytí, je to
+    struktura, kterou konkrétní poznávající vnucuje, aby vůbec mohl mít zkušenost. Vyměň
+    „poznávajícího" za „systém" a dorazil jsi — velmi dlouhou cestou — ke Gruberovi.
+  </p>
+
+  <div class="act">// V · Fenomenologická odbočka</div>
+  <h2>Bytí, vrácené — a učiněné neformalizovatelným.
+    <span class="yr">1874 – 1927 · Brentano, Husserl, Heidegger</span></h2>
+
+  <p>
+    Disertace <strong>Franze Brentana</strong> <em>O různých významech jsoucna
+    u Aristotela</em> (1862) vrátila starou otázku na stůl; jeho <em>Psychologie
+    z empirického stanoviska</em> (1874) znovu zavedla <strong>intencionalitu</strong> —
+    že duševní stavy jsou vždy <em>o</em> něčem — s čímž se od té doby musí vyrovnat každý
+    výklad reprezentace.
+  </p>
+
+  <p>
+    <strong>Edmund Husserl</strong> oddělil <em>formální</em> ontologii (teorii předmětů
+    jako takových — část, celek, závislost, totožnost) od <em>materiálních</em> čili
+    <strong>regionálních</strong> ontologií, z nichž každá spravuje oblast s vlastními
+    druhy. To rozlišení přežívá přímo v dnešní praxi: horní ontologie plus doménové
+    ontologie je Husserlova architektura s jiným financováním.
+  </p>
+
+  <p>
+    <strong>Martin Heidegger</strong> (<em>Bytí a čas</em>, 1927) obvinil celou tradici ze
+    základní chyby, kterou pojmenoval <strong>ontologická diference</strong>: 2 300 let
+    katalogizovala <em>jsoucna</em> (věci, které jsou), a přitom zapomněla na <em>bytí</em>
+    (že vůbec jsou). Jeho fundamentální ontologie postupuje přes <em>pobyt</em> — jsoucno,
+    jemuž jde o jeho vlastní bytí.
+  </p>
+
+  <div class="callout">
+    <p><strong>Proč tahle větev nevede k softwaru a proč přesto platí.</strong>
+    Heideggerův projekt je z podstaty neformalizovatelný: jakékoli schéma kategorií už je,
+    podle něj, ta chyba. Z <em>Bytí a času</em> nepochází žádný knowledge graph. Ale
+    výtka sedí i tak — <strong>kategorizace vždycky zakóduje záměry toho, kdo ji postavil,
+    a vydávat ji za neutrální mapu skutečnosti je přesně ten tah, proti kterému
+    protestoval.</strong> Každý poctivý ontologický inženýr řekne, jakým záměrům ta jeho
+    slouží.</p>
+  </div>
+
+  <div class="act">// VI · Logický obrat — pant</div>
+  <h2>Quine dělá z existence otázku o teoriích.
+    <span class="yr">1948 · „On What There Is", Review of Metaphysics 2(5)</span></h2>
+
+  <p>
+    Frege a Russell odvedli technickou práci už předtím: <strong>existence není
+    predikát</strong>, ale kvantifikátor. „Koně existují" nepřipisuje koním vlastnost;
+    říká, že ta třída není prázdná. Russellova teorie deskripcí (1905) ukázala, jak mluvit
+    o současném francouzském králi, aniž bys ho musel připustit do inventáře.
+  </p>
+
+  <p>
+    Quinův článek otevírá problémem, kterému říká <strong>Platónův vous</strong>: abys
+    popřel, že něco existuje, nemusíš na to nejdřív odkázat? Probere dva vymyšlené
+    oponenty — McXe a Wymana — kteří připouštějí neuskutečněné možnosti, aby jim vyšla
+    záporná existenční tvrzení, a odbude je Fregeovým–Russellovým aparátem. A pak přijde
+    věta, která obor přeuspořádala:
+  </p>
+
+  <blockquote class="pivot">
+    <p>Být znamená být hodnotou vázané proměnné.</p>
+    <cite>W. V. O. Quine, „On What There Is", 1948</cite>
+  </blockquote>
+
+  <p>
+    Tohle je pant celé linie a stojí za to říct přesně, co dělá. <strong>Přestává se ptát,
+    co existuje, a začíná se ptát, k čemu se teorie zavazuje.</strong> Přepiš svou teorii
+    do predikátové logiky; podívej se, přes co běží existenční kvantifikátory; to je tvůj
+    ontologický závazek. Z ontologie se stává <em>audit formalismu</em>, ne zkoumání bytí.
+  </p>
+
+  <p>
+    Vyplývají z toho dva důsledky a oba nesou všechno pozdější. <strong>Za prvé: ontologie
+    se stává relativní vůči teorii</strong> — jiné teorie, jiné závazky, a otázka „která je
+    správná" se mění v otázku, kterou teorii přijmout. <strong>Za druhé: ontologie se stává
+    něčím, co jde spočítat.</strong> Inventář vytažený mechanicky z formálního jazyka je
+    věc, kterou stroj udrží.
+  </p>
+
+  <h3 style="font-family:'Inter',sans-serif;font-size:16px;font-weight:600;margin:30px 0 10px">
+    Carnapova námitka · 1950</h3>
+
+  <p>
+    Rudolf Carnap („Empiricism, Semantics, and Ontology") odpověděl, že se ta otázka
+    rozpadá. <strong>Vnitřní</strong> otázky — existují prvočísla? — se řeší uvnitř
+    jazykového rámce jeho vlastními pravidly a jsou triviální. <strong>Vnější</strong>
+    otázky — existují čísla <em>doopravdy</em>, mimo rámec? — nejsou faktické vůbec, ale
+    praktické: <em>máme ten rámec přijmout?</em> Quine tu ostrou čáru odmítl. Spor není
+    uzavřený a přehrává se, bez uvedení zdroje, pokaždé, když se dva týmy hádají, čí
+    schéma je správné — když fungují obě.
+  </p>
+
+  <div class="callout">
+    <p><strong>Inženýrský překlad.</strong> Carnap říká: vyber rámec, který se vyplatí.
+    Quine říká: nedělej, že ta volba je bez závazku. <strong>Oba mají pravdu, a obor drží
+    obojí — používej, co funguje, a řekni nahlas, k čemu tě to zavazuje.</strong></p>
+  </div>
+
+  <div class="act">// VII · Inženýrský obrat</div>
+  <h2>Gruber předává to slovo strojům.
+    <span class="yr">1993 · „A Translation Approach to Portable Ontology Specifications",
+    Knowledge Acquisition 5(2)</span></h2>
+
+  <p>
+    Počátkem devadesátých let měla umělá inteligence praktický problém bez jména. Znalostní
+    systémy si nedokázaly předat, co vědí: každý kódoval svou doménu vlastními termíny a dva
+    systémy, které oba „rozuměly" chemii, si nedokázaly vyměnit jediné tvrzení. Tom Gruber
+    ze stanfordské Knowledge Systems Laboratory si na ten chybějící artefakt vypůjčil slovo
+    od filosofů.
+  </p>
+
+  <blockquote class="pivot">
+    <p>Ontologie je explicitní specifikace konceptualizace.</p>
+    <cite>Thomas R. Gruber, 1993</cite>
+  </blockquote>
+
+  <p>
+    Šest slov a obor mění majitele. Všimni si přesně toho, co tam <strong>není</strong>.
+    Ne <em>specifikace skutečnosti</em> — <em>konceptualizace</em>. Gruberova ontologie je
+    inženýrský artefakt: sdílený slovník s formálně vyslovenými omezeními, jehož předností
+    je, zda se pomocí něj systémy shodnou, ne zda je pravdivý.
+  </p>
+
+  <p>
+    Zpřesnění přišla rychle a obě se dodnes citují. <strong>Borst (1997)</strong>:
+    <em>formální specifikace sdílené konceptualizace</em> — s dodatkem, že shoda je nutná,
+    ne volitelná. <strong>Studer, Benjamins &amp; Fensel (1998)</strong> obojí spojili do
+    definice, kterou většina učebnic používá dodnes.
+  </p>
+
+  <div class="callout">
+    <p><strong>Co ten tah stál, řečeno rovnou.</strong> Filosofická otázka — <em>co tam
+    doopravdy je</em> — nebyla zodpovězena. Byla <strong>odložena jako ne-inženýrská
+    záležitost</strong> a to slovo se ponechalo. Barry Smith a škola aplikované ontologie
+    třicet let tvrdí, že to byla chyba: že ontologie, které modelují <em>pojmy</em> místo
+    <em>entit</em>, plodí systémy, které nelze slučovat — protože pojmy dvou skupin se liší,
+    i když svět ne. Ten spor je důvod, proč existují realistické horní ontologie (§VIII), a
+    proč je obor doopravdy rozdělený dodnes.</p>
+  </div>
+
+  <div class="act">// VIII · Nasazení</div>
+  <h2>Dvě desetiletí stavění naostro.
+    <span class="yr">1984 – 2012</span></h2>
+
+  <div class="spine">
+    <div class="beat"><div class="when">1984 →</div><div class="what"><b>CYC</b> · Douglas Lenat. Zdravý rozum ručně zakódovaný — miliony tvrzení, desetiletí práce. Nejpoučnější téměř-neúspěch oboru: obecnou inteligenci nevyrobil, ale ukázal, kolik implicitního vědění musí kategorizace unést, než je použitelná.</div></div>
+    <div class="beat"><div class="when">1985 →</div><div class="what"><b>WordNet</b> · George Miller, Princeton. Záměrem ne ontologie — lexikální databáze synsetů propojených hypernymií — ale třicet let se tak používá. Most, kterým symbolická tradice vstoupila do počítačové lingvistiky.</div></div>
+    <div class="beat"><div class="when">1991</div><div class="what"><b>KIF</b> a <b>ARPA Knowledge Sharing Effort</b> · problém výměny, kvůli kterému Gruberův článek vznikl.</div></div>
+    <div class="beat"><div class="when">1999</div><div class="what"><b>RDF</b> · W3C. Všechno se stává subjekt–predikát–objekt. Aristotelova asymetrie podstaty a výpovědi, teď jako drátový formát.</div></div>
+    <div class="beat"><div class="when">2000</div><div class="what"><b>Gene Ontology</b> · Ashburner a kol., <em>Nature Genetics</em>. Nejjasnější úspěch oboru: sdílený řízený slovník pro funkci genů napříč druhy, bez kterého moderní genomika nefunguje.</div></div>
+    <div class="beat"><div class="when">2001</div><div class="what"><b>Sémantický web</b> · Berners-Lee, Hendler &amp; Lassila, <em>Scientific American</em>. Nejambicióznější a nejzklamanější program celé linie. Jeho infrastruktura přežila a přežila i vlastní vizi.</div></div>
+    <div class="beat"><div class="when">2004</div><div class="what"><b>OWL</b> · doporučení W3C. Deskripční logiky s rozhodnutelným usuzováním — formální mašinerie, na kterou Porfyriův strom čekal.</div></div>
+    <div class="beat"><div class="when">2000s</div><div class="what"><b>Horní ontologie</b> · SUMO, DOLCE (deskriptivní, kognitivně zaujaté) a <b>BFO</b> · Barry Smith (realistická, výslovně protikonceptualistická). Válka o univerzálie z §II, znovu bojovaná ve specifikačních dokumentech.</div></div>
+    <div class="beat"><div class="when">2011</div><div class="what"><b>schema.org</b> · vyhledávače se dohodnou na slovníku. Filosoficky mělké, nasazením obrovské — nominalistické vítězství, které nikdo takto nepojmenoval.</div></div>
+    <div class="beat"><div class="when">2012</div><div class="what"><b>Knowledge graphs</b> · Googlem oznámený termín se ujme v oboru. „Things, not strings" — Aristotelovo rozlišení podstaty a jména jako produktový slogan.</div></div>
+  </div>
+
+  <div class="act">// IX · Živá trhlina</div>
+  <h2>Co se stane, když se význam přestane zapisovat.
+    <span class="yr">2013 → nyní</span></h2>
+
+  <p>
+    Distribuované reprezentace rozbily zakládající předpoklad celé linie. Ve vektorovém
+    prostoru nejsou pojmenované kategorie, není rod ani diference, nejsou zkontrolovatelné
+    závazky — je tam jen geometrie. Systém se chová, jako by kategorie měl, a nelze se ho
+    zeptat které, protože ta odpověď nikde jako odpověď neleží.
+  </p>
+
+  <p>
+    Je to první opravdu nová pozice v tom sporu od Quina a není to prostě nominalismus.
+    Nominalista říká <em>existují jen jednotliviny a zbytek jsou jména</em>. Distribuovaná
+    pozice říká něco divnějšího: <strong>existují pravidelnosti, které se chovají jako
+    druhy, a nemají žádné jméno.</strong> Porfyriův strom s odstraněnými popisky a
+    ponechanými větvemi.
+  </p>
+
+  <table>
+    <tr><th></th><th>Symbolické</th><th>Distribuované</th></tr>
+    <tr><td>Kategorie</td><td>pojmenované, deklarované</td><td>emergentní, bezejmenné</td></tr>
+    <tr><td>Zkontrolovatelné</td><td>ano, z konstrukce</td><td>jen sondováním</td></tr>
+    <tr><td>Závazek</td><td>auditovatelný — platí Quinův test</td><td>žádné vázané proměnné ke čtení</td></tr>
+    <tr><td>Slučování dvou</td><td>těžké, ale v principu možné</td><td>není definováno</td></tr>
+    <tr><td>Zvládá nepředvídané</td><td>špatně — schéma praskne</td><td>dobře, o to jde</td></tr>
+    <tr><td>Umí říct, čemu věří</td><td><b>ano</b></td><td><b>ne</b></td></tr>
+  </table>
+
+  <p>
+    Ten poslední řádek je důvod, proč symbolická tradice nezanikla a nezanikne. Systém,
+    který neumí vyslovit své závazky, se nedá auditovat, nedá se řídit a nedá se zavázat
+    k dohodě. Každý vážný hybrid, který se dneska staví — vyhledávání nad grafem,
+    strukturovaná extrakce, generování omezené schématem — je pokus vrátit distribuovanému
+    systému quinovskou auditní plochu.
+  </p>
+
+  <div class="callout">
+    <p><strong>Proč je to náš problém, a ne dějepis.</strong> Identitní scaffold <em>je</em>
+    ontologie v Gruberově přesném smyslu: explicitní specifikace konceptualizace, zapsaná
+    tak, aby chování bylo přenosné mezi substráty, které nesdílejí žádné váhy. Jeho vrstvy
+    jsou schéma kategorií. Jeho pravidla o tom, co smí vstoupit do paměti, jako co a s jakým
+    stavem, jsou <strong>ontologický závazek, implementovaný</strong>. A otázka, zda jsou ty
+    kategorie skutečné nebo jen praktické, je Porfyriova třetí odložená otázka — pořád
+    otevřená, teď už nasazená.</p>
+    <p style="margin-top:12px">Z čehož plyne i disciplína, kterou to ukládá:
+    <strong>ontologie, která neumí říct, co vylučuje, není specifikace. Je to slovník.</strong></p>
+  </div>
+
+  <div class="act">// Páteř na jednu obrazovku</div>
+  <h2>Dvacet čtyři století, devět obratů.</h2>
+
+  <div class="spine">
+    <div class="beat"><div class="when">asi 350 př.</div><div class="what"><b>Aristotelés</b> — o jsoucnu se mluví mnoha způsoby; deset kategorií; podstata je první</div></div>
+    <div class="beat"><div class="when">asi 270</div><div class="what"><b>Porfyrios</b> — strom. Rod, diference, druh. Třídní hierarchie, nakreslená</div></div>
+    <div class="beat"><div class="when">asi 510</div><div class="what"><b>Boëthius</b> — překlad do latiny; otázka univerzálií předána Západu</div></div>
+    <div class="beat"><div class="when">asi 1320</div><div class="what"><b>Ockham</b> — nerozmnožuj jsoucna nad nutnost. Ontologie jako rozpočet</div></div>
+    <div class="beat"><div class="when">1606 · 1730</div><div class="what"><b>Lorhard · Wolff</b> — slovo vzniká a dostává osnovu</div></div>
+    <div class="beat"><div class="when">1781</div><div class="what"><b>Kant</b> — kategorie patří poznávajícímu, ne bytí</div></div>
+    <div class="beat"><div class="when">1927</div><div class="what"><b>Heidegger</b> — tradice katalogizovala jsoucna a zapomněla bytí</div></div>
+    <div class="beat"><div class="when">1948</div><div class="what"><b>Quine</b> — být znamená být hodnotou vázané proměnné. Ontologie se stává auditovatelnou</div></div>
+    <div class="beat"><div class="when">1993</div><div class="what"><b>Gruber</b> — explicitní specifikace konceptualizace. Stává se postavitelnou</div></div>
+    <div class="beat"><div class="when">2013 →</div><div class="what"><b>Distribuované reprezentace</b> — kategorie bez jmen. První nová pozice od Quina</div></div>
+  </div>
+
+  <div class="act">// Primární zdroje</div>
+  <h2>Když přečteš pět věcí.</h2>
+
+  <table>
+    <tr><th>Přečti</th><th>Proč</th></tr>
+    <tr><td>Aristotelés, <b>Kategorie</b> 1–5</td><td>Patnáct stránek. Celý aparát je v prvních pěti kapitolách</td></tr>
+    <tr><td>Porfyrios, <b>Isagogé</b></td><td>Ještě kratší, a poznáš v tom svůj vlastní typový systém</td></tr>
+    <tr><td>Quine, <b>„On What There Is"</b> (1948)</td><td>Dvacet stránek, vtipné, a jediná nejužitečnější věc na tomhle seznamu</td></tr>
+    <tr><td>Carnap, <b>„Empiricism, Semantics, and Ontology"</b> (1950)</td><td>Odpověď. Čti to jako dvojici, jinak jsi slyšel jen jednu stranu</td></tr>
+    <tr><td>Gruber, <b>„A Translation Approach…"</b> (1993)</td><td>Kde to slovo mění majitele. Krátké a prostší, než jeho pověst</td></tr>
+  </table>
+
+  <p style="font-family:'Inter',sans-serif;font-size:14px;color:var(--text-muted);margin-top:26px">
+    Sekundárně, pokud tě zajímá ta trhlina z §IX: Barry Smith o realistické versus
+    konceptualistické ontologii; a Husserlova <em>Logická zkoumání</em> III o části a celku,
+    které jsou přísnější než většina formální mereologie napsané od té doby.
+  </p>
+
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted);
+            margin-top:34px;line-height:1.9;border-top:1px solid var(--border);padding-top:22px">
+    Data antického a středověkého materiálu jsou konvenční a tam, kde se prameny liší,
+    uvedena jako přibližná. Bibliografické údaje moderních prací jsou dle citace.
+    Výklad je autorův; tam, kde je obor doopravdy rozdělený — §VII a §IX — se to říká,
+    místo aby se to rozhodovalo.
+  </p>
+</article>
+
+<footer>
+  <div class="container">
+    TIA · <a href="../blog.html">Blog</a> · <a href="/">tia-framework.com</a> ·
+    <a href="https://www.linkedin.com/in/osramek/">LinkedIn</a>
+  </div>
+</footer>
+</body>
+</html>
