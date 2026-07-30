@@ -383,6 +383,14 @@
     .arch-label { width: auto; }
     .arch-status { margin-left: 0; margin-top: 4px; }
   }
+
+/* Footer site map (D135). Everything that left the top navigation lives here, on
+   every page, so tidying the nav could not make anything unreachable. */
+.footer-links { margin: 18px 0 6px; display: flex; flex-wrap: wrap; gap: 6px 18px;
+  justify-content: center; font: 400 13px/1.6 "JetBrains Mono", monospace; }
+.footer-links a { color: #666; text-decoration: none;
+  border-bottom: 1px solid transparent; }
+.footer-links a:hover { color: #eee; border-bottom-color: #00ff88; }
 </style>
 </head>
 <body>
@@ -397,13 +405,9 @@
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
       <a href="blog.html">Blog</a>
-      <a href="lore.html">Lore</a>
-      <a href="demo.html">Live Demo</a>
-      <a href="threatmap.html">Threat Map</a>
       <a href="efs.html">EFS</a>
-      <a href="mirror.html">THE MIRROR</a>
       <a href="compliance.html" class="active">Compliance</a>
-      <a href="index.html#contact" class="nav-cta">Contact</a>
+      <a href="/#contact" class="nav-cta">Contact</a>
     </div>
   </div>
 </nav>
@@ -588,7 +592,18 @@
 
 <footer>
   <div class="container">
-    <p>TIA s.r.o. — Prague, Czech Republic — <a href="efs.html">EFS Framework</a> &middot; <a href="cia2.html">CIA²</a>
+    <div class="footer-links">
+      <a href="cia2.html">CIA&sup2;</a>
+      <a href="efs.html">EFS</a>
+      <a href="mirror.html">The Mirror</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="threatmap.html">Threat Map</a>
+      <a href="memento.html">Memento</a>
+      <a href="lore.html">Lore</a>
+      <a href="blog.html">Blog</a>
+    </div>
+
+    <p>TIA — Prague, Czech Republic — <a href="efs.html">EFS Framework</a> &middot; <a href="cia2.html">CIA²</a>
       <a href="compliance.html">Compliance</a></p>
   </div>
 </footer>

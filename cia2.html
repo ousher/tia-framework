@@ -513,6 +513,14 @@
     .arch-pillars { grid-template-columns: 1fr; }
     .hero h1 { font-size: 36px; }
   }
+
+/* Footer site map (D135). Everything that left the top navigation lives here, on
+   every page, so tidying the nav could not make anything unreachable. */
+.footer-links { margin: 18px 0 6px; display: flex; flex-wrap: wrap; gap: 6px 18px;
+  justify-content: center; font: 400 13px/1.6 "JetBrains Mono", monospace; }
+.footer-links a { color: #666; text-decoration: none;
+  border-bottom: 1px solid transparent; }
+.footer-links a:hover { color: #eee; border-bottom-color: #00ff88; }
 </style>
 </head>
 <body>
@@ -525,12 +533,9 @@
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
       <a href="blog.html">Blog</a>
-      <a href="lore.html">Lore</a>
-      <a href="demo.html">Live Demo</a>
       <a href="efs.html">EFS</a>
-      <a href="cia2.html" class="active">CIA²</a>
       <a href="compliance.html">Compliance</a>
-      <a href="index.html#contact" class="nav-cta">Contact</a>
+      <a href="/#contact" class="nav-cta">Contact</a>
     </div>
     <div class="hamburger" onclick="this.classList.toggle('active');this.parentElement.querySelector('.nav-links').classList.toggle('open')">
       <span></span><span></span><span></span>
@@ -767,6 +772,16 @@
 <!-- FOOTER -->
 <footer>
   <div class="container">
+        <div class="footer-links">
+      <a href="cia2.html">CIA&sup2;</a>
+      <a href="efs.html">EFS</a>
+      <a href="mirror.html">The Mirror</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="threatmap.html">Threat Map</a>
+      <a href="memento.html">Memento</a>
+      <a href="lore.html">Lore</a>
+      <a href="blog.html">Blog</a>
+    </div>
     <div class="footer-logo">TIA</div>
     <div class="footer-text">Autonomous AI Security Operations &mdash; Prague, Czech Republic</div>
     <div class="footer-text" style="font-size: 11px;">Authors: Ondrej Sramek & The TIA Council &mdash; April 2026</div>

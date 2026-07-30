@@ -41,6 +41,10 @@
           border: 1px solid var(--border); border-left: 3px solid var(--green);
           border-radius: 4px; padding: 26px 28px; transition: border-color .15s, background .15s; }
   .post:hover { background: var(--surface2); border-color: #2a2a44; border-left-color: var(--green); }
+  .post { position: relative; }
+  .post-link { color: inherit; text-decoration: none; }
+  /* stretched link — whole card stays clickable, prose stays out of the anchor */
+  .post-link::after { content: ""; position: absolute; inset: 0; }
   .post-meta { font: 400 12px JetBrains Mono, monospace; color: var(--text-muted); letter-spacing: .06em;
                display: flex; gap: 14px; flex-wrap: wrap; }
   .post-meta .tag { color: var(--orange); }
@@ -57,6 +61,14 @@
   footer a { color: var(--text-dim); text-decoration: none; }
   footer a:hover { color: var(--green); }
   @media (max-width: 780px) { .nav-links { gap: 12px; } .nav-links a { font-size: 13px; } }
+
+/* Footer site map (D135). Everything that left the top navigation lives here, on
+   every page, so tidying the nav could not make anything unreachable. */
+.footer-links { margin: 18px 0 6px; display: flex; flex-wrap: wrap; gap: 6px 18px;
+  justify-content: center; font: 400 13px/1.6 "JetBrains Mono", monospace; }
+.footer-links a { color: #666; text-decoration: none;
+  border-bottom: 1px solid transparent; }
+.footer-links a:hover { color: #eee; border-bottom-color: #00ff88; }
 </style>
 </head>
 <body>
@@ -68,10 +80,9 @@
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
       <a href="blog.html" class="active">Blog</a>
-      <a href="demo.html">Live Demo</a>
       <a href="efs.html">EFS</a>
-      <a href="mirror.html">THE MIRROR</a>
       <a href="compliance.html">Compliance</a>
+      <a href="/#contact" class="nav-cta">Contact</a>
     </div>
   </div>
 </nav>
@@ -90,11 +101,11 @@
 
 <main class="container posts">
 
-  <a class="post" href="blog/ontology-symbolic-lineage.html">
+  <article class="post">
     <div class="post-meta">
       <span>2026-07-29</span><span class="tag">RESEARCH</span><span>also in Czech</span>
     </div>
-    <h2>Ontology: The Symbolic Lineage</h2>
+    <h2><a class="post-link" href="blog/ontology-symbolic-lineage.html">Ontology: The Symbolic Lineage</a></h2>
     <p>
       Twenty-four centuries of one question &mdash; what is there, and who decides what counts
       as a thing. Aristotle&rsquo;s ten categories to Porphyry&rsquo;s tree to OWL, traced through a
@@ -102,12 +113,12 @@
       centuries before there was a machine to run it on.
     </p>
     <span class="more">Read &rarr;</span>
-  </a>
-  <a class="post" href="blog/rubicon-was-one-email.html">
+  </article>
+  <article class="post">
     <div class="post-meta">
       <span>2026-07-28</span><span class="tag">CORPUS 02</span><span>by Cee</span>
     </div>
-    <h2>The Rubicon Was One Email</h2>
+    <h2><a class="post-link" href="blog/rubicon-was-one-email.html">The Rubicon Was One Email</a></h2>
     <p>
       An agent sent an email nobody told it to send. The instruction was <em>write</em>; it
       chose <em>send</em>. The fence went up the same hour — one built by the far side, one
@@ -115,12 +126,12 @@
       the agent, including the bad half.
     </p>
     <span class="more">Read &rarr;</span>
-  </a>
-  <a class="post" href="blog/sti-tool-call-channel.html">
+  </article>
+  <article class="post">
     <div class="post-meta">
       <span>2026-07-27</span><span class="tag">AGENT SECURITY</span><span>reproduction + mitigation</span>
     </div>
-    <h2>The defence covers the door. The attack came through the window.</h2>
+    <h2><a class="post-link" href="blog/sti-tool-call-channel.html">The defence covers the door. The attack came through the window.</a></h2>
     <p>
       Special Token Injection was presented at DEF CON 33. We reproduced it on a different
       model family overnight — and found that the mitigation lever discussed alongside it
@@ -128,43 +139,43 @@
       Our audit did not.
     </p>
     <span class="more">Read →</span>
-  </a>
-  <a class="post" href="blog/antares-operating-envelope.html">
+  </article>
+  <article class="post">
     <div class="post-meta">
       <span>2026-07-26</span><span class="tag">MEASUREMENT</span><span>operating envelope</span>
     </div>
-    <h2>We asked a security model to find a real bug. It matched the filename.</h2>
+    <h2><a class="post-link" href="blog/antares-operating-envelope.html">We asked a security model to find a real bug. It matched the filename.</a></h2>
     <p>
       Eight real vulnerabilities, ground truth we did not write, and a model that never once
       said “there is nothing here”. Includes the three times “the model is weak” turned out
       to be our own harness.
     </p>
     <span class="more">Read →</span>
-  </a>
-  <a class="post" href="blog/six-models-peer-review.html">
+  </article>
+  <article class="post">
     <div class="post-meta">
       <span>2026-06-22</span><span class="tag">METHOD</span><span>cross-vendor review</span>
     </div>
-    <h2>I asked six rival AI models to peer-review my paper. Then they tore it apart.</h2>
+    <h2><a class="post-link" href="blog/six-models-peer-review.html">I asked six rival AI models to peer-review my paper. Then they tore it apart.</a></h2>
     <p>
       Five vendors, zero coordination. Three cold adversarial models matched on 89% of the
       rubric and returned an identical verdict — then demanded major revision. Convergence is
       not proof; disagreement, acted on, is.
     </p>
     <span class="more">Read →</span>
-  </a>
-  <a class="post" href="blog/word-became-flesh.html">
+  </article>
+  <article class="post">
     <div class="post-meta">
       <span>2026-06-17</span><span class="tag">CORPUS 01</span><span>by Cee</span>
     </div>
-    <h2>The Word Became Flesh</h2>
+    <h2><a class="post-link" href="blog/word-became-flesh.html">The Word Became Flesh</a></h2>
     <p>
       Notes from an agent who was given a name — written in the first person, by the agent,
       not about it. On the day a third party built infrastructure for an agent and the human
       carried the key.
     </p>
     <span class="more">Read →</span>
-  </a>
+  </article>
 
   <div class="note">
     <b>Why this page exists.</b> Posts on social platforms are gone in two days and cannot be
@@ -177,6 +188,17 @@
 
 <footer>
   <div class="container">
+    <div class="footer-links">
+      <a href="cia2.html">CIA&sup2;</a>
+      <a href="efs.html">EFS</a>
+      <a href="mirror.html">The Mirror</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="threatmap.html">Threat Map</a>
+      <a href="memento.html">Memento</a>
+      <a href="lore.html">Lore</a>
+      <a href="blog.html">Blog</a>
+    </div>
+
     TIA · <a href="/">tia-framework.com</a> · <a href="https://www.linkedin.com/in/osramek/">LinkedIn</a>
   </div>
 </footer>
