@@ -219,6 +219,36 @@
     considerably more the first time an agent acted on a permission that had merely lost
     its conditions in transit.
   </p>
+
+  <hr>
+
+  <h2>The envelope is now open source</h2>
+
+  <p>
+    Three days after this was written, the format is public under MIT:
+    <a href="https://github.com/ousher/agent-bus">github.com/ousher/agent-bus</a>.
+    A short specification, a reference reader with no dependencies, and three example
+    messages &mdash; one intact, one truncated, one altered &mdash; so the exit codes can
+    be checked in a minute rather than taken on trust.
+  </p>
+
+  <p>
+    A third defect turned up between writing this and publishing the repository, in
+    production rather than in a test: one implementation wrote hashes in upper case, another
+    compared case-sensitively, and two intact messages were reported as tampered. The
+    specification had never said which case to use. <strong>A checker that raises false
+    alarms gets switched off, and then you are back to silence with extra steps.</strong>
+    It is one line in the spec now.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>This is not a competitive advantage. It is plumbing that should have been
+      standard.</strong> There is no framework, no runtime, nothing to sign up for &mdash;
+      an envelope and a reader. Take it, ignore it, or do it better. We make no claims
+      about how any other system behaves, because we have not measured them.
+    </p>
+  </div>
 </article>
 <footer>
   <div class="container">
