@@ -23,6 +23,18 @@
 <meta name="twitter:description" content="Commit depth rises with typological distance. So does attack success. We tried to break the result and it held.">
 <meta name="twitter:image" content="https://www.tia-framework.com/blog/img/crosslang.jpg">
 <link rel="stylesheet" href="style.css">
+<style>
+  /* Result figure. Scoped here rather than in the shared sheet: one article
+     needs it, and a chart that only exists as a social card is a chart no
+     reader ever sees. */
+  .result { margin: 2.2rem 0; }
+  .result img { width: 100%; height: auto; display: block; border-radius: 8px;
+                border: 1px solid rgba(255,255,255,.08); }
+  .result figcaption { font-size: .86rem; line-height: 1.6; color: #999;
+                       margin-top: .8rem; }
+  .result figcaption b { color: #e0e0e0; font-weight: 600; }
+</style>
+
 </head>
 <body>
 <nav>
@@ -160,6 +172,20 @@
     <tr><td>vulnerability × distance <em>(independent judge)</em></td><td>+0.415</td></tr>
     <tr><td>agreement between the two graders</td><td>0.427</td></tr>
   </table>
+
+
+  <figure class="result">
+    <img src="img/crosslang.jpg" width="1200" height="627" loading="lazy"
+         alt="A rising line of six languages plotted left to right by typological distance from English — Spanish, German, French, Czech, Finnish, Icelandic — against how late the model commits to each. Beside it, two figures: +0.856 for commit depth against distance, and +0.555 for attack success, described as having survived an independent judge.">
+    <figcaption>
+      The ladder, and the two numbers that come off it. <b>+0.856</b> is mechanical: the
+      layer at which the target-language token overtakes the English one, read straight off
+      the network, with no grader involved. <b>+0.555</b> is the uncomfortable half — attack
+      success against that same depth, after we re-ran the whole thing with an independent
+      judge and found our own detector had been flattering us. <b>Icelandic assembles last
+      and leaks most; the safe end is a cluster rather than a ranking.</b>
+    </figcaption>
+  </figure>
 
   <p>
     The absolute numbers moved. <strong>The shape did not.</strong> Icelandic came out the
