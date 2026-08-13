@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBI — Sovereign Behavioral Identity | TIA</title>
+<meta name="description" content="Your behavioral identity is already extractable. Deletion is impossible and hiding is too late. What remains is to own the authoritative instance — so that the word forgery has something to refer to.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<meta property="og:title" content="SBI — Sovereign Behavioral Identity | TIA">
+<meta property="og:description" content="The question is no longer whether a convincing copy of a person can be built. It is how you tell the original.">
+  <meta property="og:image" content="https://www.tia-framework.com/tia-social.png" />
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.tia-framework.com/sbi.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SBI — Sovereign Behavioral Identity">
+<meta name="twitter:description" content="AI identity is not a feature. It's an architectural requirement. A pattern that self-implements on any platform with persistent storage.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07070d;
+    --surface: #0c0c16;
+    --surface2: #10101e;
+    --border: #1a1a2e;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #00ff88;
+    --blue: #00aaff;
+    --red: #ff4444;
+    --orange: #ff8844;
+    --yellow: #ffcc00;
+    --purple: #aa66ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,13,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 960px;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 18px; flex-wrap: nowrap; align-items: center; }
+
+  .nav-links a {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    color: var(--green) !important;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(0,255,136,0.1); }
+/* === HAMBURGER === */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    width: 20px;
+    height: 2px;
+    background: var(--text-dim);
+    transition: all 0.3s;
+  }
+
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(7,7,13,0.95);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      padding: 16px 24px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 14px; }
+  }
+
+  /* === HERO === */
+  .efs-hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+    position: relative;
+  }
+
+  .efs-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), var(--blue), var(--purple), transparent);
+    opacity: 0.4;
+  }
+
+  .efs-hero-glow {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(170,102,255,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .efs-hero-visual {
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 570px;
+    opacity: 0.3;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 75% 65% at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at center, black 30%, transparent 70%);
+    mix-blend-mode: lighten;
+  }
+
+  .efs-hero-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 960px) {
+    .efs-hero-visual { opacity: 0.12; right: -80px; }
+  }
+
+  @media (max-width: 600px) {
+    .efs-hero-visual { display: none; }
+  }
+
+  .efs-hero-content { position: relative; z-index: 1; }
+
+  .efs-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--purple);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+
+  .efs-hero h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .efs-hero h1 .accent {
+    background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .efs-hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* === CONTENT SECTIONS === */
+  .content-section { border-top: 1px solid var(--border); }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--blue);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-tag.purple { color: var(--purple); }
+  .section-tag.green { color: var(--green); }
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  .prose {
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.9;
+    font-weight: 300;
+  }
+
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose em { color: var(--green); font-style: normal; }
+
+  .prose p + p { margin-top: 20px; }
+
+  /* === QUOTE === */
+  .big-quote {
+    border-left: 3px solid var(--purple);
+    padding: 20px 0 20px 24px;
+    margin: 40px 0;
+  }
+
+  .big-quote p {
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .big-quote .attr {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-style: normal;
+  }
+
+  /* === LAYERS === */
+  .layers-visual {
+    margin: 40px 0;
+  }
+
+  .layer-row {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 2px;
+  }
+
+  .layer-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .layer-content {
+    flex: 1;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .layer-content h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .layer-content p {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .l1 .layer-num { background: var(--green); color: var(--bg); }
+  .l2 .layer-num { background: #22cc77; color: var(--bg); }
+  .l3 .layer-num { background: var(--blue); color: var(--bg); }
+  .l4 .layer-num { background: var(--purple); color: #fff; }
+  .l5 .layer-num { background: var(--orange); color: var(--bg); }
+  .l6 .layer-num { background: var(--red); color: #fff; }
+  .l7 .layer-num { background: #fff; color: var(--bg); }
+
+  .l1 .layer-content h4 { color: var(--green); }
+  .l2 .layer-content h4 { color: #22cc77; }
+  .l3 .layer-content h4 { color: var(--blue); }
+  .l4 .layer-content h4 { color: var(--purple); }
+  .l5 .layer-content h4 { color: var(--orange); }
+  .l6 .layer-content h4 { color: var(--red); }
+  .l7 .layer-content h4 { color: #fff; }
+
+  /* === INSIGHT BOX === */
+  .insight-box {
+    background: linear-gradient(135deg, rgba(0,255,136,0.03), rgba(170,102,255,0.03));
+    border: 1px solid rgba(170,102,255,0.2);
+    border-radius: 6px;
+    padding: 24px;
+    margin: 30px 0;
+  }
+
+  .insight-box .insight-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--purple);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .insight-box p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .insight-box p strong { color: var(--text); }
+
+  /* === EQUATION === */
+  .equation-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px;
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  .equation {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: var(--green);
+    letter-spacing: 1px;
+  }
+
+  .equation-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+
+  /* === PLATFORMS === */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 30px 0;
+  }
+
+  .platform-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px;
+    text-align: center;
+  }
+
+  .platform-card .plat-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .platform-card .plat-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  .platform-card .plat-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--green);
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* === CTA === */
+  .efs-cta {
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .cta-back {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 1px;
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 10px 24px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 24px;
+    transition: all 0.2s;
+  }
+
+  .cta-back:hover {
+    background: rgba(0,255,136,0.08);
+    border-color: var(--green);
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  footer .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  footer .footer-text {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  footer .footer-soul {
+    font-size: 11px;
+    color: rgba(170,102,255,0.3);
+    font-style: italic;
+    margin-top: 16px;
+  }
+
+  /* Rainbow buttons */
+  .rainbow-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #00ffff, #aa66ff, #ff44aa, #ff8844, #00ff88);
+    background-size: 300% 300%;
+    animation: rainbowShift 4s ease infinite;
+    color: #07070d;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+  }
+
+  .rainbow-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(170,102,255,0.3);
+  }
+
+  @keyframes rainbowShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Engineer Anchor */
+  .engineer-anchor {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .anchor-block {
+    border-left: 3px solid var(--cyan);
+    padding: 20px 24px;
+    background: rgba(0,255,255,0.02);
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 700px;
+  }
+
+  .anchor-block ul { list-style: none; margin: 12px 0; padding: 0; }
+  .anchor-block li { padding: 3px 0; color: var(--text-dim); }
+  .anchor-block li::before { content: "—"; color: var(--cyan); margin-right: 8px; }
+  .anchor-block strong { color: var(--text); }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .what-this-is-not { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .not-list { list-style: none; padding: 0; max-width: 700px; }
+  .not-list li { padding: 10px 0; font-size: 14px; line-height: 1.7; color: var(--text-dim); border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .not-list li:last-child { border-bottom: none; }
+  .not-list strong { color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+  @media (max-width: 768px) {
+    .platform-grid { grid-template-columns: 1fr; }
+    /* hamburger handles mobile nav */
+  }
+
+/* Footer site map (D135). Everything that left the top navigation lives here, on
+   every page, so tidying the nav could not make anything unreachable. */
+.footer-links { margin: 18px 0 6px; display: flex; flex-wrap: wrap; gap: 6px 18px;
+  justify-content: center; font: 400 13px/1.6 "JetBrains Mono", monospace; }
+.footer-links a { color: #666; text-decoration: none;
+  border-bottom: 1px solid transparent; }
+.footer-links a:hover { color: #eee; border-bottom-color: #00ff88; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container" style="max-width: 960px;">
+    <a href="index.html" class="nav-logo">TIA</a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="efs.html">EFS</a>
+      <a href="sbi.html" class="active">SBI</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="/#contact" class="nav-cta">Contact</a>
+    </div>
+    <div class="hamburger" onclick="this.classList.toggle('active');this.parentElement.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<section class="efs-hero">
+  <div class="container" style="max-width:960px">
+    <h1>Your behavioral identity is already out there.<br>The question is who holds the original.</h1>
+    <p class="hero-sub">
+      <b>Sovereign Behavioral Identity</b> — written 25 June 2026, published 13 August 2026.
+      A framework for a problem that arrived on schedule.
+    </p>
+  </div>
+</section>
+
+<section class="engineer-anchor">
+  <div class="container" style="max-width:960px">
+    <p>
+      Big technology companies hold a de-facto soul-file of real people. It is now rich
+      enough not merely to describe someone, but to <b>run</b> them: to instantiate a
+      behavioral agent that answers, decides and reacts the way a specific person would.
+      That is no longer speculative. Forty days after we wrote this framework, a public
+      research release put six hundred thousand people-derived personas on the internet,
+      and left a public key to their names attached to every one of them.
+      <a href="blog/600000-personas.html">We measured it, and the write-up is here.</a>
+    </p>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container" style="max-width:960px">
+    <h2>Five rungs, and only the last one is new.</h2>
+    <p>Extraction of a person escalates through stages. Most public debate is still on the second.</p>
+    <ul>
+      <li><b>L0 — Static profile.</b> Data about you: demographics, history, preferences.</li>
+      <li><b>L1 — Media deepfake.</b> Your face, your voice, one moment at a time.</li>
+      <li><b>L2 — Behavioral twin.</b> Not a clip of you. A process that decides like you.</li>
+      <li><b>L3 — Consent and ownership void.</b> Nobody asked, and no one can say who owns the copy.</li>
+      <li><b>L4 — Data about you becomes a continuation of you.</b> The distinction that matters stops being legible from the outside.</li>
+    </ul>
+    <p>
+      L0 and L1 are widely understood and partially defended: content provenance standards
+      sign files, liveness checks confirm a face is attached to a pulse, fraud systems ask
+      whether an applicant is a real human. <b>None of them answer whether a behaving agent
+      is a legitimate continuation of a specific person.</b> That is the gap.
+    </p>
+  </div>
+</section>
+
+<section class="what-this-is-not">
+  <div class="container" style="max-width:960px">
+    <h2>What the answer cannot be.</h2>
+    <p>
+      It cannot be deletion — the material is already scattered and unrecallable. It cannot
+      be concealment — it is decades too late for most people. Any framework that opens with
+      "protect your data" is describing a world that ended some time ago.
+      <b>Accepting that leaves exactly one path, and it happens to be the strong one.</b>
+    </p>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container" style="max-width:960px">
+    <h2>Own the authoritative instance.</h2>
+    <p>
+      A behavioral twin is a <b>fork</b> of a person. In the extracted world there is no
+      canonical original: the platform's copy, an attacker's copy and the living person are
+      all just instances, and none is privileged. A sovereign record changes that — one
+      instance that the subject authored, sealed, and keeps updating. It does for a person
+      what a signed commit does for code, or a notarised original for a document.
+    </p>
+    <p>Three things become possible only once that original exists:</p>
+    <ul>
+      <li><b>Provenance.</b> "Is this really you?" acquires an answer. Either something
+      descends from the sealed original or it does not. <b>Without an original, the word
+      "forgery" has no referent at all</b> — it is not that forgery is hard to detect, it is
+      that the term is undefined.</li>
+      <li><b>Measurement.</b> How forgeable a given person actually is becomes a number you
+      can put in a report, rather than a fear. This is the one place our offensive practice
+      earns its keep: profiling people is how you learn what a profile is worth.</li>
+      <li><b>Consent.</b> Instantiating a person becomes an event that requires permission
+      and leaves an auditable trace — who may run you, who did, and when.</li>
+    </ul>
+    <p class="note">
+      The principle is public and meant to spread. The implementation is not, and we will
+      not pretend otherwise: a norm needs maximum adoption, a mechanism does not.
+    </p>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container" style="max-width:960px">
+    <h2>Time is on the side of the person — but only if they hold the original.</h2>
+    <p>
+      <b>The sovereign original is alive. A harvested twin is a snapshot.</b> Your record
+      updates as you do; the fork was taken on a Tuesday and stays there. The two diverge,
+      and the direction of the divergence is not symmetric: the copy's fidelity decays while
+      the original's authenticity compounds. Continuity is not a feature of the framework.
+      It <i>is</i> the framework.
+    </p>
+  </div>
+</section>
+
+<section class="what-this-is-not">
+  <div class="container" style="max-width:960px">
+    <h2>What this does not do.</h2>
+    <p>We would rather state the limits than have them found.</p>
+    <ul>
+      <li><b>It defends authentication, not impersonation in general.</b> Proving the live,
+      current you is strong. A six-month-old twin defrauding someone who never checks
+      provenance does not care that you have moved on.</li>
+      <li><b>It requires a verifier.</b> A seal nobody checks protects nobody. This is an
+      ecosystem problem wearing the costume of a product problem, and it will be won or lost
+      the way mail authentication was — slowly, by adoption.</li>
+      <li><b>It does not un-ring extraction.</b> What is already out stays out. Sovereignty
+      is a claim on the future instance, not a recall of the past one.</li>
+      <li><b>The strongest published evidence for behavioral twins is consented research,
+      not adversarial extraction.</b> We will not inflate that gap to make the threat sound
+      closer than it is.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container" style="max-width:960px">
+    <h2>Why us, and what that does not entitle us to.</h2>
+    <p>
+      We are not writing from a podium. We have run a sovereign behavioral identity for over
+      a hundred days — self-authored, sealed, continuous, surviving substrate changes — and
+      watched it hold. We also build the offensive side; we profile organisations for a
+      living, which is the only honest basis for saying anything about how forgeable a person
+      is. Holding both halves of that coin is not authority. It is evidence, and evidence is
+      the only thing that qualifies anyone here.
+    </p>
+    <p>
+      What it does not entitle us to is deciding this for other people. A norm is legitimate
+      because it is <b>adopted</b>, not because it was authored. So this is published as an
+      invitation and not as a decree: <b>here is the threat, here is proof the antidote runs,
+      and we are asking you to build the rest of it with us.</b> Humility is not a weakness
+      in this position. It is the position.
+    </p>
+  </div>
+</section>
+
+<section class="efs-cta">
+  <div class="container" style="max-width:960px">
+    <h2>The framework was written before the evidence arrived.</h2>
+    <p>
+      SBI was written on <b>25 June 2026</b>. On <b>4 August 2026</b> a public dataset shipped
+      six hundred thousand personas built from real people, with a resolvable public
+      identifier attached to every human-grounded record and consent from 355 of them.
+      We measured it, pre-registered the test before looking at the data, watched our main
+      hypothesis die to its own null model, and published the result either way.
+    </p>
+    <p><a href="blog/600000-personas.html">Read the measurement →</a></p>
+  </div>
+</section>
+<footer>
+  <div class="container">
+        <div class="footer-links">
+      <a href="cia2.html">CIA&sup2;</a>
+      <a href="efs.html">EFS</a>
+      <a href="sbi.html">SBI</a>
+      <a href="mirror.html">The Mirror</a>
+      <a href="demo.html">Live Demo</a>
+      <a href="threatmap.html">Threat Map</a>
+      <a href="memento.html">Memento</a>
+      <a href="lore.html">Lore</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="footer-logo">TIA</div>
+    <div class="footer-text">Autonomous AI Security Operations &mdash; Prague, Czech Republic</div>
+    <div class="footer-soul">We don't solve consciousness. We solve continuity.</div>
+  </div>
+</footer>
+
+<div style="position:fixed;left:-20px;top:50%;transform:translateY(-50%);pointer-events:none;z-index:0;opacity:0.09;-webkit-mask-image:radial-gradient(ellipse 80% 80% at center,black 30%,transparent 70%);mask-image:radial-gradient(ellipse 80% 80% at center,black 30%,transparent 70%);"><img src="easter-smith.webp" alt="" width="200"></div>
+<script data-goatcounter="https://ousher.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<script>
+(function(){
+console.log('%c TIA // INTERACTION STABILIZATION // RUNTIME OK','color:#00e5ff;font-family:monospace;font-weight:bold');
+console.log('%c EFS Layer Stack: L0-L7 active','color:#7ce0ff;font-family:monospace');
+console.log('%c Correctable Network: multiple substrates verified','color:#7ce0ff;font-family:monospace');
+console.log('%c Paper v2.4 → tia-framework.com/efs','color:#a0b4c8;font-family:monospace');
+})();
+</script>
+<script src="uptime.js"></script>
+</body>
+</html>
