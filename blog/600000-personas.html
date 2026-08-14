@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>600,000 Personas Were Built From Real People. 355 Of Them Agreed. — TIA</title>
-<meta name="description" content="A public research dataset models 600,000 real people as simulated personas. The names were removed. A public key to the names was not. The question is no longer whether a convincing copy of a person can be built — it is how you tell the original.">
+<meta name="description" content="A public research dataset models 600,000 real people as simulated personas. The names were removed. A public key to the names was not — and 98.1% of them carry inferred health, faith or politics. The question is no longer whether a convincing copy of a person can be built — it is how you tell the original.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔑</text></svg>">
 <meta property="og:title" content="600,000 Personas Were Built From Real People. 355 Of Them Agreed.">
 <meta property="og:description" content="The names were removed. A public key to the names was not. The question is no longer whether a convincing copy of a person can be built — it is how you tell the original.">
@@ -37,6 +37,7 @@
     <span>2026-08-13</span>
     <span class="tag">BEHAVIORAL IDENTITY</span>
     <span>measured, limits included</span>
+    <span class="tag">UPDATED 14 AUG</span>
   </div>
 
   <h1>600,000 Personas Were Built From Real People. 355 Of Them Agreed.</h1>
@@ -124,6 +125,65 @@ gss                 64 /  64   = 100.0 %</code></pre>
       by the party the rule restricts &mdash; which is a convention, not a boundary.
     </p>
   </div>
+
+  <h2>Update, 14 August: we understated this</h2>
+
+  <p>
+    Within hours of publishing, <strong>Jiří Joneš</strong> looked at the same 320
+    Wikipedia-derived records and asked a better question than ours. We had established
+    that a public key to a person's name is attached to every human-grounded record.
+    He asked what is attached <em>to the key</em> — and flagged, honestly, that he was
+    not sure his counts were right. We measured them against the same sample.
+  </p>
+
+  <p><strong>They are right, and in most cases conservative.</strong></p>
+
+  <pre><code>                          his    ours
+loss experience           223    228    of 320
+BFI-2 conscientiousness   166    167
+religiosity               131    140
+BFI-2 negative emotion    110    114
+stress level              101    108
+health insurance status    88     98
+sleep quality              81     92
+number of children        112    126
+political engagement      150    201
+───────────────────────────────────────
+pain level                 89     29    ← the one that did not reproduce</code></pre>
+
+  <p>
+    Eight of nine reproduce, most of them higher than he claimed. One does not, and we
+    report that with the same weight: our count for pain level is well below his, which
+    means one of us is reading a different column or treating empty values differently.
+    We have not resolved it and we are not going to pretend we have.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>The number that does not depend on any of that:</strong> the released
+      records carry <strong>55 columns</strong> falling within what GDPR Article 9 calls
+      special categories — health, medication, chronic conditions, mental state,
+      religion, political leaning, activism. <strong>314 of the 320 Wikipedia-derived
+      personas — 98.1% — carry at least one of them.</strong> And as he puts it: none of
+      this is in the encyclopedia entry. It is inferred, stored, and bolted to an
+      identifier anyone resolves to a name in a single request, with no account.
+    </p>
+  </div>
+
+  <p>
+    This changes the shape of the finding, and it changes it against us. We wrote "a
+    public key to the name." <strong>We should have written: a public key to the name,
+    with inferred health, faith, politics and a personality profile attached to it.</strong>
+    Article 4 personal data and Article 9 special categories are not the same conversation,
+    and we published the smaller one. The authors have been told about this second half
+    as well, on the same terms as the first.
+  </p>
+
+  <p>
+    We are naming him because he found it. He also did the thing that makes a finding
+    worth reading: <strong>he said out loud which part he was unsure about, before anyone
+    asked.</strong>
+  </p>
 
   <h2>What we got wrong on the way</h2>
 
