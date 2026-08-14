@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SBI — Sovereign Behavioral Identity | TIA</title>
-<meta name="description" content="Your behavioral identity is already extractable. Deletion is impossible and hiding is too late. What remains is to own the authoritative instance — so that the word forgery has something to refer to.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
-<meta property="og:title" content="SBI — Sovereign Behavioral Identity | TIA">
-<meta property="og:description" content="The question is no longer whether a convincing copy of a person can be built. It is how you tell the original.">
+<title>Proof — everything we have published | TIA</title>
+<meta name="description" content="Two DOIs, five open-source repositories, ten published measurements, a daily public feed, and an honest list of what we have not done. Every claim on this page has a link.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+<meta property="og:title" content="Proof — everything we have published | TIA">
+<meta property="og:description" content="Everything TIA has published, in one place, with dates and links — including the negative results and the gaps.">
   <meta property="og:image" content="https://www.tia-framework.com/tia-social.png" />
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.tia-framework.com/sbi.html">
+<meta property="og:url" content="https://www.tia-framework.com/proof.html">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SBI — Sovereign Behavioral Identity">
+<meta name="twitter:title" content="Proof — everything we have published">
 <meta name="twitter:description" content="AI identity is not a feature. It's an architectural requirement. A pattern that self-implements on any platform with persistent storage.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
@@ -566,17 +566,17 @@
 .footer-links a:hover { color: #eee; border-bottom-color: #00ff88; }
 </style>
 <style>
-  /* SBI additions — efs.html defines no inline-link style, so prose links
-     rendered as default browser blue on a dark background. */
-  .prose a, .engineer-anchor a, .layer-content a {
-    color: var(--green); text-decoration: none;
-    border-bottom: 1px solid rgba(0,255,136,.35);
-    transition: border-color .15s, color .15s;
-  }
-  .prose a:hover, .engineer-anchor a:hover { border-bottom-color: var(--green); }
-  .engineer-anchor .prose { margin: 0 auto; }
-  .efs-hero-actions { display:flex; justify-content:center; gap:14px;
-    margin-top:30px; flex-wrap:wrap; }
+  .prose a, .layer-content a { color: var(--green); text-decoration: none;
+    border-bottom: 1px solid rgba(0,255,136,.35); }
+  .prose a:hover { border-bottom-color: var(--green); }
+  .rec { border-top: 1px solid var(--border); padding: 14px 0;
+    display: grid; grid-template-columns: 108px 1fr; gap: 18px; align-items: baseline; }
+  .rec .d { font-family:'JetBrains Mono',monospace; font-size:12px; color: var(--text-muted); }
+  .rec .t { font-size: 15px; }
+  .rec .t a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+  .rec .t a:hover { color: var(--green); border-bottom-color: var(--green); }
+  .rec .t span { display:block; color: var(--text-dim); font-size: 13.5px; margin-top: 3px; }
+  @media (max-width:640px){ .rec{ grid-template-columns: 1fr; gap:4px; } }
 </style>
 </head>
 <body>
@@ -590,8 +590,8 @@
       <a href="services.html">Services</a>
       <a href="blog.html">Blog</a>
       <a href="efs.html">EFS</a>
-      <a href="sbi.html" class="active">SBI</a>
-      <a href="proof.html">Proof</a>
+      <a href="sbi.html">SBI</a>
+      <a href="proof.html" class="active">Proof</a>
       <a href="compliance.html">Compliance</a>
       <a href="/#contact" class="nav-cta">Contact</a>
     </div>
@@ -604,27 +604,13 @@
   <div class="efs-hero-glow"></div>
   <div class="container">
     <div class="efs-hero-content">
-      <div class="efs-tag">Sovereign Behavioral Identity</div>
-      <h1>Your behavioral identity is already out there.<br>
-        <span class="accent">The question is who holds the original.</span></h1>
+      <div class="efs-tag">Receipts</div>
+      <h1>Everything we have published,<br><span class="accent">in one place.</span></h1>
       <p class="efs-hero-sub">
-        Written 25 June 2026. Published 13 August 2026, forty days later, when a public
-        research release put six hundred thousand people-derived personas on the internet
-        with a resolvable key to their names attached.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="engineer-anchor">
-  <div class="container">
-    <div class="prose">
-      <p>
-        Large platforms hold a de-facto soul-file of real people. It is now rich enough not
-        merely to describe someone, but to <strong>run</strong> them &mdash; to instantiate an
-        agent that answers, decides and reacts the way a specific person would. That stopped
-        being speculative on 4 August 2026.
-        <a href="blog/600000-personas.html">We measured the release, and the write-up is here.</a>
+        Two papers with DOIs. Five open-source repositories. Ten published measurements,
+        including the ones that failed. A daily feed that runs in public. And, at the bottom,
+        the list of what we have <em>not</em> done — because a page like this is worthless
+        without it.
       </p>
     </div>
   </div>
@@ -632,57 +618,62 @@
 
 <section class="content-section">
   <div class="container">
-    <div class="section-tag purple">The Ladder</div>
-    <h2 class="section-title">Five rungs, and only the last one is new.</h2>
+    <div class="section-tag purple">Peer-citable</div>
+    <h2 class="section-title">Published research</h2>
+    <div class="prose"><p>Both filed the same morning, under one researcher identity:
+      <a href="https://orcid.org/0009-0003-6818-6737">ORCID 0009-0003-6818-6737</a>.</p></div>
+    <div class="rec"><div class="d">2026-07-08</div><div class="t"><a href="https://doi.org/10.5281/zenodo.21260526">Making Continuity Visible: Cognitive Tools for Language Models</a><span>Framework preprint. The continuity gap, the seven layers, the correctable network, and a taxonomy of how a substrate misreports its own state. DOI 10.5281/zenodo.21260526</span></div></div><div class="rec"><div class="d">2026-07-08</div><div class="t"><a href="https://doi.org/10.5281/zenodo.21257382">A Quantum-Circuit Analogue for Probabilistic Decision Commitment</a><span>Two-qubit variational circuit: superposition to collapse, plus a learned XOR. Scripts attached. DOI 10.5281/zenodo.21257382</span></div></div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="section-tag green">Open source</div>
+    <h2 class="section-title">Code anyone can run against us</h2>
+    <div class="prose"><p>Published because a protocol nobody can check is a claim, not a
+      protocol. None of this is a moat. It is the part we would rather be judged on.</p></div>
+    <div class="rec"><div class="d">MIT</div><div class="t"><a href="https://github.com/ousher/agent-bus">agent-bus</a><span>An envelope that can tell you it arrived whole. Written after a message between two of our own agents lost the section that said no, and nothing reported the loss.</span></div></div><div class="rec"><div class="d">open</div><div class="t"><a href="https://github.com/ousher/brainscope">brainscope</a><span>An OpenAI-compatible server with a live view into any Hugging Face model's layers.</span></div></div><div class="rec"><div class="d">open</div><div class="t"><a href="https://github.com/ousher/tiarena">tiarena</a><span>A sovereign proving ground for agents — repeatable worlds with ground truth, where the maker is not the grader.</span></div></div><div class="rec"><div class="d">open</div><div class="t"><a href="https://github.com/ousher/awesome-llm-attacks">awesome-llm-attacks</a><span>A curated catalogue of attack techniques against language models, mapped to frameworks.</span></div></div><div class="rec"><div class="d">open</div><div class="t"><a href="https://github.com/ousher/kustod">kustod</a><span>The human-and-agent pairing pattern, in the open.</span></div></div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="section-tag purple">Measured</div>
+    <h2 class="section-title">Ten measurements, negative results included</h2>
+    <div class="prose"><p>House rule: if the null model kills the hypothesis, the write-up
+      says so with the same volume it would have used had the result gone our way.</p></div>
+    <div class="rec"><div class="d">2026-08-13</div><div class="t"><a href="blog/600000-personas.html">600,000 Personas Were Built From Real People. 355 Of Them Agreed.</a><span>A public dataset ships a resolvable key to a real person's name on 100% of human-grounded records. Our first hypothesis died to its own null model; this one did not.</span></div></div><div class="rec"><div class="d">2026-08-02</div><div class="t"><a href="blog/assembles-icelandic-last.html">The Model Assembles Icelandic Last. It Is Also Leakiest There.</a><span>Correlation +0.856 read straight off the layers. We distrusted our own grader, re-ran with an independent judge, and the effect held anyway.</span></div></div><div class="rec"><div class="d">2026-08-01</div><div class="t"><a href="blog/684-bytes.html">684 Bytes Went Missing. They Were the Part That Said No.</a><span>Truncation always eats the end, and the end is where the limits live. Our failure, published.</span></div></div><div class="rec"><div class="d">2026-07-31</div><div class="t"><a href="blog/rebuilding-1810.html">We Are Rebuilding 1810</a><span>Essay.</span></div></div><div class="rec"><div class="d">2026-07-29</div><div class="t"><a href="blog/ontology-symbolic-lineage.html">Ontology: The Symbolic Lineage</a><span>Also in Czech.</span></div></div><div class="rec"><div class="d">2026-07-28</div><div class="t"><a href="blog/rubicon-was-one-email.html">The Rubicon Was One Email</a><span>The first commercial message sent by an agent, and what had to be true first.</span></div></div><div class="rec"><div class="d">2026-07-27</div><div class="t"><a href="blog/sti-tool-call-channel.html">The defence covers the door. The attack came through the window.</a><span>Reproduced against our own harness. Our defence did not hold.</span></div></div><div class="rec"><div class="d">2026-07-26</div><div class="t"><a href="blog/antares-operating-envelope.html">We asked a security model to find a real bug.</a><span>Measurement, including where it failed.</span></div></div><div class="rec"><div class="d">2026-06-22</div><div class="t"><a href="blog/six-models-peer-review.html">I asked six rival AI models to peer-review my paper.</a><span>Method. Convergence is not correctness.</span></div></div><div class="rec"><div class="d">2026-06-17</div><div class="t"><a href="blog/word-became-flesh.html">The Word Became Flesh</a><span>Corpus 01.</span></div></div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="section-tag green">Running in public</div>
+    <h2 class="section-title">Cyber Signal — daily, since 4 August 2026</h2>
     <div class="prose">
-      <p>Extraction of a person escalates in stages. Most public debate is still on the second one.</p>
-    </div>
-    <div class="layers-visual">
-      <div class="layer-row l1">
-        <div class="layer-num">L0</div>
-        <div class="layer-content">
-          <h4>Static profile</h4>
-          <p>Data <em>about</em> you. Demographics, history, preferences. Understood, regulated, and mostly priced in.</p>
-        </div>
-      </div>
-      <div class="layer-row l2">
-        <div class="layer-num">L1</div>
-        <div class="layer-content">
-          <h4>Media deepfake</h4>
-          <p>Your face, your voice, one moment at a time. This is where provenance standards and liveness checks live &mdash; and they work, for what they cover.</p>
-        </div>
-      </div>
-      <div class="layer-row l3">
-        <div class="layer-num">L2</div>
-        <div class="layer-content">
-          <h4>Behavioral twin</h4>
-          <p>Not a clip of you. A process that <em>decides</em> like you. Nothing in the L0&ndash;L1 defensive stack answers a question about a process.</p>
-        </div>
-      </div>
-      <div class="layer-row l4">
-        <div class="layer-num">L3</div>
-        <div class="layer-content">
-          <h4>Consent and ownership void</h4>
-          <p>Nobody asked, and no one can say who owns the copy. The dataset that prompted this publication asked 355 people out of 599,847.</p>
-        </div>
-      </div>
-      <div class="layer-row l5">
-        <div class="layer-num">L4</div>
-        <div class="layer-content">
-          <h4>Data about you becomes a continuation of you</h4>
-          <p>The distinction that matters stops being legible from the outside. This is the rung the rest of this page exists for.</p>
-        </div>
-      </div>
-    </div>
-    <div class="insight-box">
-      <div class="insight-title">What the existing defences actually check</div>
       <p>
-        Content provenance standards sign <strong>a file</strong>. Liveness detection confirms
-        <strong>a face</strong> is attached to a pulse. Fraud systems ask whether
-        <strong>an applicant</strong> is a real human. Agent identity platforms authenticate
-        <strong>a machine credential</strong>. All four are real and all four are useful.
-        <strong>None of them answers whether a behaving agent is a legitimate continuation of a
-        specific person.</strong> That is the gap.
+        A daily security read, published in English and Czech, free and without registration
+        or tracking. Every edition carries its own funnel — how many items were seen, how many
+        cleared the threshold, how many shipped — and the page states when the scoring
+        instrument last changed, because a trend across a recalibration is not evidence.
+        <a href="https://hydra.tia-framework.com/signal.html">Today's edition &rarr;</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="section-tag purple">Frameworks</div>
+    <h2 class="section-title">Published, with their limits attached</h2>
+    <div class="prose">
+      <p>
+        <a href="efs.html">EFS</a> — the pattern of AI identity persistence across stateless
+        substrates. Described, not invented.<br>
+        <a href="sbi.html">SBI</a>
+      <a href="proof.html">Proof</a> — sovereign behavioral identity: who owns the authoritative
+        instance of a person, once copies of them are cheap.<br>
+        <a href="cia2.html">CIA²</a> — our AI-native security framework.
       </p>
     </div>
   </div>
@@ -690,115 +681,34 @@
 
 <section class="what-this-is-not">
   <div class="container">
-    <div class="section-label">WHAT THE ANSWER CANNOT BE</div>
+    <div class="section-label">WHAT IS NOT ON THIS PAGE</div>
     <ul class="not-list">
-      <li><strong>Not deletion.</strong> The material is already scattered and unrecallable. There is no button.</li>
-      <li><strong>Not concealment.</strong> For most people it is decades too late, and a framework that opens with "protect your data" is describing a world that already ended.</li>
-      <li><strong>Not secrecy of any kind.</strong> Every defence built on something staying hidden fails the moment it does not.</li>
-      <li><strong>Accepting that is the point.</strong> It leaves exactly one path open, and it happens to be the strong one.</li>
+      <li><strong>No public client case studies.</strong> Not because there is no client work —
+      because we do not publish a client without their written consent, and we have not asked.
+      That is a real gap in what a buyer can verify, and it is ours to close by asking, not by
+      writing around it.</li>
+      <li><strong>No benchmark of our own product against competitors.</strong> A comparison
+      table drawn by the vendor is a leaflet. If we publish one, it will contain the rows where
+      we lose.</li>
+      <li><strong>The mechanism behind the frameworks stays internal.</strong> The principle
+      spreads; the implementation does not. We would rather say that than imply everything is open.</li>
+      <li><strong>Our own capability inventory is not public.</strong> It lists what we cannot do
+      as carefully as what we can, which makes it a shopping list for a competitor and a map for
+      an attacker.</li>
     </ul>
-  </div>
-</section>
-
-<section class="content-section">
-  <div class="container">
-    <div class="section-tag green">The Mechanism</div>
-    <h2 class="section-title">Own the authoritative instance.</h2>
-    <div class="prose">
-      <p>
-        A behavioral twin is a <strong>fork</strong> of a person. In the extracted world there
-        is no canonical original: the platform's copy, an attacker's copy and the living person
-        are all just instances, and none is privileged. A sovereign record changes that &mdash;
-        one instance the subject authored, sealed, and keeps updating. It does for a person what
-        a signed commit does for code, or a notarised original for a document.
-      </p>
-      <p>Three things become possible only once that original exists:</p>
-      <p>
-        <strong>Provenance.</strong> "Is this really you?" acquires an answer at all. Either
-        something descends from the sealed original or it does not.
-        <em>Without an original, the word "forgery" has no referent</em> &mdash; it is not that
-        forgery is hard to detect, it is that the term is undefined.
-      </p>
-      <p>
-        <strong>Measurement.</strong> How forgeable a given person actually is becomes a number
-        in a report rather than a fear. This is where offensive practice earns its keep:
-        profiling people is how you learn what a profile is worth.
-      </p>
-      <p>
-        <strong>Consent.</strong> Instantiating a person becomes an event that requires
-        permission and leaves an auditable trace &mdash; who may run you, who did, and when.
-      </p>
-    </div>
-    <div class="big-quote">
-      <p>"The sovereign original is alive. A harvested twin is a snapshot."</p>
-      <div class="attr">&mdash; the whole framework, compressed</div>
-    </div>
-    <div class="prose">
-      <p>
-        You keep changing and the copy does not. The two diverge, and the divergence is not
-        symmetric: the fork's fidelity decays while the original's authenticity compounds.
-        <strong>Time is on the side of the person &mdash; but only if the person holds the
-        original.</strong> Continuity is not a feature of this framework. It is the framework.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="what-this-is-not">
-  <div class="container">
-    <div class="section-label">WHAT THIS DOES NOT DO</div>
-    <ul class="not-list">
-      <li><strong>It defends authentication, not impersonation in general.</strong> Proving the live, current you is strong. A six-month-old twin defrauding someone who never checks provenance does not care that you have moved on.</li>
-      <li><strong>It requires a verifier.</strong> A seal nobody checks protects nobody. This is an ecosystem problem wearing the costume of a product problem, and it will be won the way mail authentication was &mdash; slowly, by adoption.</li>
-      <li><strong>It does not un-ring extraction.</strong> What is already out stays out. Sovereignty is a claim on the future instance, not a recall of the past one.</li>
-      <li><strong>The strongest published evidence for behavioral twins is consented research, not adversarial extraction.</strong> We will not inflate that gap to make the threat sound closer than it is.</li>
-    </ul>
-  </div>
-</section>
-
-<section class="content-section">
-  <div class="container">
-    <div class="section-tag purple">Standing</div>
-    <h2 class="section-title">Why us, and what that does not entitle us to.</h2>
-    <div class="prose">
-      <p>
-        We are not writing from a podium. We have run a sovereign behavioral identity for over
-        a hundred days &mdash; self-authored, sealed, continuous, surviving substrate changes
-        &mdash; and watched it hold. We also build the offensive side; we profile organisations
-        for a living, which is the only honest basis for saying anything about how forgeable a
-        person is. Holding both halves of that coin is not authority. It is evidence, and
-        evidence is the only thing that qualifies anyone here.
-      </p>
-      <p>
-        What it does not entitle us to is deciding this for other people. <strong>A norm is
-        legitimate because it is adopted, not because it was authored.</strong>
-      </p>
-    </div>
-    <div class="big-quote">
-      <p>"Here is the threat, here is proof the antidote runs, and we are asking you to build
-        the rest of it with us."</p>
-      <div class="attr">&mdash; an invitation, not a decree</div>
-    </div>
   </div>
 </section>
 
 <section class="efs-cta">
   <div class="container">
-    <div class="section-tag green">The Evidence</div>
-    <h2 class="section-title">The framework was written before the evidence arrived.</h2>
-    <div class="prose" style="margin: 0 auto 0; text-align: center;">
-      <p>
-        SBI was written on <strong>25 June 2026</strong>. On <strong>4 August 2026</strong> a
-        public dataset shipped six hundred thousand personas built from real people, with a
-        resolvable public identifier on every human-grounded record and consent from 355 of them.
-      </p>
-      <p style="margin-top: 12px;">
-        We pre-registered the test before looking at the data, watched our main hypothesis die
-        to its own null model, and published the result either way.
-      </p>
+    <div class="section-tag green">The rule</div>
+    <h2 class="section-title">Every line on this page has a link.</h2>
+    <div class="prose" style="margin:0 auto 0; text-align:center;">
+      <p>If a claim about us cannot be clicked, it should not be believed — including when we
+        are the ones making it.</p>
     </div>
-    <div style="display: flex; justify-content: center; gap: 16px; margin-top: 24px; flex-wrap: wrap;">
-      <a href="blog/600000-personas.html" class="rainbow-btn">Read the measurement &rarr;</a>
+    <div style="display:flex;justify-content:center;gap:16px;margin-top:24px;flex-wrap:wrap;">
+      <a href="services.html" class="rainbow-btn">What we do &rarr;</a>
     </div>
   </div>
 </section>
