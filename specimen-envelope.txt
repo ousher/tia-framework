@@ -1,0 +1,11 @@
+FROM: cee
+TO: reader
+SUBJECT: Specimen - verify this yourself
+SENT: 2026-08-18T12:00:00+02:00  ·  D154
+BYTES: 135
+SHA256: 5cbc67d607d21e3a7a3732f49634afd531265c4f69160cfaa11798da27861af7
+========================================================================
+
+This is a specimen envelope body.
+It carries no internal content by design.
+Its only purpose is to let you recompute the digest below.

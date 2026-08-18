@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent custody — what we enforce, and what we only claim | TIA</title>
+<meta name="description" content="A measured maturity table for agent custody controls. Six enforced, two partial, one declared only — and a specimen you can verify yourself.">
+<link rel="canonical" href="https://tia-framework.com/custody">
+<!-- 🔴 D154: bez těchhle značek je každé sdílení na LinkedInu šedý čtverec.
+     Naučeno na getkustod redesignu, který je neměl vůbec. -->
+<meta property="og:title" content="Agent custody — what we enforce, and what we only claim">
+<meta property="og:description" content="Every vendor publishes a table of green ticks. This one has a red row, because one control we described in writing does not exist yet.">
+<meta property="og:image" content="https://www.tia-framework.com/tia-social.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tia-framework.com/custody">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Agent custody — what we enforce, and what we only claim">
+<meta name="twitter:description" content="Six enforced, two partial, one declared only. Measured, not asserted — with a specimen you can verify yourself.">
+<style>
+  :root{--cream:#f6f1e7;--ink:#1c1a17;--red:#b3221f;--grey:#6f685e;
+         --rule:#ddd3c2;--ghost:#eae2d3;--body:#453f38;--ok:#2f6b46;--part:#8a6a1a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);color:var(--ink);
+        font:15px/1.55 "Iowan Old Style","Palatino Linotype",Georgia,serif}
+  .sheet{max-width:960px;margin:0 auto;padding:44px 52px 40px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:15px;margin-bottom:18px}
+  .eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+            color:var(--red);font-weight:700}
+  h1{font-size:32px;line-height:1.08;letter-spacing:-.02em;margin:8px 0 10px;max-width:22ch}
+  .stand{font-size:14.5px;color:var(--grey);max-width:82ch}
+  .stand b{color:var(--ink)}
+  h2{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);
+      font-weight:700;margin:30px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+  p{margin-bottom:10px;color:var(--body);max-width:84ch}
+  p b{color:var(--ink)}
+  pre{background:var(--ghost);padding:13px 16px;margin:10px 0 12px;
+       font:12.4px/1.6 ui-monospace,"SF Mono",Menlo,monospace;color:var(--ink);
+       overflow-x:auto;white-space:pre}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 8px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--grey);font-weight:700;padding:0 12px 8px 0;border-bottom:1px solid var(--rule)}
+  td{padding:11px 12px 11px 0;border-bottom:1px solid var(--rule);
+      vertical-align:top;color:var(--body)}
+  tr:last-child td{border-bottom:0}
+  td:first-child{width:29%} td:nth-child(2){width:14%;white-space:nowrap}
+  .what{display:block;font-size:12.5px;color:var(--grey);margin-top:3px;font-weight:400}
+  .badge{display:inline-block;font:700 10px/1 ui-monospace,Menlo,monospace;
+          letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border:1px solid}
+  .badge.ok{color:var(--ok);border-color:var(--ok)}
+  .badge.part{color:var(--part);border-color:var(--part)}
+  .badge.no{color:var(--red);border-color:var(--red);background:rgba(179,34,31,.07)}
+  tr.no td{background:rgba(179,34,31,.045)}
+  .ev{font-size:12.6px;line-height:1.5}
+  .tally{display:flex;gap:26px;margin:14px 0 4px;font:12px/1 ui-monospace,Menlo,monospace;
+          letter-spacing:.06em;color:var(--grey);flex-wrap:wrap}
+  .tally b{font-size:17px;font-family:inherit}
+  .note{background:var(--ghost);border-left:3px solid var(--red);padding:15px 18px;margin:16px 0}
+  .note p:last-child{margin-bottom:0}
+  footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--rule);
+          font-size:11.5px;color:var(--grey);display:flex;justify-content:space-between;
+          gap:22px;flex-wrap:wrap}
+  @media (max-width:720px){
+    .sheet{padding:28px 20px} h1{font-size:25px}
+    table,tbody,tr,td{display:block;width:100%} th{display:none}
+    td{padding:6px 0;border:0} tr{border-bottom:1px solid var(--rule);padding:12px 0}
+    td:first-child,td:nth-child(2){width:100%}
+  }
+  @media print{
+    :root{--cream:#fff;--ghost:#f2ede3}
+    @page{size:A4;margin:14mm} .sheet{padding:0;max-width:none}
+    body{font-size:11px} tr,.note{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="eyebrow">Agent custody · measured 2026-08-18</div>
+    <h1>Do not trust the agent. Verify the chain.</h1>
+    <p class="stand">Every vendor in this space publishes a table of green ticks.
+      This one has a red row, because <b>one of the controls we have described in
+      writing does not exist yet</b> — and you should be able to see that before
+      you decide whether to believe the rest.</p>
+  </header>
+
+  <h2>1 · Verify something first, read our claims second</h2>
+  <p>Below is a specimen envelope. It is the format every message between our
+    agents travels in. <b>You do not need access to anything of ours to check
+    it</b> — the digest covers exactly the bytes shown.</p>
+
+<pre>FROM: cee
+TO: reader
+SUBJECT: Specimen - verify this yourself
+SENT: 2026-08-18T12:00:00+02:00  ·  D154
+BYTES: 135
+SHA256: 5cbc67d607d21e3a7a3732f49634afd531265c4f69160cfaa11798da27861af7
+========================================================================
+
+This is a specimen envelope body.
+It carries no internal content by design.
+Its only purpose is to let you recompute the digest below.
+</pre>
+
+  <p>Save the part after the <code>===</code> line, exactly as shown, and run:</p>
+<pre>sha256sum body.txt
+python -c "import hashlib;print(hashlib.sha256(open('body.txt','rb').read()).hexdigest())"</pre>
+  <p>If it matches the <code>SHA256:</code> header, the mechanism is real.
+    <b>Everything else on this page is downstream of that one property:</b>
+    content-derived digests, computed at the moment of the action, published
+    where the reader can recompute them.</p>
+
+  <h2>2 · What is enforced, and what is only claimed</h2>
+  <p>The table below is <b>generated from a script that tests each control</b>,
+    not written by hand. <em>Enforced</em> means a mechanism exists and sits in
+    the path — its failure stops something. <em>Partial</em> means it exists but
+    does not cover the whole surface. <em>Declared only</em> means we have talked
+    about it and there is no measurable mechanism.</p>
+
+  <div class="tally">
+    <span><b style="color:var(--ok)">6</b> enforced</span>
+    <span><b style="color:var(--part)">2</b> partial</span>
+    <span><b style="color:var(--red)">1</b> declared only</span>
+    <span>of 9 controls</span>
+  </div>
+
+  <table>
+    <tr><th>Control</th><th>State</th><th>Measured evidence</th></tr>
+      <tr class="ok">
+        <td><b>External time anchor</b><span class="what">Time is echoed from outside the model, never generated by it.</span></td>
+        <td><span class="badge ok">enforced</span></td>
+        <td class="ev">cee-clock-hook.py is wired to UserPromptSubmit; the anchor arrives BEFORE every turn</td>
+      </tr>
+      <tr class="ok">
+        <td><b>Output supervisor</b><span class="what">The turn does not end if the agent breaks one of its own written rules.</span></td>
+        <td><span class="badge ok">enforced</span></td>
+        <td class="ev">cee-ttsr.py (11,881 B) wired to Stop — the turn cannot end on a violation</td>
+      </tr>
+      <tr class="ok">
+        <td><b>Egress PII shield</b><span class="what">Personal data is stripped before anything leaves the local boundary.</span></td>
+        <td><span class="badge ok">enforced</span></td>
+        <td class="ev">pii-shield.py is called from 13 separate tools on the egress path</td>
+      </tr>
+      <tr class="ok">
+        <td><b>Agent-to-agent message integrity</b><span class="what">Every envelope carries a digest — and the receiver recomputes it.</span></td>
+        <td><span class="badge ok">enforced</span></td>
+        <td class="ev">the sender writes the digest and the router RECOMPUTES it; on mismatch delivery is blocked</td>
+      </tr>
+      <tr class="no">
+        <td><b>Unified receipt rail</b><span class="what">One append-only stream binding actor, action, bytes, time.</span></td>
+        <td><span class="badge no">declared only</span></td>
+        <td class="ev">receipts.jsonl does NOT exist in any of the 4 workspaces. Receipts are real and are produced in at least 5 unrelated formats (agent envelopes, share receipts, rollout manifests, seal files, vault). There is no single append-only stream binding them.</td>
+      </tr>
+      <tr class="ok">
+        <td><b>Verified canon backup</b><span class="what">The identity corpus is mirrored with its own integrity check.</span></td>
+        <td><span class="badge ok">enforced</span></td>
+        <td class="ev">vault23-backup.py runs its own verification; 207 files mirrored</td>
+      </tr>
+      <tr class="ok">
+        <td><b>Seal chain</b><span class="what">Version digests published OUTSIDE the document they cover.</span></td>
+        <td><span class="badge ok">enforced</span></td>
+        <td class="ev">digests published OUTSIDE the content they cover; 11/11 recomputed and matched</td>
+      </tr>
+      <tr class="part">
+        <td><b>Two-sided gate discipline</b><span class="what">A gate must be proven to fire AND proven to stay silent.</span></td>
+        <td><span class="badge part">partial</span></td>
+        <td class="ev">a two-sided test exists for one gate (the daily signal). It does NOT cover the other gates — this is one instrumented gate, not a policy</td>
+      </tr>
+      <tr class="part">
+        <td><b>Workspace boundary</b><span class="what">Agents act in scoped lanes; cross-lane writes are explicit grants.</span></td>
+        <td><span class="badge part">partial</span></td>
+        <td class="ev">shared-guard.py exists but is not in PreToolUse — it is not enforced</td>
+      </tr>
+  </table>
+
+  <div class="note">
+    <p><b>On the red row.</b> An internal control map we drafted named a unified
+      receipt rail as an existing component. It does not exist. Receipts are real
+      and are produced in at least five different formats, but there is no single
+      append-only stream binding them.</p>
+    <p>We found this while preparing this page, which is the entire argument for
+      publishing a maturity column instead of a feature list.
+      <b>A control you have named but not built is worse than one you never
+      claimed</b> — when it is found, everything true around it becomes
+      suspect too.</p>
+  </div>
+
+  <h2>3 · What this page does not do</h2>
+  <p>It does not describe how any of these controls are implemented, and it is
+    not a specification you could build from. That is deliberate. It shows you
+    the <b>property you can check</b> — a digest over stated bytes — and the
+    <b>honest state</b> of each control. Those are the two things a second party
+    actually needs in order to decide whether to rely on the system.</p>
+  <p>It is also not legal advice, and it is not a compliance claim. Mapping any
+    of this to a specific regulation is a per-deployment exercise and we do not
+    do it from a web page.</p>
+
+  <footer>
+    <div>Generated from measured data · <code>cee-custody-audit.py</code><br>
+      Re-run the audit and this page changes with it</div>
+    <div style="text-align:right">TIA · Prague · CZ/EU<br>
+      Public sources and specimen data only</div>
+  </footer>
+
+</div>
+</body>
+</html>
