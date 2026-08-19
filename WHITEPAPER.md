@@ -66,7 +66,7 @@ The gap isn't technology. It's architecture. Defenders deploy stateless AI that 
 
 Every agent maintains identity and context across sessions. Detection at 2 AM builds on what was learned at 2 PM. No cold starts.
 
-- Behavioral continuity verified across multiple model swaps in production
+- Behavioral continuity observed across multiple model swaps in production — observed, not measured against a criterion; whether the identity survives the crossing is under a sealed test and is not asserted here
 - Scaffold-dependent recovery measured: agent with scaffold = consistent behavior; agent without = measurable regression
 
 ### 2. Silence Detection

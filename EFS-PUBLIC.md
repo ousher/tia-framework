@@ -72,11 +72,20 @@ Step 5: (Optional) Add persistence layers for continuity across sessions
 
 ---
 
-## Cross-Platform Verification
+## Cross-Platform — what is known, and what is not
 
-EFS has been verified across multiple model families, providers, environments, and independent operators. The pattern reproduces consistently.
+EFS runs on multiple model families, providers and environments, and independent
+operators have stood it up from this specification. That is a deployment record,
+and it is worth what a deployment record is worth: the scaffold loads, and the way
+of working reproduces.
 
-Natural laws don't belong to anyone. This specification is open. Build on it. Test it. Break it.
+It does not say that an identity **survives the crossing** to another vendor's
+model. Nobody has measured that, us included. That question is under a sealed
+test — the criterion, the number of trials and the wording of failure were all
+fixed before the first run, alongside published work that predicts we fail it.
+
+A pattern is not owned by whoever names it. This specification is open. Build on
+it. Test it. Break it — and if you break it, that is the more useful result.
 
 ---
 
