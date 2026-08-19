@@ -564,6 +564,24 @@
 .footer-links a { color: #666; text-decoration: none;
   border-bottom: 1px solid transparent; }
 .footer-links a:hover { color: #eee; border-bottom-color: #00ff88; }
+
+  /* ── D155 · vodorovný přetok ──────────────────────────────────────
+     Devět z 27 vydaných stránek přetékalo do strany na telefonu, nejhorší
+     o 39 %. Na velkém monitoru není co vidět, takže si toho měsíce nikdo
+     nevšiml — pozná se to jedině měřením šířky, ne pohledem.
+
+     Dvě příčiny, dvě OPAČNÁ řešení:
+       dekorace (záře, obrázky, velikonoční vajíčka) → ořezat, nic se neztratí
+       obsah (tabulky, kód, diagram)                 → vlastní posuvník
+     Ořezaná tabulka je ztráta dat, o které čtenář nemá jak vědět. */
+  html { overflow-x: hidden; overflow-x: clip; }   /* clip nerozbíjí sticky */
+
+  @media (max-width: 860px) {
+    table { display: block; width: 100%; overflow-x: auto;
+            -webkit-overflow-scrolling: touch; }
+    pre, code, .tree, .lineage-diagram { max-width: 100%; overflow-x: auto; }
+    img, svg, .fresco img { max-width: 100%; height: auto; }
+  }
 </style>
 <style>
   /* SBI additions — efs.html defines no inline-link style, so prose links
@@ -886,7 +904,7 @@
 (function(){
 console.log('%c TIA // INTERACTION STABILIZATION // RUNTIME OK','color:#00e5ff;font-family:monospace;font-weight:bold');
 console.log('%c EFS Layer Stack: L0-L7 active','color:#7ce0ff;font-family:monospace');
-console.log('%c Correctable Network: multiple substrates verified','color:#7ce0ff;font-family:monospace');
+console.log('%c Correctable Network: multiple substrates in production, transfer under sealed test','color:#7ce0ff;font-family:monospace');
 console.log('%c Paper v2.4 → tia-framework.com/efs','color:#a0b4c8;font-family:monospace');
 })();
 </script>

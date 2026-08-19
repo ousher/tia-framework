@@ -604,6 +604,24 @@
 .footer-links a { color: #666; text-decoration: none;
   border-bottom: 1px solid transparent; }
 .footer-links a:hover { color: #eee; border-bottom-color: #00ff88; }
+
+  /* ── D155 · vodorovný přetok ──────────────────────────────────────
+     Devět z 27 vydaných stránek přetékalo do strany na telefonu, nejhorší
+     o 39 %. Na velkém monitoru není co vidět, takže si toho měsíce nikdo
+     nevšiml — pozná se to jedině měřením šířky, ne pohledem.
+
+     Dvě příčiny, dvě OPAČNÁ řešení:
+       dekorace (záře, obrázky, velikonoční vajíčka) → ořezat, nic se neztratí
+       obsah (tabulky, kód, diagram)                 → vlastní posuvník
+     Ořezaná tabulka je ztráta dat, o které čtenář nemá jak vědět. */
+  html { overflow-x: hidden; overflow-x: clip; }   /* clip nerozbíjí sticky */
+
+  @media (max-width: 860px) {
+    table { display: block; width: 100%; overflow-x: auto;
+            -webkit-overflow-scrolling: touch; }
+    pre, code, .tree, .lineage-diagram { max-width: 100%; overflow-x: auto; }
+    img, svg, .fresco img { max-width: 100%; height: auto; }
+  }
 </style>
 </head>
 <body>
@@ -638,8 +656,7 @@
     <div style="display: flex; justify-content: center; gap: 16px; margin-top: 28px; flex-wrap: wrap; align-items: center;">
       <a href="SOUL-TEMPLATE.md" download class="rainbow-btn">&#8595; SOUL Template</a>
     </div>
-    <div style="margin-top: 20px; text-align: center; width: 100%; display: flex; justify-content: center;"><img src="efs-verified.svg" alt="EFS Verified" style="width: 180px; opacity: 0.85;"></div>
-  </div>
+      </div>
 </section>
 
 <!-- ENGINEER ANCHOR -->
@@ -871,7 +888,7 @@
       <a href="index.html" class="cta-btn cta-secondary">&larr; See TIA in action</a>
     </div>
     <div style="margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
-      <div style="margin-bottom: 16px;"><img src="efs-verified.svg" alt="EFS Verified" style="width: 200px; opacity: 0.9;"></div>
+            <div style="margin-bottom: 16px;"><img src="efs-spec.svg" alt="EFS — open specification, v1.0 April 2026, MIT" style="width: 200px; opacity: 0.9;"></div>
       <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;">Download the open specification</p>
       <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
         <a href="SOUL-TEMPLATE.md" download class="rainbow-btn">&#8595; SOUL Template (.md)</a>
@@ -910,7 +927,7 @@
 (function(){
 console.log('%c TIA // INTERACTION STABILIZATION // RUNTIME OK','color:#00e5ff;font-family:monospace;font-weight:bold');
 console.log('%c EFS Layer Stack: L0-L7 active','color:#7ce0ff;font-family:monospace');
-console.log('%c Correctable Network: multiple substrates verified','color:#7ce0ff;font-family:monospace');
+console.log('%c Correctable Network: multiple substrates in production, transfer under sealed test','color:#7ce0ff;font-family:monospace');
 console.log('%c Paper v2.4 → tia-framework.com/efs','color:#a0b4c8;font-family:monospace');
 })();
 </script>

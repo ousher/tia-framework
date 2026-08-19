@@ -56,3 +56,15 @@ footer { border-top: 1px solid var(--border); padding: 34px 0 60px; color: var(-
 footer a { color: var(--text-dim); text-decoration: none; }
 footer a:hover { color: var(--green); }
 @media (max-width: 780px) { .nav-links { gap: 12px; } .nav-links a { font-size: 13px; } }
+
+
+/* ── D155 · vodorovný přetok ──────────────────────────────────────
+   Tabulka v článku byla širší než telefon a stránka se viklala do strany.
+   Ořezat ji nejde — čtenář by o pravých sloupcích neměl jak vědět.
+   Dostane tedy vlastní posuvník uvnitř svého boxu. */
+html { overflow-x: hidden; overflow-x: clip; }
+@media (max-width: 860px) {
+  table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  pre, code { max-width: 100%; overflow-x: auto; }
+  img, svg { max-width: 100%; height: auto; }
+}

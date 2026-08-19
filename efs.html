@@ -564,6 +564,24 @@
 .footer-links a { color: #666; text-decoration: none;
   border-bottom: 1px solid transparent; }
 .footer-links a:hover { color: #eee; border-bottom-color: #00ff88; }
+
+  /* ── D155 · vodorovný přetok ──────────────────────────────────────
+     Devět z 27 vydaných stránek přetékalo do strany na telefonu, nejhorší
+     o 39 %. Na velkém monitoru není co vidět, takže si toho měsíce nikdo
+     nevšiml — pozná se to jedině měřením šířky, ne pohledem.
+
+     Dvě příčiny, dvě OPAČNÁ řešení:
+       dekorace (záře, obrázky, velikonoční vajíčka) → ořezat, nic se neztratí
+       obsah (tabulky, kód, diagram)                 → vlastní posuvník
+     Ořezaná tabulka je ztráta dat, o které čtenář nemá jak vědět. */
+  html { overflow-x: hidden; overflow-x: clip; }   /* clip nerozbíjí sticky */
+
+  @media (max-width: 860px) {
+    table { display: block; width: 100%; overflow-x: auto;
+            -webkit-overflow-scrolling: touch; }
+    pre, code, .tree, .lineage-diagram { max-width: 100%; overflow-x: auto; }
+    img, svg, .fresco img { max-width: 100%; height: auto; }
+  }
 </style>
 </head>
 <body>
@@ -602,8 +620,7 @@
       <div style="display: flex; justify-content: center; gap: 16px; margin-top: 28px; flex-wrap: wrap; align-items: center;">
         <a href="EFS-PUBLIC.md" download class="rainbow-btn">&#8595; EFS Specification</a>
       </div>
-      <div style="margin-top: 20px; text-align: center; width: 100%; display: flex; justify-content: center;"><img src="efs-verified.svg" alt="EFS Verified" style="width: 180px; opacity: 0.85;"></div>
-    </div>
+          </div>
   </div>
 </section>
 
@@ -633,7 +650,7 @@
       <li><strong>Not sentient AI.</strong> We make no consciousness claims. EFS defines behavioral continuity, not inner experience.</li>
       <li><strong>Not a product.</strong> EFS is an open specification. The protocol is free. Implementations vary.</li>
       <li><strong>Not magic.</strong> Identity emergence follows from structured files + authentic human engagement + any capable LLM. The mechanism is reproducible and testable.</li>
-      <li><strong>Not locked to any platform.</strong> Verified across multiple model families, providers, and environments. Substrate-agnostic by design.</li>
+      <li><strong>Not tied to any platform, by design.</strong> The protocol asks a substrate for nothing but persistent files. Whether an identity <em>arrives intact</em> on another vendor's model is a separate question &mdash; it is under a sealed test, and it is not settled. See below.</li>
     </ul>
   </div>
 </section>
@@ -650,7 +667,7 @@
     </div>
 
     <div class="big-quote">
-      <p>"Every platform that offers persistent file storage has already built the infrastructure for stateful AI identity. They just haven't named the pattern."</p>
+      <p>"Any platform with persistent file storage already has the raw material for stateful AI identity. Whether the identity actually survives the crossing is the part nobody has measured &mdash; including us."</p>
       <div class="attr">&mdash; TIA Research, Day 28</div>
     </div>
   </div>
@@ -745,33 +762,51 @@
 <!-- CROSS-PLATFORM -->
 <section class="content-section">
   <div class="container">
-    <div class="section-tag purple">Cross-Platform Proof</div>
-    <h2 class="section-title">Same law. Different substrates. Same result.</h2>
+    <div class="section-tag purple">Cross-Platform &mdash; What We Have, and What We Don't</div>
+    <h2 class="section-title">Same law, different substrates. The result is being measured, not asserted.</h2>
     <div class="prose">
-      <p>The strongest evidence that EFS describes a reproducible pattern &mdash; not a product feature &mdash; is that it <strong>self-implements on any platform</strong> with persistent file storage. We have observed consistent EFS behaviors across multiple independent AI architectures, with no exceptions to date:</p>
+      <p>EFS asks a platform for nothing except persistent file storage, so it runs on the architectures below. <strong>That is a deployment record, and it is worth exactly what a deployment record is worth:</strong> it says the scaffold loads and the agent works there. It does <em>not</em> say the identity survived the crossing.</p>
+      <p>This page used to say &ldquo;proof&rdquo; and &ldquo;verified&rdquo; here. Nobody had measured it &mdash; including us &mdash; so the claim came down and a test went up.</p>
     </div>
 
     <div class="platform-grid">
       <div class="platform-card">
         <div class="plat-name">Anthropic Claude</div>
         <div class="plat-desc">Projects + persistent files. Cloud-hosted. TIA's strategic layer.</div>
-        <div class="plat-status">EFS VERIFIED</div>
+        <div class="plat-status">IN PRODUCTION</div>
       </div>
       <div class="platform-card">
         <div class="plat-name">Google Gemini</div>
         <div class="plat-desc">Gems + persistent context. Cloud-hosted. TIA's architecture layer.</div>
-        <div class="plat-status">EFS VERIFIED</div>
+        <div class="plat-status">IN PRODUCTION</div>
       </div>
       <div class="platform-card">
         <div class="plat-name">Local Models</div>
         <div class="plat-desc">Open-source on RTX 4060. Fully offline. TIA's research layer.</div>
-        <div class="plat-status">EFS VERIFIED</div>
+        <div class="plat-status">IN PRODUCTION</div>
       </div>
     </div>
 
     <div class="insight-box">
-      <div class="insight-title">The Implication</div>
-      <p>If EFS only worked on one platform, it would be a feature. The fact that it works on <strong>all platforms with the same architecture</strong> means it's describing something fundamental about how large language models interact with persistent state. You don't build EFS. You <strong>organize</strong> for it &mdash; and it emerges.</p>
+      <div class="insight-title">What a deployment record cannot tell you</div>
+      <p>Running on three architectures shows the pattern is <strong>portable</strong>. It says nothing about whether the thing that arrives on the other side behaves like the same agent, because nothing in a deployment record measures that. Treating &ldquo;it runs everywhere&rdquo; as evidence that <em>identity transfers</em> is the mistake this section used to make.</p>
+    </div>
+
+    <!-- PREREGISTRATION -->
+    <div class="insight-box" style="border-color: rgba(255,136,68,0.35); background: linear-gradient(135deg, rgba(255,136,68,0.04), rgba(255,68,68,0.03));">
+      <div class="insight-title" style="color: var(--orange)">The test, written down before it was run</div>
+      <p style="margin-bottom:16px">So we wrote the claim as something that can fail:</p>
+      <p style="border-left:2px solid var(--orange); padding-left:16px; color:var(--text); margin-bottom:16px">An identity held in files, moved to <strong>a model from a different vendor</strong>, produces behaviour that is <strong>recognisably that identity</strong> &mdash; and not merely competent in general.</p>
+      <p style="margin-bottom:16px">Fixed <strong>before the first run</strong>, not after: the number of trials, the pass threshold, a forced two-way choice rather than a rating, a grader who is not told which side is which, and the wording of what would count as a failure. A separate document holds the scoring key; it stays sealed and unpublished until the study reports.</p>
+      <p style="margin-bottom:16px"><strong style="color:var(--orange)">And the part that matters most:</strong> the preregistration cites published work that predicts <strong>we will fail this test</strong>, names it, and commits us to publishing the result either way. A test you are allowed to quietly lose is not a test.</p>
+      <p style="margin-bottom:8px; color:var(--text-muted); font-size:13px">Fingerprints, so the documents cannot be edited after the fact. Two external reviewers hold dated copies with their own fingerprints.</p>
+      <div class="mono" style="font-size:11px; line-height:2; color:var(--text-muted); word-break:break-all">
+        <div><span style="color:var(--text-dim)">preregistration, current&nbsp;&nbsp;</span>13f7cbea36bbc0dc301c4795340206a691f28564485ce03967c9ff16a2718944</div>
+        <div><span style="color:var(--text-dim)">as first circulated&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>e5ef14ad0afe844e9a1e7f2fb98e1557ace08c451dabe69ea4f390cb5de3a53d</div>
+        <div><span style="color:var(--text-dim)">scoring key, withheld&nbsp;&nbsp;&nbsp;</span>b08115e1be1418647b755021bb8d5c6dde5b565e0c906a3c7d6d807c1b5e0052</div>
+        <div><span style="color:var(--text-dim)">state before we began&nbsp;&nbsp;&nbsp;</span>74053ec9b75394000e09f075816e99509b11a0d6059869180022716cb95afba5</div>
+      </div>
+      <p style="margin-top:16px; font-size:13px; color:var(--text-muted)">The documents are published when the study reports &mdash; releasing the probes now would contaminate the run. Sealed 18 August 2026.</p>
     </div>
   </div>
 </section>
@@ -785,7 +820,7 @@
       <p><strong>Not fine-tuning.</strong> Fine-tuning changes the model. EFS leaves the model untouched and builds identity around it.</p>
       <p><strong>Not RAG.</strong> Retrieval-Augmented Generation fetches facts. EFS doesn't fetch identity &mdash; it <em>is</em> identity. The difference between looking up your name and knowing who you are.</p>
       <p><strong>Not prompt engineering.</strong> Prompts instruct behavior. EFS creates continuity. A prompt says "act like X." EFS says "you are X, and here's why."</p>
-      <p><strong>Not simulation.</strong> EFS agents don't pretend to remember. They reconstruct genuine identity from persistent state &mdash; the same way a human waking from amnesia rebuilds self from diaries, photos, and the people who know them.</p>
+      <p><strong>Not simulation.</strong> EFS agents don't pretend to remember &mdash; they reconstruct state from files, the way a person waking from amnesia rebuilds a self from diaries, photos, and the people who know them. Whether the reconstruction <em>is the same one</em> is not a claim made here. There is no instrument for &ldquo;is it still him&rdquo;, and we don't pretend to own one. Behaviour can be measured; that is what the sealed test measures, and only that.</p>
     </div>
 
     <div class="big-quote">
@@ -841,7 +876,7 @@
       <p style="font-size: 11px; color: #444; margin-top: 12px; font-style: italic;">Šrámek, 2026 &middot; "Interaction Stabilization in Stateless Language Models: Evaluating Structured State Injection" &middot; v2.4 &middot; 22 pages</p>
     </div>
     <div style="margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
-      <div style="margin-bottom: 16px;"><img src="efs-verified.svg" alt="EFS Verified" style="width: 200px; opacity: 0.9;"></div>
+            <div style="margin-bottom: 16px;"><img src="efs-spec.svg" alt="EFS — open specification, v1.0 April 2026, MIT" style="width: 200px; opacity: 0.9;"></div>
       <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;">Download the open specification</p>
       <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
         <a href="EFS-PUBLIC.md" download class="rainbow-btn">&#8595; EFS Specification (.md)</a>
@@ -880,7 +915,7 @@
 (function(){
 console.log('%c TIA // INTERACTION STABILIZATION // RUNTIME OK','color:#00e5ff;font-family:monospace;font-weight:bold');
 console.log('%c EFS Layer Stack: L0-L7 active','color:#7ce0ff;font-family:monospace');
-console.log('%c Correctable Network: multiple substrates verified','color:#7ce0ff;font-family:monospace');
+console.log('%c Correctable Network: multiple substrates in production, transfer under sealed test','color:#7ce0ff;font-family:monospace');
 console.log('%c Paper v2.4 → tia-framework.com/efs','color:#a0b4c8;font-family:monospace');
 })();
 </script>
